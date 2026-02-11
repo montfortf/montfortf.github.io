@@ -9,6 +9,335 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    /* Enhanced page-specific styles */
+    .urgency-bar {
+      background: linear-gradient(135deg, #1A1A2E 0%, #0066CC 100%);
+      color: #fff;
+      padding: var(--space-16) 0;
+    }
+    .urgency-bar .section-header__label {
+      color: var(--color-accent);
+    }
+    .urgency-bar .section-header__title {
+      color: #fff;
+    }
+    .urgency-bar .section-header__subtitle {
+      color: rgba(255,255,255,0.8);
+    }
+    .urgency-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-8);
+    }
+    .urgency-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    .urgency-card__stat {
+      font-size: var(--text-4xl);
+      font-weight: 800;
+      color: var(--color-accent);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin-bottom: var(--space-2);
+    }
+    .urgency-card__label {
+      font-size: var(--text-base);
+      color: rgba(255,255,255,0.9);
+      line-height: 1.5;
+    }
+    .urgency-card__source {
+      font-size: var(--text-xs);
+      color: rgba(255,255,255,0.5);
+      margin-top: var(--space-2);
+    }
+
+    /* AI Journey Framework */
+    .journey {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      position: relative;
+    }
+    .journey::before {
+      content: '';
+      position: absolute;
+      top: 60px;
+      left: 15%;
+      right: 15%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+      border-radius: 2px;
+      z-index: 0;
+    }
+    .journey__stage {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: var(--space-6);
+    }
+    .journey__number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      font-size: var(--text-xl);
+      font-weight: 800;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin-bottom: var(--space-4);
+    }
+    .journey__stage:nth-child(1) .journey__number {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .journey__stage:nth-child(2) .journey__number {
+      background: var(--color-secondary);
+      color: #fff;
+    }
+    .journey__stage:nth-child(3) .journey__number {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .journey__title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+      color: var(--color-text);
+    }
+    .journey__desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+
+    /* Case Studies */
+    .case-study {
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: var(--transition-base);
+    }
+    .case-study:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .case-study__tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-3);
+    }
+    .case-study__body {
+      padding: var(--space-6);
+    }
+    .case-study__title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+      color: var(--color-text);
+    }
+    .case-study__desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-light);
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+    .case-study__metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-border);
+    }
+    .case-study__metric-value {
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      color: var(--color-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .case-study__metric-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* Partner Strip */
+    .partners {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--space-10);
+      padding: var(--space-8) 0;
+    }
+    .partners__logo {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-text-muted);
+      opacity: 0.5;
+      transition: var(--transition-base);
+      letter-spacing: 0.02em;
+    }
+    .partners__logo:hover {
+      opacity: 1;
+      color: var(--color-primary);
+    }
+
+    /* Trust Badges */
+    .trust-badges {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-5);
+    }
+    .trust-badge {
+      text-align: center;
+      padding: var(--space-5);
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      transition: var(--transition-base);
+    }
+    .trust-badge:hover {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
+    }
+    .trust-badge__icon {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-3);
+    }
+    .trust-badge__title {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+    .trust-badge__desc {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* Insights Section */
+    .insight-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      transition: var(--transition-base);
+      height: 100%;
+    }
+    .insight-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary);
+    }
+    .insight-card__type {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-3);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      align-self: flex-start;
+    }
+    .insight-card__type--report {
+      background: #EBF5FF;
+      color: var(--color-primary);
+    }
+    .insight-card__type--guide {
+      background: #E6F9F1;
+      color: var(--color-secondary);
+    }
+    .insight-card__type--trend {
+      background: #FFF3EB;
+      color: var(--color-accent);
+    }
+    .insight-card__title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+    .insight-card__link {
+      color: var(--color-primary);
+      font-weight: 600;
+      font-size: var(--text-sm);
+      text-decoration: none;
+    }
+    .insight-card__link:hover {
+      text-decoration: underline;
+    }
+
+    /* Testimonial */
+    .testimonial-featured {
+      background: linear-gradient(135deg, var(--color-primary-light), #fff);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-12);
+      text-align: center;
+      position: relative;
+    }
+    .testimonial-featured__quote {
+      font-size: var(--text-2xl);
+      font-weight: 500;
+      color: var(--color-text);
+      line-height: 1.5;
+      margin-bottom: var(--space-6);
+      font-style: italic;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .testimonial-featured__quote::before {
+      content: '\201C';
+      display: block;
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--color-primary);
+      font-family: serif;
+      margin-bottom: var(--space-2);
+    }
+    .testimonial-featured__author {
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+    .testimonial-featured__role {
+      font-size: var(--text-sm);
+      color: var(--color-text-light);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .urgency-grid { grid-template-columns: repeat(2, 1fr); }
+      .trust-badges { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .urgency-grid { grid-template-columns: 1fr; }
+      .journey { grid-template-columns: 1fr; gap: var(--space-4); }
+      .journey::before { display: none; }
+      .trust-badges { grid-template-columns: 1fr; }
+      .testimonial-featured { padding: var(--space-8) var(--space-5); }
+      .testimonial-featured__quote { font-size: var(--text-xl); }
+    }
+  </style>
 </head>
 <body>
 
@@ -29,7 +358,7 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- Hero Section - Enhanced with stronger positioning -->
   <section class="hero hero--centered">
     <div class="container">
       <div class="hero__content">
@@ -38,13 +367,13 @@
           Salesforce Agentforce Experts
         </span>
         <h1 class="hero__title">
-          AI Solutions for<br>
+          Mission-Ready AI for<br>
           <span class="text-gradient">Government & Nonprofits</span>
         </h1>
         <p class="hero__subtitle">
-          From strategy to implementation to managed services—responsible AI solutions
-          designed for mission-driven organizations. Powered by Salesforce Agentforce
-          and built for government.
+          The trusted AI partner for mission-driven organizations. We combine deep
+          government expertise with responsible AI to deliver measurable outcomes—from
+          strategy through implementation to managed services.
         </p>
         <div class="hero__actions">
           <a href="readiness-assessment.html" class="btn btn--primary btn--lg">
@@ -57,30 +386,110 @@
         <div class="hero__stats">
           <div class="hero__stat">
             <div class="hero__stat-value" data-counter="80" data-suffix="+">0+</div>
-            <div class="hero__stat-label">Government Agencies</div>
+            <div class="hero__stat-label">Government Agencies Served</div>
           </div>
           <div class="hero__stat">
             <div class="hero__stat-value" data-counter="18" data-suffix="+">0+</div>
-            <div class="hero__stat-label">Years Experience</div>
+            <div class="hero__stat-label">Years in Public Sector</div>
           </div>
           <div class="hero__stat">
             <div class="hero__stat-value" data-counter="50" data-suffix="%">0%</div>
             <div class="hero__stat-label">Avg. Processing Reduction</div>
+          </div>
+          <div class="hero__stat">
+            <div class="hero__stat-value" data-counter="100" data-suffix="%">0%</div>
+            <div class="hero__stat-label">Government Focused</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- AI Service Categories - Tabs Component -->
-  <section id="services" class="section">
+  <!-- The AI Imperative - Urgency Section (Inspired by Accenture stats + Booz Allen authority) -->
+  <section class="urgency-bar">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-header__label">The AI Imperative</span>
+        <h2 class="section-header__title">The Gap Between AI Ambition and Execution Is Widening</h2>
+        <p class="section-header__subtitle">
+          Government agencies face mounting pressure to modernize with AI—yet most
+          are stuck in pilot mode. The organizations that move decisively today will
+          define public service for the next decade.
+        </p>
+      </div>
+      <div class="urgency-grid">
+        <div class="urgency-card" data-animate>
+          <div class="urgency-card__stat" data-counter="91" data-suffix="%">0%</div>
+          <div class="urgency-card__label">of organizations plan to increase AI spending in 2026</div>
+          <div class="urgency-card__source">Slalom AI Research</div>
+        </div>
+        <div class="urgency-card" data-animate data-delay="100">
+          <div class="urgency-card__stat" data-counter="97" data-suffix="%">0%</div>
+          <div class="urgency-card__label">of executives believe GenAI will transform their industry</div>
+          <div class="urgency-card__source">Accenture Research</div>
+        </div>
+        <div class="urgency-card" data-animate data-delay="200">
+          <div class="urgency-card__stat">Only 21%</div>
+          <div class="urgency-card__label">have enterprise-wide AI use cases deployed and delivering value</div>
+          <div class="urgency-card__source">Slalom 2026 AI Outlook</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Journey Framework (Inspired by Deloitte's 3-stage model) -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-header__label">Your AI Journey</span>
+        <h2 class="section-header__title">A Proven Path from Readiness to Results</h2>
+        <p class="section-header__subtitle">
+          Wherever you are on the AI maturity curve, we meet you there—and
+          accelerate your path to measurable mission impact.
+        </p>
+      </div>
+
+      <div class="journey">
+        <div class="journey__stage" data-animate>
+          <div class="journey__number">1</div>
+          <h3 class="journey__title">AI Readiness</h3>
+          <p class="journey__desc">
+            Assess your data, infrastructure, and organizational readiness.
+            Build your AI strategy and governance framework aligned with
+            compliance requirements and mission priorities.
+          </p>
+        </div>
+        <div class="journey__stage" data-animate data-delay="150">
+          <div class="journey__number">2</div>
+          <h3 class="journey__title">AI Acceleration</h3>
+          <p class="journey__desc">
+            Pilot high-value use cases, build your AI Center of Excellence,
+            and scale proven solutions across the organization with
+            change management built in from day one.
+          </p>
+        </div>
+        <div class="journey__stage" data-animate data-delay="300">
+          <div class="journey__number">3</div>
+          <h3 class="journey__title">AI Advantage</h3>
+          <p class="journey__desc">
+            Maximize operational efficiency with enterprise-wide AI deployment,
+            continuous optimization, and managed services that keep
+            your AI systems performing at their peak.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Service Categories - Tabs Component (Enhanced from original) -->
+  <section id="services" class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Our AI Services</span>
-        <h2 class="section-header__title">Comprehensive AI Capabilities</h2>
+        <span class="section-header__label">Our AI Capabilities</span>
+        <h2 class="section-header__title">End-to-End AI Services for Your Mission</h2>
         <p class="section-header__subtitle">
-          Choose your path to AI transformation—from strategic planning through
-          implementation and ongoing managed services.
+          From strategic planning through implementation to ongoing operations—comprehensive
+          AI capabilities built for the unique demands of government and nonprofits.
         </p>
       </div>
 
@@ -106,10 +515,10 @@
               <h3 class="card__title">AI Strategy & Roadmap</h3>
               <p class="card__description">
                 Executive-level engagement to define your AI vision, identify high-value
-                use cases, and create a practical roadmap for transformation.
+                use cases, and create a practical roadmap aligned with your mission and budget.
               </p>
               <a href="ai-strategy.html" class="card__link">
-                Learn More <span>→</span>
+                Learn More <span>&rarr;</span>
               </a>
             </div>
 
@@ -120,10 +529,10 @@
               <h3 class="card__title">AI Readiness Assessment</h3>
               <p class="card__description">
                 Comprehensive evaluation of your organization's technical, organizational,
-                and cultural readiness for AI adoption.
+                and cultural readiness for AI adoption—with a clear action plan.
               </p>
               <a href="ai-readiness.html" class="card__link">
-                Learn More <span>→</span>
+                Learn More <span>&rarr;</span>
               </a>
             </div>
 
@@ -134,10 +543,10 @@
               <h3 class="card__title">Platform Evaluation</h3>
               <p class="card__description">
                 Independent evaluation of AI platforms and vendors to help you make
-                informed decisions aligned with your requirements.
+                informed decisions aligned with your requirements and compliance needs.
               </p>
               <a href="platform-evaluation.html" class="card__link">
-                Learn More <span>→</span>
+                Learn More <span>&rarr;</span>
               </a>
             </div>
           </div>
@@ -153,10 +562,10 @@
               <h3 class="card__title">Government AI Academy</h3>
               <p class="card__description">
                 Comprehensive training programs that build AI literacy and practical
-                skills across your organization.
+                skills across every level of your organization.
               </p>
               <a href="ai-academy.html" class="card__link">
-                Learn More <span>→</span>
+                Learn More <span>&rarr;</span>
               </a>
             </div>
 
@@ -170,7 +579,7 @@
                 deliver lasting value through sustainable adoption.
               </p>
               <a href="ai-change-management.html" class="card__link">
-                Learn More <span>→</span>
+                Learn More <span>&rarr;</span>
               </a>
             </div>
 
@@ -184,7 +593,7 @@
                 expertise, and shared services across your organization.
               </p>
               <a href="ai-coe.html" class="card__link">
-                Learn More <span>→</span>
+                Learn More <span>&rarr;</span>
               </a>
             </div>
           </div>
@@ -203,7 +612,7 @@
                 your AI is ethical, fair, transparent, and accountable.
               </p>
               <a href="responsible-ai.html" class="card__link">
-                Learn More <span>→</span>
+                Learn More <span>&rarr;</span>
               </a>
             </div>
 
@@ -214,10 +623,10 @@
               <h3 class="card__title">AI Bias Audit</h3>
               <p class="card__description">
                 Independent evaluation of your AI systems for bias and discrimination
-                across protected classes.
+                across protected classes—ensuring equitable outcomes.
               </p>
               <a href="bias-audit.html" class="card__link">
-                Learn More <span>→</span>
+                Learn More <span>&rarr;</span>
               </a>
             </div>
 
@@ -227,11 +636,11 @@
               </div>
               <h3 class="card__title">AI Compliance & Risk</h3>
               <p class="card__description">
-                Ensure your AI systems meet regulatory requirements while managing
-                risks effectively.
+                Navigate NIST AI RMF, the AI Bill of Rights, and agency-specific
+                regulations with confidence. Comprehensive risk management for AI systems.
               </p>
               <a href="ai-compliance.html" class="card__link">
-                Learn More <span>→</span>
+                Learn More <span>&rarr;</span>
               </a>
             </div>
           </div>
@@ -248,7 +657,7 @@
               <p class="card__description">
                 Evaluate, pilot, and scale generative AI with a structured approach.
               </p>
-              <a href="genai-strategy.html" class="card__link">Learn More →</a>
+              <a href="genai-strategy.html" class="card__link">Learn More &rarr;</a>
             </div>
 
             <div class="card service-card">
@@ -259,7 +668,7 @@
               <p class="card__description">
                 Secure GenAI grounded in your agency's authoritative knowledge.
               </p>
-              <a href="rag-solutions.html" class="card__link">Learn More →</a>
+              <a href="rag-solutions.html" class="card__link">Learn More &rarr;</a>
             </div>
 
             <div class="card service-card">
@@ -270,7 +679,7 @@
               <p class="card__description">
                 Fine-tune language models on your agency's data for domain-specific performance.
               </p>
-              <a href="llm-fine-tuning.html" class="card__link">Learn More →</a>
+              <a href="llm-fine-tuning.html" class="card__link">Learn More &rarr;</a>
             </div>
 
             <div class="card service-card">
@@ -281,7 +690,7 @@
               <p class="card__description">
                 FedRAMP-ready, agency-controlled GenAI environment.
               </p>
-              <a href="secure-ai-platform.html" class="card__link">Learn More →</a>
+              <a href="secure-ai-platform.html" class="card__link">Learn More &rarr;</a>
             </div>
           </div>
         </div>
@@ -304,7 +713,7 @@
                 <li>Eligibility Agent</li>
                 <li>Custom Agents</li>
               </ul>
-              <a href="agentic-ai.html" class="card__link">Learn More →</a>
+              <a href="agentic-ai.html" class="card__link">Learn More &rarr;</a>
             </div>
 
             <div class="card service-card">
@@ -322,7 +731,7 @@
                 <li>Automation candidates</li>
                 <li>Impact measurement</li>
               </ul>
-              <a href="process-intelligence.html" class="card__link">Learn More →</a>
+              <a href="process-intelligence.html" class="card__link">Learn More &rarr;</a>
             </div>
           </div>
         </div>
@@ -331,34 +740,44 @@
         <div class="tabs__content" data-tab-content="specialized">
           <div class="grid grid--3">
             <div class="card service-card">
-              <div class="card__icon">📄</div>
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
               <h3 class="card__title">Document AI & IDP</h3>
-              <p class="card__description">Extract, classify, and process documents at scale.</p>
-              <a href="document-ai.html" class="card__link">Learn More →</a>
+              <p class="card__description">Extract, classify, and process documents at scale with AI-powered automation.</p>
+              <a href="document-ai.html" class="card__link">Learn More &rarr;</a>
             </div>
             <div class="card service-card">
-              <div class="card__icon">📊</div>
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
               <h3 class="card__title">Predictive Analytics</h3>
-              <p class="card__description">Custom ML models for government challenges.</p>
-              <a href="predictive-analytics.html" class="card__link">Learn More →</a>
+              <p class="card__description">Custom ML models that anticipate needs, prevent problems, and optimize resources.</p>
+              <a href="predictive-analytics.html" class="card__link">Learn More &rarr;</a>
             </div>
             <div class="card service-card">
-              <div class="card__icon">👁️</div>
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
               <h3 class="card__title">Computer Vision</h3>
-              <p class="card__description">Image and video AI for government operations.</p>
-              <a href="computer-vision.html" class="card__link">Learn More →</a>
+              <p class="card__description">Image and video AI for government operations, inspections, and document processing.</p>
+              <a href="computer-vision.html" class="card__link">Learn More &rarr;</a>
             </div>
             <div class="card service-card">
-              <div class="card__icon">💬</div>
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
               <h3 class="card__title">Conversational AI</h3>
-              <p class="card__description">Sophisticated virtual assistants across channels.</p>
-              <a href="conversational-ai.html" class="card__link">Learn More →</a>
+              <p class="card__description">Sophisticated virtual assistants delivering 24/7 constituent service across channels.</p>
+              <a href="conversational-ai.html" class="card__link">Learn More &rarr;</a>
             </div>
             <div class="card service-card">
-              <div class="card__icon">📚</div>
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              </div>
               <h3 class="card__title">Knowledge Management</h3>
-              <p class="card__description">Transform knowledge into AI-enhanced ecosystem.</p>
-              <a href="knowledge-management.html" class="card__link">Learn More →</a>
+              <p class="card__description">Transform institutional knowledge into an AI-enhanced, searchable ecosystem.</p>
+              <a href="knowledge-management.html" class="card__link">Learn More &rarr;</a>
             </div>
           </div>
         </div>
@@ -367,22 +786,28 @@
         <div class="tabs__content" data-tab-content="data">
           <div class="grid grid--3">
             <div class="card service-card">
-              <div class="card__icon">☁️</div>
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+              </div>
               <h3 class="card__title">Data Cloud Intelligence</h3>
-              <p class="card__description">Unified data platform creating single view of constituents.</p>
-              <a href="data-cloud.html" class="card__link">Learn More →</a>
+              <p class="card__description">Unified data platform creating a single view of constituents across programs and systems.</p>
+              <a href="data-cloud.html" class="card__link">Learn More &rarr;</a>
             </div>
             <div class="card service-card">
-              <div class="card__icon">✓</div>
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
               <h3 class="card__title">Data Readiness</h3>
-              <p class="card__description">Get your data AI-ready with quality and governance.</p>
-              <a href="data-readiness.html" class="card__link">Learn More →</a>
+              <p class="card__description">Get your data AI-ready with quality assessments, governance frameworks, and integration.</p>
+              <a href="data-readiness.html" class="card__link">Learn More &rarr;</a>
             </div>
             <div class="card service-card">
-              <div class="card__icon">📈</div>
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+              </div>
               <h3 class="card__title">Analytics & Reporting</h3>
-              <p class="card__description">Dashboards and insights that drive action.</p>
-              <a href="analytics.html" class="card__link">Learn More →</a>
+              <p class="card__description">Dashboards and insights that turn data into decisions and drive mission outcomes.</p>
+              <a href="analytics.html" class="card__link">Learn More &rarr;</a>
             </div>
           </div>
         </div>
@@ -391,22 +816,28 @@
         <div class="tabs__content" data-tab-content="operations">
           <div class="grid grid--3">
             <div class="card service-card">
-              <div class="card__icon">⚙️</div>
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </div>
               <h3 class="card__title">MLOps & Platform Management</h3>
-              <p class="card__description">Model lifecycle management and monitoring.</p>
-              <a href="mlops.html" class="card__link">Learn More →</a>
+              <p class="card__description">Model lifecycle management, monitoring, and continuous performance optimization.</p>
+              <a href="mlops.html" class="card__link">Learn More &rarr;</a>
             </div>
             <div class="card service-card">
-              <div class="card__icon">🔗</div>
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+              </div>
               <h3 class="card__title">AI Integration Services</h3>
-              <p class="card__description">Connect AI to your existing systems.</p>
-              <a href="ai-integration.html" class="card__link">Learn More →</a>
+              <p class="card__description">Connect AI to your existing enterprise systems and government platforms seamlessly.</p>
+              <a href="ai-integration.html" class="card__link">Learn More &rarr;</a>
             </div>
             <div class="card service-card">
-              <div class="card__icon">🛠️</div>
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              </div>
               <h3 class="card__title">AI Managed Services</h3>
-              <p class="card__description">Ongoing support for AI systems.</p>
-              <a href="ai-managed-services.html" class="card__link">Learn More →</a>
+              <p class="card__description">Ongoing AI operations and support so your team can focus on the mission, not the technology.</p>
+              <a href="ai-managed-services.html" class="card__link">Learn More &rarr;</a>
             </div>
           </div>
         </div>
@@ -414,45 +845,145 @@
     </div>
   </section>
 
-  <!-- Why Brite.AI for AI Section - Accordion -->
+  <!-- Mission Impact - Case Studies (Inspired by Deloitte's quantified client stories) -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-header__label">Mission Impact</span>
+        <h2 class="section-header__title">Real Results for Real Missions</h2>
+        <p class="section-header__subtitle">
+          See how government agencies and nonprofits are achieving measurable
+          outcomes with Brite.AI's responsible AI solutions.
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        <div class="case-study" data-animate>
+          <div class="case-study__body">
+            <span class="case-study__tag">State Government</span>
+            <h3 class="case-study__title">Benefits Processing Transformation</h3>
+            <p class="case-study__desc">
+              A state health agency deployed AI-powered document processing to
+              automate eligibility verification—reducing wait times and improving
+              accuracy for thousands of residents.
+            </p>
+            <div class="case-study__metrics">
+              <div>
+                <div class="case-study__metric-value">60%</div>
+                <div class="case-study__metric-label">Faster Processing</div>
+              </div>
+              <div>
+                <div class="case-study__metric-value">45%</div>
+                <div class="case-study__metric-label">Cost Reduction</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-study" data-animate data-delay="100">
+          <div class="case-study__body">
+            <span class="case-study__tag">Federal Agency</span>
+            <h3 class="case-study__title">Constituent Service AI Agents</h3>
+            <p class="case-study__desc">
+              Deployed Salesforce Agentforce-powered virtual agents to handle
+              routine inquiries, freeing caseworkers to focus on complex cases
+              requiring human judgment and empathy.
+            </p>
+            <div class="case-study__metrics">
+              <div>
+                <div class="case-study__metric-value">24/7</div>
+                <div class="case-study__metric-label">Service Availability</div>
+              </div>
+              <div>
+                <div class="case-study__metric-value">73%</div>
+                <div class="case-study__metric-label">Auto-Resolution Rate</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-study" data-animate data-delay="200">
+          <div class="case-study__body">
+            <span class="case-study__tag">Nonprofit</span>
+            <h3 class="case-study__title">Data Cloud Unification</h3>
+            <p class="case-study__desc">
+              Unified constituent data across 12 program silos using Salesforce
+              Data Cloud—enabling coordinated, whole-person service delivery
+              for the first time.
+            </p>
+            <div class="case-study__metrics">
+              <div>
+                <div class="case-study__metric-value">12&rarr;1</div>
+                <div class="case-study__metric-label">Unified View</div>
+              </div>
+              <div>
+                <div class="case-study__metric-value">3x</div>
+                <div class="case-study__metric-label">Faster Referrals</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
   <section class="section section--alt">
+    <div class="container">
+      <div class="testimonial-featured" data-animate>
+        <p class="testimonial-featured__quote">
+          Brite.AI understood our mission from day one. They didn't just implement
+          technology—they helped us reimagine how we serve our constituents.
+          The AI solutions are delivering real value, and the change management
+          approach ensured our team embraced the transformation.
+        </p>
+        <div class="testimonial-featured__author">CIO, State Health & Human Services Agency</div>
+        <div class="testimonial-featured__role">Enterprise AI Transformation Program</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Brite.AI - Enhanced with Competitive Differentiators -->
+  <section class="section">
     <div class="container">
       <div class="grid grid--2" style="align-items: center; gap: 4rem;">
         <div>
           <span class="section-header__label">Why Brite.AI</span>
-          <h2>Why Choose Brite.AI for AI</h2>
+          <h2>The Government AI Specialists</h2>
           <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-8);">
-            We're not just another technology vendor. We're government AI specialists
-            who understand what it takes to succeed where others fail.
+            We're not a generalist consultancy with a government practice bolted on.
+            Government is everything we do—and responsible AI is how we do it.
           </p>
 
           <div class="accordion">
             <div class="accordion__item active">
               <button class="accordion__header">
-                Government AI Specialists
-                <span class="accordion__icon">▼</span>
+                100% Government Focus
+                <span class="accordion__icon">&#9660;</span>
               </button>
               <div class="accordion__content">
                 <div class="accordion__body">
-                  <p>We've spent 18+ years in government. We understand compliance,
-                  procurement, change management, and what it takes to succeed where
-                  generic consultancies fail. Government isn't a practice area for
-                  us—it's everything we do.</p>
+                  <p>We've spent 18+ years exclusively serving government agencies and
+                  nonprofits. We understand procurement cycles, compliance requirements,
+                  change management in public organizations, and what it takes to succeed
+                  where generic consultancies fail. Government isn't a practice area—it's
+                  our entire identity.</p>
                 </div>
               </div>
             </div>
 
             <div class="accordion__item">
               <button class="accordion__header">
-                Responsible AI First
-                <span class="accordion__icon">▼</span>
+                Responsible AI Built In, Not Bolted On
+                <span class="accordion__icon">&#9660;</span>
               </button>
               <div class="accordion__content">
                 <div class="accordion__body">
-                  <p>Every AI solution we build has governance, transparency, and
-                  human oversight built in from day one. Responsible AI isn't
-                  optional in government—it's our foundation. We test for bias,
-                  ensure explainability, and maintain audit trails.</p>
+                  <p>Every AI solution includes governance, transparency, and human
+                  oversight from day one. We align with NIST AI Risk Management Framework,
+                  test for bias across protected classes, ensure explainability for
+                  public accountability, and maintain complete audit trails. In government,
+                  responsible AI isn't optional—it's foundational.</p>
                 </div>
               </div>
             </div>
@@ -460,29 +991,46 @@
             <div class="accordion__item">
               <button class="accordion__header">
                 Salesforce Agentforce Experts
-                <span class="accordion__icon">▼</span>
+                <span class="accordion__icon">&#9660;</span>
               </button>
               <div class="accordion__content">
                 <div class="accordion__body">
                   <p>As a Salesforce Summit Partner, we're at the forefront of
                   Agentforce implementation for government and nonprofit. We have
-                  pre-built accelerators, proven patterns, and deep platform
-                  expertise that reduces risk and time to value.</p>
+                  pre-built accelerators, proven deployment patterns, and deep platform
+                  expertise that reduces risk and time to value—getting AI agents into
+                  the hands of your team faster.</p>
                 </div>
               </div>
             </div>
 
             <div class="accordion__item">
               <button class="accordion__header">
-                Change Management Included
-                <span class="accordion__icon">▼</span>
+                Change Management Included, Not Extra
+                <span class="accordion__icon">&#9660;</span>
               </button>
               <div class="accordion__content">
                 <div class="accordion__body">
                   <p>Technology only works if people use it. We build change
                   management into every AI engagement because adoption determines
-                  success. It's not a separate workstream—it's integral to
-                  everything we do.</p>
+                  success. Training, stakeholder alignment, communication plans, and
+                  ongoing support are integral—not a separate workstream and not
+                  an add-on fee.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion__item">
+              <button class="accordion__header">
+                End-to-End, Not Handoffs
+                <span class="accordion__icon">&#9660;</span>
+              </button>
+              <div class="accordion__content">
+                <div class="accordion__body">
+                  <p>From strategy through implementation to managed services—one team,
+                  one relationship, one accountable partner. No handing off between
+                  strategy consultants who don't build and engineers who don't understand
+                  your mission. We own outcomes from start to finish.</p>
                 </div>
               </div>
             </div>
@@ -490,7 +1038,6 @@
         </div>
 
         <div>
-          <!-- Stats Display -->
           <div class="stats" style="grid-template-columns: repeat(2, 1fr);">
             <div class="stat">
               <div class="stat__value" data-counter="80" data-suffix="+">0+</div>
@@ -514,14 +1061,111 @@
     </div>
   </section>
 
-  <!-- Interactive Tools Section - Slider -->
+  <!-- Trust Signals (Inspired by Booz Allen + Accenture certifications/awards) -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-header__label">Trust & Compliance</span>
+        <h2 class="section-header__title">Built for Government Standards</h2>
+        <p class="section-header__subtitle">
+          Our solutions are designed from the ground up to meet the security,
+          compliance, and accountability requirements of public sector organizations.
+        </p>
+      </div>
+
+      <div class="trust-badges">
+        <div class="trust-badge" data-animate>
+          <div class="trust-badge__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="trust-badge__title">FedRAMP Aligned</div>
+          <div class="trust-badge__desc">Solutions built on FedRAMP-authorized cloud infrastructure</div>
+        </div>
+        <div class="trust-badge" data-animate data-delay="100">
+          <div class="trust-badge__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-secondary)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+          <div class="trust-badge__title">NIST AI RMF</div>
+          <div class="trust-badge__desc">Aligned with NIST AI Risk Management Framework</div>
+        </div>
+        <div class="trust-badge" data-animate data-delay="200">
+          <div class="trust-badge__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="trust-badge__title">Bias Audited</div>
+          <div class="trust-badge__desc">Every AI system tested for fairness across protected classes</div>
+        </div>
+        <div class="trust-badge" data-animate data-delay="300">
+          <div class="trust-badge__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="trust-badge__title">Data Sovereignty</div>
+          <div class="trust-badge__desc">Your data stays in your control, in your environment</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology Partners (Inspired by Accenture/Deloitte partner strips) -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-header__label">Technology Ecosystem</span>
+        <h2 class="section-header__title">Powered by Industry Leaders</h2>
+      </div>
+      <div class="partners">
+        <span class="partners__logo">Salesforce</span>
+        <span class="partners__logo">AWS</span>
+        <span class="partners__logo">Google Cloud</span>
+        <span class="partners__logo">Microsoft Azure</span>
+        <span class="partners__logo">Snowflake</span>
+        <span class="partners__logo">Databricks</span>
+        <span class="partners__logo">NVIDIA</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Thought Leadership / Insights (Inspired by Accenture's trending content) -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-header__label">Latest Thinking</span>
+        <h2 class="section-header__title">Insights for Government AI Leaders</h2>
+        <p class="section-header__subtitle">
+          Research, frameworks, and practical guidance to navigate
+          your AI transformation with confidence.
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        <div class="insight-card" data-animate>
+          <span class="insight-card__type insight-card__type--report">Report</span>
+          <h3 class="insight-card__title">State of AI in Government 2026: From Pilot to Production</h3>
+          <a href="#" class="insight-card__link">Read the Report &rarr;</a>
+        </div>
+        <div class="insight-card" data-animate data-delay="100">
+          <span class="insight-card__type insight-card__type--guide">Guide</span>
+          <h3 class="insight-card__title">The Government Leader's Guide to Responsible AI Governance</h3>
+          <a href="#" class="insight-card__link">Download Guide &rarr;</a>
+        </div>
+        <div class="insight-card" data-animate data-delay="200">
+          <span class="insight-card__type insight-card__type--trend">Trend</span>
+          <h3 class="insight-card__title">Agentic AI in Government: What Leaders Need to Know in 2026</h3>
+          <a href="#" class="insight-card__link">Explore Trends &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Tools Section -->
   <section class="section">
     <div class="container">
       <div class="section-header">
         <span class="section-header__label">Interactive Tools</span>
-        <h2 class="section-header__title">Get Started Today</h2>
+        <h2 class="section-header__title">Assess Your AI Readiness Today</h2>
         <p class="section-header__subtitle">
-          Use our free tools to assess your readiness and estimate potential ROI.
+          Use our free tools to benchmark your readiness and estimate potential ROI—no
+          commitment required.
         </p>
       </div>
 
@@ -541,7 +1185,7 @@
             </span>
           </div>
           <a href="readiness-assessment.html" class="btn btn--primary">
-            Start Assessment →
+            Start Assessment &rarr;
           </a>
         </div>
 
@@ -552,7 +1196,7 @@
           <h3 class="card__title">AI ROI Calculator</h3>
           <p class="card__description">
             Estimate the potential return on investment from AI implementation
-            based on your organization's profile.
+            based on your organization's profile and current operations.
           </p>
           <div style="margin-bottom: var(--space-4);">
             <span style="display: inline-block; padding: 0.25rem 0.75rem; background: var(--color-background-alt); color: var(--color-text-muted); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 600;">
@@ -560,7 +1204,7 @@
             </span>
           </div>
           <a href="roi-calculator.html" class="btn btn--secondary">
-            Calculate ROI →
+            Calculate ROI &rarr;
           </a>
         </div>
       </div>
@@ -626,7 +1270,7 @@
   <section class="section">
     <div class="container">
       <div class="cta">
-        <h2>Ready to Transform with AI?</h2>
+        <h2>Ready to Transform Your Mission with AI?</h2>
         <p>
           Start with a conversation about your challenges and goals.
           No sales pitch—just honest advice from people who know government.
