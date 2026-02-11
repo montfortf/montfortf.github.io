@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI & Data Services Directory | Brite.AI</title>
+  <meta name="description" content="Browse all Brite.AI services—from AI strategy and governance to generative AI, agentic solutions, and data services for government and nonprofits.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .directory__category {
+      margin-bottom: var(--space-10);
+    }
+    .directory__category-title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-2);
+      border-bottom: 2px solid var(--color-primary-light);
+    }
+    .directory__list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+    }
+    .directory__item {
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      transition: var(--transition-base);
+    }
+    .directory__item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary);
+    }
+    .directory__item-title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+    .directory__item-title a {
+      color: var(--color-text);
+      text-decoration: none;
+    }
+    .directory__item-title a:hover {
+      color: var(--color-primary);
+    }
+    .directory__item-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+    @media (max-width: 1024px) {
+      .directory__list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      .directory__list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
+          <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero hero--centered">
+    <div class="container">
+      <div class="hero__content">
+        <span class="hero__badge">AI & Data Directory</span>
+        <h1 class="hero__title">
+          All AI & Data<br>
+          <span class="text-gradient">Services & Tools</span>
+        </h1>
+        <p class="hero__subtitle">
+          Browse our complete catalog of AI and data services—from strategy and
+          governance through implementation and managed operations.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Directory -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Advisory & Strategy -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">Advisory & Strategy</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="ai-strategy.html">AI Strategy & Roadmap</a></h3>
+            <p class="directory__item-desc">Executive-level engagement to define your AI vision, identify high-value use cases, and create a practical roadmap for transformation.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="ai-readiness.html">AI Readiness Assessment</a></h3>
+            <p class="directory__item-desc">Comprehensive evaluation of your organization's technical, organizational, and cultural readiness for AI adoption.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="platform-evaluation.html">AI Vendor & Platform Evaluation</a></h3>
+            <p class="directory__item-desc">Independent evaluation of AI platforms and vendors to help you make informed decisions aligned with your requirements.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="genai-strategy.html">Generative AI Strategy & Pilot</a></h3>
+            <p class="directory__item-desc">Evaluate, pilot, and scale generative AI with a structured approach that manages risk while capturing value for government agencies.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Enablement -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">AI Enablement</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="ai-academy.html">Government AI Academy</a></h3>
+            <p class="directory__item-desc">Comprehensive AI training programs that build AI literacy and practical skills across your government organization.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="ai-change-management.html">AI Change Management</a></h3>
+            <p class="directory__item-desc">Comprehensive change management strategies to drive AI adoption and maximize the value of your AI investments.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="ai-coe.html">AI Center of Excellence</a></h3>
+            <p class="directory__item-desc">Build an AI Center of Excellence that drives innovation, governance, and sustainable AI capability across your organization.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Governance & Trust -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">Governance & Trust</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="responsible-ai.html">Responsible AI Framework</a></h3>
+            <p class="directory__item-desc">Develop comprehensive responsible AI frameworks that ensure ethical, fair, and transparent AI systems in government.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="ai-compliance.html">AI Compliance & Risk Management</a></h3>
+            <p class="directory__item-desc">Navigate AI regulations and manage AI-related risks with comprehensive compliance frameworks and risk management strategies.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="bias-audit.html">AI Bias Audit & Fairness Testing</a></h3>
+            <p class="directory__item-desc">Independent testing and auditing of AI systems for bias and fairness. Ensure your AI treats all constituents equitably.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Generative AI & LLMs -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">Generative AI & LLMs</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="rag-solutions.html">RAG Solutions</a></h3>
+            <p class="directory__item-desc">Build AI systems that answer questions using your organization's knowledge. RAG solutions that ground AI responses in authoritative data.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="llm-fine-tuning.html">LLM Fine-Tuning & Custom Models</a></h3>
+            <p class="directory__item-desc">Fine-tune large language models for government-specific tasks. Custom AI models trained on your domain for superior performance.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="conversational-ai.html">Conversational AI & Chatbots</a></h3>
+            <p class="directory__item-desc">AI-powered chatbots and virtual assistants that provide 24/7 constituent service, answer questions, and guide users through government processes.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="knowledge-management.html">AI-Powered Knowledge Management</a></h3>
+            <p class="directory__item-desc">Transform how your organization captures, organizes, and retrieves knowledge with AI-powered knowledge management solutions.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agentic AI -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">Agentic AI</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="agentic-ai.html">Agentic AI Solutions</a></h3>
+            <p class="directory__item-desc">Autonomous AI agents that handle complex, multi-step tasks while keeping humans informed and in control. Built on Salesforce Agentforce.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Specialized AI -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">Specialized AI</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="document-ai.html">Document AI & Intelligent Processing</a></h3>
+            <p class="directory__item-desc">AI-powered document extraction, classification, and processing at scale. Transform documents into structured data for government applications.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="predictive-analytics.html">Predictive Analytics</a></h3>
+            <p class="directory__item-desc">AI-powered predictive analytics that help government agencies anticipate needs, prevent problems, and optimize resources.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="computer-vision.html">Computer Vision</a></h3>
+            <p class="directory__item-desc">AI-powered computer vision solutions for government. Image analysis, document processing, and visual inspection automation.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="process-intelligence.html">Process Intelligence & Mining</a></h3>
+            <p class="directory__item-desc">Discover automation opportunities with process mining and intelligence. Data-driven insights into how work actually flows through your organization.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Services -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">Data Services</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="data-cloud.html">Salesforce Data Cloud</a></h3>
+            <p class="directory__item-desc">Create a unified view of constituents across programs with Salesforce Data Cloud. Break down silos and enable coordinated, whole-person service delivery.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="analytics.html">Analytics & Business Intelligence</a></h3>
+            <p class="directory__item-desc">Transform data into actionable insights with modern analytics and business intelligence solutions for government agencies.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="data-readiness.html">Data Readiness for AI</a></h3>
+            <p class="directory__item-desc">Prepare your data for AI success. Data quality, integration, and governance services that build the foundation for effective AI.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Operations -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">AI Operations</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="mlops.html">MLOps & AI Operations</a></h3>
+            <p class="directory__item-desc">Operationalize AI with MLOps. Build reliable, scalable machine learning pipelines that keep your AI systems running in production.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="ai-integration.html">AI Integration Services</a></h3>
+            <p class="directory__item-desc">Integrate AI into your existing systems and workflows. Connect AI capabilities to enterprise applications for real business impact.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="ai-managed-services.html">AI Managed Services</a></h3>
+            <p class="directory__item-desc">Ongoing AI operations and support. We manage your AI systems so you can focus on your mission.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="secure-ai-platform.html">Secure AI Platform</a></h3>
+            <p class="directory__item-desc">Build secure, compliant AI platforms for government. FedRAMP-ready infrastructure that keeps your data safe.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Tools -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">Interactive Tools</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="readiness-assessment.html">AI Readiness Assessment Quiz</a></h3>
+            <p class="directory__item-desc">Take our free 5-minute AI Readiness Assessment. Understand where your organization stands and get a personalized roadmap.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="roi-calculator.html">AI ROI Calculator</a></h3>
+            <p class="directory__item-desc">Estimate the potential return on investment from AI automation. Calculate cost savings, efficiency gains, and payback period.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Ready to Transform with AI?</h2>
+        <p>
+          Start with a conversation about your challenges and goals.
+          No sales pitch—just honest advice from people who know government.
+        </p>
+        <div class="cta__actions">
+          <a href="readiness-assessment.html" class="btn btn--white btn--lg">
+            Take AI Readiness Assessment
+          </a>
+          <a href="../contact/index.html" class="btn btn--secondary btn--lg" style="border-color: #fff; color: #fff;">
+            Schedule a Consultation
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
