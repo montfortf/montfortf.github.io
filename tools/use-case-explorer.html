@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Use Case Explorer | Brite.AI</title>
+  <meta name="description" content="Explore 30+ proven AI use cases for government agencies across health, workforce, child welfare, revenue, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 1200px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .tool-header { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .stats-bar { display: flex; justify-content: center; gap: var(--space-8); margin-bottom: var(--space-6); padding: var(--space-4); background: var(--color-background-alt); border-radius: var(--radius-lg); }
+    .stats-bar__item { text-align: center; }
+    .stats-bar__value { font-size: var(--text-2xl); font-weight: 800; color: #8b5cf6; }
+    .stats-bar__label { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .filter-section { display: flex; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-6); padding: var(--space-4); background: var(--color-background-alt); border-radius: var(--radius-lg); }
+    .filter-group { display: flex; flex-direction: column; gap: var(--space-2); flex: 1; min-width: 180px; }
+    .filter-group label { font-weight: 600; font-size: var(--text-sm); }
+    .filter-group select { padding: var(--space-2) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+    .filter-group select:focus { outline: none; border-color: #8b5cf6; }
+    .results-count { margin-bottom: var(--space-4); color: var(--color-text-muted); font-size: var(--text-sm); }
+    .use-cases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: var(--space-4); }
+    .use-case-card { background: var(--color-background-alt); border-radius: var(--radius-xl); overflow: hidden; transition: all 0.3s; border: 2px solid transparent; cursor: pointer; }
+    .use-case-card:hover { border-color: #8b5cf6; transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .use-case-card__header { padding: var(--space-4) var(--space-5); display: flex; justify-content: space-between; align-items: flex-start; }
+    .use-case-card__icon { font-size: 2.5rem; }
+    .use-case-card__badges { display: flex; flex-direction: column; gap: var(--space-1); align-items: flex-end; }
+    .use-case-card__badge { font-size: var(--text-xs); padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); font-weight: 600; }
+    .use-case-card__badge.complexity-low { background: #dcfce7; color: #166534; }
+    .use-case-card__badge.complexity-medium { background: #fef3c7; color: #92400e; }
+    .use-case-card__badge.complexity-high { background: #fee2e2; color: #991b1b; }
+    .use-case-card__badge.roi { background: #dbeafe; color: #1e40af; }
+    .use-case-card__body { padding: 0 var(--space-5) var(--space-5); }
+    .use-case-card__title { font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-2); }
+    .use-case-card__desc { font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-4); }
+    .use-case-card__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); padding: var(--space-3); background: var(--color-background); border-radius: var(--radius-md); margin-bottom: var(--space-4); }
+    .stat-item { text-align: center; }
+    .stat-item__value { font-weight: 700; color: #8b5cf6; font-size: var(--text-sm); }
+    .stat-item__label { font-size: var(--text-xs); color: var(--color-text-muted); }
+    .use-case-card__tech { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+    .tech-tag { font-size: var(--text-xs); background: #f3e8ff; color: #7c3aed; padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: var(--space-4); }
+    .modal-overlay.show { display: flex; }
+    .modal-content { background: var(--color-background); border-radius: var(--radius-xl); max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; }
+    .modal-header { padding: var(--space-6); background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; position: relative; }
+    .modal-header h3 { margin-bottom: var(--space-2); padding-right: var(--space-8); }
+    .modal-body { padding: var(--space-6); }
+    .modal-section { margin-bottom: var(--space-6); }
+    .modal-section h4 { margin-bottom: var(--space-3); color: #7c3aed; }
+    .modal-section ul { margin: 0; padding-left: var(--space-5); }
+    .modal-section li { margin-bottom: var(--space-2); }
+    .modal-close { position: absolute; top: var(--space-4); right: var(--space-4); background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
+    .modal-close:hover { background: rgba(255,255,255,0.2); }
+    .modal-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); padding: var(--space-4); background: var(--color-background-alt); border-radius: var(--radius-lg); margin-bottom: var(--space-6); }
+    .modal-stat { text-align: center; }
+    .modal-stat__value { font-size: var(--text-xl); font-weight: 800; color: #8b5cf6; }
+    .modal-stat__label { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .modal-cta { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; padding: var(--space-4); border-radius: var(--radius-lg); text-align: center; }
+    .modal-cta p { margin-bottom: var(--space-3); opacity: 0.9; }
+    .modal-cta .btn { background: #fff; color: #7c3aed; }
+    .no-results { text-align: center; padding: var(--space-8); color: var(--color-text-muted); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Use Case Explorer</h2>
+          <p>Discover 35+ proven AI applications for government agencies</p>
+        </div>
+        <div class="tool-body">
+          <div class="stats-bar">
+            <div class="stats-bar__item">
+              <div class="stats-bar__value" id="totalCount">35</div>
+              <div class="stats-bar__label">Use Cases</div>
+            </div>
+            <div class="stats-bar__item">
+              <div class="stats-bar__value">9</div>
+              <div class="stats-bar__label">Agency Types</div>
+            </div>
+            <div class="stats-bar__item">
+              <div class="stats-bar__value">5</div>
+              <div class="stats-bar__label">Technologies</div>
+            </div>
+          </div>
+
+          <div class="filter-section">
+            <div class="filter-group">
+              <label>Agency Type</label>
+              <select id="agencyFilter" onchange="filterUseCases()">
+                <option value="all">All Agencies</option>
+                <option value="hhs">Health & Human Services</option>
+                <option value="workforce">Workforce Development</option>
+                <option value="childwelfare">Child Welfare</option>
+                <option value="revenue">Revenue / Tax</option>
+                <option value="licensing">Licensing & Permits</option>
+                <option value="publicsafety">Public Safety</option>
+                <option value="transportation">Transportation</option>
+                <option value="education">Education</option>
+                <option value="general">General Government</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Complexity</label>
+              <select id="complexityFilter" onchange="filterUseCases()">
+                <option value="all">All Levels</option>
+                <option value="low">Low (Quick Wins)</option>
+                <option value="medium">Medium</option>
+                <option value="high">High (Strategic)</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Technology</label>
+              <select id="techFilter" onchange="filterUseCases()">
+                <option value="all">All Technologies</option>
+                <option value="nlp">Natural Language Processing</option>
+                <option value="vision">Computer Vision</option>
+                <option value="ml">Machine Learning</option>
+                <option value="genai">Generative AI</option>
+                <option value="rpa">RPA + AI</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Search</label>
+              <input type="text" id="searchFilter" placeholder="Search use cases..." oninput="filterUseCases()" style="padding: var(--space-2) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md);">
+            </div>
+          </div>
+
+          <div class="results-count" id="resultsCount">Showing 35 use cases</div>
+          <div class="use-cases-grid" id="useCasesGrid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc"></p>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const useCases = [
+      // ============ CONSTITUENT SERVICES ============
+      {
+        icon: "💬", title: "Constituent Service Chatbot", desc: "AI-powered virtual assistant answering common questions 24/7",
+        agencies: ["hhs", "workforce", "revenue", "general", "licensing", "transportation"], complexity: "low", tech: ["nlp", "genai"],
+        roi: "220%", timeline: "8-12 weeks", savings: "$480K/yr",
+        benefits: ["Handle 60% of inquiries automatically", "24/7 availability without added staff", "Reduce call center volume by 40%", "Improve constituent satisfaction scores", "Support multiple languages"],
+        requirements: ["FAQ documentation", "Integration with knowledge base", "Escalation workflow to humans", "Analytics dashboard"],
+        examples: ["Colorado Benefits chatbot handles 50K+ monthly conversations", "IRS chatbot answers tax questions in multiple languages", "State DMV chatbot reduced call volume by 35%"]
+      },
+      {
+        icon: "📞", title: "Call Center AI Assistant", desc: "AI helps agents find answers and complete tasks during calls",
+        agencies: ["hhs", "revenue", "general", "workforce"], complexity: "medium", tech: ["nlp", "genai"],
+        roi: "200%", timeline: "3-4 months", savings: "$420K/yr",
+        benefits: ["Reduce average handle time by 25%", "Improve first-call resolution by 30%", "Faster agent onboarding", "Consistent information across agents", "Real-time guidance for complex cases"],
+        requirements: ["Knowledge base integration", "Call center platform integration", "Agent training program", "Quality monitoring"],
+        examples: ["State tax agency reduced call time from 8 to 5 minutes", "HHS agency improved first-call resolution by 30%", "Federal agency cut agent training time by 40%"]
+      },
+      {
+        icon: "🌐", title: "Real-Time Language Translation", desc: "AI provides instant translation for multilingual constituent services",
+        agencies: ["hhs", "general", "workforce", "education"], complexity: "low", tech: ["nlp", "genai"],
+        roi: "180%", timeline: "4-6 weeks", savings: "$220K/yr",
+        benefits: ["Support 100+ languages instantly", "Reduce interpreter costs by 60%", "Faster service for LEP constituents", "Improve equity in service delivery", "Available across all channels"],
+        requirements: ["Integration with communication platforms", "Quality assurance for critical communications", "Cultural sensitivity review"],
+        examples: ["City serves 40+ language communities with AI translation", "State court system provides real-time interpretation", "School district communicates with parents in 50+ languages"]
+      },
+      {
+        icon: "📊", title: "Sentiment Monitoring", desc: "AI monitors social media and surveys for constituent sentiment trends",
+        agencies: ["general", "transportation", "publicsafety"], complexity: "low", tech: ["nlp"],
+        roi: "140%", timeline: "4-6 weeks", savings: "$150K/yr",
+        benefits: ["Early warning of emerging issues", "Track program perception over time", "Identify service improvement areas", "Measure campaign effectiveness", "Benchmark against peers"],
+        requirements: ["Social media API access", "Survey integration", "Dashboard and alerting", "Privacy-compliant collection"],
+        examples: ["Transit agency monitors rider sentiment in real-time", "City tracks neighborhood concerns by topic", "State monitors feedback on new programs"]
+      },
+
+      // ============ DOCUMENT PROCESSING ============
+      {
+        icon: "📄", title: "Document Processing Automation", desc: "AI extracts data from forms, applications, and supporting documents",
+        agencies: ["hhs", "workforce", "revenue", "general", "licensing"], complexity: "medium", tech: ["vision", "ml"],
+        roi: "280%", timeline: "3-4 months", savings: "$620K/yr",
+        benefits: ["Process documents 10x faster", "99% data extraction accuracy", "Reduce manual entry errors by 80%", "Handle multiple document formats", "Scale without adding staff"],
+        requirements: ["Sample documents for training", "Integration with case management", "Human review workflow for exceptions", "Document storage solution"],
+        examples: ["State HHS processes 100K+ benefit applications monthly", "Tax agency extracts data from W-2s and 1099s automatically", "Licensing board processes 50K annual renewals"]
+      },
+      {
+        icon: "📋", title: "License/Permit Auto-Review", desc: "AI reviews applications against requirements and flags issues",
+        agencies: ["licensing", "general"], complexity: "medium", tech: ["vision", "ml", "nlp"],
+        roi: "240%", timeline: "3-4 months", savings: "$380K/yr",
+        benefits: ["Review applications in seconds vs hours", "Consistent application of requirements", "Identify missing documents automatically", "Reduce back-and-forth with applicants", "Prioritize complex cases for staff"],
+        requirements: ["Digitized requirements checklist", "Integration with licensing system", "Applicant notification workflow", "Exception handling process"],
+        examples: ["State contractor licensing reduced review time by 70%", "City building permits processed 3x faster", "Professional licensing board handles 2x volume without added staff"]
+      },
+      {
+        icon: "📝", title: "Contract Analysis", desc: "AI reviews contracts for compliance, risk, and key terms",
+        agencies: ["general", "transportation", "education"], complexity: "medium", tech: ["nlp", "genai"],
+        roi: "190%", timeline: "2-3 months", savings: "$290K/yr",
+        benefits: ["Review contracts 5x faster", "Identify non-standard terms automatically", "Ensure compliance with policies", "Track obligations and deadlines", "Reduce legal review bottleneck"],
+        requirements: ["Contract templates and standards", "Integration with procurement system", "Legal team oversight", "Obligation tracking system"],
+        examples: ["State reviews 10K+ vendor contracts annually with AI", "City identifies contract risks before execution", "Transit authority tracks 500+ contract obligations"]
+      },
+      {
+        icon: "🔓", title: "FOIA Request Processing", desc: "AI categorizes requests, identifies responsive documents, and redacts sensitive info",
+        agencies: ["general", "publicsafety"], complexity: "medium", tech: ["nlp", "vision"],
+        roi: "210%", timeline: "3-4 months", savings: "$320K/yr",
+        benefits: ["Process requests 60% faster", "Consistent redaction of PII", "Automatic document search and retrieval", "Track compliance deadlines", "Reduce backlog"],
+        requirements: ["Document repository access", "Redaction rules engine", "Tracking and workflow system", "Legal review for complex requests"],
+        examples: ["Federal agency reduced FOIA backlog by 50%", "City processes 5K+ requests annually with AI assistance", "State police automates body cam redaction"]
+      },
+      {
+        icon: "♿", title: "Accessibility Compliance Checker", desc: "AI checks documents and websites for ADA/508 compliance",
+        agencies: ["general", "education", "transportation"], complexity: "low", tech: ["vision", "nlp"],
+        roi: "160%", timeline: "4-6 weeks", savings: "$140K/yr",
+        benefits: ["Scan documents for accessibility issues", "Check websites automatically", "Generate remediation reports", "Track compliance over time", "Reduce legal risk"],
+        requirements: ["Access to document repositories", "Website scanning permissions", "Remediation workflow", "Staff training"],
+        examples: ["State ensures all PDFs are accessible before publishing", "University checks 10K+ pages for compliance", "City maintains accessible website with AI monitoring"]
+      },
+
+      // ============ ELIGIBILITY & BENEFITS ============
+      {
+        icon: "🎯", title: "Eligibility Pre-Screening", desc: "AI helps constituents check program eligibility before applying",
+        agencies: ["hhs", "workforce"], complexity: "low", tech: ["nlp", "ml"],
+        roi: "180%", timeline: "6-8 weeks", savings: "$340K/yr",
+        benefits: ["Reduce incomplete applications by 45%", "Better constituent experience", "Staff focus on qualified applicants", "Lower per-application processing costs", "Connect people to right programs"],
+        requirements: ["Eligibility rules documentation", "Integration with application portal", "Privacy-compliant design", "Multi-program support"],
+        examples: ["Benefits.gov eligibility screening used by 40+ programs", "State workforce pre-screens unemployment claimants", "County screens for 15 benefit programs simultaneously"]
+      },
+      {
+        icon: "🔄", title: "Benefits Recertification Automation", desc: "AI identifies clients due for renewal and pre-populates forms",
+        agencies: ["hhs", "workforce"], complexity: "medium", tech: ["ml", "rpa"],
+        roi: "220%", timeline: "3-4 months", savings: "$450K/yr",
+        benefits: ["Reduce churn from missed renewals by 40%", "Pre-populate 80% of renewal data", "Proactive outreach to clients", "Simplified renewal process", "Reduce processing time by 60%"],
+        requirements: ["Integration with benefits systems", "Client contact information", "Outreach automation", "Data verification sources"],
+        examples: ["State SNAP program reduced churn by 35%", "Medicaid renewals processed 3x faster", "County reduced renewal processing time from 2 weeks to 2 days"]
+      },
+      {
+        icon: "🏥", title: "Medical Necessity Review", desc: "AI reviews prior authorization requests against clinical criteria",
+        agencies: ["hhs"], complexity: "high", tech: ["nlp", "ml"],
+        roi: "260%", timeline: "4-6 months", savings: "$680K/yr",
+        benefits: ["Process requests in hours vs days", "Consistent application of criteria", "Reduce inappropriate denials", "Flag complex cases for clinical review", "Improve provider satisfaction"],
+        requirements: ["Clinical criteria documentation", "EHR integration", "Clinical oversight", "Appeals workflow"],
+        examples: ["State Medicaid processes 80% of prior auths automatically", "MCO reduced auth turnaround from 5 days to 4 hours", "Health plan improved provider satisfaction by 40%"]
+      },
+      {
+        icon: "🏠", title: "Social Determinants Screening", desc: "AI identifies housing, food, transportation, and other needs from case notes",
+        agencies: ["hhs", "childwelfare"], complexity: "medium", tech: ["nlp", "genai"],
+        roi: "190%", timeline: "2-3 months", savings: "$280K/yr",
+        benefits: ["Identify unmet needs automatically", "Connect clients to appropriate resources", "Improve health outcomes", "Reduce emergency service utilization", "Holistic view of client needs"],
+        requirements: ["Access to case notes", "Resource directory", "Referral tracking", "Privacy protections"],
+        examples: ["Health system reduced ER visits by 20% with SDOH screening", "County connects 5K+ clients to resources annually", "MCO improved HEDIS scores with AI-identified interventions"]
+      },
+      {
+        icon: "👨‍⚕️", title: "Provider Matching", desc: "AI matches clients to appropriate providers based on needs, preferences, and availability",
+        agencies: ["hhs", "childwelfare"], complexity: "medium", tech: ["ml"],
+        roi: "170%", timeline: "3-4 months", savings: "$240K/yr",
+        benefits: ["Reduce time to first appointment by 50%", "Better match based on specialization", "Consider distance and transportation", "Track provider capacity in real-time", "Improve treatment outcomes"],
+        requirements: ["Provider directory", "Client needs assessment", "Appointment scheduling integration", "Outcome tracking"],
+        examples: ["Behavioral health network reduced wait times by 60%", "Foster care improved placement stability with matching", "State matched 10K+ clients to appropriate PCPs"]
+      },
+      {
+        icon: "⚖️", title: "Appeals Analysis", desc: "AI analyzes appeal patterns to identify policy and process issues",
+        agencies: ["hhs", "workforce", "revenue"], complexity: "medium", tech: ["ml", "nlp"],
+        roi: "180%", timeline: "2-3 months", savings: "$220K/yr",
+        benefits: ["Identify systemic issues causing appeals", "Reduce future appeal volume", "Improve initial decision accuracy", "Track overturn patterns", "Policy improvement insights"],
+        requirements: ["Appeals data access", "Decision documentation", "Analytics dashboard", "Policy feedback loop"],
+        examples: ["State reduced UI appeals by 30% after identifying issues", "Medicaid improved initial accuracy by 15%", "Tax agency reduced audit appeals through process changes"]
+      },
+
+      // ============ CHILD WELFARE ============
+      {
+        icon: "📝", title: "Case Note Summarization", desc: "AI summarizes lengthy case histories for faster worker review",
+        agencies: ["childwelfare", "hhs"], complexity: "medium", tech: ["genai", "nlp"],
+        roi: "190%", timeline: "2-3 months", savings: "$380K/yr",
+        benefits: ["Reduce case review time by 50%", "Consistent summary format", "Highlight critical information", "Better informed decisions", "Surface patterns across time"],
+        requirements: ["Access to case management system", "Summary templates", "Human oversight workflow", "Audit trail"],
+        examples: ["LA County summarizes 5+ years of notes instantly", "State Medicaid summarizes medical records for eligibility", "Child welfare agency reviews 10 years of history in minutes"]
+      },
+      {
+        icon: "⚠️", title: "Risk Assessment & Prioritization", desc: "AI scores cases by risk level to prioritize worker attention",
+        agencies: ["childwelfare", "hhs"], complexity: "high", tech: ["ml"],
+        roi: "320%", timeline: "6-8 months", savings: "$520K/yr",
+        benefits: ["Earlier intervention on high-risk cases", "Consistent risk evaluation", "Data-driven prioritization", "Improved child safety outcomes", "Better resource allocation"],
+        requirements: ["Historical outcome data", "Risk factor definitions", "Explainability requirements", "Comprehensive bias testing", "Worker training"],
+        examples: ["Allegheny County predictive analytics for child welfare", "State uses risk scoring for adult protective services", "County reduced re-reports by 25% with risk-informed practice"]
+      },
+      {
+        icon: "🏠", title: "Placement Matching", desc: "AI recommends foster placements based on child needs and family strengths",
+        agencies: ["childwelfare"], complexity: "high", tech: ["ml"],
+        roi: "280%", timeline: "4-6 months", savings: "$420K/yr",
+        benefits: ["Improve placement stability by 40%", "Match based on child's specific needs", "Consider sibling connections", "Reduce placement disruptions", "Better outcomes for children"],
+        requirements: ["Child needs assessment data", "Foster family profiles", "Placement history", "Outcome tracking", "Worker override capability"],
+        examples: ["State improved placement stability by 35%", "County reduced emergency placements by 50%", "Agency matches 500+ children annually with AI assistance"]
+      },
+      {
+        icon: "📅", title: "Visitation Scheduling Optimization", desc: "AI optimizes family visit schedules considering all constraints",
+        agencies: ["childwelfare"], complexity: "low", tech: ["ml", "rpa"],
+        roi: "150%", timeline: "6-8 weeks", savings: "$160K/yr",
+        benefits: ["Reduce scheduling conflicts by 70%", "Maximize visitation time", "Consider transportation and availability", "Automatic reminders", "Track visitation compliance"],
+        requirements: ["Calendar integration", "Participant availability", "Location management", "Notification system"],
+        examples: ["County increased visitation compliance by 40%", "Agency reduced scheduling time by 80%", "State improved parent engagement through consistent visits"]
+      },
+      {
+        icon: "📋", title: "Court Report Generation", desc: "AI drafts court reports from case notes for worker review and editing",
+        agencies: ["childwelfare"], complexity: "medium", tech: ["genai", "nlp"],
+        roi: "200%", timeline: "2-3 months", savings: "$280K/yr",
+        benefits: ["Draft reports in minutes vs hours", "Consistent format and content", "Include relevant history automatically", "More time for client engagement", "Reduce worker burnout"],
+        requirements: ["Case management integration", "Court report templates", "Worker review workflow", "Legal compliance review"],
+        examples: ["County workers save 3 hours per report", "State generates 5K+ court reports monthly", "Agency reduced report preparation time by 70%"]
+      },
+      {
+        icon: "📱", title: "Hotline Call Screening", desc: "AI assists intake workers with screening decisions and priority assessment",
+        agencies: ["childwelfare"], complexity: "high", tech: ["nlp", "ml"],
+        roi: "240%", timeline: "4-6 months", savings: "$360K/yr",
+        benefits: ["Consistent screening decisions", "Identify high-priority calls immediately", "Surface relevant history during call", "Reduce screening time by 30%", "Support new worker training"],
+        requirements: ["Call transcription", "Historical data access", "Decision support interface", "Supervisor oversight", "Continuous model monitoring"],
+        examples: ["State improved screening consistency by 40%", "County reduced response time for high-priority cases", "Agency surfaces 5 years of history during intake calls"]
+      },
+      {
+        icon: "🎓", title: "Aging Out Preparation Tracking", desc: "AI identifies youth approaching 18 and tracks transition readiness",
+        agencies: ["childwelfare"], complexity: "low", tech: ["ml", "rpa"],
+        roi: "160%", timeline: "6-8 weeks", savings: "$180K/yr",
+        benefits: ["No youth falls through cracks", "Track progress on transition goals", "Identify missing services early", "Connect to appropriate resources", "Improve outcomes for older youth"],
+        requirements: ["Youth tracking data", "Transition checklist", "Resource directory", "Alerting system"],
+        examples: ["State ensures 100% of youth have transition plans", "County improved housing stability for aging out youth", "Agency increased post-secondary enrollment by 50%"]
+      },
+
+      // ============ WORKFORCE DEVELOPMENT ============
+      {
+        icon: "💼", title: "Job Matching & Recommendations", desc: "AI matches job seekers to opportunities based on skills, experience, and preferences",
+        agencies: ["workforce"], complexity: "medium", tech: ["ml", "nlp"],
+        roi: "230%", timeline: "3-4 months", savings: "$380K/yr",
+        benefits: ["Higher quality job matches", "Consider transferable skills", "Real-time job market integration", "Personalized recommendations", "Improve placement rates by 30%"],
+        requirements: ["Job seeker profiles", "Job posting feeds", "Skills taxonomy", "Outcome tracking"],
+        examples: ["State workforce matched 50K+ job seekers annually", "City improved placement rates by 35%", "Career center reduced time to employment by 40%"]
+      },
+      {
+        icon: "📄", title: "Resume Builder Assistant", desc: "AI helps job seekers create effective, tailored resumes",
+        agencies: ["workforce", "education"], complexity: "low", tech: ["genai"],
+        roi: "170%", timeline: "4-6 weeks", savings: "$140K/yr",
+        benefits: ["Create professional resumes quickly", "Tailor to specific job postings", "Highlight transferable skills", "Multiple format options", "Improve interview callback rates"],
+        requirements: ["Resume templates", "Job posting integration", "Skills extraction", "User-friendly interface"],
+        examples: ["Workforce center helps 10K+ job seekers annually", "Community college integrated with career services", "State reduced resume assistance wait time by 80%"]
+      },
+      {
+        icon: "🎓", title: "Training Program Recommendations", desc: "AI suggests training programs based on career goals and labor market demand",
+        agencies: ["workforce", "education"], complexity: "medium", tech: ["ml"],
+        roi: "190%", timeline: "2-3 months", savings: "$260K/yr",
+        benefits: ["Align training with job market needs", "Personalized learning paths", "Consider existing skills", "Track program outcomes", "Improve training ROI"],
+        requirements: ["Training program catalog", "Labor market data", "Skills gap analysis", "Outcome tracking"],
+        examples: ["State improved training completion by 40%", "Workforce board aligned programs with employer needs", "Community college improved job placement after training by 35%"]
+      },
+      {
+        icon: "🏢", title: "Employer Fraud Detection", desc: "AI detects employer wage theft, misclassification, and UI fraud patterns",
+        agencies: ["workforce", "revenue"], complexity: "high", tech: ["ml"],
+        roi: "380%", timeline: "4-6 months", savings: "$1.2M/yr",
+        benefits: ["Identify misclassification schemes", "Detect wage theft patterns", "Prioritize audit resources", "Protect worker rights", "Increase tax compliance"],
+        requirements: ["Employer reporting data", "Cross-agency data sharing", "Investigation workflow", "Audit trail"],
+        examples: ["State identified $50M in misclassified wages", "Labor department targeted audits with 3x higher recovery", "UI agency prevented $20M in employer fraud"]
+      },
+      {
+        icon: "🔐", title: "Claimant Identity Verification", desc: "AI verifies identity using multiple factors to prevent benefits fraud",
+        agencies: ["workforce", "hhs"], complexity: "medium", tech: ["ml", "vision"],
+        roi: "350%", timeline: "3-4 months", savings: "$890K/yr",
+        benefits: ["Reduce identity fraud by 70%", "Faster verification for legitimate claimants", "Multiple verification methods", "Reduce manual review burden", "Improve program integrity"],
+        requirements: ["Identity verification services", "Document verification", "Fraud pattern database", "Appeals process"],
+        examples: ["State UI prevented $100M+ in fraud during pandemic", "HHS agency reduced identity fraud by 80%", "Workforce system verifies 50K+ claims monthly"]
+      },
+
+      // ============ REVENUE / TAX ============
+      {
+        icon: "🚨", title: "Fraud Detection & Prevention", desc: "AI identifies suspicious patterns and anomalies in claims and applications",
+        agencies: ["hhs", "revenue", "workforce"], complexity: "high", tech: ["ml"],
+        roi: "450%", timeline: "4-6 months", savings: "$2.5M/yr",
+        benefits: ["Detect 85% of fraud vs 35% manual", "Real-time alerting", "Reduce improper payments", "Prioritize investigation resources", "Adaptive to new fraud patterns"],
+        requirements: ["Historical fraud data", "Integration with claims systems", "Investigation workflow", "Appeals process", "Continuous model training"],
+        examples: ["CMS fraud detection saves $1B+ annually", "State UI fraud detection prevented $400M in improper payments", "Tax agency increased fraud detection by 150%"]
+      },
+      {
+        icon: "🔍", title: "Audit Case Selection", desc: "AI prioritizes audit cases by recovery potential and compliance risk",
+        agencies: ["revenue"], complexity: "high", tech: ["ml"],
+        roi: "380%", timeline: "4-6 months", savings: "$1.8M/yr",
+        benefits: ["Increase audit yield by 40%", "Focus resources on high-value cases", "Consistent case selection", "Reduce selection bias", "Improve audit efficiency"],
+        requirements: ["Historical audit data", "Tax return data", "Third-party data sources", "Auditor feedback loop"],
+        examples: ["State increased audit recovery by $50M annually", "IRS improved audit selection accuracy by 35%", "Revenue department doubled yield with same staff"]
+      },
+      {
+        icon: "❌", title: "Return Error Detection", desc: "AI identifies errors and omissions before returns are processed",
+        agencies: ["revenue"], complexity: "medium", tech: ["ml"],
+        roi: "220%", timeline: "3-4 months", savings: "$420K/yr",
+        benefits: ["Catch errors before processing", "Reduce amended return volume", "Faster refunds for accurate returns", "Proactive taxpayer communication", "Improve compliance rates"],
+        requirements: ["Return processing integration", "Error pattern library", "Taxpayer notification", "Correction workflow"],
+        examples: ["State reduced error rate by 30%", "Tax agency prevented 50K+ erroneous refunds", "City improved processing accuracy by 25%"]
+      },
+      {
+        icon: "📬", title: "Taxpayer Intent Classification", desc: "AI routes taxpayer inquiries to the correct department automatically",
+        agencies: ["revenue"], complexity: "low", tech: ["nlp"],
+        roi: "160%", timeline: "4-6 weeks", savings: "$180K/yr",
+        benefits: ["Route inquiries in seconds", "Reduce misdirected contacts by 60%", "Faster resolution times", "Improve taxpayer satisfaction", "Reduce transfer rates"],
+        requirements: ["Inquiry classification taxonomy", "Integration with CRM", "Routing rules", "Performance tracking"],
+        examples: ["State routes 100K+ inquiries monthly automatically", "Tax agency reduced transfer rate by 45%", "City improved first-contact resolution by 35%"]
+      },
+      {
+        icon: "💳", title: "Collections Optimization", desc: "AI prioritizes collection actions by likelihood of payment and recovery potential",
+        agencies: ["revenue"], complexity: "medium", tech: ["ml"],
+        roi: "240%", timeline: "3-4 months", savings: "$560K/yr",
+        benefits: ["Increase collection rates by 25%", "Optimize outreach timing", "Personalize payment options", "Reduce collection costs", "Improve taxpayer experience"],
+        requirements: ["Payment history data", "Contact information", "Outreach automation", "Payment portal integration"],
+        examples: ["State increased collections by $30M annually", "City improved payment plan success by 40%", "Revenue department reduced write-offs by 20%"]
+      },
+      {
+        icon: "⚡", title: "Refund Fraud Prevention", desc: "AI detects suspicious refund patterns in real-time before payment",
+        agencies: ["revenue"], complexity: "high", tech: ["ml"],
+        roi: "520%", timeline: "4-6 months", savings: "$3.2M/yr",
+        benefits: ["Stop fraudulent refunds before payment", "Reduce false positives by 50%", "Adapt to new fraud schemes", "Protect legitimate taxpayers", "Recover more attempted fraud"],
+        requirements: ["Real-time processing integration", "Fraud pattern database", "Identity verification", "Investigation workflow"],
+        examples: ["IRS prevented $5B+ in fraudulent refunds", "State stopped $200M in refund fraud", "Tax agency reduced fraud losses by 80%"]
+      },
+
+      // ============ GENERAL GOVERNMENT ============
+      {
+        icon: "📊", title: "Predictive Analytics for Demand", desc: "AI forecasts service demand to optimize staffing and resources",
+        agencies: ["hhs", "workforce", "general", "transportation"], complexity: "medium", tech: ["ml"],
+        roi: "160%", timeline: "3-4 months", savings: "$280K/yr",
+        benefits: ["Optimize staffing levels", "Reduce constituent wait times", "Better budget planning", "Proactive resource allocation", "Improve service levels"],
+        requirements: ["Historical volume data", "Integration with HR systems", "Dashboard for managers", "Alerting for anomalies"],
+        examples: ["State DMV predicts daily visits with 95% accuracy", "Workforce agency forecasts unemployment claims spikes", "Call center optimizes staffing weekly with ML"]
+      },
+      {
+        icon: "✉️", title: "Correspondence Generation", desc: "AI drafts personalized letters and notices for staff review",
+        agencies: ["hhs", "revenue", "general", "licensing"], complexity: "low", tech: ["genai", "nlp"],
+        roi: "150%", timeline: "4-6 weeks", savings: "$180K/yr",
+        benefits: ["Draft letters in seconds vs minutes", "Consistent tone and accuracy", "Personalized content", "Multilingual support", "Reduce staff drafting time by 70%"],
+        requirements: ["Letter templates", "Integration with case data", "Staff review workflow", "Compliance review"],
+        examples: ["State generates 50K+ personalized notices monthly", "Tax agency auto-drafts audit correspondence", "Benefits office reduced letter preparation by 80%"]
+      },
+      {
+        icon: "🔍", title: "Intelligent Search & Discovery", desc: "AI-powered search across policies, procedures, and case files",
+        agencies: ["hhs", "childwelfare", "general", "education"], complexity: "medium", tech: ["nlp", "genai"],
+        roi: "140%", timeline: "2-3 months", savings: "$220K/yr",
+        benefits: ["Find information 5x faster", "Search across multiple systems", "Natural language queries", "Surface relevant context", "Improve decision accuracy"],
+        requirements: ["Document repositories", "Access controls", "Search interface", "Feedback mechanism"],
+        examples: ["Federal agency semantic search across 10M+ documents", "State policy search saves workers 30 min/day", "County finds relevant case precedents instantly"]
+      },
+      {
+        icon: "💬", title: "Public Comment Analysis", desc: "AI summarizes and categorizes thousands of public comments for rulemaking",
+        agencies: ["general", "transportation", "education"], complexity: "medium", tech: ["nlp", "genai"],
+        roi: "200%", timeline: "2-3 months", savings: "$340K/yr",
+        benefits: ["Process 10K+ comments in hours", "Identify key themes automatically", "Detect duplicate/campaign submissions", "Summarize sentiment by topic", "Ensure all voices are heard"],
+        requirements: ["Comment submission system", "Analysis dashboard", "Summary generation", "Response tracking"],
+        examples: ["Federal agency analyzed 50K comments on proposed rule", "State summarized 10K comments for environmental review", "City processed community input on zoning changes"]
+      },
+      {
+        icon: "🎙️", title: "Meeting Transcription & Minutes", desc: "AI transcribes meetings and generates summary minutes automatically",
+        agencies: ["general", "education"], complexity: "low", tech: ["nlp", "genai"],
+        roi: "170%", timeline: "4-6 weeks", savings: "$120K/yr",
+        benefits: ["Instant transcription of meetings", "Automatic action item extraction", "Searchable meeting archives", "Accessibility compliance", "Reduce staff time for minutes"],
+        requirements: ["Audio/video recording capability", "Transcription service", "Minutes templates", "Archive system"],
+        examples: ["City council meetings transcribed and published same day", "School board generates minutes automatically", "State agency meetings are fully searchable"]
+      },
+
+      // ============ TRANSPORTATION ============
+      {
+        icon: "🚦", title: "Traffic Pattern Prediction", desc: "AI predicts traffic patterns to optimize signal timing and routing",
+        agencies: ["transportation"], complexity: "high", tech: ["ml"],
+        roi: "220%", timeline: "6-8 months", savings: "$480K/yr",
+        benefits: ["Reduce congestion by 20%", "Optimize signal timing", "Predict incident impacts", "Improve emergency response routing", "Reduce emissions"],
+        requirements: ["Traffic sensor data", "Signal control integration", "Real-time processing", "Dashboard and alerting"],
+        examples: ["City reduced commute times by 15%", "State DOT optimizes highway flow with ML", "Transit authority predicts delays and reroutes buses"]
+      },
+      {
+        icon: "🔧", title: "Infrastructure Maintenance Prediction", desc: "AI predicts when roads, bridges, and equipment need maintenance",
+        agencies: ["transportation", "general"], complexity: "high", tech: ["ml", "vision"],
+        roi: "280%", timeline: "6-8 months", savings: "$620K/yr",
+        benefits: ["Prevent costly emergency repairs", "Optimize maintenance schedules", "Extend asset lifespan", "Reduce safety incidents", "Better budget planning"],
+        requirements: ["Sensor data from infrastructure", "Maintenance history", "Inspection integration", "Work order system"],
+        examples: ["State DOT reduced bridge emergency repairs by 40%", "Transit authority predicts bus maintenance needs", "City optimizes road resurfacing with AI"]
+      },
+
+      // ============ PUBLIC SAFETY ============
+      {
+        icon: "📹", title: "Video Analytics for Safety", desc: "AI analyzes video feeds for safety incidents and traffic violations",
+        agencies: ["publicsafety", "transportation"], complexity: "high", tech: ["vision", "ml"],
+        roi: "240%", timeline: "4-6 months", savings: "$420K/yr",
+        benefits: ["Real-time incident detection", "Reduce manual monitoring", "Traffic violation automation", "Evidence management", "Improve public safety"],
+        requirements: ["Camera infrastructure", "Processing capacity", "Privacy protections", "Chain of custody", "Human review workflow"],
+        examples: ["City detects traffic incidents in real-time", "Transit authority monitors station safety", "State automated speed enforcement reduces crashes by 30%"]
+      },
+      {
+        icon: "🚨", title: "911 Call Analysis", desc: "AI analyzes emergency calls to improve dispatch accuracy and speed",
+        agencies: ["publicsafety"], complexity: "high", tech: ["nlp", "ml"],
+        roi: "200%", timeline: "4-6 months", savings: "$380K/yr",
+        benefits: ["Faster threat assessment", "Improve dispatch accuracy", "Identify caller location faster", "Detect high-priority calls", "Support dispatcher decisions"],
+        requirements: ["Call recording integration", "Dispatch system integration", "Real-time processing", "Quality assurance"],
+        examples: ["County reduced emergency response time by 20%", "City improved dispatch accuracy by 15%", "911 center handles 30% more calls with same staff"]
+      },
+
+      // ============ EDUCATION ============
+      {
+        icon: "📚", title: "Student Early Warning System", desc: "AI identifies students at risk of dropping out or falling behind",
+        agencies: ["education"], complexity: "high", tech: ["ml"],
+        roi: "260%", timeline: "4-6 months", savings: "$380K/yr",
+        benefits: ["Identify at-risk students early", "Personalize interventions", "Improve graduation rates", "Reduce achievement gaps", "Optimize counselor resources"],
+        requirements: ["Student information system", "Attendance and grades data", "Intervention tracking", "Privacy protections", "Counselor workflow"],
+        examples: ["District improved graduation rate by 10%", "State reduced dropout rate by 25%", "University improved retention with early alerts"]
+      },
+      {
+        icon: "✏️", title: "Automated Essay Scoring", desc: "AI provides instant feedback on student writing assignments",
+        agencies: ["education"], complexity: "medium", tech: ["nlp", "genai"],
+        roi: "180%", timeline: "3-4 months", savings: "$240K/yr",
+        benefits: ["Instant feedback for students", "Consistent scoring criteria", "Free teachers for instruction", "Identify common mistakes", "Scale writing practice"],
+        requirements: ["Rubric documentation", "Student submission system", "Teacher override", "Feedback templates"],
+        examples: ["State assessment uses AI for initial scoring", "University grades 50K+ essays per semester", "District provides writing feedback at scale"]
+      }
+    ];
+
+    let filteredUseCases = [...useCases];
+
+    function renderUseCases(filtered) {
+      const grid = document.getElementById('useCasesGrid');
+      document.getElementById('resultsCount').textContent = `Showing ${filtered.length} use case${filtered.length !== 1 ? 's' : ''}`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="no-results">No use cases match your filters. Try broadening your search.</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map((uc, idx) => {
+        const originalIdx = useCases.indexOf(uc);
+        return `
+          <div class="use-case-card" onclick="openModal(${originalIdx})">
+            <div class="use-case-card__header">
+              <div class="use-case-card__icon">${uc.icon}</div>
+              <div class="use-case-card__badges">
+                <span class="use-case-card__badge complexity-${uc.complexity}">${uc.complexity.charAt(0).toUpperCase() + uc.complexity.slice(1)}</span>
+                <span class="use-case-card__badge roi">${uc.roi} ROI</span>
+              </div>
+            </div>
+            <div class="use-case-card__body">
+              <div class="use-case-card__title">${uc.title}</div>
+              <div class="use-case-card__desc">${uc.desc}</div>
+              <div class="use-case-card__stats">
+                <div class="stat-item">
+                  <div class="stat-item__value">${uc.timeline}</div>
+                  <div class="stat-item__label">Timeline</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-item__value">${uc.savings}</div>
+                  <div class="stat-item__label">Savings</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-item__value">${uc.roi}</div>
+                  <div class="stat-item__label">ROI</div>
+                </div>
+              </div>
+              <div class="use-case-card__tech">
+                ${uc.tech.map(t => `<span class="tech-tag">${getTechLabel(t)}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function getTechLabel(tech) {
+      const labels = {
+        'nlp': 'NLP',
+        'vision': 'Computer Vision',
+        'ml': 'Machine Learning',
+        'genai': 'Generative AI',
+        'rpa': 'RPA + AI'
+      };
+      return labels[tech] || tech.toUpperCase();
+    }
+
+    function filterUseCases() {
+      const agency = document.getElementById('agencyFilter').value;
+      const complexity = document.getElementById('complexityFilter').value;
+      const tech = document.getElementById('techFilter').value;
+      const search = document.getElementById('searchFilter').value.toLowerCase();
+
+      filteredUseCases = useCases.filter(uc => {
+        if (agency !== 'all' && !uc.agencies.includes(agency)) return false;
+        if (complexity !== 'all' && uc.complexity !== complexity) return false;
+        if (tech !== 'all' && !uc.tech.includes(tech)) return false;
+        if (search && !uc.title.toLowerCase().includes(search) && !uc.desc.toLowerCase().includes(search)) return false;
+        return true;
+      });
+
+      renderUseCases(filteredUseCases);
+    }
+
+    function openModal(idx) {
+      const uc = useCases[idx];
+      document.getElementById('modalTitle').textContent = `${uc.icon} ${uc.title}`;
+      document.getElementById('modalDesc').textContent = uc.desc;
+
+      const agencyLabels = {
+        'hhs': 'Health & Human Services',
+        'workforce': 'Workforce Development',
+        'childwelfare': 'Child Welfare',
+        'revenue': 'Revenue / Tax',
+        'licensing': 'Licensing & Permits',
+        'publicsafety': 'Public Safety',
+        'transportation': 'Transportation',
+        'education': 'Education',
+        'general': 'General Government'
+      };
+
+      document.getElementById('modalBody').innerHTML = `
+        <div class="modal-stats">
+          <div class="modal-stat">
+            <div class="modal-stat__value">${uc.timeline}</div>
+            <div class="modal-stat__label">Implementation Timeline</div>
+          </div>
+          <div class="modal-stat">
+            <div class="modal-stat__value">${uc.savings}</div>
+            <div class="modal-stat__label">Annual Savings</div>
+          </div>
+          <div class="modal-stat">
+            <div class="modal-stat__value">${uc.roi}</div>
+            <div class="modal-stat__label">Expected ROI</div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4>Applicable Agency Types</h4>
+          <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+            ${uc.agencies.map(a => `<span class="tech-tag">${agencyLabels[a]}</span>`).join('')}
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4>Key Benefits</h4>
+          <ul>${uc.benefits.map(b => `<li>${b}</li>`).join('')}</ul>
+        </div>
+
+        <div class="modal-section">
+          <h4>Implementation Requirements</h4>
+          <ul>${uc.requirements.map(r => `<li>${r}</li>`).join('')}</ul>
+        </div>
+
+        <div class="modal-section">
+          <h4>Real-World Examples</h4>
+          <ul>${uc.examples.map(e => `<li>${e}</li>`).join('')}</ul>
+        </div>
+
+        <div class="modal-section">
+          <h4>Technologies Used</h4>
+          <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+            ${uc.tech.map(t => `<span class="tech-tag">${getTechLabel(t)}</span>`).join('')}
+          </div>
+        </div>
+
+        <div class="modal-cta">
+          <p>Ready to implement this use case at your agency?</p>
+          <a href="../contact/index.html" class="btn">Get Started</a>
+        </div>
+      `;
+      document.getElementById('modalOverlay').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(e) {
+      if (!e || e.target === document.getElementById('modalOverlay')) {
+        document.getElementById('modalOverlay').classList.remove('show');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Close modal on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Update total count
+    document.getElementById('totalCount').textContent = useCases.length;
+
+    // Initial render
+    renderUseCases(useCases);
+  </script>
+</body>
+</html>

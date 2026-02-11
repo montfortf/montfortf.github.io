@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Privacy Impact Estimator | Brite.AI</title>
+  <meta name="description" content="Estimate the privacy impact and requirements for your AI project.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .checkbox-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+    @media (max-width: 768px) { .checkbox-grid { grid-template-columns: 1fr; } }
+    .checkbox-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; }
+    .checkbox-item:hover { border-color: var(--color-primary); }
+    .checkbox-item.selected { border-color: var(--color-primary); background: rgba(79, 70, 229, 0.1); }
+    .results-section { display: none; }
+    .impact-hero { text-align: center; margin-bottom: var(--space-8); }
+    .impact-badge { display: inline-block; padding: var(--space-4) var(--space-8); border-radius: var(--radius-xl); font-size: var(--text-2xl); font-weight: 800; }
+    .impact-badge.low { background: #dcfce7; color: #166534; }
+    .impact-badge.medium { background: #fef3c7; color: #92400e; }
+    .impact-badge.high { background: #fee2e2; color: #991b1b; }
+    .impact-badge.critical { background: #581c87; color: #fff; }
+    .impact-desc { margin-top: var(--space-4); color: var(--color-text-muted); max-width: 600px; margin-left: auto; margin-right: auto; }
+    .requirements-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    @media (max-width: 768px) { .requirements-grid { grid-template-columns: 1fr; } }
+    .requirement-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); border-left: 4px solid var(--color-primary); }
+    .requirement-card__icon { font-size: 2rem; margin-bottom: var(--space-3); }
+    .requirement-card__title { font-weight: 700; margin-bottom: var(--space-2); }
+    .requirement-card__status { display: inline-block; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 600; margin-bottom: var(--space-3); }
+    .requirement-card__status.required { background: #fee2e2; color: #991b1b; }
+    .requirement-card__status.recommended { background: #fef3c7; color: #92400e; }
+    .requirement-card__status.optional { background: #dbeafe; color: #1e40af; }
+    .requirement-card__desc { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .data-flow-section { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .data-flow { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); overflow-x: auto; padding: var(--space-4) 0; }
+    .flow-step { text-align: center; min-width: 100px; }
+    .flow-step__icon { width: 60px; height: 60px; background: var(--color-primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto var(--space-2); }
+    .flow-step__icon.warning { background: #f59e0b; }
+    .flow-step__icon.danger { background: #ef4444; }
+    .flow-step__label { font-size: var(--text-sm); font-weight: 500; }
+    .flow-arrow { font-size: 1.5rem; color: var(--color-text-muted); }
+    .safeguards-section { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .safeguard-item { display: flex; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+    .safeguard-item:last-child { border-bottom: none; }
+    .safeguard-item__check { width: 32px; height: 32px; background: #dcfce7; color: #166534; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .safeguard-item__content h4 { font-weight: 600; margin-bottom: var(--space-1); }
+    .safeguard-item__content p { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+    .timeline-section { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .timeline-item { display: flex; gap: var(--space-4); padding: var(--space-4) 0; }
+    .timeline-item__week { width: 80px; font-weight: 700; color: #1d4ed8; }
+    .timeline-item__task { flex: 1; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Data Privacy Impact Estimator</h2>
+          <p>Understand privacy requirements and risks for your AI project</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>Data Types Processed (select all that apply)</label>
+              <div class="checkbox-grid" id="dataTypes">
+                <label class="checkbox-item"><input type="checkbox" value="pii" data-risk="2"> Basic PII (name, address, email)</label>
+                <label class="checkbox-item"><input type="checkbox" value="ssn" data-risk="4"> SSN / Government IDs</label>
+                <label class="checkbox-item"><input type="checkbox" value="financial" data-risk="3"> Financial Information</label>
+                <label class="checkbox-item"><input type="checkbox" value="health" data-risk="4"> Health / Medical Data (PHI)</label>
+                <label class="checkbox-item"><input type="checkbox" value="biometric" data-risk="4"> Biometric Data</label>
+                <label class="checkbox-item"><input type="checkbox" value="children" data-risk="4"> Children's Data</label>
+                <label class="checkbox-item"><input type="checkbox" value="location" data-risk="2"> Location Data</label>
+                <label class="checkbox-item"><input type="checkbox" value="behavioral" data-risk="2"> Behavioral/Usage Data</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Data Volume</label>
+              <select id="dataVolume">
+                <option value="small">Under 10,000 records</option>
+                <option value="medium">10,000 - 100,000 records</option>
+                <option value="large">100,000 - 1 million records</option>
+                <option value="xlarge">Over 1 million records</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Data Processing Activities</label>
+              <div class="checkbox-grid" id="processingTypes">
+                <label class="checkbox-item"><input type="checkbox" value="collection"> Collection from individuals</label>
+                <label class="checkbox-item"><input type="checkbox" value="storage"> Long-term storage</label>
+                <label class="checkbox-item"><input type="checkbox" value="profiling"> Profiling / Scoring</label>
+                <label class="checkbox-item"><input type="checkbox" value="automated"> Automated decisions</label>
+                <label class="checkbox-item"><input type="checkbox" value="sharing"> Third-party sharing</label>
+                <label class="checkbox-item"><input type="checkbox" value="training"> AI model training</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Data Retention Period</label>
+              <select id="retention">
+                <option value="temp">Temporary (deleted after processing)</option>
+                <option value="short">Short-term (under 1 year)</option>
+                <option value="medium">Medium-term (1-7 years)</option>
+                <option value="long">Long-term (7+ years)</option>
+                <option value="indefinite">Indefinite</option>
+              </select>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="estimateImpact()" style="width: 100%;">Estimate Privacy Impact</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="impact-hero">
+              <div class="impact-badge" id="impactLevel">High Impact</div>
+              <p class="impact-desc" id="impactDesc">Your AI project processes sensitive data requiring formal Privacy Impact Assessment.</p>
+            </div>
+
+            <h3 style="margin-bottom: var(--space-4);">Required Privacy Measures</h3>
+            <div class="requirements-grid" id="requirementsGrid"></div>
+
+            <div class="data-flow-section">
+              <h3 style="margin-bottom: var(--space-4);">Data Flow Risk Points</h3>
+              <div class="data-flow" id="dataFlow"></div>
+            </div>
+
+            <div class="safeguards-section">
+              <h3 style="margin-bottom: var(--space-4);">Recommended Safeguards</h3>
+              <div id="safeguardsList"></div>
+            </div>
+
+            <div class="timeline-section">
+              <h3 style="margin-bottom: var(--space-4);">Privacy Compliance Timeline</h3>
+              <div id="timelineList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Privacy Impact Assessment Template</h3>
+              <p>Receive a customized PIA template and data protection documentation.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Template</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Estimate Another Project</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Handle checkbox selection
+    document.querySelectorAll('.checkbox-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (e.target.type !== 'checkbox') {
+          const checkbox = item.querySelector('input');
+          checkbox.checked = !checkbox.checked;
+        }
+        item.classList.toggle('selected', item.querySelector('input').checked);
+      });
+    });
+
+    const requirements = {
+      low: [
+        { icon: "📋", title: "Privacy Notice", status: "required", desc: "Basic notice to individuals about data collection and use." },
+        { icon: "🔒", title: "Basic Security", status: "required", desc: "Standard security controls for data protection." }
+      ],
+      medium: [
+        { icon: "📋", title: "Privacy Notice", status: "required", desc: "Detailed notice covering all processing activities." },
+        { icon: "📝", title: "Privacy Impact Assessment", status: "required", desc: "Formal PIA documenting risks and mitigations." },
+        { icon: "🔒", title: "Enhanced Security", status: "required", desc: "Encryption, access controls, and audit logging." },
+        { icon: "👤", title: "Data Subject Rights", status: "required", desc: "Procedures for access, correction, and deletion requests." }
+      ],
+      high: [
+        { icon: "📋", title: "Privacy Notice", status: "required", desc: "Comprehensive, layered privacy notice." },
+        { icon: "📝", title: "Privacy Impact Assessment", status: "required", desc: "Full PIA with third-party review recommended." },
+        { icon: "🔒", title: "Advanced Security", status: "required", desc: "Strong encryption, MFA, continuous monitoring." },
+        { icon: "👤", title: "Data Subject Rights", status: "required", desc: "Automated systems for handling rights requests." },
+        { icon: "📊", title: "Data Minimization Plan", status: "required", desc: "Document necessity of each data element." },
+        { icon: "🏛️", title: "DPO Consultation", status: "recommended", desc: "Consult with Data Protection Officer on implementation." }
+      ],
+      critical: [
+        { icon: "📋", title: "Privacy Notice", status: "required", desc: "Legal-reviewed, multi-language privacy notice." },
+        { icon: "📝", title: "Privacy Impact Assessment", status: "required", desc: "Mandatory PIA with regulatory submission." },
+        { icon: "🔒", title: "Maximum Security", status: "required", desc: "End-to-end encryption, zero-trust architecture." },
+        { icon: "👤", title: "Data Subject Rights", status: "required", desc: "Fully automated, auditable rights management." },
+        { icon: "📊", title: "Data Minimization Plan", status: "required", desc: "Strict data minimization with regular reviews." },
+        { icon: "🏛️", title: "DPO Oversight", status: "required", desc: "Ongoing DPO involvement in project governance." },
+        { icon: "⚖️", title: "Legal Review", status: "required", desc: "Privacy counsel review of all processing activities." },
+        { icon: "🔍", title: "Regular Audits", status: "required", desc: "Annual privacy audits by independent party." }
+      ]
+    };
+
+    const safeguards = [
+      { title: "Data Encryption at Rest", desc: "Encrypt all stored personal data using AES-256 or equivalent." },
+      { title: "Data Encryption in Transit", desc: "Use TLS 1.3 for all data transmission." },
+      { title: "Access Control Implementation", desc: "Role-based access with principle of least privilege." },
+      { title: "Audit Logging", desc: "Log all access to personal data with tamper-proof storage." },
+      { title: "Data Anonymization/Pseudonymization", desc: "Remove or mask identifiers where full data not needed." },
+      { title: "Retention Policy Enforcement", desc: "Automated deletion when retention period expires." },
+      { title: "Breach Response Plan", desc: "Documented procedures for privacy incident response." },
+      { title: "Vendor Due Diligence", desc: "Privacy assessments for any third-party processors." }
+    ];
+
+    function estimateImpact() {
+      const selectedData = Array.from(document.querySelectorAll('#dataTypes input:checked'));
+      const selectedProcessing = Array.from(document.querySelectorAll('#processingTypes input:checked'));
+      const dataVolume = document.getElementById('dataVolume').value;
+      const retention = document.getElementById('retention').value;
+
+      // Calculate risk score
+      let riskScore = 0;
+      selectedData.forEach(d => riskScore += parseInt(d.dataset.risk || 2));
+
+      // Volume multiplier
+      const volumeMultiplier = { small: 1, medium: 1.2, large: 1.5, xlarge: 2 };
+      riskScore *= volumeMultiplier[dataVolume];
+
+      // Processing risk
+      if (selectedProcessing.some(p => p.value === 'profiling')) riskScore += 4;
+      if (selectedProcessing.some(p => p.value === 'automated')) riskScore += 4;
+      if (selectedProcessing.some(p => p.value === 'sharing')) riskScore += 3;
+
+      // Retention risk
+      const retentionRisk = { temp: 0, short: 1, medium: 2, long: 3, indefinite: 4 };
+      riskScore += retentionRisk[retention];
+
+      // Determine impact level
+      let impactLevel, impactClass, impactDesc;
+      if (riskScore <= 8) {
+        impactLevel = "Low Impact";
+        impactClass = "low";
+        impactDesc = "Standard privacy controls are sufficient. Ensure basic documentation is in place.";
+      } else if (riskScore <= 16) {
+        impactLevel = "Medium Impact";
+        impactClass = "medium";
+        impactDesc = "Enhanced privacy measures required. Complete a Privacy Impact Assessment before deployment.";
+      } else if (riskScore <= 24) {
+        impactLevel = "High Impact";
+        impactClass = "high";
+        impactDesc = "Significant privacy risks identified. Formal PIA and enhanced safeguards mandatory.";
+      } else {
+        impactLevel = "Critical Impact";
+        impactClass = "critical";
+        impactDesc = "Maximum privacy protections required. Consider whether this processing is necessary.";
+      }
+
+      // Update display
+      const badge = document.getElementById('impactLevel');
+      badge.textContent = impactLevel;
+      badge.className = 'impact-badge ' + impactClass;
+      document.getElementById('impactDesc').textContent = impactDesc;
+
+      // Requirements
+      document.getElementById('requirementsGrid').innerHTML = (requirements[impactClass] || requirements.low).map(r => `
+        <div class="requirement-card">
+          <div class="requirement-card__icon">${r.icon}</div>
+          <div class="requirement-card__title">${r.title}</div>
+          <span class="requirement-card__status ${r.status}">${r.status}</span>
+          <div class="requirement-card__desc">${r.desc}</div>
+        </div>
+      `).join('');
+
+      // Data flow
+      const flowSteps = [
+        { icon: "📥", label: "Collection", risk: selectedProcessing.some(p => p.value === 'collection') },
+        { icon: "⚙️", label: "Processing", risk: selectedProcessing.some(p => p.value === 'profiling' || p.value === 'automated') },
+        { icon: "💾", label: "Storage", risk: retention === 'long' || retention === 'indefinite' },
+        { icon: "🤖", label: "AI Training", risk: selectedProcessing.some(p => p.value === 'training') },
+        { icon: "📤", label: "Sharing", risk: selectedProcessing.some(p => p.value === 'sharing') }
+      ].filter(s => selectedProcessing.length === 0 || s.risk || s.label === 'Processing' || s.label === 'Storage');
+
+      document.getElementById('dataFlow').innerHTML = flowSteps.map((step, idx) => `
+        ${idx > 0 ? '<div class="flow-arrow">→</div>' : ''}
+        <div class="flow-step">
+          <div class="flow-step__icon ${step.risk ? 'warning' : ''}">${step.icon}</div>
+          <div class="flow-step__label">${step.label}</div>
+        </div>
+      `).join('');
+
+      // Safeguards
+      const numSafeguards = impactClass === 'critical' ? 8 : impactClass === 'high' ? 6 : impactClass === 'medium' ? 5 : 3;
+      document.getElementById('safeguardsList').innerHTML = safeguards.slice(0, numSafeguards).map(s => `
+        <div class="safeguard-item">
+          <div class="safeguard-item__check">✓</div>
+          <div class="safeguard-item__content">
+            <h4>${s.title}</h4>
+            <p>${s.desc}</p>
+          </div>
+        </div>
+      `).join('');
+
+      // Timeline
+      const weeks = impactClass === 'critical' ? 12 : impactClass === 'high' ? 8 : impactClass === 'medium' ? 6 : 4;
+      const timeline = [
+        { week: "Week 1-2", task: "Complete data inventory and mapping" },
+        { week: "Week 2-4", task: "Draft Privacy Impact Assessment" },
+        { week: "Week 3-" + (weeks - 2), task: "Implement technical safeguards" },
+        { week: "Week " + (weeks - 2) + "-" + (weeks - 1), task: "DPO/Legal review and approval" },
+        { week: "Week " + weeks, task: "Final documentation and deployment" }
+      ];
+
+      document.getElementById('timelineList').innerHTML = timeline.slice(0, impactClass === 'low' ? 3 : 5).map(t => `
+        <div class="timeline-item">
+          <div class="timeline-item__week">${t.week}</div>
+          <div class="timeline-item__task">${t.task}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+      document.querySelectorAll('.checkbox-item input').forEach(c => { c.checked = false; c.closest('.checkbox-item').classList.remove('selected'); });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your Privacy Impact Assessment Template will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

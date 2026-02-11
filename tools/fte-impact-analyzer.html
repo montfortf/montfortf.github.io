@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FTE Impact Analyzer | Brite.AI</title>
+  <meta name="description" content="Calculate staff hours reclaimed by AI and see how workers can be redeployed to higher-value tasks.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group input, .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--color-primary); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .results-section { display: none; }
+    .results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    @media (max-width: 768px) { .results-grid { grid-template-columns: 1fr; } }
+    .result-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-6); text-align: center; }
+    .result-card__icon { font-size: 2rem; margin-bottom: var(--space-2); }
+    .result-card__value { font-size: var(--text-3xl); font-weight: 800; color: var(--color-primary); }
+    .result-card__label { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .redeployment-section { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius: var(--radius-xl); padding: var(--space-6); margin-top: var(--space-6); }
+    .redeployment-section h3 { margin-bottom: var(--space-4); color: #166534; }
+    .redeployment-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid rgba(0,0,0,0.1); }
+    .redeployment-item:last-child { border-bottom: none; }
+    .redeployment-item__icon { width: 40px; height: 40px; background: #166534; color: #fff; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
+    .redeployment-item__text { flex: 1; }
+    .redeployment-item__hours { font-weight: 700; color: #166534; }
+    .chart-container { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-6); margin-top: var(--space-6); }
+    .bar-chart { display: flex; flex-direction: column; gap: var(--space-4); }
+    .bar-item { display: flex; align-items: center; gap: var(--space-4); }
+    .bar-item__label { width: 120px; font-size: var(--text-sm); font-weight: 500; }
+    .bar-item__track { flex: 1; height: 32px; background: var(--color-border); border-radius: var(--radius-md); overflow: hidden; position: relative; }
+    .bar-item__fill { height: 100%; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: flex-end; padding-right: var(--space-3); color: #fff; font-weight: 600; font-size: var(--text-sm); transition: width 0.5s ease; }
+    .bar-item__fill.current { background: #ef4444; }
+    .bar-item__fill.ai { background: #22c55e; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>FTE Impact Analyzer</h2>
+          <p>Calculate staff hours reclaimed by AI and plan workforce redeployment</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Number of Staff Performing This Process</label>
+                <input type="number" id="staffCount" value="10" min="1">
+              </div>
+              <div class="form-group">
+                <label>Hours per Week on This Process (per person)</label>
+                <input type="number" id="hoursPerWeek" value="20" min="1" max="40">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Average Hourly Cost (fully loaded)</label>
+                <input type="number" id="hourlyCost" value="45" min="1">
+                <p class="help-text">Include benefits, overhead (~1.4x base salary)</p>
+              </div>
+              <div class="form-group">
+                <label>Expected AI Automation Rate</label>
+                <select id="automationRate">
+                  <option value="0.3">30% - Basic automation</option>
+                  <option value="0.5" selected>50% - Moderate automation</option>
+                  <option value="0.7">70% - Significant automation</option>
+                  <option value="0.85">85% - High automation</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Process Type</label>
+              <select id="processType">
+                <option value="document">Document Processing & Data Entry</option>
+                <option value="eligibility">Eligibility Determination</option>
+                <option value="casework">Case Management & Review</option>
+                <option value="customer">Customer Service & Inquiries</option>
+                <option value="reporting">Reporting & Compliance</option>
+              </select>
+            </div>
+            <button class="btn btn--primary btn--lg" onclick="calculateImpact()" style="width: 100%;">Calculate FTE Impact</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="results-grid">
+              <div class="result-card">
+                <div class="result-card__icon">⏱️</div>
+                <div class="result-card__value" id="hoursReclaimed">0</div>
+                <div class="result-card__label">Hours Reclaimed per Week</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">👥</div>
+                <div class="result-card__value" id="fteEquivalent">0</div>
+                <div class="result-card__label">FTE Equivalent Freed</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">💰</div>
+                <div class="result-card__value" id="annualValue">$0</div>
+                <div class="result-card__label">Annual Capacity Value</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">📈</div>
+                <div class="result-card__value" id="productivityGain">0%</div>
+                <div class="result-card__label">Productivity Increase</div>
+              </div>
+            </div>
+
+            <div class="chart-container">
+              <h3>Time Allocation Shift</h3>
+              <div class="bar-chart">
+                <div class="bar-item">
+                  <div class="bar-item__label">Current State</div>
+                  <div class="bar-item__track">
+                    <div class="bar-item__fill current" id="currentBar" style="width: 100%;">100%</div>
+                  </div>
+                </div>
+                <div class="bar-item">
+                  <div class="bar-item__label">With AI</div>
+                  <div class="bar-item__track">
+                    <div class="bar-item__fill ai" id="aiBar" style="width: 50%;">50%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="redeployment-section">
+              <h3>Recommended Redeployment Opportunities</h3>
+              <div id="redeploymentList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Workforce Transition Plan</h3>
+              <p>Receive a detailed report with change management recommendations and training needs.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <button type="submit" class="btn btn--primary">Download Report</button>
+              </form>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-6);">
+              <button class="btn btn--secondary" onclick="resetForm()">Start Over</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const redeploymentOptions = {
+      document: [
+        { icon: '🔍', task: 'Quality assurance and exception handling', percent: 25 },
+        { icon: '📞', task: 'Complex case consultation', percent: 20 },
+        { icon: '🎓', task: 'Training and mentoring new staff', percent: 15 },
+        { icon: '📊', task: 'Process improvement initiatives', percent: 20 },
+        { icon: '🤝', task: 'Constituent relationship building', percent: 20 }
+      ],
+      eligibility: [
+        { icon: '👥', task: 'Complex eligibility appeals and reviews', percent: 30 },
+        { icon: '📞', task: 'Proactive outreach to at-risk cases', percent: 25 },
+        { icon: '🔗', task: 'Cross-program coordination', percent: 20 },
+        { icon: '📈', task: 'Policy analysis and recommendations', percent: 15 },
+        { icon: '🎓', task: 'Staff development and training', percent: 10 }
+      ],
+      casework: [
+        { icon: '🏠', task: 'Field visits and in-person assessments', percent: 30 },
+        { icon: '💬', task: 'Therapeutic engagement with clients', percent: 25 },
+        { icon: '🤝', task: 'Community partner coordination', percent: 20 },
+        { icon: '📋', task: 'Complex case planning', percent: 15 },
+        { icon: '⚖️', task: 'Court preparation and testimony', percent: 10 }
+      ],
+      customer: [
+        { icon: '🔧', task: 'Complex issue resolution', percent: 35 },
+        { icon: '📚', task: 'Knowledge base development', percent: 20 },
+        { icon: '📊', task: 'Customer experience analysis', percent: 20 },
+        { icon: '🎯', task: 'Proactive outreach campaigns', percent: 15 },
+        { icon: '🎓', task: 'Agent coaching and development', percent: 10 }
+      ],
+      reporting: [
+        { icon: '📈', task: 'Strategic analysis and insights', percent: 30 },
+        { icon: '🔍', task: 'Data quality improvement', percent: 25 },
+        { icon: '📊', task: 'Performance optimization', percent: 20 },
+        { icon: '📋', task: 'Compliance monitoring', percent: 15 },
+        { icon: '🎓', task: 'Analytics training for staff', percent: 10 }
+      ]
+    };
+
+    function calculateImpact() {
+      const staffCount = parseInt(document.getElementById('staffCount').value);
+      const hoursPerWeek = parseInt(document.getElementById('hoursPerWeek').value);
+      const hourlyCost = parseFloat(document.getElementById('hourlyCost').value);
+      const automationRate = parseFloat(document.getElementById('automationRate').value);
+      const processType = document.getElementById('processType').value;
+
+      const totalHoursPerWeek = staffCount * hoursPerWeek;
+      const hoursReclaimed = Math.round(totalHoursPerWeek * automationRate);
+      const fteEquivalent = (hoursReclaimed / 40).toFixed(1);
+      const annualValue = hoursReclaimed * 52 * hourlyCost;
+      const productivityGain = Math.round((automationRate / (1 - automationRate)) * 100);
+
+      document.getElementById('hoursReclaimed').textContent = hoursReclaimed.toLocaleString();
+      document.getElementById('fteEquivalent').textContent = fteEquivalent;
+      document.getElementById('annualValue').textContent = '$' + annualValue.toLocaleString();
+      document.getElementById('productivityGain').textContent = productivityGain + '%';
+
+      const remainingPercent = Math.round((1 - automationRate) * 100);
+      document.getElementById('aiBar').style.width = remainingPercent + '%';
+      document.getElementById('aiBar').textContent = remainingPercent + '%';
+
+      const options = redeploymentOptions[processType];
+      const listEl = document.getElementById('redeploymentList');
+      listEl.innerHTML = options.map(opt => {
+        const hours = Math.round(hoursReclaimed * (opt.percent / 100));
+        return `
+          <div class="redeployment-item">
+            <div class="redeployment-item__icon">${opt.icon}</div>
+            <div class="redeployment-item__text">${opt.task}</div>
+            <div class="redeployment-item__hours">+${hours} hrs/wk</div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your workforce transition plan will be sent to your email.');
+    }
+  </script>
+</body>
+</html>

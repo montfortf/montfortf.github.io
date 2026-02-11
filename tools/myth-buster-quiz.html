@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Myth Buster Quiz | Brite.AI</title>
+  <meta name="description" content="Test your AI knowledge and bust common myths about artificial intelligence.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 800px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .tool-header { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .progress-bar { height: 8px; background: #e5e7eb; border-radius: var(--radius-full); margin-bottom: var(--space-6); overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #ef4444, #dc2626); transition: width 0.3s ease; }
+    .question-counter { text-align: center; color: var(--color-text-muted); margin-bottom: var(--space-6); }
+    .question-card { text-align: center; margin-bottom: var(--space-6); }
+    .question-card__statement { font-size: var(--text-2xl); font-weight: 700; margin-bottom: var(--space-2); padding: var(--space-6); background: var(--color-background-alt); border-radius: var(--radius-xl); }
+    .question-card__prompt { color: var(--color-text-muted); margin-bottom: var(--space-6); }
+    .answer-buttons { display: flex; gap: var(--space-4); justify-content: center; margin-bottom: var(--space-6); }
+    .answer-btn { padding: var(--space-4) var(--space-8); font-size: var(--text-lg); font-weight: 700; border: 3px solid var(--color-border); border-radius: var(--radius-xl); background: var(--color-background); cursor: pointer; transition: all 0.2s; min-width: 150px; }
+    .answer-btn:hover { transform: scale(1.05); }
+    .answer-btn.myth:hover { border-color: #ef4444; background: #fee2e2; }
+    .answer-btn.fact:hover { border-color: #22c55e; background: #dcfce7; }
+    .answer-btn.selected.correct { background: #dcfce7; border-color: #22c55e; color: #166534; }
+    .answer-btn.selected.incorrect { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+    .answer-btn:disabled { cursor: not-allowed; opacity: 0.7; }
+    .explanation { display: none; background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .explanation.show { display: block; }
+    .explanation__verdict { font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--space-3); display: flex; align-items: center; justify-content: center; gap: var(--space-2); }
+    .explanation__verdict.myth { color: #ef4444; }
+    .explanation__verdict.fact { color: #22c55e; }
+    .explanation__text { color: var(--color-text-muted); margin-bottom: var(--space-4); }
+    .explanation__stat { background: var(--color-background); border-radius: var(--radius-lg); padding: var(--space-4); text-align: center; }
+    .explanation__stat-value { font-size: var(--text-2xl); font-weight: 800; color: var(--color-primary); }
+    .explanation__stat-label { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .next-btn { display: none; width: 100%; }
+    .next-btn.show { display: block; }
+    .results-section { display: none; text-align: center; }
+    .results-section.show { display: block; }
+    .results-hero { margin-bottom: var(--space-8); }
+    .results-score { font-size: var(--text-5xl); font-weight: 800; color: var(--color-primary); }
+    .results-label { font-size: var(--text-xl); color: var(--color-text-muted); }
+    .results-badge { display: inline-block; padding: var(--space-4) var(--space-8); border-radius: var(--radius-xl); font-size: var(--text-lg); font-weight: 700; margin-top: var(--space-4); }
+    .results-badge.expert { background: #dcfce7; color: #166534; }
+    .results-badge.learner { background: #fef3c7; color: #92400e; }
+    .results-badge.beginner { background: #fee2e2; color: #991b1b; }
+    .myth-summary { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); text-align: left; }
+    .myth-summary h3 { margin-bottom: var(--space-4); }
+    .myth-item { display: flex; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
+    .myth-item:last-child { border-bottom: none; }
+    .myth-item__icon { font-size: 1.5rem; }
+    .myth-item__text { flex: 1; }
+    .myth-item__text strong { display: block; margin-bottom: var(--space-1); }
+    .myth-item__text span { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .share-section { margin-top: var(--space-6); }
+    .share-buttons { display: flex; gap: var(--space-4); justify-content: center; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>🔍 AI Myth Buster Quiz</h2>
+          <p>Can you separate AI fact from fiction?</p>
+        </div>
+        <div class="tool-body">
+          <div id="quizSection">
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+            </div>
+            <div class="question-counter" id="questionCounter">Question 1 of 10</div>
+
+            <div class="question-card">
+              <div class="question-card__statement" id="statement"></div>
+              <div class="question-card__prompt">Is this statement a myth or a fact?</div>
+            </div>
+
+            <div class="answer-buttons">
+              <button class="answer-btn myth" onclick="answer(false)">🚫 MYTH</button>
+              <button class="answer-btn fact" onclick="answer(true)">✅ FACT</button>
+            </div>
+
+            <div class="explanation" id="explanation">
+              <div class="explanation__verdict" id="verdict"></div>
+              <div class="explanation__text" id="explanationText"></div>
+              <div class="explanation__stat">
+                <div class="explanation__stat-value" id="statValue"></div>
+                <div class="explanation__stat-label" id="statLabel"></div>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="results-hero">
+              <div class="results-score" id="finalScore">0/10</div>
+              <div class="results-label">Questions Correct</div>
+              <div class="results-badge" id="resultsBadge">AI Learner</div>
+            </div>
+
+            <div class="myth-summary">
+              <h3>Key Takeaways</h3>
+              <div id="mythSummary"></div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="restartQuiz()" style="width: 100%;">Take Quiz Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const questions = [
+      {
+        statement: "AI will replace all government workers",
+        isFact: false,
+        explanation: "AI augments human capabilities rather than replacing workers entirely. Government roles require empathy, judgment, and complex decision-making that AI cannot replicate. AI typically automates routine tasks, allowing workers to focus on higher-value activities.",
+        stat: "92%", statLabel: "of AI deployments augment workers rather than replace them"
+      },
+      {
+        statement: "AI systems can be biased",
+        isFact: true,
+        explanation: "AI systems learn from historical data which may contain human biases. Without careful testing and monitoring, AI can perpetuate or even amplify existing inequities. This is why bias testing and responsible AI practices are essential.",
+        stat: "78%", statLabel: "of organizations have encountered bias issues in AI systems"
+      },
+      {
+        statement: "AI needs massive amounts of data to be useful",
+        isFact: false,
+        explanation: "While more data often helps, modern AI techniques like transfer learning and few-shot learning can achieve good results with limited data. Pre-trained models can be fine-tuned with relatively small datasets for specific government use cases.",
+        stat: "100-1000", statLabel: "examples can be enough to fine-tune modern AI models"
+      },
+      {
+        statement: "AI decisions are always a 'black box' that can't be explained",
+        isFact: false,
+        explanation: "Explainable AI (XAI) techniques can provide insights into how AI makes decisions. Many AI systems can generate explanations, show feature importance, and provide reasoning. Government AI should prioritize explainability.",
+        stat: "85%", statLabel: "of government AI use cases can leverage explainable AI techniques"
+      },
+      {
+        statement: "AI can help reduce fraud in government programs",
+        isFact: true,
+        explanation: "AI excels at pattern recognition and can identify anomalies that humans might miss. Many government agencies have successfully deployed AI to detect fraudulent claims, saving millions in improper payments.",
+        stat: "$12B+", statLabel: "in fraud detected by AI in government programs annually"
+      },
+      {
+        statement: "You need a team of data scientists to use AI",
+        isFact: false,
+        explanation: "Modern AI platforms offer no-code/low-code tools that enable non-technical users to leverage AI. While data scientists add value, many AI solutions can be deployed with minimal technical expertise.",
+        stat: "65%", statLabel: "of AI tools now offer low-code or no-code options"
+      },
+      {
+        statement: "AI works best for repetitive, rule-based tasks",
+        isFact: true,
+        explanation: "AI excels at automating high-volume, repetitive tasks with consistent rules. Document processing, data entry, and eligibility determinations are ideal AI use cases in government.",
+        stat: "70%", statLabel: "time savings on repetitive tasks with AI automation"
+      },
+      {
+        statement: "Cloud AI services aren't secure enough for government",
+        isFact: false,
+        explanation: "Major cloud providers offer FedRAMP-authorized services meeting strict government security requirements. Cloud AI can be more secure than on-premise solutions due to dedicated security teams and continuous updates.",
+        stat: "200+", statLabel: "FedRAMP authorized cloud AI services available"
+      },
+      {
+        statement: "AI requires constant human oversight",
+        isFact: true,
+        explanation: "Responsible AI deployment requires ongoing human oversight to monitor performance, check for bias drift, handle edge cases, and ensure accountability. 'Human in the loop' is a best practice for government AI.",
+        stat: "100%", statLabel: "of responsible AI frameworks recommend human oversight"
+      },
+      {
+        statement: "AI implementation always takes years",
+        isFact: false,
+        explanation: "Modern AI solutions can be deployed in weeks or months, not years. Pre-built AI services, SaaS platforms, and agile implementation approaches have dramatically shortened time-to-value for government AI projects.",
+        stat: "8-12 weeks", statLabel: "average time to deploy a government chatbot"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById('statement').textContent = `"${q.statement}"`;
+      document.getElementById('questionCounter').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+      document.getElementById('progressFill').style.width = `${((currentQuestion) / questions.length) * 100}%`;
+
+      document.getElementById('explanation').classList.remove('show');
+      document.getElementById('nextBtn').classList.remove('show');
+      document.querySelectorAll('.answer-btn').forEach(btn => {
+        btn.disabled = false;
+        btn.classList.remove('selected', 'correct', 'incorrect');
+      });
+      answered = false;
+    }
+
+    function answer(selectedFact) {
+      if (answered) return;
+      answered = true;
+
+      const q = questions[currentQuestion];
+      const isCorrect = selectedFact === q.isFact;
+
+      if (isCorrect) score++;
+
+      // Update buttons
+      document.querySelectorAll('.answer-btn').forEach(btn => btn.disabled = true);
+
+      const selectedBtn = selectedFact ? document.querySelector('.answer-btn.fact') : document.querySelector('.answer-btn.myth');
+      selectedBtn.classList.add('selected', isCorrect ? 'correct' : 'incorrect');
+
+      // Show explanation
+      const verdict = document.getElementById('verdict');
+      verdict.textContent = q.isFact ? '✅ This is a FACT' : '🚫 This is a MYTH';
+      verdict.className = `explanation__verdict ${q.isFact ? 'fact' : 'myth'}`;
+
+      document.getElementById('explanationText').textContent = q.explanation;
+      document.getElementById('statValue').textContent = q.stat;
+      document.getElementById('statLabel').textContent = q.statLabel;
+
+      document.getElementById('explanation').classList.add('show');
+      document.getElementById('nextBtn').classList.add('show');
+      document.getElementById('nextBtn').textContent = currentQuestion === questions.length - 1 ? 'See Results' : 'Next Question →';
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion >= questions.length) {
+        showResults();
+      } else {
+        showQuestion();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quizSection').style.display = 'none';
+      document.getElementById('resultsSection').classList.add('show');
+
+      document.getElementById('finalScore').textContent = `${score}/${questions.length}`;
+
+      const badge = document.getElementById('resultsBadge');
+      if (score >= 8) {
+        badge.textContent = '🏆 AI Expert';
+        badge.className = 'results-badge expert';
+      } else if (score >= 5) {
+        badge.textContent = '📚 AI Learner';
+        badge.className = 'results-badge learner';
+      } else {
+        badge.textContent = '🌱 AI Beginner';
+        badge.className = 'results-badge beginner';
+      }
+
+      // Show myth summary
+      const myths = questions.filter(q => !q.isFact);
+      document.getElementById('mythSummary').innerHTML = myths.slice(0, 4).map(m => `
+        <div class="myth-item">
+          <div class="myth-item__icon">🚫</div>
+          <div class="myth-item__text">
+            <strong>MYTH: "${m.statement}"</strong>
+            <span>${m.explanation.split('.')[0]}.</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('quizSection').style.display = 'block';
+      document.getElementById('resultsSection').classList.remove('show');
+      showQuestion();
+    }
+
+    // Start quiz
+    showQuestion();
+  </script>
+</body>
+</html>

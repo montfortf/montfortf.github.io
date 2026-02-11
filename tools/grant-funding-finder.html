@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Grant Funding Eligibility Finder | Brite.AI</title>
+  <meta name="description" content="Discover federal grant funding sources for your AI project. Match your initiative with SNAP E&T, CCDF, Title IV-E, Medicaid, and other funding opportunities.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .tool-card {
+      background: var(--color-background);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-6);
+    }
+    .tool-header {
+      background: linear-gradient(135deg, #059669, #047857);
+      color: #fff;
+      padding: var(--space-8);
+      text-align: center;
+    }
+    .tool-header h2 {
+      margin-bottom: var(--space-2);
+    }
+    .tool-body {
+      padding: var(--space-8);
+    }
+    .form-section {
+      margin-bottom: var(--space-8);
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+    }
+    .section-title__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      background: linear-gradient(135deg, #059669, #047857);
+      color: #fff;
+    }
+    .form-group {
+      margin-bottom: var(--space-5);
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+      color: var(--color-text);
+    }
+    .form-group .help-text {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+    .form-group select {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-base);
+      background: var(--color-background);
+    }
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+    @media (max-width: 768px) {
+      .checkbox-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .checkbox-option {
+      display: flex;
+      align-items: flex-start;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .checkbox-option:hover {
+      border-color: var(--color-primary);
+      background: rgba(26, 86, 219, 0.05);
+    }
+    .checkbox-option.selected {
+      border-color: #059669;
+      background: rgba(5, 150, 105, 0.1);
+    }
+    .checkbox-option input {
+      margin-right: var(--space-3);
+      margin-top: 4px;
+    }
+    .checkbox-option .option-text {
+      flex: 1;
+    }
+    .checkbox-option .option-label {
+      font-weight: 500;
+      display: block;
+    }
+    .checkbox-option .option-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .radio-option {
+      display: flex;
+      align-items: flex-start;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .radio-option:hover {
+      border-color: var(--color-primary);
+    }
+    .radio-option.selected {
+      border-color: #059669;
+      background: rgba(5, 150, 105, 0.1);
+    }
+    .radio-option input {
+      margin-right: var(--space-3);
+      margin-top: 4px;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: var(--space-6);
+    }
+    /* Results */
+    .results-section {
+      display: none;
+    }
+    .results-summary {
+      background: linear-gradient(135deg, #059669, #047857);
+      color: #fff;
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      text-align: center;
+      margin-bottom: var(--space-8);
+    }
+    .results-summary__count {
+      font-size: 4rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .results-summary__label {
+      font-size: var(--text-xl);
+      opacity: 0.9;
+      margin-top: var(--space-2);
+    }
+    .funding-list {
+      display: grid;
+      gap: var(--space-4);
+    }
+    .funding-card {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      border-left: 4px solid #059669;
+    }
+    .funding-card.high-match {
+      border-left-color: #059669;
+    }
+    .funding-card.medium-match {
+      border-left-color: #f59e0b;
+    }
+    .funding-card.low-match {
+      border-left-color: #6b7280;
+    }
+    .funding-card__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-4);
+    }
+    .funding-card__title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+    }
+    .funding-card__agency {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+    .funding-card__match {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 600;
+    }
+    .funding-card__match.high {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .funding-card__match.medium {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .funding-card__match.low {
+      background: #f3f4f6;
+      color: #4b5563;
+    }
+    .funding-card__details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+    @media (max-width: 768px) {
+      .funding-card__details {
+        grid-template-columns: 1fr;
+      }
+    }
+    .funding-card__detail {
+      text-align: center;
+    }
+    .funding-card__detail-label {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-1);
+    }
+    .funding-card__detail-value {
+      font-weight: 600;
+    }
+    .funding-card__desc {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-4);
+    }
+    .funding-card__eligible {
+      margin-bottom: var(--space-4);
+    }
+    .funding-card__eligible h4 {
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #059669;
+      margin-bottom: var(--space-2);
+    }
+    .funding-card__eligible ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+    .funding-card__eligible li {
+      background: #d1fae5;
+      color: #065f46;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+    }
+    .funding-card__actions {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+    .funding-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--color-primary);
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .funding-card__link:hover {
+      text-decoration: underline;
+    }
+    .no-results {
+      text-align: center;
+      padding: var(--space-8);
+      background: var(--color-background-alt);
+      border-radius: var(--radius-xl);
+    }
+    .no-results__icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-4);
+    }
+    .no-results h3 {
+      margin-bottom: var(--space-2);
+    }
+    .no-results p {
+      color: var(--color-text-muted);
+    }
+    .tips-section {
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-top: var(--space-8);
+    }
+    .tips-section h3 {
+      margin-bottom: var(--space-4);
+    }
+    .tip-item {
+      display: flex;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .tip-item:last-child {
+      border-bottom: none;
+    }
+    .tip-item__icon {
+      font-size: 1.25rem;
+    }
+    .tip-item__text {
+      flex: 1;
+    }
+    .tip-item__text strong {
+      display: block;
+      margin-bottom: var(--space-1);
+    }
+    .tip-item__text p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+    .lead-capture {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-8);
+      text-align: center;
+    }
+    .lead-capture h3 {
+      margin-bottom: var(--space-2);
+    }
+    .lead-capture p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-6);
+    }
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .lead-form input {
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-base);
+    }
+    .lead-form input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../ai-data/index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Grant Funding Eligibility Finder</h2>
+          <p>Discover federal funding sources that can support your AI modernization initiative</p>
+        </div>
+
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-section">
+              <div class="section-title">
+                <div class="section-title__icon">🏛️</div>
+                <span>Agency Information</span>
+              </div>
+
+              <div class="form-group">
+                <label>What type of agency are you?</label>
+                <select id="agencyType">
+                  <option value="">Select agency type...</option>
+                  <option value="state-hhs">State Health & Human Services Agency</option>
+                  <option value="state-workforce">State Workforce/Labor Agency</option>
+                  <option value="state-child">State Child Welfare Agency</option>
+                  <option value="state-medicaid">State Medicaid Agency</option>
+                  <option value="state-snap">State SNAP/Food Assistance Agency</option>
+                  <option value="state-tanf">State TANF Agency</option>
+                  <option value="state-other">Other State Agency</option>
+                  <option value="county-hhs">County/Local HHS Agency</option>
+                  <option value="county-other">Other County/Local Agency</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="section-title">
+                <div class="section-title__icon">🎯</div>
+                <span>Program Areas</span>
+              </div>
+
+              <div class="form-group">
+                <label>Which program areas does your AI project support? (Select all that apply)</label>
+                <p class="help-text">Select the programs that will benefit from or be modernized by your AI initiative</p>
+                <div class="checkbox-grid">
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="programs" value="snap">
+                    <div class="option-text">
+                      <span class="option-label">SNAP / Food Assistance</span>
+                      <span class="option-desc">Eligibility, E&T, benefits management</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="programs" value="tanf">
+                    <div class="option-text">
+                      <span class="option-label">TANF / Cash Assistance</span>
+                      <span class="option-desc">Temporary assistance, work programs</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="programs" value="medicaid">
+                    <div class="option-text">
+                      <span class="option-label">Medicaid</span>
+                      <span class="option-desc">Healthcare coverage, managed care</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="programs" value="childcare">
+                    <div class="option-text">
+                      <span class="option-label">Child Care (CCDF)</span>
+                      <span class="option-desc">Child care subsidies, provider management</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="programs" value="childwelfare">
+                    <div class="option-text">
+                      <span class="option-label">Child Welfare</span>
+                      <span class="option-desc">Foster care, adoption, child protection</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="programs" value="workforce">
+                    <div class="option-text">
+                      <span class="option-label">Workforce / Employment</span>
+                      <span class="option-desc">Job training, unemployment, WIOA</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="programs" value="aging">
+                    <div class="option-text">
+                      <span class="option-label">Aging Services</span>
+                      <span class="option-desc">Senior services, long-term care</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="programs" value="disability">
+                    <div class="option-text">
+                      <span class="option-label">Disability Services</span>
+                      <span class="option-desc">Vocational rehab, disability programs</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="section-title">
+                <div class="section-title__icon">🤖</div>
+                <span>AI Use Case Type</span>
+              </div>
+
+              <div class="form-group">
+                <label>What type of AI capability are you implementing? (Select all that apply)</label>
+                <div class="checkbox-grid">
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="aitype" value="eligibility">
+                    <div class="option-text">
+                      <span class="option-label">Eligibility Determination</span>
+                      <span class="option-desc">Automating or assisting eligibility decisions</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="aitype" value="document">
+                    <div class="option-text">
+                      <span class="option-label">Document Processing</span>
+                      <span class="option-desc">OCR, document classification, data extraction</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="aitype" value="chatbot">
+                    <div class="option-text">
+                      <span class="option-label">Chatbot / Virtual Assistant</span>
+                      <span class="option-desc">Customer service automation</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="aitype" value="fraud">
+                    <div class="option-text">
+                      <span class="option-label">Fraud Detection</span>
+                      <span class="option-desc">Identifying improper payments or fraud</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="aitype" value="predictive">
+                    <div class="option-text">
+                      <span class="option-label">Predictive Analytics</span>
+                      <span class="option-desc">Risk scoring, outcome prediction</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="aitype" value="casemgmt">
+                    <div class="option-text">
+                      <span class="option-label">Case Management</span>
+                      <span class="option-desc">Workload optimization, case routing</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="aitype" value="callcenter">
+                    <div class="option-text">
+                      <span class="option-label">Contact Center AI</span>
+                      <span class="option-desc">Call routing, agent assist, transcription</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="aitype" value="analytics">
+                    <div class="option-text">
+                      <span class="option-label">Business Intelligence</span>
+                      <span class="option-desc">Reporting, dashboards, data analytics</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="section-title">
+                <div class="section-title__icon">💰</div>
+                <span>Project Scope</span>
+              </div>
+
+              <div class="form-group">
+                <label>What is your estimated project budget?</label>
+                <div class="radio-group">
+                  <label class="radio-option">
+                    <input type="radio" name="budget" value="small">
+                    <div class="option-text">
+                      <span class="option-label">Under $500K</span>
+                      <span class="option-desc">Small pilot or proof of concept</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="budget" value="medium">
+                    <div class="option-text">
+                      <span class="option-label">$500K - $2M</span>
+                      <span class="option-desc">Moderate implementation project</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="budget" value="large">
+                    <div class="option-text">
+                      <span class="option-label">$2M - $10M</span>
+                      <span class="option-desc">Major modernization initiative</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="budget" value="enterprise">
+                    <div class="option-text">
+                      <span class="option-label">Over $10M</span>
+                      <span class="option-desc">Enterprise transformation program</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-buttons">
+              <button type="button" class="btn btn--primary btn--lg" id="findFundingBtn">Find Funding Sources</button>
+            </div>
+          </div>
+
+          <!-- Results Section -->
+          <div class="results-section" id="resultsSection">
+            <div class="results-summary">
+              <div class="results-summary__count" id="fundingCount">0</div>
+              <div class="results-summary__label">Potential Funding Sources Identified</div>
+            </div>
+
+            <div class="funding-list" id="fundingList"></div>
+
+            <div class="tips-section">
+              <h3>Tips for Maximizing Federal Funding</h3>
+              <div class="tip-item">
+                <div class="tip-item__icon">📋</div>
+                <div class="tip-item__text">
+                  <strong>Document Everything</strong>
+                  <p>Maintain detailed records of how AI modernization supports program goals and outcomes for federal reporting.</p>
+                </div>
+              </div>
+              <div class="tip-item">
+                <div class="tip-item__icon">🔄</div>
+                <div class="tip-item__text">
+                  <strong>Cost Allocation</strong>
+                  <p>Work with your fiscal team to properly allocate costs across programs to maximize matching rates.</p>
+                </div>
+              </div>
+              <div class="tip-item">
+                <div class="tip-item__icon">📞</div>
+                <div class="tip-item__text">
+                  <strong>Engage Your Federal Partners</strong>
+                  <p>Contact your regional federal office early to discuss your plans and get guidance on allowable activities.</p>
+                </div>
+              </div>
+              <div class="tip-item">
+                <div class="tip-item__icon">📊</div>
+                <div class="tip-item__text">
+                  <strong>Build Your Business Case</strong>
+                  <p>Quantify expected outcomes (processing time reduction, error reduction, cost savings) to strengthen funding requests.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Personalized Funding Guidance</h3>
+              <p>Our team can help you navigate federal funding opportunities and build a compelling business case for your AI initiative.</p>
+              <form class="lead-form" id="leadForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <input type="tel" placeholder="Phone (Optional)">
+                <button type="submit" class="btn btn--primary">Request Consultation</button>
+              </form>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-8);">
+              <button class="btn btn--secondary" id="startOverBtn">Start Over</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Funding sources database
+    const fundingSources = [
+      {
+        id: 'snap-et',
+        name: 'SNAP Employment & Training (E&T)',
+        agency: 'USDA Food and Nutrition Service',
+        matchRate: '50% Federal Match',
+        maxFunding: 'No Cap (Based on State Plan)',
+        eligiblePrograms: ['snap', 'workforce'],
+        eligibleAI: ['eligibility', 'document', 'chatbot', 'casemgmt', 'callcenter', 'analytics'],
+        description: 'SNAP E&T 50% funds can support technology that helps SNAP recipients find and maintain employment. AI tools that improve E&T program efficiency, participant engagement, or employment outcomes may be eligible.',
+        allowableUses: ['Case management systems', 'Virtual assistants for participants', 'Document processing for verification', 'Analytics for program improvement'],
+        link: 'https://www.fns.usda.gov/snap/et'
+      },
+      {
+        id: 'ccdf',
+        name: 'Child Care Development Fund (CCDF)',
+        agency: 'HHS Administration for Children and Families',
+        matchRate: 'State Match Required',
+        maxFunding: 'Based on State Allocation',
+        eligiblePrograms: ['childcare'],
+        eligibleAI: ['eligibility', 'document', 'chatbot', 'fraud', 'casemgmt', 'callcenter', 'analytics'],
+        description: 'CCDF funds can support administrative costs including technology systems that improve program efficiency, reduce improper payments, and enhance family access to child care.',
+        allowableUses: ['Eligibility automation', 'Provider management systems', 'Fraud detection', 'Customer service chatbots'],
+        link: 'https://www.acf.hhs.gov/occ/ccdf-reauthorization'
+      },
+      {
+        id: 'title-iv-e',
+        name: 'Title IV-E Foster Care',
+        agency: 'HHS Administration for Children and Families',
+        matchRate: '50-75% Federal Match',
+        maxFunding: 'Based on Eligible Costs',
+        eligiblePrograms: ['childwelfare'],
+        eligibleAI: ['predictive', 'casemgmt', 'document', 'analytics'],
+        description: 'Title IV-E provides federal matching funds for foster care administration, including technology that supports case management, quality assurance, and program improvement.',
+        allowableUses: ['Case management systems', 'Predictive analytics (with safeguards)', 'Quality assurance tools', 'Administrative efficiency'],
+        link: 'https://www.acf.hhs.gov/cb/title-iv-e'
+      },
+      {
+        id: 'medicaid-mmis',
+        name: 'Medicaid MMIS/E&E (90/10)',
+        agency: 'CMS Centers for Medicare & Medicaid Services',
+        matchRate: '90% DDI / 75% M&O',
+        maxFunding: 'Based on APD Approval',
+        eligiblePrograms: ['medicaid'],
+        eligibleAI: ['eligibility', 'document', 'chatbot', 'fraud', 'predictive', 'casemgmt', 'callcenter', 'analytics'],
+        description: 'CMS provides enhanced federal matching for Medicaid Management Information Systems (MMIS) and Eligibility & Enrollment (E&E) systems, including AI/ML components that improve program administration.',
+        allowableUses: ['Eligibility determination', 'Document verification', 'Fraud detection', 'Member services', 'Provider management'],
+        link: 'https://www.medicaid.gov/medicaid/data-systems/index.html'
+      },
+      {
+        id: 'tanf',
+        name: 'TANF Administrative Funds',
+        agency: 'HHS Administration for Children and Families',
+        matchRate: '50% Match Available',
+        maxFunding: 'Within TANF Block Grant',
+        eligiblePrograms: ['tanf', 'workforce'],
+        eligibleAI: ['eligibility', 'document', 'chatbot', 'casemgmt', 'callcenter', 'analytics'],
+        description: 'TANF administrative funds can support technology systems that improve program efficiency and help families achieve self-sufficiency.',
+        allowableUses: ['Case management automation', 'Work participation tracking', 'Customer service technology', 'Program analytics'],
+        link: 'https://www.acf.hhs.gov/ofa/programs/tanf'
+      },
+      {
+        id: 'wioa',
+        name: 'WIOA Statewide Activities',
+        agency: 'DOL Employment and Training Administration',
+        matchRate: 'Formula Grant',
+        maxFunding: '15% of State Allocation',
+        eligiblePrograms: ['workforce'],
+        eligibleAI: ['chatbot', 'casemgmt', 'analytics', 'predictive', 'callcenter'],
+        description: 'WIOA statewide activity funds can support technology innovation that improves workforce system performance and participant outcomes.',
+        allowableUses: ['Job matching systems', 'Virtual career services', 'Performance analytics', 'System integration'],
+        link: 'https://www.dol.gov/agencies/eta/wioa'
+      },
+      {
+        id: 'aging-oaa',
+        name: 'Older Americans Act (OAA)',
+        agency: 'HHS Administration for Community Living',
+        matchRate: 'Formula Grant',
+        maxFunding: 'Based on State Plan',
+        eligiblePrograms: ['aging'],
+        eligibleAI: ['chatbot', 'casemgmt', 'callcenter', 'analytics'],
+        description: 'OAA funds can support technology that improves service delivery and access for older adults, including AI-powered assistants and case management tools.',
+        allowableUses: ['Information and referral systems', 'Case management', 'Service coordination', 'Outreach tools'],
+        link: 'https://acl.gov/about-acl/authorizing-statutes/older-americans-act'
+      },
+      {
+        id: 'vr',
+        name: 'Vocational Rehabilitation (VR)',
+        agency: 'HHS Rehabilitation Services Administration',
+        matchRate: '78.7% Federal Match',
+        maxFunding: 'Based on State Allocation',
+        eligiblePrograms: ['disability', 'workforce'],
+        eligibleAI: ['casemgmt', 'analytics', 'chatbot', 'document'],
+        description: 'VR administrative funds can support technology that improves service delivery for individuals with disabilities seeking employment.',
+        allowableUses: ['Case management systems', 'Accessibility tools', 'Employment outcome analytics', 'Service coordination'],
+        link: 'https://rsa.ed.gov/about/programs/vocational-rehabilitation-state-grants'
+      },
+      {
+        id: 'ssbg',
+        name: 'Social Services Block Grant (SSBG)',
+        agency: 'HHS Administration for Children and Families',
+        matchRate: '100% Federal (No Match)',
+        maxFunding: 'Based on State Allocation',
+        eligiblePrograms: ['snap', 'tanf', 'childcare', 'childwelfare', 'aging', 'disability'],
+        eligibleAI: ['eligibility', 'document', 'chatbot', 'casemgmt', 'analytics'],
+        description: 'SSBG provides flexible funding that states can use for a wide range of social services, including administrative technology improvements.',
+        allowableUses: ['Various social services technology', 'Administrative systems', 'Service delivery improvement'],
+        link: 'https://www.acf.hhs.gov/ocs/programs/ssbg'
+      },
+      {
+        id: 'prams',
+        name: 'Program Integrity / PRAMS',
+        agency: 'Multiple Federal Agencies',
+        matchRate: 'Varies by Program',
+        maxFunding: 'Project-Based',
+        eligiblePrograms: ['snap', 'medicaid', 'tanf', 'childcare'],
+        eligibleAI: ['fraud', 'predictive', 'analytics'],
+        description: 'Various federal programs provide funding specifically for program integrity and improper payment reduction initiatives, including AI-powered fraud detection.',
+        allowableUses: ['Fraud detection systems', 'Quality control', 'Improper payment reduction', 'Data analytics'],
+        link: 'https://www.paymentaccuracy.gov/'
+      }
+    ];
+
+    // Initialize checkbox styling
+    document.querySelectorAll('.checkbox-option').forEach(option => {
+      option.addEventListener('click', function(e) {
+        if (e.target.type !== 'checkbox') {
+          const checkbox = this.querySelector('input');
+          checkbox.checked = !checkbox.checked;
+        }
+        this.classList.toggle('selected', this.querySelector('input').checked);
+      });
+    });
+
+    // Initialize radio styling
+    document.querySelectorAll('.radio-option').forEach(option => {
+      option.addEventListener('click', function() {
+        const group = this.closest('.radio-group');
+        group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+        this.querySelector('input').checked = true;
+      });
+    });
+
+    // Find funding button
+    document.getElementById('findFundingBtn').addEventListener('click', findFunding);
+
+    function findFunding() {
+      const agencyType = document.getElementById('agencyType').value;
+      const selectedPrograms = Array.from(document.querySelectorAll('input[name="programs"]:checked')).map(c => c.value);
+      const selectedAI = Array.from(document.querySelectorAll('input[name="aitype"]:checked')).map(c => c.value);
+      const budget = document.querySelector('input[name="budget"]:checked')?.value || 'medium';
+
+      if (!agencyType || selectedPrograms.length === 0 || selectedAI.length === 0) {
+        alert('Please complete all sections to find matching funding sources.');
+        return;
+      }
+
+      // Score and filter funding sources
+      const scoredFunding = fundingSources.map(source => {
+        let score = 0;
+        let matchedPrograms = [];
+        let matchedAI = [];
+
+        // Check program matches
+        selectedPrograms.forEach(prog => {
+          if (source.eligiblePrograms.includes(prog)) {
+            score += 20;
+            matchedPrograms.push(prog);
+          }
+        });
+
+        // Check AI type matches
+        selectedAI.forEach(ai => {
+          if (source.eligibleAI.includes(ai)) {
+            score += 10;
+            matchedAI.push(ai);
+          }
+        });
+
+        // Bonus for multiple matches
+        if (matchedPrograms.length >= 2) score += 15;
+        if (matchedAI.length >= 2) score += 10;
+
+        return {
+          ...source,
+          score,
+          matchedPrograms,
+          matchedAI
+        };
+      }).filter(s => s.score > 0).sort((a, b) => b.score - a.score);
+
+      // Determine match level
+      scoredFunding.forEach(source => {
+        if (source.score >= 50) {
+          source.matchLevel = 'high';
+          source.matchText = 'Strong Match';
+        } else if (source.score >= 30) {
+          source.matchLevel = 'medium';
+          source.matchText = 'Possible Match';
+        } else {
+          source.matchLevel = 'low';
+          source.matchText = 'Potential Match';
+        }
+      });
+
+      // Show results
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+
+      document.getElementById('fundingCount').textContent = scoredFunding.length;
+
+      // Render funding cards
+      const listEl = document.getElementById('fundingList');
+
+      if (scoredFunding.length === 0) {
+        listEl.innerHTML = `
+          <div class="no-results">
+            <div class="no-results__icon">🔍</div>
+            <h3>No Exact Matches Found</h3>
+            <p>Based on your selections, we couldn't identify strong funding matches. Contact us to discuss alternative funding strategies.</p>
+          </div>
+        `;
+      } else {
+        const programLabels = {
+          snap: 'SNAP',
+          tanf: 'TANF',
+          medicaid: 'Medicaid',
+          childcare: 'Child Care',
+          childwelfare: 'Child Welfare',
+          workforce: 'Workforce',
+          aging: 'Aging Services',
+          disability: 'Disability'
+        };
+
+        listEl.innerHTML = scoredFunding.map(source => `
+          <div class="funding-card ${source.matchLevel}-match">
+            <div class="funding-card__header">
+              <div>
+                <div class="funding-card__title">${source.name}</div>
+                <div class="funding-card__agency">${source.agency}</div>
+              </div>
+              <div class="funding-card__match ${source.matchLevel}">
+                <span>${source.matchText}</span>
+              </div>
+            </div>
+            <div class="funding-card__details">
+              <div class="funding-card__detail">
+                <div class="funding-card__detail-label">Federal Match Rate</div>
+                <div class="funding-card__detail-value">${source.matchRate}</div>
+              </div>
+              <div class="funding-card__detail">
+                <div class="funding-card__detail-label">Maximum Funding</div>
+                <div class="funding-card__detail-value">${source.maxFunding}</div>
+              </div>
+              <div class="funding-card__detail">
+                <div class="funding-card__detail-label">Your Programs Matched</div>
+                <div class="funding-card__detail-value">${source.matchedPrograms.length} of ${selectedPrograms.length}</div>
+              </div>
+            </div>
+            <div class="funding-card__desc">${source.description}</div>
+            <div class="funding-card__eligible">
+              <h4>Allowable Uses</h4>
+              <ul>
+                ${source.allowableUses.map(use => `<li>${use}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="funding-card__actions">
+              <a href="${source.link}" target="_blank" class="funding-card__link">
+                Learn More →
+              </a>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Start over button
+    document.getElementById('startOverBtn').addEventListener('click', function() {
+      document.getElementById('resultsSection').style.display = 'none';
+      document.getElementById('formSection').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Lead form
+    document.getElementById('leadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you! A member of our team will contact you to discuss funding strategies for your AI initiative.');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Project Scope Estimator | Brite.AI</title>
+  <meta name="description" content="Estimate the scope, effort, and resources needed for your AI project.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #0d9488, #0f766e); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group select, .form-group input { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .checkbox-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+    @media (max-width: 768px) { .checkbox-grid { grid-template-columns: 1fr; } }
+    .checkbox-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; }
+    .checkbox-item:hover { border-color: var(--color-primary); }
+    .checkbox-item.selected { border-color: #0d9488; background: rgba(13, 148, 136, 0.1); }
+    .results-section { display: none; }
+    .scope-summary { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); text-align: center; }
+    @media (max-width: 768px) { .scope-summary { grid-template-columns: repeat(2, 1fr); } }
+    .summary-item__value { font-size: var(--text-2xl); font-weight: 800; color: #0f766e; }
+    .summary-item__label { font-size: var(--text-sm); color: #0d9488; }
+    .effort-breakdown { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .effort-phase { margin-bottom: var(--space-4); }
+    .effort-phase:last-child { margin-bottom: 0; }
+    .effort-phase__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2); }
+    .effort-phase__name { font-weight: 600; }
+    .effort-phase__duration { font-weight: 700; color: #0d9488; }
+    .effort-phase__bar { height: 12px; background: #e5e7eb; border-radius: var(--radius-full); overflow: hidden; }
+    .effort-phase__fill { height: 100%; background: linear-gradient(90deg, #0d9488, #0f766e); border-radius: var(--radius-full); }
+    .team-section { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .team-grid { grid-template-columns: 1fr; } }
+    .team-role { text-align: center; padding: var(--space-4); background: var(--color-background); border-radius: var(--radius-lg); }
+    .team-role__icon { font-size: 2rem; margin-bottom: var(--space-2); }
+    .team-role__title { font-weight: 600; margin-bottom: var(--space-1); }
+    .team-role__fte { font-size: var(--text-lg); font-weight: 700; color: #0d9488; }
+    .team-role__note { font-size: var(--text-xs); color: var(--color-text-muted); }
+    .risk-factors { background: #fef3c7; border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .risk-item { display: flex; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid rgba(0,0,0,0.1); }
+    .risk-item:last-child { border-bottom: none; }
+    .risk-item__icon { color: #f59e0b; }
+    .risk-item__text { color: #92400e; font-size: var(--text-sm); }
+    .budget-estimate { background: linear-gradient(135deg, #0d9488, #0f766e); border-radius: var(--radius-xl); padding: var(--space-6); color: #fff; text-align: center; margin-bottom: var(--space-6); }
+    .budget-estimate__label { opacity: 0.9; margin-bottom: var(--space-2); }
+    .budget-estimate__range { font-size: var(--text-4xl); font-weight: 800; }
+    .budget-estimate__note { font-size: var(--text-sm); opacity: 0.8; margin-top: var(--space-2); }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Project Scope Estimator</h2>
+          <p>Estimate effort, timeline, team, and budget for your AI project</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>Project Type</label>
+              <select id="projectType">
+                <option value="chatbot">Chatbot / Virtual Agent</option>
+                <option value="document">Document Processing / OCR</option>
+                <option value="prediction">Predictive Analytics</option>
+                <option value="decision">Automated Decision Support</option>
+                <option value="fraud">Fraud Detection</option>
+                <option value="rpa">RPA with AI</option>
+                <option value="custom">Custom ML Model</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Complexity Level</label>
+                <select id="complexity">
+                  <option value="low">Low - Single process, clear requirements</option>
+                  <option value="medium">Medium - Multiple integrations</option>
+                  <option value="high">High - Complex logic, multiple systems</option>
+                  <option value="enterprise">Enterprise - Large scale, org-wide</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Current Data Readiness</label>
+                <select id="dataReadiness">
+                  <option value="high">High - Clean, accessible data</option>
+                  <option value="medium">Medium - Some cleanup needed</option>
+                  <option value="low">Low - Significant data work required</option>
+                  <option value="none">None - Data collection needed</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Required Integrations (select all that apply)</label>
+              <div class="checkbox-grid" id="integrations">
+                <label class="checkbox-item"><input type="checkbox" value="crm"> CRM / Case Management</label>
+                <label class="checkbox-item"><input type="checkbox" value="erp"> ERP / Financial System</label>
+                <label class="checkbox-item"><input type="checkbox" value="legacy"> Legacy Mainframe</label>
+                <label class="checkbox-item"><input type="checkbox" value="portal"> Citizen Portal</label>
+                <label class="checkbox-item"><input type="checkbox" value="phone"> Phone System / IVR</label>
+                <label class="checkbox-item"><input type="checkbox" value="dms"> Document Management</label>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Deployment Environment</label>
+                <select id="deployment">
+                  <option value="cloud">Cloud (AWS/Azure/GCP)</option>
+                  <option value="hybrid">Hybrid Cloud</option>
+                  <option value="onprem">On-Premise</option>
+                  <option value="fedramp">FedRAMP Cloud</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Compliance Requirements</label>
+                <select id="compliance">
+                  <option value="standard">Standard Government</option>
+                  <option value="hipaa">HIPAA Required</option>
+                  <option value="pii">Enhanced PII Protection</option>
+                  <option value="high">High Security (FISMA High)</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="estimateScope()" style="width: 100%;">Estimate Project Scope</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="scope-summary">
+              <div class="summary-item">
+                <div class="summary-item__value" id="totalDuration">0</div>
+                <div class="summary-item__label">Months Duration</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-item__value" id="teamSize">0</div>
+                <div class="summary-item__label">Team Members</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-item__value" id="totalEffort">0</div>
+                <div class="summary-item__label">Person-Months</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-item__value" id="riskLevel">Low</div>
+                <div class="summary-item__label">Risk Level</div>
+              </div>
+            </div>
+
+            <div class="effort-breakdown">
+              <h3 style="margin-bottom: var(--space-4);">Project Phase Breakdown</h3>
+              <div id="phasesList"></div>
+            </div>
+
+            <div class="team-section">
+              <h3 style="margin-bottom: var(--space-4);">Recommended Team Composition</h3>
+              <div class="team-grid" id="teamGrid"></div>
+            </div>
+
+            <div class="budget-estimate">
+              <div class="budget-estimate__label">Estimated Budget Range</div>
+              <div class="budget-estimate__range" id="budgetRange">$0 - $0</div>
+              <div class="budget-estimate__note">Based on typical government AI project costs</div>
+            </div>
+
+            <div class="risk-factors" id="riskSection">
+              <h3 style="margin-bottom: var(--space-4); color: #92400e;">⚠️ Key Risk Factors</h3>
+              <div id="risksList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Detailed Project Plan</h3>
+              <p>Receive a comprehensive project plan with detailed tasks, milestones, and resource allocation.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Project Plan</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Estimate Another Project</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.checkbox-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (e.target.type !== 'checkbox') {
+          const checkbox = item.querySelector('input');
+          checkbox.checked = !checkbox.checked;
+        }
+        item.classList.toggle('selected', item.querySelector('input').checked);
+      });
+    });
+
+    const projectConfigs = {
+      chatbot: { base: 3, phases: { discovery: 0.15, design: 0.20, build: 0.35, test: 0.15, deploy: 0.15 } },
+      document: { base: 4, phases: { discovery: 0.15, design: 0.15, build: 0.40, test: 0.20, deploy: 0.10 } },
+      prediction: { base: 5, phases: { discovery: 0.20, design: 0.15, build: 0.35, test: 0.20, deploy: 0.10 } },
+      decision: { base: 6, phases: { discovery: 0.20, design: 0.20, build: 0.30, test: 0.20, deploy: 0.10 } },
+      fraud: { base: 6, phases: { discovery: 0.20, design: 0.15, build: 0.35, test: 0.20, deploy: 0.10 } },
+      rpa: { base: 4, phases: { discovery: 0.20, design: 0.20, build: 0.30, test: 0.15, deploy: 0.15 } },
+      custom: { base: 8, phases: { discovery: 0.15, design: 0.15, build: 0.40, test: 0.20, deploy: 0.10 } }
+    };
+
+    const complexityMultiplier = { low: 1, medium: 1.5, high: 2.2, enterprise: 3 };
+    const dataMultiplier = { high: 1, medium: 1.3, low: 1.6, none: 2 };
+
+    const teamRoles = {
+      small: [
+        { icon: "👨‍💼", title: "Project Manager", fte: 0.5, note: "Part-time" },
+        { icon: "🤖", title: "AI/ML Engineer", fte: 1.0, note: "Full-time" },
+        { icon: "💻", title: "Developer", fte: 1.0, note: "Full-time" }
+      ],
+      medium: [
+        { icon: "👨‍💼", title: "Project Manager", fte: 1.0, note: "Full-time" },
+        { icon: "🤖", title: "AI/ML Engineer", fte: 1.5, note: "1-2 people" },
+        { icon: "💻", title: "Full-Stack Developer", fte: 2.0, note: "2 people" },
+        { icon: "🔧", title: "Integration Specialist", fte: 1.0, note: "Full-time" },
+        { icon: "✅", title: "QA Engineer", fte: 0.5, note: "Part-time" }
+      ],
+      large: [
+        { icon: "👨‍💼", title: "Project Manager", fte: 1.0, note: "Full-time" },
+        { icon: "📐", title: "Solution Architect", fte: 1.0, note: "Full-time" },
+        { icon: "🤖", title: "AI/ML Engineers", fte: 3.0, note: "2-3 people" },
+        { icon: "💻", title: "Developers", fte: 4.0, note: "3-4 people" },
+        { icon: "🔧", title: "Integration Specialist", fte: 2.0, note: "2 people" },
+        { icon: "✅", title: "QA Engineers", fte: 2.0, note: "2 people" },
+        { icon: "🔒", title: "Security Analyst", fte: 0.5, note: "Part-time" }
+      ]
+    };
+
+    function estimateScope() {
+      const projectType = document.getElementById('projectType').value;
+      const complexity = document.getElementById('complexity').value;
+      const dataReadiness = document.getElementById('dataReadiness').value;
+      const integrations = Array.from(document.querySelectorAll('#integrations input:checked')).length;
+      const deployment = document.getElementById('deployment').value;
+      const compliance = document.getElementById('compliance').value;
+
+      const config = projectConfigs[projectType];
+      let duration = config.base * complexityMultiplier[complexity] * dataMultiplier[dataReadiness];
+
+      // Integration overhead
+      duration += integrations * 0.5;
+
+      // Deployment overhead
+      if (deployment === 'onprem') duration *= 1.2;
+      if (deployment === 'fedramp') duration *= 1.3;
+
+      // Compliance overhead
+      if (compliance === 'hipaa') duration *= 1.2;
+      if (compliance === 'high') duration *= 1.3;
+
+      duration = Math.round(duration);
+
+      // Team size
+      let teamSize, teamConfig;
+      if (duration <= 4) {
+        teamSize = 3;
+        teamConfig = 'small';
+      } else if (duration <= 8) {
+        teamSize = 6;
+        teamConfig = 'medium';
+      } else {
+        teamSize = 10;
+        teamConfig = 'large';
+      }
+
+      const totalEffort = Math.round(duration * teamSize * 0.7);
+
+      // Risk level
+      let riskLevel = 'Low';
+      let risks = [];
+      if (complexity === 'high' || complexity === 'enterprise') {
+        riskLevel = 'Medium';
+        risks.push('High complexity increases implementation risk');
+      }
+      if (dataReadiness === 'low' || dataReadiness === 'none') {
+        riskLevel = riskLevel === 'Low' ? 'Medium' : 'High';
+        risks.push('Data preparation may cause delays');
+      }
+      if (integrations >= 3) {
+        risks.push('Multiple integrations add technical complexity');
+      }
+      if (deployment === 'fedramp' || compliance === 'high') {
+        risks.push('Enhanced compliance requirements extend timeline');
+      }
+      if (projectType === 'custom') {
+        risks.push('Custom ML development has higher uncertainty');
+      }
+
+      // Budget estimate
+      const monthlyRate = 150000; // Blended rate
+      const budgetLow = Math.round((totalEffort * monthlyRate * 0.8) / 1000000 * 10) / 10;
+      const budgetHigh = Math.round((totalEffort * monthlyRate * 1.3) / 1000000 * 10) / 10;
+
+      // Update display
+      document.getElementById('totalDuration').textContent = duration;
+      document.getElementById('teamSize').textContent = teamSize;
+      document.getElementById('totalEffort').textContent = totalEffort;
+      document.getElementById('riskLevel').textContent = riskLevel;
+      document.getElementById('budgetRange').textContent = `$${budgetLow}M - $${budgetHigh}M`;
+
+      // Phases
+      document.getElementById('phasesList').innerHTML = Object.entries(config.phases).map(([phase, pct]) => {
+        const phaseDuration = Math.round(duration * pct);
+        const phaseNames = {
+          discovery: 'Discovery & Requirements',
+          design: 'Design & Architecture',
+          build: 'Development & Integration',
+          test: 'Testing & Validation',
+          deploy: 'Deployment & Training'
+        };
+        return `
+          <div class="effort-phase">
+            <div class="effort-phase__header">
+              <span class="effort-phase__name">${phaseNames[phase]}</span>
+              <span class="effort-phase__duration">${phaseDuration} months</span>
+            </div>
+            <div class="effort-phase__bar">
+              <div class="effort-phase__fill" style="width: ${pct * 100}%;"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Team
+      document.getElementById('teamGrid').innerHTML = teamRoles[teamConfig].map(role => `
+        <div class="team-role">
+          <div class="team-role__icon">${role.icon}</div>
+          <div class="team-role__title">${role.title}</div>
+          <div class="team-role__fte">${role.fte} FTE</div>
+          <div class="team-role__note">${role.note}</div>
+        </div>
+      `).join('');
+
+      // Risks
+      if (risks.length > 0) {
+        document.getElementById('riskSection').style.display = 'block';
+        document.getElementById('risksList').innerHTML = risks.map(r => `
+          <div class="risk-item">
+            <span class="risk-item__icon">⚠️</span>
+            <span class="risk-item__text">${r}</span>
+          </div>
+        `).join('');
+      } else {
+        document.getElementById('riskSection').style.display = 'none';
+      }
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+      document.querySelectorAll('.checkbox-item input').forEach(c => { c.checked = false; c.closest('.checkbox-item').classList.remove('selected'); });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your detailed project plan will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constituent Experience Benchmark | Brite.AI</title>
+  <meta name="description" content="Measure and compare your constituent experience metrics against government leaders.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .tool-header { background: linear-gradient(135deg, #ec4899, #db2777); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-section { margin-bottom: var(--space-6); }
+    .form-section label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-section select { width: 100%; padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-lg); font-size: var(--text-base); }
+    .form-section select:focus { outline: none; border-color: #ec4899; }
+    .metric-group { margin-bottom: var(--space-6); }
+    .metric-group__title { font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-4); padding-bottom: var(--space-2); border-bottom: 2px solid var(--color-border); }
+    .metric-item { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-4); margin-bottom: var(--space-3); }
+    .metric-item__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2); }
+    .metric-item__name { font-weight: 600; }
+    .metric-item__hint { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .metric-item__input { display: flex; align-items: center; gap: var(--space-2); }
+    .metric-item__input input { flex: 1; max-width: 120px; padding: var(--space-2); border: 2px solid var(--color-border); border-radius: var(--radius-md); text-align: center; }
+    .metric-item__input span { color: var(--color-text-muted); }
+    .btn--calculate { width: 100%; background: linear-gradient(135deg, #ec4899, #db2777); border: none; color: #fff; padding: var(--space-4); font-size: var(--text-lg); font-weight: 700; border-radius: var(--radius-xl); cursor: pointer; }
+    .btn--calculate:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .results-section { display: none; margin-top: var(--space-8); }
+    .results-section.show { display: block; }
+    .score-hero { text-align: center; margin-bottom: var(--space-8); }
+    .score-circle { width: 180px; height: 180px; border-radius: 50%; margin: 0 auto var(--space-4); display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
+    .score-circle::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(var(--score-color) calc(var(--score) * 3.6deg), #e5e7eb calc(var(--score) * 3.6deg)); }
+    .score-circle::after { content: ''; position: absolute; inset: 12px; border-radius: 50%; background: var(--color-background); }
+    .score-value { position: relative; z-index: 1; font-size: var(--text-4xl); font-weight: 800; }
+    .score-label { position: relative; z-index: 1; font-size: var(--text-sm); color: var(--color-text-muted); }
+    .score-rating { font-size: var(--text-2xl); font-weight: 700; margin-bottom: var(--space-2); }
+    .score-description { color: var(--color-text-muted); }
+    .dimension-grid { display: grid; gap: var(--space-4); margin-bottom: var(--space-6); }
+    .dimension-card { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-5); border-left: 4px solid var(--color-border); }
+    .dimension-card.excellent { border-left-color: #22c55e; }
+    .dimension-card.good { border-left-color: #3b82f6; }
+    .dimension-card.average { border-left-color: #f59e0b; }
+    .dimension-card.poor { border-left-color: #ef4444; }
+    .dimension-card__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+    .dimension-card__name { font-weight: 700; }
+    .dimension-card__score { font-weight: 700; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-sm); }
+    .dimension-card.excellent .dimension-card__score { background: #dcfce7; color: #166534; }
+    .dimension-card.good .dimension-card__score { background: #dbeafe; color: #1e40af; }
+    .dimension-card.average .dimension-card__score { background: #fef3c7; color: #92400e; }
+    .dimension-card.poor .dimension-card__score { background: #fee2e2; color: #991b1b; }
+    .dimension-card__metrics { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .dimension-card__comparison { margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-border); }
+    .comparison-bar { height: 8px; background: #e5e7eb; border-radius: var(--radius-full); margin-top: var(--space-2); position: relative; }
+    .comparison-bar__fill { height: 100%; border-radius: var(--radius-full); background: linear-gradient(90deg, #ec4899, #db2777); }
+    .comparison-bar__marker { position: absolute; top: -4px; width: 16px; height: 16px; background: #374151; border-radius: 50%; border: 2px solid #fff; transform: translateX(-50%); }
+    .comparison-labels { display: flex; justify-content: space-between; font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .recommendations { background: linear-gradient(135deg, #fdf2f8, #fce7f3); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .recommendations h3 { margin-bottom: var(--space-4); }
+    .recommendation-item { display: flex; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid rgba(236, 72, 153, 0.2); }
+    .recommendation-item:last-child { border-bottom: none; }
+    .recommendation-item__priority { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: var(--text-sm); flex-shrink: 0; }
+    .recommendation-item__priority.high { background: #fee2e2; color: #991b1b; }
+    .recommendation-item__priority.medium { background: #fef3c7; color: #92400e; }
+    .recommendation-item__priority.low { background: #dcfce7; color: #166534; }
+    .recommendation-item__content { flex: 1; }
+    .recommendation-item__title { font-weight: 600; margin-bottom: var(--space-1); }
+    .recommendation-item__text { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .peer-comparison { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .peer-comparison h3 { margin-bottom: var(--space-4); }
+    .peer-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+    .peer-table th, .peer-table td { padding: var(--space-3); text-align: left; border-bottom: 1px solid var(--color-border); }
+    .peer-table th { font-weight: 600; background: var(--color-background); }
+    .peer-table tr.highlight { background: #fdf2f8; font-weight: 600; }
+    .cta-section { background: linear-gradient(135deg, #ec4899, #db2777); border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; color: #fff; margin-top: var(--space-6); }
+    .cta-section h3 { margin-bottom: var(--space-2); }
+    .cta-section p { opacity: 0.9; margin-bottom: var(--space-4); }
+    .cta-section .btn { background: #fff; color: #db2777; }
+    .btn--reset { width: 100%; margin-top: var(--space-4); background: var(--color-background-alt); color: var(--color-text); border: 2px solid var(--color-border); padding: var(--space-3); border-radius: var(--radius-lg); cursor: pointer; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>😊 Constituent Experience Benchmark</h2>
+          <p>Compare your CX metrics to government leaders and see AI improvement potential</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-section">
+              <label for="agencyType">Service Type</label>
+              <select id="agencyType">
+                <option value="">Select your primary service...</option>
+                <option value="benefits">Benefits/Entitlements</option>
+                <option value="licensing">Licensing/Permits</option>
+                <option value="tax">Tax/Revenue</option>
+                <option value="health">Health Services</option>
+                <option value="general">General Government Services</option>
+              </select>
+            </div>
+
+            <div class="metric-group">
+              <div class="metric-group__title">📞 Accessibility</div>
+              <div class="metric-item">
+                <div class="metric-item__header">
+                  <span class="metric-item__name">Channel Availability</span>
+                  <span class="metric-item__hint">How many service channels do you offer?</span>
+                </div>
+                <div class="metric-item__input">
+                  <input type="number" id="channels" min="1" max="10" placeholder="0">
+                  <span>channels (phone, web, chat, in-person, etc.)</span>
+                </div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-item__header">
+                  <span class="metric-item__name">24/7 Digital Availability</span>
+                  <span class="metric-item__hint">% of services available outside business hours</span>
+                </div>
+                <div class="metric-item__input">
+                  <input type="number" id="availability" min="0" max="100" placeholder="0">
+                  <span>%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="metric-group">
+              <div class="metric-group__title">⏱️ Responsiveness</div>
+              <div class="metric-item">
+                <div class="metric-item__header">
+                  <span class="metric-item__name">Average Wait Time (Phone)</span>
+                  <span class="metric-item__hint">Time to reach a live agent</span>
+                </div>
+                <div class="metric-item__input">
+                  <input type="number" id="waitTime" min="0" placeholder="0">
+                  <span>minutes</span>
+                </div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-item__header">
+                  <span class="metric-item__name">First Contact Resolution</span>
+                  <span class="metric-item__hint">% resolved on first interaction</span>
+                </div>
+                <div class="metric-item__input">
+                  <input type="number" id="fcr" min="0" max="100" placeholder="0">
+                  <span>%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="metric-group">
+              <div class="metric-group__title">😊 Satisfaction</div>
+              <div class="metric-item">
+                <div class="metric-item__header">
+                  <span class="metric-item__name">Customer Satisfaction Score</span>
+                  <span class="metric-item__hint">CSAT score if available</span>
+                </div>
+                <div class="metric-item__input">
+                  <input type="number" id="csat" min="0" max="100" placeholder="0">
+                  <span>%</span>
+                </div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-item__header">
+                  <span class="metric-item__name">Complaint Rate</span>
+                  <span class="metric-item__hint">Formal complaints per 1,000 interactions</span>
+                </div>
+                <div class="metric-item__input">
+                  <input type="number" id="complaints" min="0" step="0.1" placeholder="0">
+                  <span>per 1,000</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="metric-group">
+              <div class="metric-group__title">🔄 Efficiency</div>
+              <div class="metric-item">
+                <div class="metric-item__header">
+                  <span class="metric-item__name">Self-Service Adoption</span>
+                  <span class="metric-item__hint">% of transactions completed digitally</span>
+                </div>
+                <div class="metric-item__input">
+                  <input type="number" id="selfService" min="0" max="100" placeholder="0">
+                  <span>%</span>
+                </div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-item__header">
+                  <span class="metric-item__name">Average Transactions per Resolution</span>
+                  <span class="metric-item__hint">How many interactions to complete a request</span>
+                </div>
+                <div class="metric-item__input">
+                  <input type="number" id="touchpoints" min="1" max="10" step="0.1" placeholder="0">
+                  <span>interactions</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn--calculate" onclick="calculateBenchmark()">See Your CX Score →</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="score-hero">
+              <div class="score-circle" id="scoreCircle">
+                <span class="score-value" id="scoreValue">0</span>
+                <span class="score-label">out of 100</span>
+              </div>
+              <div class="score-rating" id="scoreRating">CX Rating</div>
+              <div class="score-description" id="scoreDescription">Description here</div>
+            </div>
+
+            <div class="dimension-grid" id="dimensionGrid">
+              <!-- Populated dynamically -->
+            </div>
+
+            <div class="peer-comparison">
+              <h3>📊 How You Compare</h3>
+              <table class="peer-table">
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Your Score</th>
+                    <th>Peer Average</th>
+                    <th>Top 25%</th>
+                    <th>AI-Enabled</th>
+                  </tr>
+                </thead>
+                <tbody id="peerTable">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="recommendations">
+              <h3>🎯 Priority Improvements</h3>
+              <div id="recommendationsList"></div>
+            </div>
+
+            <div class="cta-section">
+              <h3>Ready to Transform Your CX?</h3>
+              <p>Get a personalized roadmap to achieve AI-enabled constituent experience excellence.</p>
+              <a href="../contact/index.html" class="btn btn--lg">Get Your CX Roadmap</a>
+            </div>
+
+            <button class="btn--reset" onclick="resetForm()">← Start Over</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const benchmarks = {
+      channels: { peerAvg: 4, top25: 6, aiEnabled: 8 },
+      availability: { peerAvg: 35, top25: 60, aiEnabled: 95 },
+      waitTime: { peerAvg: 18, top25: 8, aiEnabled: 2 },
+      fcr: { peerAvg: 55, top25: 72, aiEnabled: 85 },
+      csat: { peerAvg: 68, top25: 82, aiEnabled: 90 },
+      complaints: { peerAvg: 8, top25: 4, aiEnabled: 1.5 },
+      selfService: { peerAvg: 40, top25: 65, aiEnabled: 85 },
+      touchpoints: { peerAvg: 3.2, top25: 2.1, aiEnabled: 1.3 }
+    };
+
+    function calculateBenchmark() {
+      const agencyType = document.getElementById('agencyType').value;
+      if (!agencyType) {
+        alert('Please select your service type.');
+        return;
+      }
+
+      const metrics = {
+        channels: parseFloat(document.getElementById('channels').value) || 0,
+        availability: parseFloat(document.getElementById('availability').value) || 0,
+        waitTime: parseFloat(document.getElementById('waitTime').value) || 0,
+        fcr: parseFloat(document.getElementById('fcr').value) || 0,
+        csat: parseFloat(document.getElementById('csat').value) || 0,
+        complaints: parseFloat(document.getElementById('complaints').value) || 0,
+        selfService: parseFloat(document.getElementById('selfService').value) || 0,
+        touchpoints: parseFloat(document.getElementById('touchpoints').value) || 0
+      };
+
+      // Calculate dimension scores
+      const dimensions = [
+        {
+          name: 'Accessibility',
+          score: calculateDimensionScore([
+            scoreMetric(metrics.channels, benchmarks.channels, false),
+            scoreMetric(metrics.availability, benchmarks.availability, false)
+          ]),
+          metrics: `${metrics.channels} channels, ${metrics.availability}% digital availability`
+        },
+        {
+          name: 'Responsiveness',
+          score: calculateDimensionScore([
+            scoreMetric(metrics.waitTime, benchmarks.waitTime, true),
+            scoreMetric(metrics.fcr, benchmarks.fcr, false)
+          ]),
+          metrics: `${metrics.waitTime} min wait, ${metrics.fcr}% FCR`
+        },
+        {
+          name: 'Satisfaction',
+          score: calculateDimensionScore([
+            scoreMetric(metrics.csat, benchmarks.csat, false),
+            scoreMetric(metrics.complaints, benchmarks.complaints, true)
+          ]),
+          metrics: `${metrics.csat}% CSAT, ${metrics.complaints} complaints/1K`
+        },
+        {
+          name: 'Efficiency',
+          score: calculateDimensionScore([
+            scoreMetric(metrics.selfService, benchmarks.selfService, false),
+            scoreMetric(metrics.touchpoints, benchmarks.touchpoints, true)
+          ]),
+          metrics: `${metrics.selfService}% self-service, ${metrics.touchpoints} touchpoints`
+        }
+      ];
+
+      const overallScore = Math.round(dimensions.reduce((sum, d) => sum + d.score, 0) / dimensions.length);
+
+      renderResults(overallScore, dimensions, metrics);
+    }
+
+    function scoreMetric(value, benchmark, lowerIsBetter) {
+      if (value === 0) return 50; // Default if not provided
+
+      const { peerAvg, top25, aiEnabled } = benchmark;
+
+      if (lowerIsBetter) {
+        if (value <= aiEnabled) return 100;
+        if (value <= top25) return 85;
+        if (value <= peerAvg) return 65;
+        if (value <= peerAvg * 1.5) return 40;
+        return 20;
+      } else {
+        if (value >= aiEnabled) return 100;
+        if (value >= top25) return 85;
+        if (value >= peerAvg) return 65;
+        if (value >= peerAvg * 0.6) return 40;
+        return 20;
+      }
+    }
+
+    function calculateDimensionScore(scores) {
+      return Math.round(scores.reduce((sum, s) => sum + s, 0) / scores.length);
+    }
+
+    function renderResults(overallScore, dimensions, metrics) {
+      // Set score circle
+      const scoreCircle = document.getElementById('scoreCircle');
+      let scoreColor;
+      if (overallScore >= 80) scoreColor = '#22c55e';
+      else if (overallScore >= 60) scoreColor = '#3b82f6';
+      else if (overallScore >= 40) scoreColor = '#f59e0b';
+      else scoreColor = '#ef4444';
+
+      scoreCircle.style.setProperty('--score', overallScore);
+      scoreCircle.style.setProperty('--score-color', scoreColor);
+      document.getElementById('scoreValue').textContent = overallScore;
+
+      // Set rating
+      let rating, description;
+      if (overallScore >= 80) {
+        rating = '🏆 CX Leader';
+        description = 'Your constituent experience is among the best in government.';
+      } else if (overallScore >= 60) {
+        rating = '📈 Above Average';
+        description = 'You\'re ahead of most agencies but have room for AI-powered improvements.';
+      } else if (overallScore >= 40) {
+        rating = '📊 Average';
+        description = 'Your CX is typical for government. AI can help you stand out.';
+      } else {
+        rating = '⚠️ Needs Improvement';
+        description = 'Significant opportunity to improve constituent experience with AI.';
+      }
+
+      document.getElementById('scoreRating').textContent = rating;
+      document.getElementById('scoreDescription').textContent = description;
+
+      // Render dimension cards
+      document.getElementById('dimensionGrid').innerHTML = dimensions.map(d => {
+        let ratingClass;
+        if (d.score >= 80) ratingClass = 'excellent';
+        else if (d.score >= 60) ratingClass = 'good';
+        else if (d.score >= 40) ratingClass = 'average';
+        else ratingClass = 'poor';
+
+        return `
+          <div class="dimension-card ${ratingClass}">
+            <div class="dimension-card__header">
+              <span class="dimension-card__name">${d.name}</span>
+              <span class="dimension-card__score">${d.score}/100</span>
+            </div>
+            <div class="dimension-card__metrics">${d.metrics}</div>
+            <div class="dimension-card__comparison">
+              <div style="font-size: var(--text-sm); color: var(--color-text-muted);">vs. AI-Enabled Target</div>
+              <div class="comparison-bar">
+                <div class="comparison-bar__fill" style="width: ${d.score}%"></div>
+              </div>
+              <div class="comparison-labels">
+                <span>0</span>
+                <span>Peer Avg (65)</span>
+                <span>100</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Render peer table
+      const metricLabels = {
+        channels: 'Service Channels',
+        availability: '24/7 Availability',
+        waitTime: 'Wait Time (min)',
+        fcr: 'First Contact Resolution',
+        csat: 'CSAT Score',
+        complaints: 'Complaints/1K',
+        selfService: 'Self-Service Rate',
+        touchpoints: 'Avg Touchpoints'
+      };
+
+      document.getElementById('peerTable').innerHTML = Object.keys(metrics).map(key => {
+        const value = metrics[key];
+        const bench = benchmarks[key];
+        const isLower = ['waitTime', 'complaints', 'touchpoints'].includes(key);
+        const isBetter = isLower ? value <= bench.peerAvg : value >= bench.peerAvg;
+        const unit = ['availability', 'fcr', 'csat', 'selfService'].includes(key) ? '%' : '';
+
+        return `
+          <tr>
+            <td>${metricLabels[key]}</td>
+            <td style="color: ${isBetter ? '#22c55e' : '#ef4444'}; font-weight: 600;">${value}${unit}</td>
+            <td>${bench.peerAvg}${unit}</td>
+            <td>${bench.top25}${unit}</td>
+            <td style="color: #3b82f6;">${bench.aiEnabled}${unit}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // Generate recommendations
+      const recommendations = [];
+      const sorted = [...dimensions].sort((a, b) => a.score - b.score);
+
+      sorted.forEach((d, i) => {
+        if (d.score < 80) {
+          let rec;
+          switch(d.name) {
+            case 'Accessibility':
+              rec = {
+                title: 'Expand Digital Channels',
+                text: 'Deploy AI chatbots and virtual assistants to offer 24/7 service without adding staff.',
+                priority: d.score < 50 ? 'high' : 'medium'
+              };
+              break;
+            case 'Responsiveness':
+              rec = {
+                title: 'Reduce Wait Times with AI',
+                text: 'AI can handle 60-80% of routine inquiries instantly, dramatically reducing wait times.',
+                priority: d.score < 50 ? 'high' : 'medium'
+              };
+              break;
+            case 'Satisfaction':
+              rec = {
+                title: 'Improve Service Quality',
+                text: 'AI-powered quality monitoring and consistent responses can boost CSAT by 15-25%.',
+                priority: d.score < 50 ? 'high' : 'medium'
+              };
+              break;
+            case 'Efficiency':
+              rec = {
+                title: 'Increase Self-Service Adoption',
+                text: 'Intelligent self-service with AI guidance can resolve issues in one interaction.',
+                priority: d.score < 50 ? 'high' : 'medium'
+              };
+              break;
+          }
+          recommendations.push(rec);
+        }
+      });
+
+      if (recommendations.length === 0) {
+        recommendations.push({
+          title: 'Maintain Excellence',
+          text: 'Continue monitoring metrics and explore advanced AI capabilities to stay ahead.',
+          priority: 'low'
+        });
+      }
+
+      document.getElementById('recommendationsList').innerHTML = recommendations.slice(0, 4).map((r, i) => `
+        <div class="recommendation-item">
+          <div class="recommendation-item__priority ${r.priority}">${i + 1}</div>
+          <div class="recommendation-item__content">
+            <div class="recommendation-item__title">${r.title}</div>
+            <div class="recommendation-item__text">${r.text}</div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').classList.add('show');
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').classList.remove('show');
+      document.querySelectorAll('input').forEach(input => input.value = '');
+      document.getElementById('agencyType').value = '';
+    }
+  </script>
+</body>
+</html>

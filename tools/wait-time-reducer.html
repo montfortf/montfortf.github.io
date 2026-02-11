@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constituent Wait Time Reducer | Brite.AI</title>
+  <meta name="description" content="Calculate how AI can reduce wait times and improve constituent satisfaction.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #14b8a6, #0d9488); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group input, .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--color-primary); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .results-section { display: none; }
+    .wait-hero { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; margin-bottom: var(--space-6); }
+    .wait-comparison { display: flex; justify-content: center; align-items: center; gap: var(--space-8); }
+    @media (max-width: 768px) { .wait-comparison { flex-direction: column; gap: var(--space-4); } }
+    .wait-box { text-align: center; }
+    .wait-box__value { font-size: var(--text-4xl); font-weight: 800; }
+    .wait-box__value.before { color: #ef4444; }
+    .wait-box__value.after { color: #14b8a6; }
+    .wait-box__label { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .wait-arrow { font-size: 2rem; color: #14b8a6; }
+    @media (max-width: 768px) { .wait-arrow { transform: rotate(90deg); } }
+    .results-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    @media (max-width: 768px) { .results-grid { grid-template-columns: repeat(2, 1fr); } }
+    .result-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); text-align: center; }
+    .result-card__icon { font-size: 1.5rem; margin-bottom: var(--space-2); }
+    .result-card__value { font-size: var(--text-2xl); font-weight: 800; color: var(--color-primary); }
+    .result-card__label { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .channel-breakdown { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .channel-item { display: grid; grid-template-columns: 1fr 100px 100px 100px; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); align-items: center; }
+    .channel-item:last-child { border-bottom: none; }
+    @media (max-width: 768px) { .channel-item { grid-template-columns: 1fr 1fr; } }
+    .channel-item__name { font-weight: 600; }
+    .channel-item__current { color: #ef4444; }
+    .channel-item__new { color: #14b8a6; font-weight: 700; }
+    .channel-item__reduction { color: #22c55e; font-weight: 700; }
+    .satisfaction-meter { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); text-align: center; }
+    .satisfaction-track { height: 40px; background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e); border-radius: var(--radius-full); position: relative; margin: var(--space-6) 0; }
+    .satisfaction-marker { position: absolute; width: 4px; height: 56px; background: #1f2937; top: -8px; transition: left 0.5s ease; }
+    .satisfaction-marker::after { content: attr(data-value); position: absolute; top: -28px; left: 50%; transform: translateX(-50%); font-weight: 700; font-size: var(--text-lg); }
+    .satisfaction-labels { display: flex; justify-content: space-between; font-size: var(--text-sm); color: var(--color-text-muted); }
+    .ai-solutions { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .solution-item { display: flex; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+    .solution-item:last-child { border-bottom: none; }
+    .solution-item__icon { width: 48px; height: 48px; background: linear-gradient(135deg, #14b8a6, #0d9488); color: #fff; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+    .solution-item__content h4 { font-weight: 600; margin-bottom: var(--space-1); }
+    .solution-item__content p { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .solution-item__impact { text-align: right; white-space: nowrap; }
+    .solution-item__impact-value { font-size: var(--text-lg); font-weight: 700; color: #14b8a6; }
+    .solution-item__impact-label { font-size: var(--text-xs); color: var(--color-text-muted); }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Constituent Wait Time Reducer</h2>
+          <p>Calculate how AI can transform the constituent experience</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>Primary Service Channel</label>
+              <select id="channelType">
+                <option value="callcenter">Call Center</option>
+                <option value="inperson">In-Person Office</option>
+                <option value="online">Online Portal</option>
+                <option value="multi">Multi-Channel</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Average Phone Wait Time (minutes)</label>
+                <input type="number" id="phoneWait" value="25" min="1">
+              </div>
+              <div class="form-group">
+                <label>Average In-Person Wait Time (minutes)</label>
+                <input type="number" id="inPersonWait" value="45" min="1">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Average Online Processing Time (days)</label>
+                <input type="number" id="onlineWait" value="14" min="1">
+              </div>
+              <div class="form-group">
+                <label>Monthly Constituent Contacts</label>
+                <input type="number" id="monthlyContacts" value="50000" min="100">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Current CSAT Score</label>
+                <select id="csatScore">
+                  <option value="50">50% - Poor</option>
+                  <option value="60" selected>60% - Below Average</option>
+                  <option value="70">70% - Average</option>
+                  <option value="80">80% - Good</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Call Center Staff Size</label>
+                <input type="number" id="staffSize" value="30" min="1">
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="calculateWaitReduction()" style="width: 100%;">Calculate Wait Time Reduction</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="wait-hero">
+              <h3 style="margin-bottom: var(--space-4);">Average Wait Time Transformation</h3>
+              <div class="wait-comparison">
+                <div class="wait-box">
+                  <div class="wait-box__value before" id="waitBefore">25 min</div>
+                  <div class="wait-box__label">Current Average</div>
+                </div>
+                <div class="wait-arrow">→</div>
+                <div class="wait-box">
+                  <div class="wait-box__value after" id="waitAfter">4 min</div>
+                  <div class="wait-box__label">With AI</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="results-grid">
+              <div class="result-card">
+                <div class="result-card__icon">⏱️</div>
+                <div class="result-card__value" id="waitReduction">0%</div>
+                <div class="result-card__label">Wait Time Reduction</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">📞</div>
+                <div class="result-card__value" id="callsDeflected">0%</div>
+                <div class="result-card__label">Calls Handled by AI</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">😊</div>
+                <div class="result-card__value" id="csatImprove">+0%</div>
+                <div class="result-card__label">CSAT Improvement</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">💰</div>
+                <div class="result-card__value" id="annualSavings">$0</div>
+                <div class="result-card__label">Annual Savings</div>
+              </div>
+            </div>
+
+            <div class="channel-breakdown">
+              <h3 style="margin-bottom: var(--space-4);">Wait Time by Channel</h3>
+              <div class="channel-item" style="font-weight: 600; color: var(--color-text-muted);">
+                <span>Channel</span>
+                <span>Current</span>
+                <span>With AI</span>
+                <span>Reduction</span>
+              </div>
+              <div id="channelList"></div>
+            </div>
+
+            <div class="satisfaction-meter">
+              <h3 style="margin-bottom: var(--space-2);">Constituent Satisfaction Projection</h3>
+              <div class="satisfaction-track">
+                <div class="satisfaction-marker" id="currentMarker" style="left: 60%;" data-value="60%"></div>
+                <div class="satisfaction-marker" id="projectedMarker" style="left: 85%; background: #14b8a6;" data-value="85%"></div>
+              </div>
+              <div class="satisfaction-labels">
+                <span>Very Dissatisfied</span>
+                <span>Neutral</span>
+                <span>Very Satisfied</span>
+              </div>
+            </div>
+
+            <div class="ai-solutions">
+              <h3 style="margin-bottom: var(--space-4);">AI Solutions for Wait Time Reduction</h3>
+              <div id="solutionsList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Wait Time Reduction Blueprint</h3>
+              <p>Receive a detailed implementation plan with channel-specific recommendations.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Blueprint</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Calculate Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const solutions = [
+      { icon: "🤖", name: "AI Chatbot / Virtual Agent", desc: "Handle 60% of common inquiries instantly, 24/7", reduction: "60%" },
+      { icon: "📞", name: "Intelligent Call Routing", desc: "Route calls to best-matched agent, reducing transfers", reduction: "25%" },
+      { icon: "📝", name: "Automated Case Status Updates", desc: "Proactive notifications reduce status inquiry calls", reduction: "40%" },
+      { icon: "🔍", name: "AI-Powered Search & Self-Service", desc: "Help constituents find answers without calling", reduction: "35%" },
+      { icon: "⚡", name: "Real-Time Agent Assist", desc: "AI helps agents resolve issues faster", reduction: "30%" }
+    ];
+
+    function calculateWaitReduction() {
+      const phoneWait = parseInt(document.getElementById('phoneWait').value);
+      const inPersonWait = parseInt(document.getElementById('inPersonWait').value);
+      const onlineWait = parseInt(document.getElementById('onlineWait').value);
+      const monthlyContacts = parseInt(document.getElementById('monthlyContacts').value);
+      const csatScore = parseInt(document.getElementById('csatScore').value);
+      const staffSize = parseInt(document.getElementById('staffSize').value);
+
+      // AI improvements
+      const phoneReduction = 0.85;
+      const inPersonReduction = 0.60;
+      const onlineReduction = 0.70;
+
+      const newPhoneWait = Math.round(phoneWait * (1 - phoneReduction));
+      const newInPersonWait = Math.round(inPersonWait * (1 - inPersonReduction));
+      const newOnlineWait = Math.round(onlineWait * (1 - onlineReduction));
+
+      const avgCurrentWait = Math.round((phoneWait + inPersonWait) / 2);
+      const avgNewWait = Math.round((newPhoneWait + newInPersonWait) / 2);
+      const waitReduction = Math.round((1 - avgNewWait / avgCurrentWait) * 100);
+
+      // CSAT improvement
+      const newCsat = Math.min(95, csatScore + 25);
+      const csatImprove = newCsat - csatScore;
+
+      // Cost savings (reduced call volume + efficiency)
+      const callCostPerMinute = 1.50;
+      const callsDeflected = 0.60;
+      const annualCalls = monthlyContacts * 12 * 0.6; // 60% are phone
+      const minutesSaved = annualCalls * callsDeflected * phoneWait * 0.5;
+      const annualSavings = minutesSaved * callCostPerMinute;
+
+      // Update display
+      document.getElementById('waitBefore').textContent = avgCurrentWait + ' min';
+      document.getElementById('waitAfter').textContent = avgNewWait + ' min';
+      document.getElementById('waitReduction').textContent = waitReduction + '%';
+      document.getElementById('callsDeflected').textContent = Math.round(callsDeflected * 100) + '%';
+      document.getElementById('csatImprove').textContent = '+' + csatImprove + '%';
+      document.getElementById('annualSavings').textContent = '$' + (annualSavings / 1000000).toFixed(1) + 'M';
+
+      // Satisfaction markers
+      document.getElementById('currentMarker').style.left = csatScore + '%';
+      document.getElementById('currentMarker').setAttribute('data-value', csatScore + '%');
+      document.getElementById('projectedMarker').style.left = newCsat + '%';
+      document.getElementById('projectedMarker').setAttribute('data-value', newCsat + '%');
+
+      // Channel breakdown
+      document.getElementById('channelList').innerHTML = `
+        <div class="channel-item">
+          <span class="channel-item__name">📞 Phone</span>
+          <span class="channel-item__current">${phoneWait} min</span>
+          <span class="channel-item__new">${newPhoneWait} min</span>
+          <span class="channel-item__reduction">-${Math.round(phoneReduction * 100)}%</span>
+        </div>
+        <div class="channel-item">
+          <span class="channel-item__name">🏢 In-Person</span>
+          <span class="channel-item__current">${inPersonWait} min</span>
+          <span class="channel-item__new">${newInPersonWait} min</span>
+          <span class="channel-item__reduction">-${Math.round(inPersonReduction * 100)}%</span>
+        </div>
+        <div class="channel-item">
+          <span class="channel-item__name">💻 Online</span>
+          <span class="channel-item__current">${onlineWait} days</span>
+          <span class="channel-item__new">${newOnlineWait} days</span>
+          <span class="channel-item__reduction">-${Math.round(onlineReduction * 100)}%</span>
+        </div>
+      `;
+
+      // Solutions list
+      document.getElementById('solutionsList').innerHTML = solutions.map(s => `
+        <div class="solution-item">
+          <div class="solution-item__icon">${s.icon}</div>
+          <div class="solution-item__content">
+            <h4>${s.name}</h4>
+            <p>${s.desc}</p>
+          </div>
+          <div class="solution-item__impact">
+            <div class="solution-item__impact-value">${s.reduction}</div>
+            <div class="solution-item__impact-label">volume reduction</div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your Wait Time Reduction Blueprint will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

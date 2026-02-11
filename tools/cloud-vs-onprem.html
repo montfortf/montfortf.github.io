@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud vs On-Premise AI Decision Tool | Brite.AI</title>
+  <meta name="description" content="Determine the best deployment model for your AI initiative.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .results-section { display: none; }
+    .recommendation-hero { text-align: center; margin-bottom: var(--space-8); }
+    .recommendation-badge { display: inline-flex; align-items: center; gap: var(--space-4); padding: var(--space-6) var(--space-8); border-radius: var(--radius-xl); font-size: var(--text-2xl); font-weight: 800; }
+    .recommendation-badge.cloud { background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; }
+    .recommendation-badge.onprem { background: linear-gradient(135deg, #f3e8ff, #e9d5ff); color: #6b21a8; }
+    .recommendation-badge.hybrid { background: linear-gradient(135deg, #dcfce7, #bbf7d0); color: #166534; }
+    .recommendation-badge__icon { font-size: 3rem; }
+    .confidence-meter { margin-top: var(--space-4); }
+    .confidence-bar { height: 8px; background: #e5e7eb; border-radius: var(--radius-full); overflow: hidden; max-width: 300px; margin: 0 auto; }
+    .confidence-fill { height: 100%; background: linear-gradient(90deg, #6366f1, #4f46e5); border-radius: var(--radius-full); }
+    .confidence-label { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .comparison-section { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    @media (max-width: 768px) { .comparison-section { grid-template-columns: 1fr; } }
+    .option-card { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); text-align: center; border: 3px solid transparent; transition: all 0.3s; }
+    .option-card.recommended { border-color: #22c55e; }
+    .option-card__icon { font-size: 3rem; margin-bottom: var(--space-3); }
+    .option-card__title { font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--space-2); }
+    .option-card__score { font-size: var(--text-3xl); font-weight: 800; color: var(--color-primary); margin-bottom: var(--space-4); }
+    .option-card__pros, .option-card__cons { text-align: left; font-size: var(--text-sm); }
+    .option-card__pros li { color: #22c55e; margin-bottom: var(--space-1); }
+    .option-card__cons li { color: #ef4444; margin-bottom: var(--space-1); }
+    .factors-section { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .factor-item { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+    .factor-item:last-child { border-bottom: none; }
+    .factor-item__label { flex: 1; font-weight: 500; }
+    .factor-item__indicator { display: flex; gap: var(--space-2); }
+    .indicator-dot { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--text-xs); font-weight: 700; color: #fff; }
+    .indicator-dot.cloud { background: #3b82f6; }
+    .indicator-dot.onprem { background: #8b5cf6; }
+    .indicator-dot.hybrid { background: #22c55e; }
+    .indicator-dot.neutral { background: #9ca3af; }
+    .cost-comparison { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .cost-row { display: grid; grid-template-columns: 1fr repeat(3, 100px); gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); text-align: center; }
+    .cost-row:last-child { border-bottom: none; }
+    .cost-row.header { font-weight: 600; background: var(--color-background); border-radius: var(--radius-md); margin-bottom: var(--space-2); }
+    .cost-row div:first-child { text-align: left; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Cloud vs On-Premise AI Decision Tool</h2>
+          <p>Find the right deployment model for your AI initiative</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Data Sensitivity Level</label>
+                <select id="dataSensitivity">
+                  <option value="low">Low - Public/non-sensitive</option>
+                  <option value="medium">Medium - PII involved</option>
+                  <option value="high">High - PHI, financial, criminal justice</option>
+                  <option value="critical">Critical - National security, classified</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Data Residency Requirements</label>
+                <select id="dataResidency">
+                  <option value="none">No specific requirements</option>
+                  <option value="us">US-only data centers</option>
+                  <option value="state">State-specific requirements</option>
+                  <option value="onsite">Must remain on-site</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Compliance Requirements</label>
+                <select id="compliance">
+                  <option value="standard">Standard government</option>
+                  <option value="fedramp">FedRAMP Moderate</option>
+                  <option value="fedramp-high">FedRAMP High</option>
+                  <option value="dod">DoD IL4+</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Existing Infrastructure</label>
+                <select id="infrastructure">
+                  <option value="cloud">Already using cloud</option>
+                  <option value="hybrid">Hybrid environment</option>
+                  <option value="datacenter">Modern data center</option>
+                  <option value="legacy">Legacy on-premise only</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Expected Scale</label>
+                <select id="scale">
+                  <option value="small">Small - Departmental use</option>
+                  <option value="medium">Medium - Agency-wide</option>
+                  <option value="large">Large - Enterprise/state-wide</option>
+                  <option value="variable">Variable - Unpredictable spikes</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>IT Team Capability</label>
+                <select id="itCapability">
+                  <option value="limited">Limited - Outsource most IT</option>
+                  <option value="moderate">Moderate - Basic infrastructure</option>
+                  <option value="strong">Strong - Full IT operations</option>
+                  <option value="expert">Expert - AI/ML ops capability</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Budget Model Preference</label>
+              <select id="budgetModel">
+                <option value="opex">OpEx preferred (pay-as-you-go)</option>
+                <option value="capex">CapEx preferred (upfront investment)</option>
+                <option value="mixed">Flexible (either works)</option>
+              </select>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="analyzeDeployment()" style="width: 100%;">Analyze Deployment Options</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="recommendation-hero">
+              <div class="recommendation-badge" id="recommendationBadge">
+                <span class="recommendation-badge__icon">☁️</span>
+                <span>Cloud Recommended</span>
+              </div>
+              <div class="confidence-meter">
+                <div class="confidence-bar">
+                  <div class="confidence-fill" id="confidenceFill" style="width: 85%;"></div>
+                </div>
+                <div class="confidence-label"><span id="confidenceValue">85%</span> confidence in recommendation</div>
+              </div>
+            </div>
+
+            <div class="comparison-section" id="comparisonSection"></div>
+
+            <div class="factors-section">
+              <h3 style="margin-bottom: var(--space-4);">Decision Factors Analysis</h3>
+              <div id="factorsList"></div>
+            </div>
+
+            <div class="cost-comparison">
+              <h3 style="margin-bottom: var(--space-4);">5-Year TCO Comparison</h3>
+              <div class="cost-row header">
+                <div>Cost Category</div>
+                <div>☁️ Cloud</div>
+                <div>🏢 On-Prem</div>
+                <div>🔄 Hybrid</div>
+              </div>
+              <div id="costRows"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Deployment Strategy Report</h3>
+              <p>Receive detailed TCO analysis, migration planning, and architecture recommendations.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Report</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Analyze Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function analyzeDeployment() {
+      const dataSensitivity = document.getElementById('dataSensitivity').value;
+      const dataResidency = document.getElementById('dataResidency').value;
+      const compliance = document.getElementById('compliance').value;
+      const infrastructure = document.getElementById('infrastructure').value;
+      const scale = document.getElementById('scale').value;
+      const itCapability = document.getElementById('itCapability').value;
+      const budgetModel = document.getElementById('budgetModel').value;
+
+      // Scoring logic
+      let cloudScore = 50, onpremScore = 50, hybridScore = 55;
+
+      // Data sensitivity
+      if (dataSensitivity === 'low') { cloudScore += 15; }
+      else if (dataSensitivity === 'medium') { cloudScore += 10; hybridScore += 5; }
+      else if (dataSensitivity === 'high') { hybridScore += 10; onpremScore += 5; }
+      else { onpremScore += 20; }
+
+      // Data residency
+      if (dataResidency === 'none') { cloudScore += 10; }
+      else if (dataResidency === 'us') { cloudScore += 5; hybridScore += 5; }
+      else if (dataResidency === 'state') { hybridScore += 10; }
+      else { onpremScore += 15; }
+
+      // Compliance
+      if (compliance === 'standard') { cloudScore += 10; }
+      else if (compliance === 'fedramp') { cloudScore += 5; hybridScore += 5; }
+      else if (compliance === 'fedramp-high') { hybridScore += 10; }
+      else { onpremScore += 15; }
+
+      // Infrastructure
+      if (infrastructure === 'cloud') { cloudScore += 15; }
+      else if (infrastructure === 'hybrid') { hybridScore += 15; }
+      else if (infrastructure === 'datacenter') { hybridScore += 10; onpremScore += 5; }
+      else { onpremScore += 10; }
+
+      // Scale
+      if (scale === 'variable') { cloudScore += 15; }
+      else if (scale === 'large') { cloudScore += 10; hybridScore += 5; }
+      else if (scale === 'medium') { hybridScore += 5; }
+      else { onpremScore += 5; }
+
+      // IT capability
+      if (itCapability === 'limited') { cloudScore += 15; }
+      else if (itCapability === 'moderate') { cloudScore += 10; hybridScore += 5; }
+      else if (itCapability === 'strong') { hybridScore += 10; }
+      else { onpremScore += 10; }
+
+      // Budget
+      if (budgetModel === 'opex') { cloudScore += 10; }
+      else if (budgetModel === 'capex') { onpremScore += 10; }
+
+      // Normalize scores
+      const maxScore = Math.max(cloudScore, onpremScore, hybridScore);
+      cloudScore = Math.round((cloudScore / maxScore) * 100);
+      onpremScore = Math.round((onpremScore / maxScore) * 100);
+      hybridScore = Math.round((hybridScore / maxScore) * 100);
+
+      // Determine winner
+      let winner, winnerIcon, badgeClass;
+      if (cloudScore >= onpremScore && cloudScore >= hybridScore) {
+        winner = 'Cloud'; winnerIcon = '☁️'; badgeClass = 'cloud';
+      } else if (hybridScore >= cloudScore && hybridScore >= onpremScore) {
+        winner = 'Hybrid'; winnerIcon = '🔄'; badgeClass = 'hybrid';
+      } else {
+        winner = 'On-Premise'; winnerIcon = '🏢'; badgeClass = 'onprem';
+      }
+
+      const confidence = Math.max(cloudScore, onpremScore, hybridScore) - Math.min(cloudScore, onpremScore, hybridScore) + 50;
+
+      // Update UI
+      const badge = document.getElementById('recommendationBadge');
+      badge.className = 'recommendation-badge ' + badgeClass;
+      badge.innerHTML = `<span class="recommendation-badge__icon">${winnerIcon}</span><span>${winner} Recommended</span>`;
+      document.getElementById('confidenceFill').style.width = confidence + '%';
+      document.getElementById('confidenceValue').textContent = confidence + '%';
+
+      // Option cards
+      document.getElementById('comparisonSection').innerHTML = [
+        { icon: '☁️', name: 'Cloud', score: cloudScore, pros: ['Scalability', 'Lower upfront cost', 'Faster deployment', 'Automatic updates'], cons: ['Ongoing costs', 'Data transfer fees', 'Vendor dependency'] },
+        { icon: '🏢', name: 'On-Premise', score: onpremScore, pros: ['Data control', 'Predictable costs', 'No internet dependency', 'Full customization'], cons: ['High upfront cost', 'Maintenance burden', 'Scaling limitations'] },
+        { icon: '🔄', name: 'Hybrid', score: hybridScore, pros: ['Flexibility', 'Keep sensitive data local', 'Burst to cloud', 'Gradual migration'], cons: ['Complexity', 'Integration challenges', 'Two environments to manage'] }
+      ].map(opt => `
+        <div class="option-card ${opt.score === 100 ? 'recommended' : ''}">
+          <div class="option-card__icon">${opt.icon}</div>
+          <div class="option-card__title">${opt.name}</div>
+          <div class="option-card__score">${opt.score}%</div>
+          <div class="option-card__pros"><strong>Pros:</strong><ul>${opt.pros.map(p => `<li>+ ${p}</li>`).join('')}</ul></div>
+          <div class="option-card__cons"><strong>Cons:</strong><ul>${opt.cons.map(c => `<li>- ${c}</li>`).join('')}</ul></div>
+        </div>
+      `).join('');
+
+      // Factors
+      const factors = [
+        { label: 'Data Sensitivity', cloud: dataSensitivity === 'low', onprem: dataSensitivity === 'critical', hybrid: dataSensitivity === 'high' },
+        { label: 'Compliance Needs', cloud: compliance === 'standard', onprem: compliance === 'dod', hybrid: compliance === 'fedramp-high' },
+        { label: 'Scale Requirements', cloud: scale === 'variable', onprem: scale === 'small', hybrid: scale === 'large' },
+        { label: 'IT Capability', cloud: itCapability === 'limited', onprem: itCapability === 'expert', hybrid: itCapability === 'strong' },
+        { label: 'Existing Infrastructure', cloud: infrastructure === 'cloud', onprem: infrastructure === 'legacy', hybrid: infrastructure === 'hybrid' }
+      ];
+
+      document.getElementById('factorsList').innerHTML = factors.map(f => `
+        <div class="factor-item">
+          <span class="factor-item__label">${f.label}</span>
+          <div class="factor-item__indicator">
+            <div class="indicator-dot ${f.cloud ? 'cloud' : 'neutral'}" title="Cloud">☁️</div>
+            <div class="indicator-dot ${f.onprem ? 'onprem' : 'neutral'}" title="On-Prem">🏢</div>
+            <div class="indicator-dot ${f.hybrid ? 'hybrid' : 'neutral'}" title="Hybrid">🔄</div>
+          </div>
+        </div>
+      `).join('');
+
+      // Cost comparison
+      const costs = [
+        { name: 'Infrastructure', cloud: '$200K', onprem: '$800K', hybrid: '$500K' },
+        { name: 'Software/Licensing', cloud: '$300K', onprem: '$250K', hybrid: '$350K' },
+        { name: 'Personnel', cloud: '$400K', onprem: '$1.2M', hybrid: '$800K' },
+        { name: 'Operations', cloud: '$250K', onprem: '$500K', hybrid: '$400K' },
+        { name: 'Total 5-Year TCO', cloud: '$1.15M', onprem: '$2.75M', hybrid: '$2.05M' }
+      ];
+
+      document.getElementById('costRows').innerHTML = costs.map((c, i) => `
+        <div class="cost-row" style="${i === costs.length - 1 ? 'font-weight: 700; background: var(--color-background);' : ''}">
+          <div>${c.name}</div>
+          <div>${c.cloud}</div>
+          <div>${c.onprem}</div>
+          <div>${c.hybrid}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your deployment strategy report will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

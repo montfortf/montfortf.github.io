@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Child Welfare Caseload Optimizer | Brite.AI</title>
+  <meta name="description" content="Optimize caseworker caseloads with AI-powered case management and documentation automation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #ec4899, #be185d); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group input, .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--color-primary); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .results-section { display: none; }
+    .impact-hero { background: linear-gradient(135deg, #fdf2f8, #fce7f3); border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; margin-bottom: var(--space-6); }
+    .impact-hero__value { font-size: var(--text-5xl); font-weight: 800; color: #be185d; }
+    .impact-hero__label { color: #9d174d; font-size: var(--text-lg); margin-top: var(--space-2); }
+    .results-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    @media (max-width: 768px) { .results-grid { grid-template-columns: repeat(2, 1fr); } }
+    .result-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); text-align: center; }
+    .result-card__icon { font-size: 1.5rem; margin-bottom: var(--space-2); }
+    .result-card__value { font-size: var(--text-2xl); font-weight: 800; color: var(--color-primary); }
+    .result-card__label { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .time-breakdown { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .time-comparison { display: grid; grid-template-columns: 1fr 60px 1fr; gap: var(--space-4); align-items: center; }
+    @media (max-width: 768px) { .time-comparison { grid-template-columns: 1fr; } }
+    .time-block { text-align: center; }
+    .time-block__title { font-weight: 600; margin-bottom: var(--space-4); }
+    .time-item { display: flex; justify-content: space-between; padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); font-size: var(--text-sm); }
+    .time-item:last-child { border-bottom: none; }
+    .time-arrow { font-size: 2rem; color: #22c55e; }
+    @media (max-width: 768px) { .time-arrow { transform: rotate(90deg); } }
+    .outcome-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    @media (max-width: 768px) { .outcome-cards { grid-template-columns: 1fr; } }
+    .outcome-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); text-align: center; border-top: 4px solid var(--color-primary); }
+    .outcome-card__icon { font-size: 2rem; margin-bottom: var(--space-3); }
+    .outcome-card__title { font-weight: 700; margin-bottom: var(--space-2); }
+    .outcome-card__value { font-size: var(--text-xl); font-weight: 800; color: #22c55e; }
+    .outcome-card__desc { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Child Welfare Caseload Optimizer</h2>
+          <p>See how AI can help caseworkers spend more time with families</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Number of Caseworkers</label>
+                <input type="number" id="caseworkers" value="50" min="1">
+              </div>
+              <div class="form-group">
+                <label>Average Caseload per Worker</label>
+                <input type="number" id="caseload" value="18" min="1">
+                <p class="help-text">CWLA recommends 12-15 cases</p>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Hours per Week on Documentation</label>
+                <input type="number" id="docHours" value="18" min="1" max="40">
+                <p class="help-text">Case notes, reports, forms</p>
+              </div>
+              <div class="form-group">
+                <label>Hours per Week on Administrative Tasks</label>
+                <input type="number" id="adminHours" value="8" min="1" max="20">
+                <p class="help-text">Scheduling, data entry, filing</p>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Average Caseworker Salary</label>
+                <input type="number" id="salary" value="52000" min="30000">
+              </div>
+              <div class="form-group">
+                <label>Annual Turnover Rate</label>
+                <select id="turnover">
+                  <option value="0.15">15% - Low</option>
+                  <option value="0.25" selected>25% - Average</option>
+                  <option value="0.35">35% - High</option>
+                  <option value="0.45">45% - Critical</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="calculateOptimization()" style="width: 100%;">Calculate Optimization Impact</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="impact-hero">
+              <div class="impact-hero__value" id="timeReclaimed">0</div>
+              <div class="impact-hero__label">Additional Hours per Week for Direct Family Contact</div>
+            </div>
+
+            <div class="results-grid">
+              <div class="result-card">
+                <div class="result-card__icon">📝</div>
+                <div class="result-card__value" id="docReduction">0%</div>
+                <div class="result-card__label">Documentation Time Saved</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">👨‍👩‍👧</div>
+                <div class="result-card__value" id="familyTime">0 hrs</div>
+                <div class="result-card__label">More Family Time/Week</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">📉</div>
+                <div class="result-card__value" id="effectiveCaseload">0</div>
+                <div class="result-card__label">Effective Caseload</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">💰</div>
+                <div class="result-card__value" id="annualSavings">$0</div>
+                <div class="result-card__label">Annual Savings</div>
+              </div>
+            </div>
+
+            <div class="time-breakdown">
+              <h3 style="margin-bottom: var(--space-4); text-align: center;">Weekly Time Allocation Shift</h3>
+              <div class="time-comparison">
+                <div class="time-block">
+                  <div class="time-block__title">Current (40 hrs)</div>
+                  <div class="time-item"><span>Documentation</span><span id="currentDoc">18 hrs</span></div>
+                  <div class="time-item"><span>Admin Tasks</span><span id="currentAdmin">8 hrs</span></div>
+                  <div class="time-item"><span>Family Contact</span><span id="currentFamily">14 hrs</span></div>
+                </div>
+                <div class="time-arrow">→</div>
+                <div class="time-block">
+                  <div class="time-block__title">With AI (40 hrs)</div>
+                  <div class="time-item"><span>Documentation</span><span id="newDoc">6 hrs</span></div>
+                  <div class="time-item"><span>Admin Tasks</span><span id="newAdmin">3 hrs</span></div>
+                  <div class="time-item" style="color: #22c55e; font-weight: 700;"><span>Family Contact</span><span id="newFamily">31 hrs</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="outcome-cards">
+              <div class="outcome-card">
+                <div class="outcome-card__icon">🏠</div>
+                <div class="outcome-card__title">Home Visits</div>
+                <div class="outcome-card__value" id="visitIncrease">+0%</div>
+                <div class="outcome-card__desc">More frequent check-ins</div>
+              </div>
+              <div class="outcome-card">
+                <div class="outcome-card__icon">⚠️</div>
+                <div class="outcome-card__title">Risk Detection</div>
+                <div class="outcome-card__value" id="riskImprove">+0%</div>
+                <div class="outcome-card__desc">Earlier intervention</div>
+              </div>
+              <div class="outcome-card">
+                <div class="outcome-card__icon">🔄</div>
+                <div class="outcome-card__title">Turnover Reduction</div>
+                <div class="outcome-card__value" id="turnoverReduction">-0%</div>
+                <div class="outcome-card__desc">Reduced burnout</div>
+              </div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Child Welfare AI Blueprint</h3>
+              <p>Receive detailed implementation guidance and outcome projections for your agency.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Blueprint</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Calculate Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function calculateOptimization() {
+      const caseworkers = parseInt(document.getElementById('caseworkers').value);
+      const caseload = parseInt(document.getElementById('caseload').value);
+      const docHours = parseInt(document.getElementById('docHours').value);
+      const adminHours = parseInt(document.getElementById('adminHours').value);
+      const salary = parseInt(document.getElementById('salary').value);
+      const turnover = parseFloat(document.getElementById('turnover').value);
+
+      // AI reduces documentation by 65% and admin by 60%
+      const docReduction = 0.65;
+      const adminReduction = 0.60;
+
+      const newDocHours = Math.round(docHours * (1 - docReduction));
+      const newAdminHours = Math.round(adminHours * (1 - adminReduction));
+      const currentFamilyTime = 40 - docHours - adminHours;
+      const newFamilyTime = 40 - newDocHours - newAdminHours;
+      const timeReclaimed = newFamilyTime - currentFamilyTime;
+
+      // Effective caseload reduction (more time = can handle same cases better)
+      const effectiveCaseload = Math.round(caseload * (currentFamilyTime / newFamilyTime));
+
+      // Cost savings
+      const hoursSavedPerYear = (docHours - newDocHours + adminHours - newAdminHours) * 52 * caseworkers;
+      const fullyLoadedHourly = (salary * 1.35) / 2080;
+      const annualSavings = hoursSavedPerYear * fullyLoadedHourly;
+
+      // Outcome improvements
+      const visitIncrease = Math.round((newFamilyTime / currentFamilyTime - 1) * 100);
+      const riskImprove = Math.round(visitIncrease * 0.6);
+      const turnoverReduction = Math.round(turnover * 0.3 * 100);
+
+      // Update display
+      document.getElementById('timeReclaimed').textContent = timeReclaimed;
+      document.getElementById('docReduction').textContent = Math.round(docReduction * 100) + '%';
+      document.getElementById('familyTime').textContent = '+' + timeReclaimed + ' hrs';
+      document.getElementById('effectiveCaseload').textContent = effectiveCaseload;
+      document.getElementById('annualSavings').textContent = '$' + (annualSavings / 1000000).toFixed(1) + 'M';
+
+      document.getElementById('currentDoc').textContent = docHours + ' hrs';
+      document.getElementById('currentAdmin').textContent = adminHours + ' hrs';
+      document.getElementById('currentFamily').textContent = currentFamilyTime + ' hrs';
+      document.getElementById('newDoc').textContent = newDocHours + ' hrs';
+      document.getElementById('newAdmin').textContent = newAdminHours + ' hrs';
+      document.getElementById('newFamily').textContent = newFamilyTime + ' hrs';
+
+      document.getElementById('visitIncrease').textContent = '+' + visitIncrease + '%';
+      document.getElementById('riskImprove').textContent = '+' + riskImprove + '%';
+      document.getElementById('turnoverReduction').textContent = '-' + turnoverReduction + '%';
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your Child Welfare AI Blueprint will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

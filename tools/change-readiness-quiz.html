@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organizational Change Readiness Quiz | Brite.AI</title>
+  <meta name="description" content="Assess your organization's leadership support, culture, and change capacity for AI adoption.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 800px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .tool-header { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-body { padding: var(--space-8); }
+    .quiz-progress { display: flex; justify-content: center; gap: var(--space-2); margin-bottom: var(--space-6); }
+    .quiz-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--color-border); transition: all 0.3s; }
+    .quiz-dot.active { background: #f59e0b; transform: scale(1.2); }
+    .quiz-dot.completed { background: #22c55e; }
+    .question-card { text-align: center; }
+    .question-card__number { font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-2); }
+    .question-card__text { font-size: var(--text-xl); font-weight: 600; margin-bottom: var(--space-6); }
+    .answer-options { display: flex; flex-direction: column; gap: var(--space-3); max-width: 500px; margin: 0 auto; }
+    .answer-option { padding: var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-lg); cursor: pointer; transition: all 0.2s; text-align: left; }
+    .answer-option:hover { border-color: #f59e0b; background: rgba(245, 158, 11, 0.05); }
+    .answer-option.selected { border-color: #f59e0b; background: rgba(245, 158, 11, 0.1); }
+    .nav-buttons { display: flex; justify-content: center; gap: var(--space-4); margin-top: var(--space-8); }
+    .results-section { display: none; }
+    .readiness-score { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; margin-bottom: var(--space-8); }
+    .readiness-score__value { font-size: var(--text-6xl); font-weight: 800; }
+    .readiness-score__label { font-size: var(--text-xl); margin-top: var(--space-2); }
+    .readiness-score__desc { margin-top: var(--space-4); opacity: 0.9; }
+    .dimension-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-8); }
+    @media (max-width: 768px) { .dimension-results { grid-template-columns: 1fr; } }
+    .dim-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); text-align: center; }
+    .dim-card__icon { font-size: 2rem; margin-bottom: var(--space-2); }
+    .dim-card__title { font-weight: 600; margin-bottom: var(--space-2); }
+    .dim-card__score { font-size: var(--text-2xl); font-weight: 700; color: var(--color-primary); }
+    .actions-section { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); }
+    .actions-section h3 { margin-bottom: var(--space-4); }
+    .action-item { display: flex; gap: var(--space-4); padding: var(--space-4); background: var(--color-background); border-radius: var(--radius-lg); margin-bottom: var(--space-3); }
+    .action-item__priority { width: 32px; height: 32px; background: #f59e0b; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+    .action-item__text h4 { margin-bottom: var(--space-1); }
+    .action-item__text p { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Change Readiness Quiz</h2>
+          <p>Assess your organization's readiness for AI-driven transformation</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="quiz-progress" id="quizProgress"></div>
+            <div class="question-card" id="questionCard"></div>
+            <div class="nav-buttons">
+              <button class="btn btn--secondary" id="prevBtn" style="display: none;" onclick="prevQuestion()">Previous</button>
+              <button class="btn btn--primary" id="nextBtn" onclick="nextQuestion()">Next</button>
+            </div>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="readiness-score">
+              <div class="readiness-score__value" id="scoreValue">0%</div>
+              <div class="readiness-score__label" id="scoreLabel">Change Readiness</div>
+              <div class="readiness-score__desc" id="scoreDesc"></div>
+            </div>
+
+            <div class="dimension-results">
+              <div class="dim-card">
+                <div class="dim-card__icon">👔</div>
+                <div class="dim-card__title">Leadership</div>
+                <div class="dim-card__score" id="leadershipScore">0%</div>
+              </div>
+              <div class="dim-card">
+                <div class="dim-card__icon">🏢</div>
+                <div class="dim-card__title">Culture</div>
+                <div class="dim-card__score" id="cultureScore">0%</div>
+              </div>
+              <div class="dim-card">
+                <div class="dim-card__icon">⚡</div>
+                <div class="dim-card__title">Capacity</div>
+                <div class="dim-card__score" id="capacityScore">0%</div>
+              </div>
+            </div>
+
+            <div class="actions-section">
+              <h3>Recommended Actions</h3>
+              <div id="actionsList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Change Management Playbook</h3>
+              <p>Receive a customized change management plan for your AI initiative.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <button type="submit" class="btn btn--primary">Download Playbook</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const questions = [
+      { dim: 'leadership', text: 'How supportive is executive leadership of AI initiatives?', options: [
+        { text: 'Skeptical or resistant to AI', score: 1 },
+        { text: 'Neutral - open but not actively engaged', score: 2 },
+        { text: 'Supportive - endorses AI exploration', score: 3 },
+        { text: 'Champion - actively driving AI agenda', score: 4 }
+      ]},
+      { dim: 'leadership', text: 'Is there an executive sponsor for AI initiatives?', options: [
+        { text: 'No identified sponsor', score: 1 },
+        { text: 'Informal interest from leadership', score: 2 },
+        { text: 'Designated sponsor with limited time', score: 3 },
+        { text: 'Dedicated executive sponsor with authority', score: 4 }
+      ]},
+      { dim: 'leadership', text: 'How aligned is leadership on AI vision and priorities?', options: [
+        { text: 'No shared vision, competing priorities', score: 1 },
+        { text: 'General agreement but no clear strategy', score: 2 },
+        { text: 'Aligned on direction, details being refined', score: 3 },
+        { text: 'Clear, shared vision with defined priorities', score: 4 }
+      ]},
+      { dim: 'culture', text: 'How does your organization typically respond to new technology?', options: [
+        { text: 'Resistant - prefer current ways of working', score: 1 },
+        { text: 'Cautious - need extensive proof before adopting', score: 2 },
+        { text: 'Open - willing to try new approaches', score: 3 },
+        { text: 'Eager - actively seek innovation', score: 4 }
+      ]},
+      { dim: 'culture', text: 'How is failure typically treated in your organization?', options: [
+        { text: 'Blamed and punished', score: 1 },
+        { text: 'Tolerated but not discussed', score: 2 },
+        { text: 'Accepted as part of learning', score: 3 },
+        { text: 'Celebrated as growth opportunity', score: 4 }
+      ]},
+      { dim: 'culture', text: 'How do staff feel about AI potentially changing their roles?', options: [
+        { text: 'Fearful - worried about job security', score: 1 },
+        { text: 'Skeptical - doubt AI can help', score: 2 },
+        { text: 'Curious - interested to learn more', score: 3 },
+        { text: 'Excited - see opportunity for growth', score: 4 }
+      ]},
+      { dim: 'capacity', text: 'Does your organization have change management expertise?', options: [
+        { text: 'No change management capability', score: 1 },
+        { text: 'Ad-hoc approach to change', score: 2 },
+        { text: 'Some change management resources', score: 3 },
+        { text: 'Established change management practice', score: 4 }
+      ]},
+      { dim: 'capacity', text: 'How successful have past technology changes been?', options: [
+        { text: 'Most changes failed or were abandoned', score: 1 },
+        { text: 'Mixed results with adoption challenges', score: 2 },
+        { text: 'Generally successful with some issues', score: 3 },
+        { text: 'Strong track record of successful change', score: 4 }
+      ]},
+      { dim: 'capacity', text: 'Do staff have bandwidth to learn and adopt new tools?', options: [
+        { text: 'No - already overwhelmed', score: 1 },
+        { text: 'Limited - very constrained capacity', score: 2 },
+        { text: 'Some - can accommodate with planning', score: 3 },
+        { text: 'Yes - time allocated for development', score: 4 }
+      ]}
+    ];
+
+    let currentQuestion = 0;
+    let answers = [];
+
+    function init() {
+      renderProgress();
+      renderQuestion();
+    }
+
+    function renderProgress() {
+      const progressEl = document.getElementById('quizProgress');
+      progressEl.innerHTML = questions.map((_, i) =>
+        `<div class="quiz-dot ${i === currentQuestion ? 'active' : ''} ${answers[i] !== undefined ? 'completed' : ''}"></div>`
+      ).join('');
+    }
+
+    function renderQuestion() {
+      const q = questions[currentQuestion];
+      const cardEl = document.getElementById('questionCard');
+      cardEl.innerHTML = `
+        <div class="question-card__number">Question ${currentQuestion + 1} of ${questions.length}</div>
+        <div class="question-card__text">${q.text}</div>
+        <div class="answer-options">
+          ${q.options.map((opt, i) => `
+            <div class="answer-option ${answers[currentQuestion] === i ? 'selected' : ''}" onclick="selectAnswer(${i})">
+              ${opt.text}
+            </div>
+          `).join('')}
+        </div>
+      `;
+      document.getElementById('prevBtn').style.display = currentQuestion > 0 ? 'inline-block' : 'none';
+      document.getElementById('nextBtn').textContent = currentQuestion === questions.length - 1 ? 'Get Results' : 'Next';
+    }
+
+    function selectAnswer(index) {
+      answers[currentQuestion] = index;
+      renderQuestion();
+      renderProgress();
+    }
+
+    function nextQuestion() {
+      if (answers[currentQuestion] === undefined) {
+        alert('Please select an answer');
+        return;
+      }
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        renderProgress();
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderProgress();
+        renderQuestion();
+      }
+    }
+
+    function showResults() {
+      const scores = { leadership: 0, culture: 0, capacity: 0 };
+      const counts = { leadership: 0, culture: 0, capacity: 0 };
+
+      questions.forEach((q, i) => {
+        if (answers[i] !== undefined) {
+          scores[q.dim] += q.options[answers[i]].score;
+          counts[q.dim]++;
+        }
+      });
+
+      const percents = {
+        leadership: Math.round((scores.leadership / (counts.leadership * 4)) * 100),
+        culture: Math.round((scores.culture / (counts.culture * 4)) * 100),
+        capacity: Math.round((scores.capacity / (counts.capacity * 4)) * 100)
+      };
+
+      const overall = Math.round((percents.leadership + percents.culture + percents.capacity) / 3);
+
+      let label, desc;
+      if (overall >= 80) { label = 'Highly Ready'; desc = 'Your organization is well-positioned for AI transformation. Proceed with confidence.'; }
+      else if (overall >= 60) { label = 'Moderately Ready'; desc = 'Good foundation exists. Address identified gaps for best results.'; }
+      else if (overall >= 40) { label = 'Developing Readiness'; desc = 'Significant change management effort needed alongside AI implementation.'; }
+      else { label = 'Building Readiness'; desc = 'Focus on organizational readiness before major AI initiatives.'; }
+
+      document.getElementById('scoreValue').textContent = overall + '%';
+      document.getElementById('scoreLabel').textContent = label;
+      document.getElementById('scoreDesc').textContent = desc;
+      document.getElementById('leadershipScore').textContent = percents.leadership + '%';
+      document.getElementById('cultureScore').textContent = percents.culture + '%';
+      document.getElementById('capacityScore').textContent = percents.capacity + '%';
+
+      generateActions(percents);
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function generateActions(percents) {
+      const actions = [];
+      if (percents.leadership < 75) {
+        actions.push({ title: 'Secure Executive Sponsorship', desc: 'Identify and engage an executive champion to drive AI initiatives.' });
+      }
+      if (percents.culture < 75) {
+        actions.push({ title: 'Build AI Awareness', desc: 'Conduct lunch-and-learns and demos to build excitement and reduce fear.' });
+      }
+      if (percents.capacity < 75) {
+        actions.push({ title: 'Develop Change Capability', desc: 'Train change champions and allocate time for staff development.' });
+      }
+      actions.push({ title: 'Start with Quick Wins', desc: 'Begin with high-visibility, low-risk AI projects to build momentum.' });
+      actions.push({ title: 'Communicate Continuously', desc: 'Share progress, celebrate wins, and address concerns transparently.' });
+
+      const listEl = document.getElementById('actionsList');
+      listEl.innerHTML = actions.slice(0, 5).map((a, i) => `
+        <div class="action-item">
+          <div class="action-item__priority">${i + 1}</div>
+          <div class="action-item__text">
+            <h4>${a.title}</h4>
+            <p>${a.desc}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your change management playbook will be sent to your email.');
+    }
+
+    init();
+  </script>
+</body>
+</html>

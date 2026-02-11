@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Implementation Timeline Generator | Brite.AI</title>
+  <meta name="description" content="Generate a realistic implementation timeline for your AI project.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group select, .form-group input { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .results-section { display: none; }
+    .timeline-header { background: linear-gradient(135deg, #f5f3ff, #ede9fe); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-4); }
+    .timeline-header__dates { text-align: center; }
+    .timeline-header__date { font-size: var(--text-2xl); font-weight: 800; color: #7c3aed; }
+    .timeline-header__label { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .timeline-header__duration { background: #7c3aed; color: #fff; padding: var(--space-3) var(--space-6); border-radius: var(--radius-full); font-weight: 700; }
+    .timeline-container { position: relative; padding-left: 40px; }
+    .timeline-container::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, #7c3aed, #6d28d9); border-radius: 2px; }
+    .timeline-phase { position: relative; margin-bottom: var(--space-6); padding-left: var(--space-6); }
+    .timeline-phase::before { content: ''; position: absolute; left: -32px; top: 8px; width: 20px; height: 20px; background: #7c3aed; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 0 0 2px #7c3aed; }
+    .timeline-phase__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+    .timeline-phase__name { font-size: var(--text-lg); font-weight: 700; }
+    .timeline-phase__duration { background: #ede9fe; color: #7c3aed; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 600; }
+    .timeline-phase__dates { font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-3); }
+    .timeline-phase__tasks { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-4); }
+    .task-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); font-size: var(--text-sm); }
+    .task-item:last-child { border-bottom: none; }
+    .task-item__checkbox { width: 18px; height: 18px; border: 2px solid var(--color-border); border-radius: var(--radius-sm); }
+    .milestones-section { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .milestone-item { display: flex; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+    .milestone-item:last-child { border-bottom: none; }
+    .milestone-item__icon { width: 48px; height: 48px; background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+    .milestone-item__content { flex: 1; }
+    .milestone-item__name { font-weight: 600; margin-bottom: var(--space-1); }
+    .milestone-item__date { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .milestone-item__week { font-weight: 700; color: #7c3aed; white-space: nowrap; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+    .export-btn { margin-top: var(--space-4); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Implementation Timeline Generator</h2>
+          <p>Create a realistic project timeline with key milestones</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>Project Start Date</label>
+              <input type="date" id="startDate">
+            </div>
+
+            <div class="form-group">
+              <label>AI Solution Type</label>
+              <select id="solutionType">
+                <option value="chatbot">Chatbot / Virtual Agent</option>
+                <option value="document">Document Processing / IDP</option>
+                <option value="analytics">Predictive Analytics</option>
+                <option value="automation">Process Automation (RPA+AI)</option>
+                <option value="decision">Decision Support System</option>
+                <option value="custom">Custom AI/ML Solution</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Implementation Approach</label>
+                <select id="approach">
+                  <option value="saas">SaaS / Cloud Platform</option>
+                  <option value="cots">COTS with Configuration</option>
+                  <option value="custom">Custom Development</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Organization Size</label>
+                <select id="orgSize">
+                  <option value="small">Small (under 500 employees)</option>
+                  <option value="medium">Medium (500-2000 employees)</option>
+                  <option value="large">Large (2000+ employees)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Procurement Status</label>
+                <select id="procurement">
+                  <option value="complete">Vendor Selected</option>
+                  <option value="inprogress">RFP in Progress</option>
+                  <option value="notstarted">Not Started</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Data Readiness</label>
+                <select id="dataReady">
+                  <option value="ready">Data Ready</option>
+                  <option value="partial">Partial - Some Work Needed</option>
+                  <option value="notready">Significant Data Work Required</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="generateTimeline()" style="width: 100%;">Generate Timeline</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="timeline-header">
+              <div class="timeline-header__dates">
+                <div class="timeline-header__date" id="startDateDisplay">Jan 1, 2025</div>
+                <div class="timeline-header__label">Project Start</div>
+              </div>
+              <div class="timeline-header__duration" id="totalDuration">12 Months</div>
+              <div class="timeline-header__dates">
+                <div class="timeline-header__date" id="endDateDisplay">Dec 31, 2025</div>
+                <div class="timeline-header__label">Go-Live Target</div>
+              </div>
+            </div>
+
+            <div class="timeline-container" id="timelineContainer"></div>
+
+            <div class="milestones-section">
+              <h3 style="margin-bottom: var(--space-4);">Key Milestones</h3>
+              <div id="milestonesList"></div>
+            </div>
+
+            <button class="btn btn--secondary export-btn" onclick="exportTimeline()" style="width: 100%;">📅 Export to Calendar</button>
+
+            <div class="lead-capture">
+              <h3>Get Your Detailed Project Plan</h3>
+              <p>Receive a comprehensive project plan with task-level details and resource requirements.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Full Plan</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Generate New Timeline</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set default date to today
+    document.getElementById('startDate').valueAsDate = new Date();
+
+    const phases = {
+      chatbot: [
+        { name: "Discovery & Requirements", weeks: 3, tasks: ["Stakeholder interviews", "Use case documentation", "Success metrics definition", "Technical requirements"] },
+        { name: "Design & Architecture", weeks: 3, tasks: ["Conversation flow design", "Integration architecture", "Knowledge base structure", "UX/UI design"] },
+        { name: "Development & Configuration", weeks: 6, tasks: ["Platform setup", "Intent and entity training", "Integration development", "Knowledge base population"] },
+        { name: "Testing & Refinement", weeks: 4, tasks: ["Functional testing", "User acceptance testing", "Performance tuning", "Edge case handling"] },
+        { name: "Pilot & Deployment", weeks: 4, tasks: ["Soft launch (10% traffic)", "Monitoring and adjustment", "Full rollout", "Training and documentation"] }
+      ],
+      document: [
+        { name: "Discovery & Assessment", weeks: 4, tasks: ["Document type inventory", "Volume analysis", "Quality assessment", "Integration requirements"] },
+        { name: "Solution Design", weeks: 3, tasks: ["Processing workflow design", "Extraction rules definition", "Exception handling design", "Output format specification"] },
+        { name: "Development & Training", weeks: 8, tasks: ["Model training", "Integration development", "Workflow automation", "Exception handling"] },
+        { name: "Testing & Validation", weeks: 5, tasks: ["Accuracy testing", "Volume testing", "Exception path testing", "User acceptance testing"] },
+        { name: "Deployment & Optimization", weeks: 4, tasks: ["Production deployment", "Monitoring setup", "Continuous improvement", "User training"] }
+      ],
+      analytics: [
+        { name: "Discovery & Data Assessment", weeks: 5, tasks: ["Business requirements", "Data inventory", "Data quality analysis", "Feature identification"] },
+        { name: "Data Preparation", weeks: 6, tasks: ["Data cleansing", "Feature engineering", "Data pipeline development", "Training/test splits"] },
+        { name: "Model Development", weeks: 8, tasks: ["Algorithm selection", "Model training", "Hyperparameter tuning", "Model validation"] },
+        { name: "Integration & Testing", weeks: 5, tasks: ["API development", "System integration", "Performance testing", "A/B testing setup"] },
+        { name: "Deployment & Monitoring", weeks: 4, tasks: ["Production deployment", "Monitoring dashboards", "Drift detection", "Feedback loops"] }
+      ],
+      automation: [
+        { name: "Process Discovery", weeks: 4, tasks: ["Process mapping", "Automation opportunity assessment", "ROI analysis", "Technical feasibility"] },
+        { name: "Solution Design", weeks: 3, tasks: ["Bot architecture", "Exception handling", "Integration design", "Security review"] },
+        { name: "Development", weeks: 6, tasks: ["Bot development", "AI component integration", "Testing scripts", "Error handling"] },
+        { name: "Testing & UAT", weeks: 4, tasks: ["Unit testing", "Integration testing", "User acceptance testing", "Performance testing"] },
+        { name: "Deployment & Scaling", weeks: 3, tasks: ["Production deployment", "Monitoring setup", "Scaling plan", "Support documentation"] }
+      ],
+      decision: [
+        { name: "Requirements & Ethics Review", weeks: 5, tasks: ["Decision criteria documentation", "Ethics and bias assessment", "Compliance review", "Stakeholder alignment"] },
+        { name: "Design & Architecture", weeks: 4, tasks: ["Decision logic design", "Explainability requirements", "Human oversight design", "Integration planning"] },
+        { name: "Development", weeks: 8, tasks: ["Model development", "Rules engine configuration", "Explanation generation", "Appeals workflow"] },
+        { name: "Validation & Testing", weeks: 6, tasks: ["Accuracy validation", "Fairness testing", "Explanation testing", "User acceptance testing"] },
+        { name: "Controlled Deployment", weeks: 5, tasks: ["Shadow mode deployment", "Pilot with human review", "Gradual automation", "Monitoring and adjustment"] }
+      ],
+      custom: [
+        { name: "Discovery & Planning", weeks: 6, tasks: ["Requirements gathering", "Feasibility study", "Architecture design", "Resource planning"] },
+        { name: "Data Preparation", weeks: 8, tasks: ["Data collection", "Data cleaning", "Feature engineering", "Annotation/labeling"] },
+        { name: "Model Development", weeks: 12, tasks: ["Algorithm research", "Model training", "Iteration and tuning", "Validation"] },
+        { name: "Integration & Testing", weeks: 6, tasks: ["API development", "System integration", "Performance testing", "Security testing"] },
+        { name: "Deployment & Operations", weeks: 4, tasks: ["Production deployment", "MLOps setup", "Monitoring", "Documentation"] }
+      ]
+    };
+
+    const milestones = [
+      { icon: "📋", name: "Requirements Signed Off", phase: 0 },
+      { icon: "🎨", name: "Design Approved", phase: 1 },
+      { icon: "🔧", name: "Development Complete", phase: 2 },
+      { icon: "✅", name: "UAT Complete", phase: 3 },
+      { icon: "🚀", name: "Go-Live", phase: 4 }
+    ];
+
+    function generateTimeline() {
+      const startDate = new Date(document.getElementById('startDate').value);
+      const solutionType = document.getElementById('solutionType').value;
+      const approach = document.getElementById('approach').value;
+      const orgSize = document.getElementById('orgSize').value;
+      const procurement = document.getElementById('procurement').value;
+      const dataReady = document.getElementById('dataReady').value;
+
+      let projectPhases = JSON.parse(JSON.stringify(phases[solutionType]));
+
+      // Apply multipliers
+      let multiplier = 1;
+      if (approach === 'custom') multiplier *= 1.3;
+      if (orgSize === 'large') multiplier *= 1.2;
+      if (dataReady === 'notready') multiplier *= 1.4;
+
+      // Add procurement phase if needed
+      if (procurement !== 'complete') {
+        const procWeeks = procurement === 'notstarted' ? 12 : 6;
+        projectPhases.unshift({
+          name: "Procurement",
+          weeks: procWeeks,
+          tasks: ["Requirements finalization", "RFP development", "Vendor evaluation", "Contract negotiation"]
+        });
+      }
+
+      // Apply multiplier to all phases
+      projectPhases.forEach(p => p.weeks = Math.round(p.weeks * multiplier));
+
+      const totalWeeks = projectPhases.reduce((sum, p) => sum + p.weeks, 0);
+      const endDate = new Date(startDate);
+      endDate.setDate(endDate.getDate() + totalWeeks * 7);
+
+      // Update header
+      document.getElementById('startDateDisplay').textContent = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      document.getElementById('endDateDisplay').textContent = endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      document.getElementById('totalDuration').textContent = Math.round(totalWeeks / 4.3) + ' Months';
+
+      // Generate timeline
+      let currentDate = new Date(startDate);
+      document.getElementById('timelineContainer').innerHTML = projectPhases.map((phase, idx) => {
+        const phaseStart = new Date(currentDate);
+        currentDate.setDate(currentDate.getDate() + phase.weeks * 7);
+        const phaseEnd = new Date(currentDate);
+        phaseEnd.setDate(phaseEnd.getDate() - 1);
+
+        return `
+          <div class="timeline-phase">
+            <div class="timeline-phase__header">
+              <span class="timeline-phase__name">${phase.name}</span>
+              <span class="timeline-phase__duration">${phase.weeks} weeks</span>
+            </div>
+            <div class="timeline-phase__dates">
+              ${phaseStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${phaseEnd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </div>
+            <div class="timeline-phase__tasks">
+              ${phase.tasks.map(task => `
+                <div class="task-item">
+                  <div class="task-item__checkbox"></div>
+                  <span>${task}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Generate milestones
+      let weekCounter = 0;
+      document.getElementById('milestonesList').innerHTML = milestones.slice(0, projectPhases.length).map((m, idx) => {
+        weekCounter += projectPhases[idx].weeks;
+        const milestoneDate = new Date(startDate);
+        milestoneDate.setDate(milestoneDate.getDate() + weekCounter * 7);
+
+        return `
+          <div class="milestone-item">
+            <div class="milestone-item__icon">${m.icon}</div>
+            <div class="milestone-item__content">
+              <div class="milestone-item__name">${m.name}</div>
+              <div class="milestone-item__date">${milestoneDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
+            </div>
+            <div class="milestone-item__week">Week ${weekCounter}</div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function exportTimeline() {
+      alert('Timeline export functionality would generate an ICS calendar file or integrate with your project management tool.');
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your detailed project plan will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

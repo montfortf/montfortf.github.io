@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Risk Assessment Tool | Brite.AI</title>
+  <meta name="description" content="Evaluate the risk level of your AI use case across ethics, security, compliance, and operational dimensions with mitigation recommendations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .assessment-card {
+      background: var(--color-background);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-6);
+    }
+    .assessment-header {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      color: #fff;
+      padding: var(--space-8);
+      text-align: center;
+    }
+    .assessment-header h2 {
+      margin-bottom: var(--space-2);
+    }
+    .assessment-body {
+      padding: var(--space-8);
+    }
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+    }
+    .step {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--color-border);
+      transition: all 0.3s;
+    }
+    .step.active {
+      background: var(--color-primary);
+      transform: scale(1.2);
+    }
+    .step.completed {
+      background: #10b981;
+    }
+    .form-step {
+      display: none;
+    }
+    .form-step.active {
+      display: block;
+    }
+    .form-group {
+      margin-bottom: var(--space-6);
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+      color: var(--color-text);
+    }
+    .form-group .help-text {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+    .form-group input[type="text"],
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-base);
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+    .risk-category {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-4);
+    }
+    .risk-category__title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+    }
+    .risk-category__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .radio-option {
+      display: flex;
+      align-items: flex-start;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .radio-option:hover {
+      border-color: var(--color-primary);
+      background: rgba(26, 86, 219, 0.05);
+    }
+    .radio-option.selected {
+      border-color: var(--color-primary);
+      background: rgba(26, 86, 219, 0.1);
+    }
+    .radio-option input {
+      margin-right: var(--space-3);
+      margin-top: 4px;
+    }
+    .radio-option .option-text {
+      flex: 1;
+    }
+    .radio-option .option-label {
+      font-weight: 500;
+      display: block;
+    }
+    .radio-option .option-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+    /* Results Styles */
+    .results-section {
+      display: none;
+    }
+    .risk-summary {
+      text-align: center;
+      padding: var(--space-8);
+      border-radius: var(--radius-xl);
+      margin-bottom: var(--space-8);
+    }
+    .risk-summary.low {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+    }
+    .risk-summary.medium {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #fff;
+    }
+    .risk-summary.high {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      color: #fff;
+    }
+    .risk-summary__level {
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: var(--space-2);
+    }
+    .risk-summary__score {
+      font-size: var(--text-xl);
+      opacity: 0.9;
+    }
+    .risk-summary__label {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      margin-top: var(--space-4);
+      font-weight: 600;
+    }
+    .risk-breakdown {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+    @media (max-width: 768px) {
+      .risk-breakdown {
+        grid-template-columns: 1fr;
+      }
+    }
+    .risk-card {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+    .risk-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-3);
+    }
+    .risk-card__title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: 600;
+    }
+    .risk-card__badge {
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 600;
+    }
+    .risk-card__badge.low {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .risk-card__badge.medium {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    .risk-card__badge.high {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .risk-card__bar {
+      height: 8px;
+      background: var(--color-border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .risk-card__bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    .risk-card__bar-fill.low { background: #10b981; }
+    .risk-card__bar-fill.medium { background: #f59e0b; }
+    .risk-card__bar-fill.high { background: #dc2626; }
+    .mitigation-section {
+      margin-top: var(--space-8);
+    }
+    .mitigation-section h3 {
+      margin-bottom: var(--space-4);
+    }
+    .mitigation-item {
+      display: flex;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: var(--color-background-alt);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+      border-left: 4px solid var(--color-primary);
+    }
+    .mitigation-item__priority {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .mitigation-item__content h4 {
+      margin-bottom: var(--space-1);
+    }
+    .mitigation-item__content p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+    .mitigation-item.high-priority {
+      border-left-color: #dc2626;
+    }
+    .mitigation-item.high-priority .mitigation-item__priority {
+      background: #dc2626;
+    }
+    .mitigation-item.medium-priority {
+      border-left-color: #f59e0b;
+    }
+    .mitigation-item.medium-priority .mitigation-item__priority {
+      background: #f59e0b;
+    }
+    .governance-checklist {
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-top: var(--space-8);
+    }
+    .governance-checklist h3 {
+      margin-bottom: var(--space-4);
+    }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .checklist-item:last-child {
+      border-bottom: none;
+    }
+    .checklist-item__icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+    }
+    .checklist-item__icon.required {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+    .checklist-item__icon.recommended {
+      background: #fef3c7;
+      color: #d97706;
+    }
+    .lead-capture {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-8);
+      text-align: center;
+    }
+    .lead-capture h3 {
+      margin-bottom: var(--space-2);
+    }
+    .lead-capture p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-6);
+    }
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .lead-form input {
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-base);
+    }
+    .lead-form input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../ai-data/index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="assessment-card">
+        <div class="assessment-header">
+          <h2>AI Risk Assessment Tool</h2>
+          <p>Evaluate the risk level of your AI use case and get mitigation recommendations</p>
+        </div>
+
+        <div class="assessment-body">
+          <div class="step-indicator">
+            <div class="step active" data-step="1"></div>
+            <div class="step" data-step="2"></div>
+            <div class="step" data-step="3"></div>
+            <div class="step" data-step="4"></div>
+            <div class="step" data-step="5"></div>
+          </div>
+
+          <div id="formSection">
+            <!-- Step 1: Use Case Context -->
+            <div class="form-step active" id="step1">
+              <h3 style="margin-bottom: var(--space-6);">Describe Your AI Use Case</h3>
+
+              <div class="form-group">
+                <label>Use Case Name</label>
+                <input type="text" id="useCaseName" placeholder="e.g., Benefits Eligibility Determination">
+              </div>
+
+              <div class="form-group">
+                <label>Use Case Type</label>
+                <select id="useCaseType">
+                  <option value="">Select type...</option>
+                  <option value="decision-support">Decision Support (assists human decisions)</option>
+                  <option value="automated-decision">Automated Decision Making (no human in loop)</option>
+                  <option value="classification">Classification/Categorization</option>
+                  <option value="prediction">Prediction/Forecasting</option>
+                  <option value="document-processing">Document Processing</option>
+                  <option value="chatbot">Chatbot/Virtual Assistant</option>
+                  <option value="fraud-detection">Fraud Detection</option>
+                  <option value="resource-optimization">Resource Optimization</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Brief Description</label>
+                <textarea id="useCaseDesc" rows="3" placeholder="Describe what the AI will do and how it will be used..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Target Population Affected</label>
+                <select id="targetPopulation">
+                  <option value="">Select population...</option>
+                  <option value="internal">Internal staff only</option>
+                  <option value="general">General public</option>
+                  <option value="benefits">Benefits recipients</option>
+                  <option value="vulnerable">Vulnerable populations (children, elderly, disabled)</option>
+                  <option value="justice">Justice-involved individuals</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Step 2: Ethical Risk -->
+            <div class="form-step" id="step2">
+              <div class="risk-category">
+                <div class="risk-category__title">
+                  <div class="risk-category__icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff;">⚖️</div>
+                  <span>Ethical & Fairness Risk</span>
+                </div>
+
+                <div class="form-group">
+                  <label>Does the AI make or influence decisions that affect individual rights, benefits, or opportunities?</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input type="radio" name="rights_impact" value="1">
+                      <div class="option-text">
+                        <span class="option-label">No direct impact</span>
+                        <span class="option-desc">Informational only, no decisions affected</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="rights_impact" value="2">
+                      <div class="option-text">
+                        <span class="option-label">Indirect impact</span>
+                        <span class="option-desc">Influences decisions but human makes final call</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="rights_impact" value="3">
+                      <div class="option-text">
+                        <span class="option-label">Direct impact on services</span>
+                        <span class="option-desc">Affects service delivery or resource allocation</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="rights_impact" value="4">
+                      <div class="option-text">
+                        <span class="option-label">Direct impact on rights</span>
+                        <span class="option-desc">Affects eligibility, benefits, or legal status</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Does the AI use demographic data or proxies that could result in disparate impact?</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input type="radio" name="demographic_data" value="1">
+                      <div class="option-text">
+                        <span class="option-label">No demographic data</span>
+                        <span class="option-desc">Data does not include or proxy demographics</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="demographic_data" value="2">
+                      <div class="option-text">
+                        <span class="option-label">Limited demographic data</span>
+                        <span class="option-desc">Some demographic data but not for decisions</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="demographic_data" value="3">
+                      <div class="option-text">
+                        <span class="option-label">Demographic proxies possible</span>
+                        <span class="option-desc">Features could correlate with protected classes</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="demographic_data" value="4">
+                      <div class="option-text">
+                        <span class="option-label">Direct demographic use</span>
+                        <span class="option-desc">Demographics are input features for decisions</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>What is the historical context of this decision domain?</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input type="radio" name="historical_bias" value="1">
+                      <div class="option-text">
+                        <span class="option-label">No known historical bias</span>
+                        <span class="option-desc">Domain has no history of discriminatory practices</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="historical_bias" value="2">
+                      <div class="option-text">
+                        <span class="option-label">Minor historical issues</span>
+                        <span class="option-desc">Some past issues but largely addressed</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="historical_bias" value="3">
+                      <div class="option-text">
+                        <span class="option-label">Documented historical bias</span>
+                        <span class="option-desc">Domain has documented discriminatory history</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="historical_bias" value="4">
+                      <div class="option-text">
+                        <span class="option-label">Active litigation/oversight</span>
+                        <span class="option-desc">Current consent decrees or active civil rights oversight</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Security & Privacy Risk -->
+            <div class="form-step" id="step3">
+              <div class="risk-category">
+                <div class="risk-category__title">
+                  <div class="risk-category__icon" style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff;">🔒</div>
+                  <span>Security & Privacy Risk</span>
+                </div>
+
+                <div class="form-group">
+                  <label>What type of data will the AI process?</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input type="radio" name="data_sensitivity" value="1">
+                      <div class="option-text">
+                        <span class="option-label">Public data only</span>
+                        <span class="option-desc">No personal or sensitive information</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="data_sensitivity" value="2">
+                      <div class="option-text">
+                        <span class="option-label">Basic PII</span>
+                        <span class="option-desc">Names, addresses, contact information</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="data_sensitivity" value="3">
+                      <div class="option-text">
+                        <span class="option-label">Sensitive PII</span>
+                        <span class="option-desc">SSN, financial data, health information</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="data_sensitivity" value="4">
+                      <div class="option-text">
+                        <span class="option-label">Highly sensitive/regulated</span>
+                        <span class="option-desc">HIPAA, CJIS, child welfare, or substance abuse data</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Where will the AI model be hosted/executed?</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input type="radio" name="hosting" value="1">
+                      <div class="option-text">
+                        <span class="option-label">On-premise only</span>
+                        <span class="option-desc">All processing within government data center</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="hosting" value="2">
+                      <div class="option-text">
+                        <span class="option-label">Government cloud</span>
+                        <span class="option-desc">FedRAMP/StateRAMP authorized cloud</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="hosting" value="3">
+                      <div class="option-text">
+                        <span class="option-label">Commercial cloud</span>
+                        <span class="option-desc">Commercial cloud with government compliance</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="hosting" value="4">
+                      <div class="option-text">
+                        <span class="option-label">Third-party API</span>
+                        <span class="option-desc">External AI service (e.g., ChatGPT, Gemini)</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>What is the potential impact of a data breach or model failure?</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input type="radio" name="breach_impact" value="1">
+                      <div class="option-text">
+                        <span class="option-label">Minimal impact</span>
+                        <span class="option-desc">Limited to operational inconvenience</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="breach_impact" value="2">
+                      <div class="option-text">
+                        <span class="option-label">Moderate impact</span>
+                        <span class="option-desc">Could affect some individuals or operations</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="breach_impact" value="3">
+                      <div class="option-text">
+                        <span class="option-label">Significant impact</span>
+                        <span class="option-desc">Would harm many individuals or major operations</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="breach_impact" value="4">
+                      <div class="option-text">
+                        <span class="option-label">Severe impact</span>
+                        <span class="option-desc">Could cause substantial harm to vulnerable populations</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Compliance Risk -->
+            <div class="form-step" id="step4">
+              <div class="risk-category">
+                <div class="risk-category__title">
+                  <div class="risk-category__icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">📋</div>
+                  <span>Compliance & Legal Risk</span>
+                </div>
+
+                <div class="form-group">
+                  <label>What regulatory frameworks apply to this use case?</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input type="radio" name="regulatory" value="1">
+                      <div class="option-text">
+                        <span class="option-label">General government standards</span>
+                        <span class="option-desc">Standard IT and data policies only</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="regulatory" value="2">
+                      <div class="option-text">
+                        <span class="option-label">Sector-specific regulations</span>
+                        <span class="option-desc">Industry regulations (education, transportation)</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="regulatory" value="3">
+                      <div class="option-text">
+                        <span class="option-label">Federal program requirements</span>
+                        <span class="option-desc">Federal funding requirements (SNAP, TANF, Medicaid)</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="regulatory" value="4">
+                      <div class="option-text">
+                        <span class="option-label">Strict federal oversight</span>
+                        <span class="option-desc">HIPAA, CJIS, Title IV-E, or civil rights oversight</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Is there an appeals or due process requirement for decisions?</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input type="radio" name="due_process" value="1">
+                      <div class="option-text">
+                        <span class="option-label">No appeals process needed</span>
+                        <span class="option-desc">Operational decisions without individual impact</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="due_process" value="2">
+                      <div class="option-text">
+                        <span class="option-label">Informal review available</span>
+                        <span class="option-desc">Can request reconsideration</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="due_process" value="3">
+                      <div class="option-text">
+                        <span class="option-label">Formal appeals required</span>
+                        <span class="option-desc">Statutory appeals process exists</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="due_process" value="4">
+                      <div class="option-text">
+                        <span class="option-label">Constitutional due process</span>
+                        <span class="option-desc">Liberty or property interests at stake</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>What level of explainability is required?</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input type="radio" name="explainability" value="1">
+                      <div class="option-text">
+                        <span class="option-label">None required</span>
+                        <span class="option-desc">No explanation needed for outputs</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="explainability" value="2">
+                      <div class="option-text">
+                        <span class="option-label">General explanation</span>
+                        <span class="option-desc">Can explain how the system works generally</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="explainability" value="3">
+                      <div class="option-text">
+                        <span class="option-label">Individual explanation</span>
+                        <span class="option-desc">Must explain specific decisions to individuals</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="explainability" value="4">
+                      <div class="option-text">
+                        <span class="option-label">Legal/audit trail</span>
+                        <span class="option-desc">Full audit trail for legal proceedings</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 5: Operational Risk -->
+            <div class="form-step" id="step5">
+              <div class="risk-category">
+                <div class="risk-category__title">
+                  <div class="risk-category__icon" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">⚙️</div>
+                  <span>Operational Risk</span>
+                </div>
+
+                <div class="form-group">
+                  <label>What is the scale of deployment?</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input type="radio" name="scale" value="1">
+                      <div class="option-text">
+                        <span class="option-label">Pilot/Limited</span>
+                        <span class="option-desc">Small pilot with limited scope</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="scale" value="2">
+                      <div class="option-text">
+                        <span class="option-label">Single program</span>
+                        <span class="option-desc">One program or department</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="scale" value="3">
+                      <div class="option-text">
+                        <span class="option-label">Multiple programs</span>
+                        <span class="option-desc">Cross-program or agency-wide</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="scale" value="4">
+                      <div class="option-text">
+                        <span class="option-label">Statewide/public-facing</span>
+                        <span class="option-desc">Large-scale public-facing deployment</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>What level of human oversight will be in place?</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input type="radio" name="human_oversight" value="1">
+                      <div class="option-text">
+                        <span class="option-label">Human in the loop</span>
+                        <span class="option-desc">Human reviews every AI output before action</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="human_oversight" value="2">
+                      <div class="option-text">
+                        <span class="option-label">Human on the loop</span>
+                        <span class="option-desc">Human can intervene and override</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="human_oversight" value="3">
+                      <div class="option-text">
+                        <span class="option-label">Sampling review</span>
+                        <span class="option-desc">Human reviews sample of decisions</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="human_oversight" value="4">
+                      <div class="option-text">
+                        <span class="option-label">Fully automated</span>
+                        <span class="option-desc">No routine human oversight</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>What happens if the AI system fails or is unavailable?</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input type="radio" name="failure_impact" value="1">
+                      <div class="option-text">
+                        <span class="option-label">Minimal disruption</span>
+                        <span class="option-desc">Easy fallback to manual process</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="failure_impact" value="2">
+                      <div class="option-text">
+                        <span class="option-label">Moderate disruption</span>
+                        <span class="option-desc">Would slow operations but manageable</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="failure_impact" value="3">
+                      <div class="option-text">
+                        <span class="option-label">Significant disruption</span>
+                        <span class="option-desc">Would seriously impact service delivery</span>
+                      </div>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="failure_impact" value="4">
+                      <div class="option-text">
+                        <span class="option-label">Critical dependency</span>
+                        <span class="option-desc">Operations cannot continue without it</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-buttons">
+              <button type="button" class="btn btn--secondary" id="prevBtn" style="visibility: hidden;">Previous</button>
+              <button type="button" class="btn btn--primary" id="nextBtn">Continue</button>
+            </div>
+          </div>
+
+          <!-- Results Section -->
+          <div class="results-section" id="resultsSection">
+            <div class="risk-summary" id="riskSummary">
+              <div class="risk-summary__level" id="riskLevel">--</div>
+              <div class="risk-summary__score">Risk Score: <span id="riskScore">0</span>/100</div>
+              <div class="risk-summary__label" id="riskLabel">Calculating...</div>
+            </div>
+
+            <h3 style="margin-bottom: var(--space-4);">Risk Breakdown by Category</h3>
+            <div class="risk-breakdown">
+              <div class="risk-card">
+                <div class="risk-card__header">
+                  <div class="risk-card__title">⚖️ Ethical & Fairness</div>
+                  <span class="risk-card__badge" id="ethicsBadge">--</span>
+                </div>
+                <div class="risk-card__bar">
+                  <div class="risk-card__bar-fill" id="ethicsBar" style="width: 0%;"></div>
+                </div>
+              </div>
+              <div class="risk-card">
+                <div class="risk-card__header">
+                  <div class="risk-card__title">🔒 Security & Privacy</div>
+                  <span class="risk-card__badge" id="securityBadge">--</span>
+                </div>
+                <div class="risk-card__bar">
+                  <div class="risk-card__bar-fill" id="securityBar" style="width: 0%;"></div>
+                </div>
+              </div>
+              <div class="risk-card">
+                <div class="risk-card__header">
+                  <div class="risk-card__title">📋 Compliance & Legal</div>
+                  <span class="risk-card__badge" id="complianceBadge">--</span>
+                </div>
+                <div class="risk-card__bar">
+                  <div class="risk-card__bar-fill" id="complianceBar" style="width: 0%;"></div>
+                </div>
+              </div>
+              <div class="risk-card">
+                <div class="risk-card__header">
+                  <div class="risk-card__title">⚙️ Operational</div>
+                  <span class="risk-card__badge" id="operationalBadge">--</span>
+                </div>
+                <div class="risk-card__bar">
+                  <div class="risk-card__bar-fill" id="operationalBar" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mitigation-section">
+              <h3>Priority Mitigation Actions</h3>
+              <div id="mitigationList"></div>
+            </div>
+
+            <div class="governance-checklist">
+              <h3>Required Governance Actions</h3>
+              <div id="governanceList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Complete Risk Report</h3>
+              <p>Receive a detailed PDF with full risk analysis, mitigation roadmap, and governance checklist.</p>
+              <form class="lead-form" id="leadForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <button type="submit" class="btn btn--primary">Download Full Report</button>
+              </form>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-8);">
+              <a href="../contact/index.html" class="btn btn--primary btn--lg">Schedule Risk Consultation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Step navigation
+    let currentStep = 1;
+    const totalSteps = 5;
+
+    // Initialize radio option styling
+    document.querySelectorAll('.radio-option').forEach(option => {
+      option.addEventListener('click', function() {
+        const group = this.closest('.radio-group');
+        group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+        this.querySelector('input').checked = true;
+      });
+    });
+
+    function updateStepIndicator() {
+      document.querySelectorAll('.step').forEach((step, idx) => {
+        step.classList.remove('active', 'completed');
+        if (idx + 1 === currentStep) {
+          step.classList.add('active');
+        } else if (idx + 1 < currentStep) {
+          step.classList.add('completed');
+        }
+      });
+    }
+
+    function showStep(step) {
+      document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step' + step).classList.add('active');
+
+      document.getElementById('prevBtn').style.visibility = step > 1 ? 'visible' : 'hidden';
+      document.getElementById('nextBtn').textContent = step === totalSteps ? 'Calculate Risk' : 'Continue';
+
+      updateStepIndicator();
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', function() {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        showStep(currentStep);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        calculateRisk();
+      }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', function() {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    function calculateRisk() {
+      // Get context values
+      const useCaseType = document.getElementById('useCaseType').value;
+      const targetPopulation = document.getElementById('targetPopulation').value;
+
+      // Calculate category scores (1-4 scale, convert to percentage)
+      const ethicsScore = calculateCategoryScore(['rights_impact', 'demographic_data', 'historical_bias']);
+      const securityScore = calculateCategoryScore(['data_sensitivity', 'hosting', 'breach_impact']);
+      const complianceScore = calculateCategoryScore(['regulatory', 'due_process', 'explainability']);
+      const operationalScore = calculateCategoryScore(['scale', 'human_oversight', 'failure_impact']);
+
+      // Apply context multipliers
+      let multiplier = 1;
+      if (useCaseType === 'automated-decision') multiplier *= 1.2;
+      if (targetPopulation === 'vulnerable' || targetPopulation === 'justice') multiplier *= 1.15;
+
+      // Calculate overall risk score (weighted average)
+      const weights = { ethics: 0.35, security: 0.25, compliance: 0.25, operational: 0.15 };
+      let overallScore = (
+        ethicsScore * weights.ethics +
+        securityScore * weights.security +
+        complianceScore * weights.compliance +
+        operationalScore * weights.operational
+      ) * multiplier;
+      overallScore = Math.min(100, Math.round(overallScore));
+
+      // Determine risk level
+      let riskLevel, riskClass;
+      if (overallScore <= 33) {
+        riskLevel = 'LOW';
+        riskClass = 'low';
+      } else if (overallScore <= 66) {
+        riskLevel = 'MEDIUM';
+        riskClass = 'medium';
+      } else {
+        riskLevel = 'HIGH';
+        riskClass = 'high';
+      }
+
+      // Show results
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+
+      // Update risk summary
+      const summaryEl = document.getElementById('riskSummary');
+      summaryEl.className = 'risk-summary ' + riskClass;
+      document.getElementById('riskLevel').textContent = riskLevel;
+      document.getElementById('riskScore').textContent = overallScore;
+
+      const labels = {
+        low: 'Proceed with Standard Governance',
+        medium: 'Enhanced Oversight Required',
+        high: 'Executive Review Required'
+      };
+      document.getElementById('riskLabel').textContent = labels[riskClass];
+
+      // Update category cards
+      updateCategoryCard('ethics', ethicsScore);
+      updateCategoryCard('security', securityScore);
+      updateCategoryCard('compliance', complianceScore);
+      updateCategoryCard('operational', operationalScore);
+
+      // Generate mitigations
+      generateMitigations(ethicsScore, securityScore, complianceScore, operationalScore);
+
+      // Generate governance checklist
+      generateGovernanceChecklist(overallScore, ethicsScore, complianceScore);
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function calculateCategoryScore(fields) {
+      let total = 0;
+      let count = 0;
+      fields.forEach(field => {
+        const selected = document.querySelector(`input[name="${field}"]:checked`);
+        if (selected) {
+          total += parseInt(selected.value);
+          count++;
+        }
+      });
+      if (count === 0) return 50;
+      return Math.round((total / (count * 4)) * 100);
+    }
+
+    function updateCategoryCard(category, score) {
+      let level, levelClass;
+      if (score <= 33) {
+        level = 'Low';
+        levelClass = 'low';
+      } else if (score <= 66) {
+        level = 'Medium';
+        levelClass = 'medium';
+      } else {
+        level = 'High';
+        levelClass = 'high';
+      }
+
+      document.getElementById(category + 'Badge').textContent = level;
+      document.getElementById(category + 'Badge').className = 'risk-card__badge ' + levelClass;
+      document.getElementById(category + 'Bar').style.width = score + '%';
+      document.getElementById(category + 'Bar').className = 'risk-card__bar-fill ' + levelClass;
+    }
+
+    function generateMitigations(ethics, security, compliance, operational) {
+      const mitigations = [];
+
+      if (ethics > 50) {
+        mitigations.push({ priority: 'high', title: 'Conduct Bias Audit', desc: 'Perform algorithmic bias testing before deployment to identify potential disparate impacts.' });
+        mitigations.push({ priority: 'high', title: 'Establish Fairness Metrics', desc: 'Define measurable fairness criteria and implement ongoing monitoring.' });
+      }
+      if (security > 50) {
+        mitigations.push({ priority: 'high', title: 'Data Protection Assessment', desc: 'Conduct Privacy Impact Assessment (PIA) for sensitive data handling.' });
+        mitigations.push({ priority: 'medium', title: 'Security Architecture Review', desc: 'Review AI system architecture against government security standards.' });
+      }
+      if (compliance > 50) {
+        mitigations.push({ priority: 'high', title: 'Legal Review', desc: 'Obtain legal opinion on regulatory compliance and due process requirements.' });
+        mitigations.push({ priority: 'medium', title: 'Explainability Implementation', desc: 'Implement decision explanation capabilities for affected individuals.' });
+      }
+      if (operational > 50) {
+        mitigations.push({ priority: 'medium', title: 'Human Oversight Design', desc: 'Design and document human review processes for AI outputs.' });
+        mitigations.push({ priority: 'medium', title: 'Fallback Procedures', desc: 'Develop manual backup procedures in case of system failure.' });
+      }
+
+      // Sort by priority and limit
+      const priorityOrder = { high: 1, medium: 2 };
+      mitigations.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+      const topMitigations = mitigations.slice(0, 5);
+
+      const listEl = document.getElementById('mitigationList');
+      listEl.innerHTML = topMitigations.map((m, idx) => `
+        <div class="mitigation-item ${m.priority}-priority">
+          <div class="mitigation-item__priority">${idx + 1}</div>
+          <div class="mitigation-item__content">
+            <h4>${m.title}</h4>
+            <p>${m.desc}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function generateGovernanceChecklist(overall, ethics, compliance) {
+      const items = [];
+
+      // Always required
+      items.push({ required: true, text: 'Document AI use case in agency AI inventory' });
+      items.push({ required: true, text: 'Identify accountable official for AI system' });
+
+      if (overall > 33) {
+        items.push({ required: true, text: 'Conduct AI Impact Assessment' });
+        items.push({ required: true, text: 'Establish performance monitoring plan' });
+      }
+      if (overall > 50) {
+        items.push({ required: true, text: 'Obtain executive sponsor approval' });
+        items.push({ required: true, text: 'Complete Privacy Impact Assessment' });
+      }
+      if (overall > 66) {
+        items.push({ required: true, text: 'Present to AI governance board' });
+        items.push({ required: true, text: 'Develop incident response plan' });
+      }
+      if (ethics > 50) {
+        items.push({ required: true, text: 'Complete bias testing and documentation' });
+        items.push({ required: false, text: 'Engage community stakeholders for input' });
+      }
+      if (compliance > 50) {
+        items.push({ required: true, text: 'Obtain legal review and approval' });
+        items.push({ required: false, text: 'Develop public transparency documentation' });
+      }
+
+      const listEl = document.getElementById('governanceList');
+      listEl.innerHTML = items.map(item => `
+        <div class="checklist-item">
+          <div class="checklist-item__icon ${item.required ? 'required' : 'recommended'}">
+            ${item.required ? '!' : '?'}
+          </div>
+          <span>${item.text}</span>
+        </div>
+      `).join('');
+    }
+
+    // Lead form
+    document.getElementById('leadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you! Your detailed risk report will be sent to your email shortly.');
+    });
+  </script>
+</body>
+</html>

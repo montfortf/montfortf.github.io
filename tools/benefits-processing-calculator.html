@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benefits Processing Efficiency Calculator | Brite.AI</title>
+  <meta name="description" content="Calculate efficiency gains from AI-powered benefits processing automation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group input, .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--color-primary); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .results-section { display: none; }
+    .results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    @media (max-width: 768px) { .results-grid { grid-template-columns: 1fr; } }
+    .result-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-6); text-align: center; }
+    .result-card__icon { font-size: 2rem; margin-bottom: var(--space-2); }
+    .result-card__value { font-size: var(--text-3xl); font-weight: 800; color: var(--color-primary); }
+    .result-card__label { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .comparison-table { width: 100%; border-collapse: collapse; margin-top: var(--space-6); }
+    .comparison-table th, .comparison-table td { padding: var(--space-4); text-align: left; border-bottom: 1px solid var(--color-border); }
+    .comparison-table th { background: var(--color-background-alt); font-weight: 600; }
+    .comparison-table .highlight { color: #22c55e; font-weight: 700; }
+    .comparison-table .negative { color: #ef4444; }
+    .improvement-banner { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius: var(--radius-xl); padding: var(--space-6); margin-top: var(--space-6); text-align: center; }
+    .improvement-banner__value { font-size: var(--text-4xl); font-weight: 800; color: #166534; }
+    .improvement-banner__label { color: #166534; margin-top: var(--space-2); }
+    .program-breakdown { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-top: var(--space-6); }
+    .program-item { display: flex; justify-content: space-between; align-items: center; padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+    .program-item:last-child { border-bottom: none; }
+    .program-item__name { font-weight: 600; }
+    .program-item__savings { color: #22c55e; font-weight: 700; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Benefits Processing Efficiency Calculator</h2>
+          <p>Calculate efficiency gains from AI-powered benefits automation</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>Primary Benefits Program</label>
+              <select id="programType">
+                <option value="snap">SNAP (Food Assistance)</option>
+                <option value="medicaid">Medicaid</option>
+                <option value="tanf">TANF (Cash Assistance)</option>
+                <option value="childcare">Child Care Subsidy</option>
+                <option value="unemployment">Unemployment Insurance</option>
+                <option value="multi">Multiple Programs</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Monthly Application Volume</label>
+                <input type="number" id="monthlyVolume" value="5000" min="100">
+                <p class="help-text">Total new applications per month</p>
+              </div>
+              <div class="form-group">
+                <label>Current Processing Staff (FTEs)</label>
+                <input type="number" id="staffCount" value="25" min="1">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Average Processing Time (minutes)</label>
+                <input type="number" id="processingTime" value="45" min="5">
+                <p class="help-text">Per application, including review</p>
+              </div>
+              <div class="form-group">
+                <label>Current Error/Rework Rate</label>
+                <select id="errorRate">
+                  <option value="0.05">5% - Low</option>
+                  <option value="0.10" selected>10% - Average</option>
+                  <option value="0.15">15% - High</option>
+                  <option value="0.20">20% - Very High</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Average Days to Process</label>
+                <input type="number" id="processingDays" value="14" min="1">
+              </div>
+              <div class="form-group">
+                <label>Average Staff Hourly Cost</label>
+                <input type="number" id="hourlyCost" value="42" min="20">
+                <p class="help-text">Fully loaded (salary + benefits)</p>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="calculateEfficiency()" style="width: 100%;">Calculate Efficiency Gains</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="results-grid">
+              <div class="result-card">
+                <div class="result-card__icon">⏱️</div>
+                <div class="result-card__value" id="timeReduction">0%</div>
+                <div class="result-card__label">Processing Time Reduction</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">📋</div>
+                <div class="result-card__value" id="newDays">0</div>
+                <div class="result-card__label">New Avg Days to Process</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">✅</div>
+                <div class="result-card__value" id="errorReduction">0%</div>
+                <div class="result-card__label">Error Rate Reduction</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">💰</div>
+                <div class="result-card__value" id="annualSavings">$0</div>
+                <div class="result-card__label">Annual Cost Savings</div>
+              </div>
+            </div>
+
+            <div class="improvement-banner">
+              <div class="improvement-banner__value" id="capacityIncrease">0%</div>
+              <div class="improvement-banner__label">Increase in Processing Capacity Without Adding Staff</div>
+            </div>
+
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>Current State</th>
+                  <th>With AI</th>
+                  <th>Improvement</th>
+                </tr>
+              </thead>
+              <tbody id="comparisonBody">
+              </tbody>
+            </table>
+
+            <div class="program-breakdown">
+              <h3 style="margin-bottom: var(--space-4);">Impact by AI Capability</h3>
+              <div id="capabilityBreakdown"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Benefits AI Roadmap</h3>
+              <p>Receive a detailed implementation plan with vendor recommendations and ROI projections.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Roadmap</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Calculate Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const programFactors = {
+      snap: { timeReduction: 0.65, errorReduction: 0.50, autoApproval: 0.35 },
+      medicaid: { timeReduction: 0.55, errorReduction: 0.45, autoApproval: 0.25 },
+      tanf: { timeReduction: 0.60, errorReduction: 0.50, autoApproval: 0.30 },
+      childcare: { timeReduction: 0.60, errorReduction: 0.55, autoApproval: 0.40 },
+      unemployment: { timeReduction: 0.70, errorReduction: 0.60, autoApproval: 0.45 },
+      multi: { timeReduction: 0.55, errorReduction: 0.45, autoApproval: 0.30 }
+    };
+
+    function calculateEfficiency() {
+      const program = document.getElementById('programType').value;
+      const monthlyVolume = parseInt(document.getElementById('monthlyVolume').value);
+      const staffCount = parseInt(document.getElementById('staffCount').value);
+      const processingTime = parseInt(document.getElementById('processingTime').value);
+      const errorRate = parseFloat(document.getElementById('errorRate').value);
+      const processingDays = parseInt(document.getElementById('processingDays').value);
+      const hourlyCost = parseInt(document.getElementById('hourlyCost').value);
+
+      const factors = programFactors[program];
+
+      // Calculate improvements
+      const timeReduction = factors.timeReduction;
+      const errorReduction = factors.errorReduction;
+      const newProcessingTime = Math.round(processingTime * (1 - timeReduction));
+      const newDays = Math.round(processingDays * (1 - timeReduction * 0.7));
+      const newErrorRate = errorRate * (1 - errorReduction);
+
+      // Calculate costs
+      const annualVolume = monthlyVolume * 12;
+      const currentHoursPerYear = (annualVolume * processingTime / 60);
+      const reworkHours = currentHoursPerYear * errorRate * 0.5;
+      const totalCurrentHours = currentHoursPerYear + reworkHours;
+
+      const newHoursPerYear = (annualVolume * newProcessingTime / 60);
+      const newReworkHours = newHoursPerYear * newErrorRate * 0.5;
+      const totalNewHours = newHoursPerYear + newReworkHours;
+
+      const hoursSaved = totalCurrentHours - totalNewHours;
+      const annualSavings = hoursSaved * hourlyCost;
+
+      // Capacity increase
+      const capacityIncrease = Math.round((totalCurrentHours / totalNewHours - 1) * 100);
+
+      // Update results
+      document.getElementById('timeReduction').textContent = Math.round(timeReduction * 100) + '%';
+      document.getElementById('newDays').textContent = newDays + ' days';
+      document.getElementById('errorReduction').textContent = Math.round(errorReduction * 100) + '%';
+      document.getElementById('annualSavings').textContent = '$' + (annualSavings / 1000000).toFixed(1) + 'M';
+      document.getElementById('capacityIncrease').textContent = capacityIncrease + '%';
+
+      // Comparison table
+      document.getElementById('comparisonBody').innerHTML = `
+        <tr>
+          <td>Processing Time per Application</td>
+          <td>${processingTime} min</td>
+          <td>${newProcessingTime} min</td>
+          <td class="highlight">-${processingTime - newProcessingTime} min</td>
+        </tr>
+        <tr>
+          <td>Days to Decision</td>
+          <td>${processingDays} days</td>
+          <td>${newDays} days</td>
+          <td class="highlight">-${processingDays - newDays} days</td>
+        </tr>
+        <tr>
+          <td>Error/Rework Rate</td>
+          <td class="negative">${(errorRate * 100).toFixed(0)}%</td>
+          <td>${(newErrorRate * 100).toFixed(1)}%</td>
+          <td class="highlight">-${((errorRate - newErrorRate) * 100).toFixed(1)}%</td>
+        </tr>
+        <tr>
+          <td>Annual Processing Hours</td>
+          <td>${Math.round(totalCurrentHours).toLocaleString()}</td>
+          <td>${Math.round(totalNewHours).toLocaleString()}</td>
+          <td class="highlight">-${Math.round(hoursSaved).toLocaleString()}</td>
+        </tr>
+        <tr>
+          <td>Applications per Staff per Day</td>
+          <td>${Math.round((monthlyVolume / staffCount / 22) * 10) / 10}</td>
+          <td>${Math.round((monthlyVolume / staffCount / 22 / (1 - timeReduction)) * 10) / 10}</td>
+          <td class="highlight">+${Math.round((monthlyVolume / staffCount / 22 / (1 - timeReduction) - monthlyVolume / staffCount / 22) * 10) / 10}</td>
+        </tr>
+      `;
+
+      // Capability breakdown
+      const capabilities = [
+        { name: "Intelligent Document Processing", savings: Math.round(annualSavings * 0.35) },
+        { name: "Auto-Eligibility Determination", savings: Math.round(annualSavings * 0.30) },
+        { name: "Data Validation & Error Prevention", savings: Math.round(annualSavings * 0.20) },
+        { name: "Case Routing & Prioritization", savings: Math.round(annualSavings * 0.15) }
+      ];
+
+      document.getElementById('capabilityBreakdown').innerHTML = capabilities.map(c => `
+        <div class="program-item">
+          <span class="program-item__name">${c.name}</span>
+          <span class="program-item__savings">$${(c.savings / 1000).toFixed(0)}K/year</span>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your Benefits AI Roadmap will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

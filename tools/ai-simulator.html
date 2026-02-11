@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Can AI Do? Simulator | Brite.AI</title>
+  <meta name="description" content="See AI capabilities in action with interactive demonstrations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .tool-header { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .demo-tabs { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-6); justify-content: center; }
+    .demo-tab { padding: var(--space-3) var(--space-5); border: 2px solid var(--color-border); border-radius: var(--radius-full); cursor: pointer; font-weight: 500; transition: all 0.2s; }
+    .demo-tab:hover { border-color: #22c55e; }
+    .demo-tab.active { background: #22c55e; color: #fff; border-color: #22c55e; }
+    .demo-container { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); }
+    .demo-header { text-align: center; margin-bottom: var(--space-6); }
+    .demo-header h3 { margin-bottom: var(--space-2); }
+    .demo-header p { color: var(--color-text-muted); }
+    .demo-area { min-height: 300px; }
+    /* Document Processing Demo */
+    .document-demo { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    @media (max-width: 768px) { .document-demo { grid-template-columns: 1fr; } }
+    .document-input { background: var(--color-background); border-radius: var(--radius-lg); padding: var(--space-4); }
+    .document-output { background: var(--color-background); border-radius: var(--radius-lg); padding: var(--space-4); }
+    .fake-document { font-family: 'Courier New', monospace; font-size: var(--text-sm); line-height: 1.8; padding: var(--space-4); background: #fefce8; border: 1px dashed #ca8a04; border-radius: var(--radius-md); }
+    .extracted-data { margin-top: var(--space-4); }
+    .extracted-field { display: flex; justify-content: space-between; padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); }
+    .extracted-field:last-child { border-bottom: none; }
+    .extracted-field__label { font-weight: 600; }
+    .extracted-field__value { color: #22c55e; font-weight: 500; }
+    .processing-animation { display: none; text-align: center; padding: var(--space-6); }
+    .processing-animation.show { display: block; }
+    .spinner { width: 48px; height: 48px; border: 4px solid #e5e7eb; border-top-color: #22c55e; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto var(--space-4); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Chat Demo */
+    .chat-demo { max-width: 500px; margin: 0 auto; }
+    .chat-messages { background: var(--color-background); border-radius: var(--radius-lg); padding: var(--space-4); height: 300px; overflow-y: auto; margin-bottom: var(--space-4); }
+    .chat-message { margin-bottom: var(--space-3); display: flex; gap: var(--space-3); }
+    .chat-message.user { flex-direction: row-reverse; }
+    .chat-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .chat-avatar.bot { background: #22c55e; }
+    .chat-avatar.user { background: #3b82f6; }
+    .chat-bubble { max-width: 80%; padding: var(--space-3) var(--space-4); border-radius: var(--radius-lg); }
+    .chat-message.bot .chat-bubble { background: #f3f4f6; }
+    .chat-message.user .chat-bubble { background: #3b82f6; color: #fff; }
+    .chat-input { display: flex; gap: var(--space-2); }
+    .chat-input input { flex: 1; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-full); }
+    .chat-input button { padding: var(--space-3) var(--space-6); background: #22c55e; color: #fff; border: none; border-radius: var(--radius-full); cursor: pointer; font-weight: 600; }
+    .suggested-questions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
+    .suggested-question { font-size: var(--text-sm); padding: var(--space-2) var(--space-3); background: var(--color-background); border: 1px solid var(--color-border); border-radius: var(--radius-full); cursor: pointer; }
+    .suggested-question:hover { border-color: #22c55e; }
+    /* Sentiment Demo */
+    .sentiment-demo { max-width: 500px; margin: 0 auto; }
+    .sentiment-input textarea { width: 100%; padding: var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-lg); resize: none; height: 120px; margin-bottom: var(--space-4); }
+    .sentiment-result { background: var(--color-background); border-radius: var(--radius-lg); padding: var(--space-6); text-align: center; }
+    .sentiment-emoji { font-size: 4rem; margin-bottom: var(--space-2); }
+    .sentiment-label { font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--space-2); }
+    .sentiment-confidence { color: var(--color-text-muted); }
+    .sentiment-bar { height: 12px; background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e); border-radius: var(--radius-full); position: relative; margin-top: var(--space-4); }
+    .sentiment-marker { position: absolute; width: 20px; height: 20px; background: #fff; border: 3px solid #1f2937; border-radius: 50%; top: -4px; transition: left 0.3s ease; }
+    /* Summary Demo */
+    .summary-demo { }
+    .summary-input textarea { width: 100%; padding: var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-lg); resize: none; height: 150px; margin-bottom: var(--space-4); }
+    .summary-output { background: var(--color-background); border-radius: var(--radius-lg); padding: var(--space-4); }
+    .summary-output h4 { margin-bottom: var(--space-3); color: #22c55e; }
+    .summary-bullets { list-style: none; padding: 0; }
+    .summary-bullets li { padding: var(--space-2) 0; padding-left: var(--space-5); position: relative; border-bottom: 1px solid var(--color-border); }
+    .summary-bullets li::before { content: '•'; position: absolute; left: 0; color: #22c55e; font-weight: 700; }
+    .summary-bullets li:last-child { border-bottom: none; }
+    .capability-callout { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius: var(--radius-xl); padding: var(--space-6); margin-top: var(--space-6); text-align: center; }
+    .capability-callout h4 { color: #166534; margin-bottom: var(--space-2); }
+    .capability-callout p { color: #166534; margin: 0; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>✨ What Can AI Do? Simulator</h2>
+          <p>Experience AI capabilities through interactive demonstrations</p>
+        </div>
+        <div class="tool-body">
+          <div class="demo-tabs">
+            <button class="demo-tab active" data-demo="document">📄 Document Processing</button>
+            <button class="demo-tab" data-demo="chat">💬 Chatbot</button>
+            <button class="demo-tab" data-demo="sentiment">😊 Sentiment Analysis</button>
+            <button class="demo-tab" data-demo="summary">📝 Summarization</button>
+          </div>
+
+          <!-- Document Processing Demo -->
+          <div class="demo-container" id="documentDemo">
+            <div class="demo-header">
+              <h3>📄 Document Processing AI</h3>
+              <p>Watch AI extract structured data from unstructured documents</p>
+            </div>
+            <div class="demo-area">
+              <div class="document-demo">
+                <div class="document-input">
+                  <h4 style="margin-bottom: var(--space-3);">Sample Application Form</h4>
+                  <div class="fake-document" id="sampleDocument">
+BENEFIT APPLICATION FORM
+
+Name: Maria Garcia
+DOB: 03/15/1985
+SSN: XXX-XX-4521
+
+Address: 1234 Oak Street
+         Austin, TX 78701
+
+Household Size: 4
+Monthly Income: $2,450.00
+
+☑ I certify this information is true
+
+Signature: Maria Garcia
+Date: 01/15/2025
+                  </div>
+                  <button class="btn btn--primary" style="width: 100%; margin-top: var(--space-4);" onclick="processDocument()">Extract Data with AI</button>
+                </div>
+                <div class="document-output">
+                  <h4 style="margin-bottom: var(--space-3);">Extracted Data</h4>
+                  <div class="processing-animation" id="docProcessing">
+                    <div class="spinner"></div>
+                    <p>AI is analyzing the document...</p>
+                  </div>
+                  <div class="extracted-data" id="extractedData" style="display: none;">
+                    <div class="extracted-field"><span class="extracted-field__label">Full Name</span><span class="extracted-field__value">Maria Garcia</span></div>
+                    <div class="extracted-field"><span class="extracted-field__label">Date of Birth</span><span class="extracted-field__value">March 15, 1985</span></div>
+                    <div class="extracted-field"><span class="extracted-field__label">SSN (Last 4)</span><span class="extracted-field__value">4521</span></div>
+                    <div class="extracted-field"><span class="extracted-field__label">Street Address</span><span class="extracted-field__value">1234 Oak Street</span></div>
+                    <div class="extracted-field"><span class="extracted-field__label">City, State, ZIP</span><span class="extracted-field__value">Austin, TX 78701</span></div>
+                    <div class="extracted-field"><span class="extracted-field__label">Household Size</span><span class="extracted-field__value">4</span></div>
+                    <div class="extracted-field"><span class="extracted-field__label">Monthly Income</span><span class="extracted-field__value">$2,450.00</span></div>
+                    <div class="extracted-field"><span class="extracted-field__label">Certification</span><span class="extracted-field__value">✓ Signed</span></div>
+                    <div class="extracted-field"><span class="extracted-field__label">Confidence</span><span class="extracted-field__value">98.5%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chatbot Demo -->
+          <div class="demo-container" id="chatDemo" style="display: none;">
+            <div class="demo-header">
+              <h3>💬 AI Chatbot</h3>
+              <p>See how AI can answer constituent questions naturally</p>
+            </div>
+            <div class="demo-area">
+              <div class="chat-demo">
+                <div class="chat-messages" id="chatMessages">
+                  <div class="chat-message bot">
+                    <div class="chat-avatar bot">🤖</div>
+                    <div class="chat-bubble">Hello! I'm here to help you with benefits questions. What would you like to know?</div>
+                  </div>
+                </div>
+                <div class="chat-input">
+                  <input type="text" id="chatInput" placeholder="Type your question..." onkeypress="if(event.key==='Enter')sendChat()">
+                  <button onclick="sendChat()">Send</button>
+                </div>
+                <div class="suggested-questions">
+                  <button class="suggested-question" onclick="askQuestion('How do I check my application status?')">Check application status</button>
+                  <button class="suggested-question" onclick="askQuestion('What documents do I need?')">Required documents</button>
+                  <button class="suggested-question" onclick="askQuestion('When will I receive my benefits?')">Benefit timing</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sentiment Demo -->
+          <div class="demo-container" id="sentimentDemo" style="display: none;">
+            <div class="demo-header">
+              <h3>😊 Sentiment Analysis</h3>
+              <p>AI can understand the emotional tone of text</p>
+            </div>
+            <div class="demo-area">
+              <div class="sentiment-demo">
+                <div class="sentiment-input">
+                  <textarea id="sentimentText" placeholder="Enter text to analyze sentiment...">I've been waiting for weeks and still haven't received any update on my application. This is really frustrating and I don't know what to do.</textarea>
+                  <button class="btn btn--primary" style="width: 100%;" onclick="analyzeSentiment()">Analyze Sentiment</button>
+                </div>
+                <div class="sentiment-result" id="sentimentResult" style="display: none;">
+                  <div class="sentiment-emoji" id="sentimentEmoji">😟</div>
+                  <div class="sentiment-label" id="sentimentLabel">Frustrated / Negative</div>
+                  <div class="sentiment-confidence" id="sentimentConfidence">Confidence: 87%</div>
+                  <div class="sentiment-bar">
+                    <div class="sentiment-marker" id="sentimentMarker" style="left: 20%;"></div>
+                  </div>
+                  <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted);">AI detected frustration keywords and negative sentiment. This case may need priority follow-up.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Summary Demo -->
+          <div class="demo-container" id="summaryDemo" style="display: none;">
+            <div class="demo-header">
+              <h3>📝 AI Summarization</h3>
+              <p>Watch AI condense lengthy text into key points</p>
+            </div>
+            <div class="demo-area">
+              <div class="summary-demo">
+                <div class="summary-input">
+                  <textarea id="summaryText">The applicant, John Smith, submitted his initial benefits application on November 15, 2024. During the initial review, it was discovered that the income verification documents were incomplete. A request for additional documentation was sent on November 20, 2024. The applicant responded on December 5, 2024, providing updated pay stubs and a letter from his employer confirming his employment status and salary. Upon review of the additional documentation, the eligibility determination was completed on December 12, 2024. The applicant was found to be eligible for the program based on household income falling below 150% of the federal poverty level. Benefits were approved at the standard rate for a household of three. The first benefit payment was scheduled for January 1, 2025. The applicant was notified of the approval via mail and email on December 15, 2024.</textarea>
+                  <button class="btn btn--primary" style="width: 100%;" onclick="summarizeText()">Summarize with AI</button>
+                </div>
+                <div class="summary-output" id="summaryOutput" style="display: none;">
+                  <h4>📋 AI Summary</h4>
+                  <ul class="summary-bullets">
+                    <li>Application submitted Nov 15, 2024 - initially incomplete</li>
+                    <li>Additional docs requested and received Dec 5, 2024</li>
+                    <li>Approved Dec 12 - household income below 150% FPL</li>
+                    <li>Benefits for household of 3, first payment Jan 1, 2025</li>
+                  </ul>
+                  <p style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted);"><strong>Processing time:</strong> 27 days | <strong>Status:</strong> ✅ Approved</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="capability-callout">
+            <h4>💡 These are just a few AI capabilities</h4>
+            <p>AI can also classify documents, detect fraud, predict outcomes, translate languages, and much more.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Tab switching
+    document.querySelectorAll('.demo-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('.demo-container').forEach(c => c.style.display = 'none');
+        document.getElementById(tab.dataset.demo + 'Demo').style.display = 'block';
+      });
+    });
+
+    // Document Processing Demo
+    function processDocument() {
+      document.getElementById('docProcessing').classList.add('show');
+      document.getElementById('extractedData').style.display = 'none';
+      setTimeout(() => {
+        document.getElementById('docProcessing').classList.remove('show');
+        document.getElementById('extractedData').style.display = 'block';
+      }, 2000);
+    }
+
+    // Chat Demo
+    const chatResponses = {
+      'status': "To check your application status, you can:\n1. Log into your account at benefits.gov\n2. Call our helpline at 1-800-XXX-XXXX\n3. Use reference number from your confirmation email\n\nProcessing typically takes 10-14 business days.",
+      'documents': "Required documents for most benefits applications include:\n• Proof of identity (ID, passport)\n• Proof of income (pay stubs, tax returns)\n• Proof of residence (utility bill, lease)\n• Social Security numbers for household members",
+      'when': "After approval, benefits are typically available within 5-7 business days. You'll receive a notification with your specific benefit date and amount.",
+      'default': "I understand your question. For specific assistance with your case, I recommend speaking with a caseworker who can access your file. Would you like me to help you schedule an appointment?"
+    };
+
+    function sendChat() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage(text, 'user');
+      input.value = '';
+
+      setTimeout(() => {
+        let response = chatResponses.default;
+        if (text.toLowerCase().includes('status')) response = chatResponses.status;
+        else if (text.toLowerCase().includes('document')) response = chatResponses.documents;
+        else if (text.toLowerCase().includes('when') || text.toLowerCase().includes('receive')) response = chatResponses.when;
+        addMessage(response, 'bot');
+      }, 1000);
+    }
+
+    function addMessage(text, type) {
+      const messages = document.getElementById('chatMessages');
+      const msg = document.createElement('div');
+      msg.className = `chat-message ${type}`;
+      msg.innerHTML = `
+        <div class="chat-avatar ${type}">${type === 'bot' ? '🤖' : '👤'}</div>
+        <div class="chat-bubble">${text.replace(/\n/g, '<br>')}</div>
+      `;
+      messages.appendChild(msg);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function askQuestion(text) {
+      document.getElementById('chatInput').value = text;
+      sendChat();
+    }
+
+    // Sentiment Demo
+    function analyzeSentiment() {
+      const text = document.getElementById('sentimentText').value.toLowerCase();
+      let sentiment, emoji, position, confidence;
+
+      const negativeWords = ['frustrated', 'angry', 'waiting', 'terrible', 'horrible', 'bad', 'disappointed', 'upset', 'annoyed'];
+      const positiveWords = ['thank', 'great', 'excellent', 'happy', 'pleased', 'wonderful', 'appreciate', 'helpful', 'good'];
+
+      const negCount = negativeWords.filter(w => text.includes(w)).length;
+      const posCount = positiveWords.filter(w => text.includes(w)).length;
+
+      if (negCount > posCount) {
+        sentiment = 'Frustrated / Negative';
+        emoji = '😟';
+        position = 15 + Math.random() * 20;
+        confidence = 75 + Math.floor(Math.random() * 20);
+      } else if (posCount > negCount) {
+        sentiment = 'Positive / Satisfied';
+        emoji = '😊';
+        position = 70 + Math.random() * 20;
+        confidence = 80 + Math.floor(Math.random() * 15);
+      } else {
+        sentiment = 'Neutral';
+        emoji = '😐';
+        position = 45 + Math.random() * 10;
+        confidence = 60 + Math.floor(Math.random() * 20);
+      }
+
+      document.getElementById('sentimentEmoji').textContent = emoji;
+      document.getElementById('sentimentLabel').textContent = sentiment;
+      document.getElementById('sentimentConfidence').textContent = `Confidence: ${confidence}%`;
+      document.getElementById('sentimentMarker').style.left = position + '%';
+      document.getElementById('sentimentResult').style.display = 'block';
+    }
+
+    // Summary Demo
+    function summarizeText() {
+      document.getElementById('summaryOutput').style.display = 'none';
+      setTimeout(() => {
+        document.getElementById('summaryOutput').style.display = 'block';
+      }, 1500);
+    }
+  </script>
+</body>
+</html>

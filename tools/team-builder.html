@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Team Builder | Brite.AI</title>
+  <meta name="description" content="Design the ideal team structure for your AI initiative.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #ec4899, #db2777); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .results-section { display: none; }
+    .team-summary { background: linear-gradient(135deg, #fdf2f8, #fce7f3); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); text-align: center; }
+    @media (max-width: 768px) { .team-summary { grid-template-columns: 1fr; } }
+    .summary-item__value { font-size: var(--text-3xl); font-weight: 800; color: #db2777; }
+    .summary-item__label { font-size: var(--text-sm); color: #9d174d; }
+    .org-chart { margin-bottom: var(--space-6); }
+    .org-level { display: flex; justify-content: center; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-4); position: relative; }
+    .org-level:not(:last-child)::after { content: ''; position: absolute; bottom: -16px; left: 50%; width: 2px; height: 16px; background: #e5e7eb; }
+    .role-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-4); text-align: center; min-width: 140px; border: 2px solid transparent; transition: all 0.2s; }
+    .role-card:hover { border-color: #ec4899; transform: translateY(-2px); }
+    .role-card.leadership { background: linear-gradient(135deg, #ec4899, #db2777); color: #fff; }
+    .role-card.core { background: #fdf2f8; border-color: #ec4899; }
+    .role-card__icon { font-size: 2rem; margin-bottom: var(--space-2); }
+    .role-card__title { font-weight: 700; font-size: var(--text-sm); margin-bottom: var(--space-1); }
+    .role-card__count { font-size: var(--text-lg); font-weight: 800; color: #db2777; }
+    .role-card.leadership .role-card__count { color: #fff; }
+    .role-details { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .role-detail { padding: var(--space-4); border-bottom: 1px solid var(--color-border); }
+    .role-detail:last-child { border-bottom: none; }
+    .role-detail__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); cursor: pointer; }
+    .role-detail__title { font-weight: 600; display: flex; align-items: center; gap: var(--space-2); }
+    .role-detail__badge { background: #fdf2f8; color: #db2777; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 600; }
+    .role-detail__content { display: none; padding-top: var(--space-3); }
+    .role-detail.expanded .role-detail__content { display: block; }
+    .skill-list { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-3); }
+    .skill-tag { background: var(--color-background); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-sm); }
+    .sourcing-section { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .sourcing-option { display: flex; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+    .sourcing-option:last-child { border-bottom: none; }
+    .sourcing-option__icon { width: 48px; height: 48px; background: linear-gradient(135deg, #ec4899, #db2777); color: #fff; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+    .sourcing-option__content h4 { font-weight: 600; margin-bottom: var(--space-1); }
+    .sourcing-option__content p { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+    .cost-estimate { background: linear-gradient(135deg, #ec4899, #db2777); border-radius: var(--radius-xl); padding: var(--space-6); color: #fff; text-align: center; margin-bottom: var(--space-6); }
+    .cost-estimate__label { opacity: 0.9; margin-bottom: var(--space-2); }
+    .cost-estimate__value { font-size: var(--text-4xl); font-weight: 800; }
+    .cost-estimate__note { font-size: var(--text-sm); opacity: 0.8; margin-top: var(--space-2); }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Team Builder</h2>
+          <p>Design the ideal team structure for your AI initiative</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>AI Initiative Scope</label>
+              <select id="scope">
+                <option value="pilot">Single AI Pilot Project</option>
+                <option value="program">Multi-Project AI Program</option>
+                <option value="coe">AI Center of Excellence</option>
+                <option value="transformation">Enterprise AI Transformation</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Primary AI Technology Focus</label>
+                <select id="techFocus">
+                  <option value="nlp">NLP / Conversational AI</option>
+                  <option value="vision">Computer Vision / Document AI</option>
+                  <option value="ml">Predictive ML / Analytics</option>
+                  <option value="automation">RPA + AI Automation</option>
+                  <option value="genai">Generative AI</option>
+                  <option value="mixed">Mixed / Multiple Technologies</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Build vs Buy Approach</label>
+                <select id="buildBuy">
+                  <option value="buy">Primarily Buy (Vendor Solutions)</option>
+                  <option value="hybrid">Hybrid (Buy + Customize)</option>
+                  <option value="build">Primarily Build (Custom Development)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Existing In-House AI Capability</label>
+                <select id="capability">
+                  <option value="none">None - Starting from scratch</option>
+                  <option value="limited">Limited - Some data analysts</option>
+                  <option value="moderate">Moderate - Data science team exists</option>
+                  <option value="strong">Strong - ML/AI team in place</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Timeline Urgency</label>
+                <select id="urgency">
+                  <option value="standard">Standard (6-12 months)</option>
+                  <option value="accelerated">Accelerated (3-6 months)</option>
+                  <option value="urgent">Urgent (under 3 months)</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="buildTeam()" style="width: 100%;">Build My AI Team</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="team-summary">
+              <div class="summary-item">
+                <div class="summary-item__value" id="totalFTE">0</div>
+                <div class="summary-item__label">Total FTEs Needed</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-item__value" id="internalFTE">0</div>
+                <div class="summary-item__label">Internal Hires</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-item__value" id="contractorFTE">0</div>
+                <div class="summary-item__label">Contractors/Partners</div>
+              </div>
+            </div>
+
+            <h3 style="margin-bottom: var(--space-4);">Recommended Team Structure</h3>
+            <div class="org-chart" id="orgChart"></div>
+
+            <div class="role-details">
+              <h3 style="margin-bottom: var(--space-4);">Role Details</h3>
+              <div id="roleDetailsList"></div>
+            </div>
+
+            <div class="cost-estimate">
+              <div class="cost-estimate__label">Estimated Annual Team Cost</div>
+              <div class="cost-estimate__value" id="annualCost">$0</div>
+              <div class="cost-estimate__note">Blended rate including salary, benefits, and overhead</div>
+            </div>
+
+            <div class="sourcing-section">
+              <h3 style="margin-bottom: var(--space-4);">Team Sourcing Recommendations</h3>
+              <div id="sourcingList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Team Building Playbook</h3>
+              <p>Receive detailed job descriptions, interview guides, and onboarding plans.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Playbook</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Build Another Team</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const teamConfigs = {
+      pilot: {
+        leadership: [{ icon: "👔", title: "Project Lead", count: 1 }],
+        core: [
+          { icon: "🤖", title: "AI/ML Engineer", count: 1, skills: ["Python", "ML frameworks", "Data pipelines"], source: "hire" },
+          { icon: "💻", title: "Developer", count: 1, skills: ["Backend development", "APIs", "Integration"], source: "hire" },
+          { icon: "📊", title: "Data Analyst", count: 0.5, skills: ["SQL", "Data visualization", "Business analysis"], source: "internal" }
+        ],
+        costMultiplier: 1
+      },
+      program: {
+        leadership: [
+          { icon: "👔", title: "Program Manager", count: 1 },
+          { icon: "📐", title: "Solution Architect", count: 1 }
+        ],
+        core: [
+          { icon: "🤖", title: "AI/ML Engineers", count: 3, skills: ["Python", "ML frameworks", "MLOps", "Cloud AI services"], source: "hire" },
+          { icon: "💻", title: "Developers", count: 2, skills: ["Full-stack", "APIs", "Cloud platforms"], source: "hire" },
+          { icon: "📊", title: "Data Engineers", count: 2, skills: ["ETL", "Data pipelines", "Data warehousing"], source: "hire" },
+          { icon: "✅", title: "QA Engineer", count: 1, skills: ["Test automation", "AI testing", "Performance testing"], source: "contractor" },
+          { icon: "🔧", title: "DevOps/MLOps", count: 1, skills: ["CI/CD", "Kubernetes", "Monitoring"], source: "contractor" }
+        ],
+        costMultiplier: 1.3
+      },
+      coe: {
+        leadership: [
+          { icon: "🎯", title: "AI Director", count: 1 },
+          { icon: "👔", title: "Program Manager", count: 1 },
+          { icon: "📐", title: "Chief Architect", count: 1 }
+        ],
+        core: [
+          { icon: "🤖", title: "AI/ML Engineers", count: 5, skills: ["Advanced ML", "Deep learning", "NLP/CV", "MLOps"], source: "hire" },
+          { icon: "🔬", title: "Data Scientists", count: 3, skills: ["Statistics", "ML modeling", "Research"], source: "hire" },
+          { icon: "📊", title: "Data Engineers", count: 3, skills: ["Big data", "Streaming", "Data platforms"], source: "hire" },
+          { icon: "💻", title: "Platform Engineers", count: 2, skills: ["AI platforms", "Infrastructure", "APIs"], source: "hire" },
+          { icon: "⚖️", title: "AI Ethics Lead", count: 1, skills: ["AI governance", "Bias testing", "Compliance"], source: "hire" },
+          { icon: "📚", title: "AI Trainer", count: 1, skills: ["Training development", "Change management"], source: "internal" }
+        ],
+        costMultiplier: 1.5
+      },
+      transformation: {
+        leadership: [
+          { icon: "🎯", title: "Chief AI Officer", count: 1 },
+          { icon: "📐", title: "Enterprise Architect", count: 1 },
+          { icon: "👔", title: "Program Directors", count: 2 }
+        ],
+        core: [
+          { icon: "🤖", title: "AI/ML Engineers", count: 10, skills: ["Advanced ML", "Deep learning", "Specialized AI"], source: "hire" },
+          { icon: "🔬", title: "Data Scientists", count: 5, skills: ["Advanced statistics", "Research", "Domain expertise"], source: "hire" },
+          { icon: "📊", title: "Data Engineers", count: 5, skills: ["Enterprise data", "Real-time processing"], source: "hire" },
+          { icon: "💻", title: "Platform Team", count: 4, skills: ["AI platforms", "Infrastructure", "Security"], source: "hire" },
+          { icon: "⚖️", title: "AI Governance Team", count: 2, skills: ["Ethics", "Compliance", "Risk management"], source: "hire" },
+          { icon: "🔄", title: "Change Management", count: 2, skills: ["Org change", "Training", "Communication"], source: "contractor" },
+          { icon: "📋", title: "Product Owners", count: 3, skills: ["AI product management", "Stakeholder management"], source: "internal" }
+        ],
+        costMultiplier: 2
+      }
+    };
+
+    const salaryRanges = {
+      "Chief AI Officer": 280000,
+      "AI Director": 220000,
+      "Enterprise Architect": 200000,
+      "Chief Architect": 200000,
+      "Program Directors": 180000,
+      "Program Manager": 150000,
+      "Solution Architect": 175000,
+      "Project Lead": 130000,
+      "AI/ML Engineer": 165000,
+      "AI/ML Engineers": 165000,
+      "Data Scientists": 155000,
+      "Data Scientist": 155000,
+      "Data Engineers": 145000,
+      "Data Engineer": 145000,
+      "Developers": 135000,
+      "Developer": 135000,
+      "Platform Engineers": 155000,
+      "Platform Team": 155000,
+      "Data Analyst": 100000,
+      "QA Engineer": 110000,
+      "DevOps/MLOps": 145000,
+      "AI Ethics Lead": 150000,
+      "AI Governance Team": 140000,
+      "AI Trainer": 95000,
+      "Change Management": 120000,
+      "Product Owners": 140000
+    };
+
+    function buildTeam() {
+      const scope = document.getElementById('scope').value;
+      const buildBuy = document.getElementById('buildBuy').value;
+      const capability = document.getElementById('capability').value;
+      const urgency = document.getElementById('urgency').value;
+
+      const config = teamConfigs[scope];
+
+      // Adjust based on build/buy
+      let buildMultiplier = buildBuy === 'build' ? 1.4 : buildBuy === 'hybrid' ? 1.1 : 0.8;
+
+      // Adjust based on capability
+      let capabilityMultiplier = capability === 'none' ? 1.2 : capability === 'limited' ? 1.1 : capability === 'moderate' ? 1 : 0.8;
+
+      // Calculate totals
+      let totalFTE = 0;
+      let internalFTE = 0;
+      let contractorFTE = 0;
+      let annualCost = 0;
+
+      const allRoles = [...config.leadership, ...config.core];
+
+      allRoles.forEach(role => {
+        const adjustedCount = role.count * buildMultiplier * capabilityMultiplier;
+        totalFTE += adjustedCount;
+        if (role.source === 'contractor') {
+          contractorFTE += adjustedCount;
+        } else {
+          internalFTE += adjustedCount;
+        }
+        const salary = salaryRanges[role.title] || 140000;
+        annualCost += adjustedCount * salary * 1.35; // Fully loaded
+      });
+
+      // Update display
+      document.getElementById('totalFTE').textContent = Math.round(totalFTE);
+      document.getElementById('internalFTE').textContent = Math.round(internalFTE);
+      document.getElementById('contractorFTE').textContent = Math.round(contractorFTE);
+      document.getElementById('annualCost').textContent = '$' + (annualCost / 1000000).toFixed(1) + 'M';
+
+      // Org chart
+      document.getElementById('orgChart').innerHTML = `
+        <div class="org-level">
+          ${config.leadership.map(role => `
+            <div class="role-card leadership">
+              <div class="role-card__icon">${role.icon}</div>
+              <div class="role-card__title">${role.title}</div>
+              <div class="role-card__count">${Math.round(role.count * buildMultiplier * capabilityMultiplier)}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="org-level">
+          ${config.core.map(role => `
+            <div class="role-card core">
+              <div class="role-card__icon">${role.icon}</div>
+              <div class="role-card__title">${role.title}</div>
+              <div class="role-card__count">${Math.round(role.count * buildMultiplier * capabilityMultiplier * 10) / 10}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      // Role details
+      document.getElementById('roleDetailsList').innerHTML = config.core.map((role, idx) => `
+        <div class="role-detail" onclick="this.classList.toggle('expanded')">
+          <div class="role-detail__header">
+            <span class="role-detail__title">${role.icon} ${role.title}</span>
+            <span class="role-detail__badge">${Math.round(role.count * buildMultiplier * capabilityMultiplier * 10) / 10} FTE</span>
+          </div>
+          <div class="role-detail__content">
+            <p style="margin-bottom: var(--space-3); font-size: var(--text-sm);"><strong>Key Skills:</strong></p>
+            <div class="skill-list">
+              ${role.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+            </div>
+            <p style="font-size: var(--text-sm); color: var(--color-text-muted);">
+              <strong>Recommended Source:</strong> ${role.source === 'hire' ? 'Full-time hire' : role.source === 'contractor' ? 'Contractor/consultant' : 'Internal transfer'}
+            </p>
+          </div>
+        </div>
+      `).join('');
+
+      // Sourcing recommendations
+      const sourcingOptions = [
+        { icon: "👥", title: "Internal Talent Development", desc: "Upskill existing data analysts and developers with AI/ML training programs." },
+        { icon: "🎯", title: "Targeted Hiring", desc: "Focus on senior AI engineers who can mentor and build team capability." },
+        { icon: "🤝", title: "Strategic Partner", desc: "Engage a systems integrator for initial implementation with knowledge transfer." },
+        { icon: "🎓", title: "University Partnership", desc: "Partner with local universities for intern pipeline and research collaboration." }
+      ];
+
+      document.getElementById('sourcingList').innerHTML = sourcingOptions.map(opt => `
+        <div class="sourcing-option">
+          <div class="sourcing-option__icon">${opt.icon}</div>
+          <div class="sourcing-option__content">
+            <h4>${opt.title}</h4>
+            <p>${opt.desc}</p>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your Team Building Playbook will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

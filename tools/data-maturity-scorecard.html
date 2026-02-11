@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Maturity Scorecard | Brite.AI</title>
+  <meta name="description" content="Evaluate your data quality, accessibility, governance, and documentation to determine AI readiness.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .tool-header { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-body { padding: var(--space-8); }
+    .progress-bar { background: var(--color-background-alt); height: 8px; border-radius: 4px; margin-bottom: var(--space-6); overflow: hidden; }
+    .progress-bar__fill { background: linear-gradient(90deg, #3b82f6, #8b5cf6); height: 100%; border-radius: 4px; transition: width 0.3s; }
+    .progress-text { text-align: center; font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-4); }
+    .dimension-section { margin-bottom: var(--space-8); }
+    .dimension-title { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--space-4); }
+    .dimension-icon { width: 48px; height: 48px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; }
+    .question-group { margin-bottom: var(--space-6); }
+    .question-label { display: block; font-weight: 500; margin-bottom: var(--space-3); }
+    .radio-group { display: flex; flex-direction: column; gap: var(--space-2); }
+    .radio-option { display: flex; align-items: center; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s; }
+    .radio-option:hover { border-color: var(--color-primary); background: rgba(26, 86, 219, 0.05); }
+    .radio-option.selected { border-color: var(--color-primary); background: rgba(26, 86, 219, 0.1); }
+    .radio-option input { margin-right: var(--space-3); }
+    .nav-buttons { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-6); }
+    .results-section { display: none; }
+    .maturity-score { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; margin-bottom: var(--space-8); }
+    .maturity-score__level { font-size: var(--text-6xl); font-weight: 800; }
+    .maturity-score__label { font-size: var(--text-xl); margin-top: var(--space-2); }
+    .maturity-score__desc { opacity: 0.9; margin-top: var(--space-4); max-width: 500px; margin-left: auto; margin-right: auto; }
+    .dimension-scores { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-bottom: var(--space-8); }
+    @media (max-width: 768px) { .dimension-scores { grid-template-columns: 1fr; } }
+    .score-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); }
+    .score-card__header { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); }
+    .score-card__icon { font-size: 1.5rem; }
+    .score-card__title { font-weight: 600; }
+    .score-card__bar { height: 8px; background: var(--color-border); border-radius: 4px; overflow: hidden; margin-bottom: var(--space-2); }
+    .score-card__bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+    .score-card__value { font-size: var(--text-sm); font-weight: 600; text-align: right; }
+    .roadmap-section { margin-top: var(--space-8); }
+    .roadmap-item { display: flex; gap: var(--space-4); padding: var(--space-4); background: var(--color-background-alt); border-radius: var(--radius-lg); margin-bottom: var(--space-3); border-left: 4px solid var(--color-primary); }
+    .roadmap-item__phase { width: 60px; text-align: center; }
+    .roadmap-item__phase-num { font-size: var(--text-2xl); font-weight: 800; color: var(--color-primary); }
+    .roadmap-item__phase-label { font-size: var(--text-xs); color: var(--color-text-muted); }
+    .roadmap-item__content h4 { margin-bottom: var(--space-1); }
+    .roadmap-item__content p { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Data Maturity Scorecard</h2>
+          <p>Evaluate your data foundation for AI readiness</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="progress-text">Question <span id="currentQ">1</span> of 16</div>
+            <div class="progress-bar"><div class="progress-bar__fill" id="progressFill" style="width: 6.25%;"></div></div>
+
+            <!-- Data Quality -->
+            <div class="dimension-section" id="dim-quality">
+              <div class="dimension-title">
+                <div class="dimension-icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">📊</div>
+                <span>Data Quality</span>
+              </div>
+              <div class="question-group">
+                <label class="question-label">1. How accurate is your core operational data?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q1" value="1"> Significant accuracy issues, frequent errors</label>
+                  <label class="radio-option"><input type="radio" name="q1" value="2"> Some accuracy issues, periodic data cleanup needed</label>
+                  <label class="radio-option"><input type="radio" name="q1" value="3"> Generally accurate with occasional issues</label>
+                  <label class="radio-option"><input type="radio" name="q1" value="4"> Highly accurate with automated validation</label>
+                </div>
+              </div>
+              <div class="question-group">
+                <label class="question-label">2. How complete is your data (minimal missing values)?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q2" value="1"> Many missing fields, incomplete records common</label>
+                  <label class="radio-option"><input type="radio" name="q2" value="2"> Some missing data in non-critical fields</label>
+                  <label class="radio-option"><input type="radio" name="q2" value="3"> Most required fields populated</label>
+                  <label class="radio-option"><input type="radio" name="q2" value="4"> Comprehensive data with completeness monitoring</label>
+                </div>
+              </div>
+              <div class="question-group">
+                <label class="question-label">3. How consistent is data across systems?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q3" value="1"> Same data differs significantly across systems</label>
+                  <label class="radio-option"><input type="radio" name="q3" value="2"> Some inconsistencies requiring manual reconciliation</label>
+                  <label class="radio-option"><input type="radio" name="q3" value="3"> Mostly consistent with some known discrepancies</label>
+                  <label class="radio-option"><input type="radio" name="q3" value="4"> Fully consistent with master data management</label>
+                </div>
+              </div>
+              <div class="question-group">
+                <label class="question-label">4. How timely is your data (currency/freshness)?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q4" value="1"> Data often stale, batch updates weekly or less</label>
+                  <label class="radio-option"><input type="radio" name="q4" value="2"> Daily batch updates for most systems</label>
+                  <label class="radio-option"><input type="radio" name="q4" value="3"> Near real-time for critical data</label>
+                  <label class="radio-option"><input type="radio" name="q4" value="4"> Real-time data streaming and updates</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Data Accessibility -->
+            <div class="dimension-section" id="dim-access" style="display: none;">
+              <div class="dimension-title">
+                <div class="dimension-icon" style="background: linear-gradient(135deg, #10b981, #059669);">🔓</div>
+                <span>Data Accessibility</span>
+              </div>
+              <div class="question-group">
+                <label class="question-label">5. How easy is it for authorized users to access data?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q5" value="1"> Complex request process, IT bottleneck</label>
+                  <label class="radio-option"><input type="radio" name="q5" value="2"> Access available but requires technical skills</label>
+                  <label class="radio-option"><input type="radio" name="q5" value="3"> Self-service available for common needs</label>
+                  <label class="radio-option"><input type="radio" name="q5" value="4"> Full self-service with data catalog</label>
+                </div>
+              </div>
+              <div class="question-group">
+                <label class="question-label">6. How integrated are your data sources?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q6" value="1"> Siloed systems with no integration</label>
+                  <label class="radio-option"><input type="radio" name="q6" value="2"> Point-to-point integrations for some systems</label>
+                  <label class="radio-option"><input type="radio" name="q6" value="3"> Data warehouse or lake consolidates most data</label>
+                  <label class="radio-option"><input type="radio" name="q6" value="4"> Enterprise data platform with unified access</label>
+                </div>
+              </div>
+              <div class="question-group">
+                <label class="question-label">7. Do you have APIs for programmatic data access?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q7" value="1"> No APIs, manual exports only</label>
+                  <label class="radio-option"><input type="radio" name="q7" value="2"> Limited APIs for some systems</label>
+                  <label class="radio-option"><input type="radio" name="q7" value="3"> APIs available for most major systems</label>
+                  <label class="radio-option"><input type="radio" name="q7" value="4"> Comprehensive API layer with documentation</label>
+                </div>
+              </div>
+              <div class="question-group">
+                <label class="question-label">8. Can data be accessed securely from AI/ML platforms?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q8" value="1"> No secure pathway for AI platform access</label>
+                  <label class="radio-option"><input type="radio" name="q8" value="2"> Possible with significant security review</label>
+                  <label class="radio-option"><input type="radio" name="q8" value="3"> Secure access established for pilot projects</label>
+                  <label class="radio-option"><input type="radio" name="q8" value="4"> Production-ready secure data pipelines</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Data Governance -->
+            <div class="dimension-section" id="dim-governance" style="display: none;">
+              <div class="dimension-title">
+                <div class="dimension-icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);">🛡️</div>
+                <span>Data Governance</span>
+              </div>
+              <div class="question-group">
+                <label class="question-label">9. Do you have defined data ownership?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q9" value="1"> No defined data owners</label>
+                  <label class="radio-option"><input type="radio" name="q9" value="2"> Informal ownership, unclear accountability</label>
+                  <label class="radio-option"><input type="radio" name="q9" value="3"> Data stewards assigned for critical data</label>
+                  <label class="radio-option"><input type="radio" name="q9" value="4"> Comprehensive data ownership model</label>
+                </div>
+              </div>
+              <div class="question-group">
+                <label class="question-label">10. Do you have data quality standards and monitoring?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q10" value="1"> No formal quality standards</label>
+                  <label class="radio-option"><input type="radio" name="q10" value="2"> Standards exist but not monitored</label>
+                  <label class="radio-option"><input type="radio" name="q10" value="3"> Regular quality monitoring for key data</label>
+                  <label class="radio-option"><input type="radio" name="q10" value="4"> Automated quality monitoring with alerts</label>
+                </div>
+              </div>
+              <div class="question-group">
+                <label class="question-label">11. How mature is your data privacy/security program?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q11" value="1"> Basic security, no formal privacy program</label>
+                  <label class="radio-option"><input type="radio" name="q11" value="2"> Policies exist but inconsistently applied</label>
+                  <label class="radio-option"><input type="radio" name="q11" value="3"> Strong program with regular audits</label>
+                  <label class="radio-option"><input type="radio" name="q11" value="4"> Comprehensive privacy-by-design approach</label>
+                </div>
+              </div>
+              <div class="question-group">
+                <label class="question-label">12. Do you have data lineage tracking?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q12" value="1"> No lineage tracking</label>
+                  <label class="radio-option"><input type="radio" name="q12" value="2"> Manual documentation of some data flows</label>
+                  <label class="radio-option"><input type="radio" name="q12" value="3"> Automated lineage for key pipelines</label>
+                  <label class="radio-option"><input type="radio" name="q12" value="4"> Full end-to-end lineage visibility</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Data Documentation -->
+            <div class="dimension-section" id="dim-docs" style="display: none;">
+              <div class="dimension-title">
+                <div class="dimension-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">📚</div>
+                <span>Data Documentation</span>
+              </div>
+              <div class="question-group">
+                <label class="question-label">13. Do you have a data dictionary/catalog?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q13" value="1"> No data dictionary exists</label>
+                  <label class="radio-option"><input type="radio" name="q13" value="2"> Partial documentation in spreadsheets</label>
+                  <label class="radio-option"><input type="radio" name="q13" value="3"> Data catalog for major systems</label>
+                  <label class="radio-option"><input type="radio" name="q13" value="4"> Enterprise data catalog with search</label>
+                </div>
+              </div>
+              <div class="question-group">
+                <label class="question-label">14. How well documented are data definitions?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q14" value="1"> Tribal knowledge only</label>
+                  <label class="radio-option"><input type="radio" name="q14" value="2"> Some definitions documented</label>
+                  <label class="radio-option"><input type="radio" name="q14" value="3"> Standard definitions for key fields</label>
+                  <label class="radio-option"><input type="radio" name="q14" value="4"> Comprehensive business glossary</label>
+                </div>
+              </div>
+              <div class="question-group">
+                <label class="question-label">15. Is metadata captured and maintained?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q15" value="1"> No metadata management</label>
+                  <label class="radio-option"><input type="radio" name="q15" value="2"> Basic technical metadata only</label>
+                  <label class="radio-option"><input type="radio" name="q15" value="3"> Technical and some business metadata</label>
+                  <label class="radio-option"><input type="radio" name="q15" value="4"> Rich metadata with automated capture</label>
+                </div>
+              </div>
+              <div class="question-group">
+                <label class="question-label">16. Can users discover and understand available data?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q16" value="1"> Must ask IT what data exists</label>
+                  <label class="radio-option"><input type="radio" name="q16" value="2"> Lists available but hard to understand</label>
+                  <label class="radio-option"><input type="radio" name="q16" value="3"> Searchable catalog with descriptions</label>
+                  <label class="radio-option"><input type="radio" name="q16" value="4"> Self-service discovery with samples/profiling</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-buttons">
+              <button class="btn btn--secondary" id="prevBtn" style="visibility: hidden;" onclick="navigate(-1)">Previous</button>
+              <button class="btn btn--primary" id="nextBtn" onclick="navigate(1)">Continue</button>
+            </div>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="maturity-score">
+              <div class="maturity-score__level" id="maturityLevel">3</div>
+              <div class="maturity-score__label" id="maturityLabel">Developing</div>
+              <div class="maturity-score__desc" id="maturityDesc">Your data foundation shows promise but needs investment before AI implementation.</div>
+            </div>
+
+            <div class="dimension-scores">
+              <div class="score-card">
+                <div class="score-card__header"><span class="score-card__icon">📊</span><span class="score-card__title">Data Quality</span></div>
+                <div class="score-card__bar"><div class="score-card__bar-fill" id="qualityBar" style="background: #3b82f6; width: 0%;"></div></div>
+                <div class="score-card__value" id="qualityScore">0%</div>
+              </div>
+              <div class="score-card">
+                <div class="score-card__header"><span class="score-card__icon">🔓</span><span class="score-card__title">Data Accessibility</span></div>
+                <div class="score-card__bar"><div class="score-card__bar-fill" id="accessBar" style="background: #10b981; width: 0%;"></div></div>
+                <div class="score-card__value" id="accessScore">0%</div>
+              </div>
+              <div class="score-card">
+                <div class="score-card__header"><span class="score-card__icon">🛡️</span><span class="score-card__title">Data Governance</span></div>
+                <div class="score-card__bar"><div class="score-card__bar-fill" id="govBar" style="background: #8b5cf6; width: 0%;"></div></div>
+                <div class="score-card__value" id="govScore">0%</div>
+              </div>
+              <div class="score-card">
+                <div class="score-card__header"><span class="score-card__icon">📚</span><span class="score-card__title">Data Documentation</span></div>
+                <div class="score-card__bar"><div class="score-card__bar-fill" id="docsBar" style="background: #f59e0b; width: 0%;"></div></div>
+                <div class="score-card__value" id="docsScore">0%</div>
+              </div>
+            </div>
+
+            <div class="roadmap-section">
+              <h3>Improvement Roadmap</h3>
+              <div id="roadmapList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Data Readiness Report</h3>
+              <p>Receive a detailed assessment with specific recommendations for your organization.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <button type="submit" class="btn btn--primary">Download Report</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const dimensions = ['quality', 'access', 'governance', 'docs'];
+    const dimElements = { quality: 'dim-quality', access: 'dim-access', governance: 'dim-governance', docs: 'dim-docs' };
+    let currentDim = 0;
+
+    document.querySelectorAll('.radio-option').forEach(opt => {
+      opt.addEventListener('click', function() {
+        const group = this.closest('.radio-group');
+        group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+        this.querySelector('input').checked = true;
+        updateProgress();
+      });
+    });
+
+    function updateProgress() {
+      const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+      document.getElementById('progressFill').style.width = (answered / 16 * 100) + '%';
+      document.getElementById('currentQ').textContent = Math.min(answered + 1, 16);
+    }
+
+    function navigate(dir) {
+      if (dir === 1 && currentDim < 3) {
+        currentDim++;
+        showDimension();
+      } else if (dir === -1 && currentDim > 0) {
+        currentDim--;
+        showDimension();
+      } else if (dir === 1 && currentDim === 3) {
+        calculateResults();
+      }
+    }
+
+    function showDimension() {
+      dimensions.forEach((d, i) => {
+        document.getElementById(dimElements[d]).style.display = i === currentDim ? 'block' : 'none';
+      });
+      document.getElementById('prevBtn').style.visibility = currentDim > 0 ? 'visible' : 'hidden';
+      document.getElementById('nextBtn').textContent = currentDim === 3 ? 'Get Results' : 'Continue';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function calculateResults() {
+      const scores = { quality: 0, access: 0, governance: 0, docs: 0 };
+      for (let i = 1; i <= 4; i++) scores.quality += parseInt(document.querySelector(`input[name="q${i}"]:checked`)?.value || 1);
+      for (let i = 5; i <= 8; i++) scores.access += parseInt(document.querySelector(`input[name="q${i}"]:checked`)?.value || 1);
+      for (let i = 9; i <= 12; i++) scores.governance += parseInt(document.querySelector(`input[name="q${i}"]:checked`)?.value || 1);
+      for (let i = 13; i <= 16; i++) scores.docs += parseInt(document.querySelector(`input[name="q${i}"]:checked`)?.value || 1);
+
+      const percents = {
+        quality: Math.round((scores.quality / 16) * 100),
+        access: Math.round((scores.access / 16) * 100),
+        governance: Math.round((scores.governance / 16) * 100),
+        docs: Math.round((scores.docs / 16) * 100)
+      };
+
+      const overall = Math.round((percents.quality + percents.access + percents.governance + percents.docs) / 4);
+      let level, label, desc;
+      if (overall >= 85) { level = 5; label = 'Optimized'; desc = 'Your data foundation is AI-ready. You can proceed with advanced AI implementations.'; }
+      else if (overall >= 70) { level = 4; label = 'Managed'; desc = 'Strong data foundation. Minor improvements will maximize AI success.'; }
+      else if (overall >= 50) { level = 3; label = 'Developing'; desc = 'Adequate foundation but investments needed before production AI.'; }
+      else if (overall >= 30) { level = 2; label = 'Emerging'; desc = 'Significant data work required before AI implementation.'; }
+      else { level = 1; label = 'Initial'; desc = 'Foundational data capabilities must be built before AI journey.'; }
+
+      document.getElementById('maturityLevel').textContent = level;
+      document.getElementById('maturityLabel').textContent = label;
+      document.getElementById('maturityDesc').textContent = desc;
+
+      setTimeout(() => {
+        document.getElementById('qualityBar').style.width = percents.quality + '%';
+        document.getElementById('qualityScore').textContent = percents.quality + '%';
+        document.getElementById('accessBar').style.width = percents.access + '%';
+        document.getElementById('accessScore').textContent = percents.access + '%';
+        document.getElementById('govBar').style.width = percents.governance + '%';
+        document.getElementById('govScore').textContent = percents.governance + '%';
+        document.getElementById('docsBar').style.width = percents.docs + '%';
+        document.getElementById('docsScore').textContent = percents.docs + '%';
+      }, 300);
+
+      generateRoadmap(percents);
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function generateRoadmap(percents) {
+      const items = [];
+      const sorted = Object.entries(percents).sort((a, b) => a[1] - b[1]);
+
+      sorted.forEach(([dim, score], idx) => {
+        if (score < 75) {
+          const recs = {
+            quality: { title: 'Improve Data Quality', desc: 'Implement data validation, cleansing routines, and quality monitoring dashboards.' },
+            access: { title: 'Enhance Data Accessibility', desc: 'Build data integration layer, implement APIs, and create self-service capabilities.' },
+            governance: { title: 'Strengthen Data Governance', desc: 'Establish data ownership, implement quality standards, and deploy monitoring.' },
+            docs: { title: 'Build Data Documentation', desc: 'Create data catalog, define business glossary, and implement metadata management.' }
+          };
+          items.push({ phase: idx + 1, ...recs[dim] });
+        }
+      });
+
+      const listEl = document.getElementById('roadmapList');
+      listEl.innerHTML = items.slice(0, 4).map(item => `
+        <div class="roadmap-item">
+          <div class="roadmap-item__phase">
+            <div class="roadmap-item__phase-num">${item.phase}</div>
+            <div class="roadmap-item__phase-label">Phase</div>
+          </div>
+          <div class="roadmap-item__content">
+            <h4>${item.title}</h4>
+            <p>${item.desc}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your data readiness report will be sent to your email.');
+    }
+  </script>
+</body>
+</html>

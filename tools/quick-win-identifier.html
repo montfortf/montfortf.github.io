@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Quick Win Identifier | Brite.AI</title>
+  <meta name="description" content="Identify the fastest AI wins for your agency based on complexity, impact, and implementation speed.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group input, .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--color-primary); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+    .checkbox-pill { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-full); cursor: pointer; transition: all 0.2s; }
+    .checkbox-pill:hover { border-color: var(--color-primary); }
+    .checkbox-pill.selected { border-color: #22c55e; background: rgba(34, 197, 94, 0.1); }
+    .checkbox-pill input { display: none; }
+    .results-section { display: none; }
+    .quick-win-card { background: var(--color-background-alt); border-radius: var(--radius-xl); overflow: hidden; margin-bottom: var(--space-4); }
+    .quick-win-card__rank { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; padding: var(--space-4) var(--space-6); display: flex; justify-content: space-between; align-items: center; }
+    .quick-win-card__rank-number { font-size: var(--text-2xl); font-weight: 800; }
+    .quick-win-card__rank-badge { background: rgba(255,255,255,0.2); padding: var(--space-2) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 600; }
+    .quick-win-card__body { padding: var(--space-6); }
+    .quick-win-card__title { font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--space-4); }
+    .quick-win-card__metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-4); }
+    @media (max-width: 768px) { .quick-win-card__metrics { grid-template-columns: repeat(2, 1fr); } }
+    .metric { text-align: center; padding: var(--space-3); background: var(--color-background); border-radius: var(--radius-md); }
+    .metric__value { font-size: var(--text-lg); font-weight: 700; color: var(--color-primary); }
+    .metric__label { font-size: var(--text-xs); color: var(--color-text-muted); }
+    .quick-win-card__why { background: #f0fdf4; border-radius: var(--radius-md); padding: var(--space-4); }
+    .quick-win-card__why h4 { color: #166534; font-size: var(--text-sm); margin-bottom: var(--space-2); }
+    .quick-win-card__why p { font-size: var(--text-sm); color: #166534; margin: 0; }
+    .timeline-banner { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .timeline-banner h3 { color: #1e40af; margin-bottom: var(--space-4); }
+    .timeline-phases { display: flex; justify-content: space-between; position: relative; }
+    .timeline-phases::before { content: ''; position: absolute; top: 24px; left: 60px; right: 60px; height: 4px; background: #93c5fd; }
+    @media (max-width: 768px) { .timeline-phases { flex-direction: column; gap: var(--space-4); } .timeline-phases::before { display: none; } }
+    .phase { text-align: center; position: relative; z-index: 1; }
+    .phase__circle { width: 48px; height: 48px; background: #3b82f6; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; margin: 0 auto var(--space-2); }
+    .phase__title { font-weight: 600; color: #1e40af; }
+    .phase__time { font-size: var(--text-sm); color: #3b82f6; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Quick Win Identifier</h2>
+          <p>Find the fastest path to AI success in your agency</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Agency Type</label>
+                <select id="agencyType">
+                  <option value="hhs">Health & Human Services</option>
+                  <option value="workforce">Workforce Development</option>
+                  <option value="childwelfare">Child Welfare</option>
+                  <option value="revenue">Revenue / Tax</option>
+                  <option value="general">General Government</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>IT Readiness</label>
+                <select id="itReadiness">
+                  <option value="low">Basic - Limited IT resources</option>
+                  <option value="medium">Moderate - Some cloud adoption</option>
+                  <option value="high">Advanced - Modern infrastructure</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Budget Available for Quick Wins</label>
+              <select id="budget">
+                <option value="50000">Under $50K</option>
+                <option value="100000">$50K - $100K</option>
+                <option value="250000">$100K - $250K</option>
+                <option value="500000">$250K+</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Select Your Priorities (choose up to 3)</label>
+              <div class="checkbox-group" id="priorities">
+                <label class="checkbox-pill"><input type="checkbox" value="speed"> ⚡ Speed to Value</label>
+                <label class="checkbox-pill"><input type="checkbox" value="cost"> 💰 Cost Savings</label>
+                <label class="checkbox-pill"><input type="checkbox" value="citizen"> 👥 Citizen Experience</label>
+                <label class="checkbox-pill"><input type="checkbox" value="staff"> 🎯 Staff Productivity</label>
+                <label class="checkbox-pill"><input type="checkbox" value="compliance"> 📋 Compliance</label>
+                <label class="checkbox-pill"><input type="checkbox" value="visibility"> 📊 Executive Visibility</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Desired Implementation Timeframe</label>
+              <select id="timeframe">
+                <option value="30">30 days or less</option>
+                <option value="60">60 days</option>
+                <option value="90">90 days</option>
+                <option value="180">6 months</option>
+              </select>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="findQuickWins()" style="width: 100%;">Find My Quick Wins</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="timeline-banner">
+              <h3>Your 90-Day Quick Win Timeline</h3>
+              <div class="timeline-phases">
+                <div class="phase">
+                  <div class="phase__circle">1</div>
+                  <div class="phase__title">Quick Win #1</div>
+                  <div class="phase__time">Days 1-30</div>
+                </div>
+                <div class="phase">
+                  <div class="phase__circle">2</div>
+                  <div class="phase__title">Quick Win #2</div>
+                  <div class="phase__time">Days 31-60</div>
+                </div>
+                <div class="phase">
+                  <div class="phase__circle">3</div>
+                  <div class="phase__title">Scale Success</div>
+                  <div class="phase__time">Days 61-90</div>
+                </div>
+              </div>
+            </div>
+
+            <div id="quickWinsList"></div>
+
+            <div class="lead-capture">
+              <h3>Get Your Quick Win Implementation Kit</h3>
+              <p>Receive detailed playbooks, vendor recommendations, and ROI templates for each quick win.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Implementation Kit</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Start Over</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Handle checkbox pill selection
+    document.querySelectorAll('.checkbox-pill').forEach(pill => {
+      pill.addEventListener('click', function(e) {
+        const checkbox = this.querySelector('input');
+        const checked = document.querySelectorAll('.checkbox-pill.selected').length;
+        if (!checkbox.checked && checked >= 3) {
+          alert('Please select up to 3 priorities');
+          e.preventDefault();
+          return;
+        }
+        if (e.target.type !== 'checkbox') {
+          checkbox.checked = !checkbox.checked;
+        }
+        this.classList.toggle('selected', checkbox.checked);
+      });
+    });
+
+    const quickWins = {
+      hhs: [
+        { name: "Chatbot for Benefits FAQs", days: 21, cost: 35000, savings: 180000, roi: 414, complexity: "Low", priorities: ["speed", "citizen", "staff"], why: "Pre-built government chatbot solutions can be deployed in weeks with minimal IT integration, immediately reducing call volume by 40%+." },
+        { name: "Document Auto-Classification", days: 30, cost: 45000, savings: 220000, roi: 389, complexity: "Low", priorities: ["speed", "staff", "compliance"], why: "Modern AI can classify incoming documents with 95%+ accuracy, eliminating manual sorting and routing." },
+        { name: "Eligibility Pre-Screening Bot", days: 45, cost: 65000, savings: 340000, roi: 423, complexity: "Medium", priorities: ["citizen", "staff", "speed"], why: "Self-service eligibility screening reduces staff workload while giving citizens faster answers." },
+        { name: "Appointment Scheduling AI", days: 14, cost: 25000, savings: 120000, roi: 380, complexity: "Low", priorities: ["speed", "citizen"], why: "AI scheduling eliminates phone tag and reduces no-shows by 30% through smart reminders." },
+        { name: "Fraud Detection Dashboard", days: 60, cost: 95000, savings: 580000, roi: 511, complexity: "Medium", priorities: ["cost", "compliance", "visibility"], why: "AI pattern detection identifies suspicious claims in real-time, recovering significant improper payments." }
+      ],
+      workforce: [
+        { name: "Resume Parsing & Matching", days: 28, cost: 40000, savings: 190000, roi: 375, complexity: "Low", priorities: ["speed", "staff"], why: "AI instantly matches job seekers to opportunities, reducing manual review time by 80%." },
+        { name: "Training Recommendation Engine", days: 35, cost: 55000, savings: 210000, roi: 282, complexity: "Medium", priorities: ["citizen", "cost"], why: "Personalized training suggestions improve completion rates and employment outcomes." },
+        { name: "Employer Outreach Automation", days: 21, cost: 30000, savings: 140000, roi: 367, complexity: "Low", priorities: ["speed", "staff", "visibility"], why: "Automated job posting collection and employer communication saves hundreds of staff hours monthly." }
+      ],
+      childwelfare: [
+        { name: "Case Note Summarization", days: 30, cost: 50000, savings: 280000, roi: 460, complexity: "Low", priorities: ["staff", "speed", "compliance"], why: "AI summarizes lengthy case histories, helping workers make faster, better-informed decisions." },
+        { name: "Document Checklist Automation", days: 21, cost: 35000, savings: 160000, roi: 357, complexity: "Low", priorities: ["speed", "compliance"], why: "Automated tracking ensures all required documents are collected, reducing compliance gaps." },
+        { name: "Risk Alert Dashboard", days: 45, cost: 75000, savings: 420000, roi: 460, complexity: "Medium", priorities: ["compliance", "visibility", "staff"], why: "AI monitors case data for risk indicators, alerting workers to cases needing immediate attention." }
+      ],
+      revenue: [
+        { name: "Taxpayer Service Chatbot", days: 21, cost: 40000, savings: 250000, roi: 525, complexity: "Low", priorities: ["speed", "citizen", "staff"], why: "Answer 70% of common tax questions automatically, dramatically reducing call center volume." },
+        { name: "Document OCR & Data Entry", days: 28, cost: 50000, savings: 320000, roi: 540, complexity: "Low", priorities: ["speed", "staff", "cost"], why: "AI extracts data from tax forms with 99% accuracy, eliminating manual data entry." },
+        { name: "Audit Selection AI", days: 60, cost: 120000, savings: 850000, roi: 608, complexity: "Medium", priorities: ["cost", "compliance", "visibility"], why: "Machine learning identifies high-yield audit targets, increasing recovery rates by 45%." }
+      ],
+      general: [
+        { name: "Public Records AI Assistant", days: 30, cost: 45000, savings: 180000, roi: 300, complexity: "Low", priorities: ["speed", "compliance", "citizen"], why: "AI auto-redacts sensitive information and accelerates FOIA responses by 60%." },
+        { name: "Meeting Transcription & Summary", days: 14, cost: 20000, savings: 80000, roi: 300, complexity: "Low", priorities: ["speed", "staff"], why: "AI transcribes and summarizes meetings, saving hours of manual note-taking." },
+        { name: "Permit Application Pre-Check", days: 28, cost: 40000, savings: 190000, roi: 375, complexity: "Low", priorities: ["speed", "citizen", "staff"], why: "AI validates permit applications for completeness before staff review, reducing back-and-forth." }
+      ]
+    };
+
+    function findQuickWins() {
+      const agencyType = document.getElementById('agencyType').value;
+      const itReadiness = document.getElementById('itReadiness').value;
+      const budget = parseInt(document.getElementById('budget').value);
+      const timeframe = parseInt(document.getElementById('timeframe').value);
+      const selectedPriorities = Array.from(document.querySelectorAll('#priorities input:checked')).map(c => c.value);
+
+      const itMultiplier = { low: 1.3, medium: 1, high: 0.8 };
+      const agencyWins = quickWins[agencyType] || quickWins.general;
+
+      // Filter and score quick wins
+      let scoredWins = agencyWins
+        .filter(w => w.cost <= budget && (w.days * itMultiplier[itReadiness]) <= timeframe)
+        .map(w => {
+          const priorityMatch = w.priorities.filter(p => selectedPriorities.includes(p)).length;
+          const adjustedDays = Math.round(w.days * itMultiplier[itReadiness]);
+          return { ...w, priorityScore: priorityMatch, adjustedDays };
+        })
+        .sort((a, b) => {
+          if (b.priorityScore !== a.priorityScore) return b.priorityScore - a.priorityScore;
+          return a.adjustedDays - b.adjustedDays;
+        });
+
+      if (scoredWins.length === 0) {
+        scoredWins = agencyWins.slice(0, 3).map(w => ({
+          ...w,
+          adjustedDays: Math.round(w.days * itMultiplier[itReadiness]),
+          priorityScore: 0
+        }));
+      }
+
+      // Generate quick win cards
+      const listEl = document.getElementById('quickWinsList');
+      listEl.innerHTML = scoredWins.slice(0, 3).map((win, i) => `
+        <div class="quick-win-card">
+          <div class="quick-win-card__rank">
+            <div class="quick-win-card__rank-number">#${i + 1} Quick Win</div>
+            <div class="quick-win-card__rank-badge">${win.complexity} Complexity</div>
+          </div>
+          <div class="quick-win-card__body">
+            <div class="quick-win-card__title">${win.name}</div>
+            <div class="quick-win-card__metrics">
+              <div class="metric">
+                <div class="metric__value">${win.adjustedDays} days</div>
+                <div class="metric__label">Implementation</div>
+              </div>
+              <div class="metric">
+                <div class="metric__value">$${(win.cost / 1000).toFixed(0)}K</div>
+                <div class="metric__label">Investment</div>
+              </div>
+              <div class="metric">
+                <div class="metric__value">$${(win.savings / 1000).toFixed(0)}K</div>
+                <div class="metric__label">Annual Savings</div>
+              </div>
+              <div class="metric">
+                <div class="metric__value">${win.roi}%</div>
+                <div class="metric__label">First Year ROI</div>
+              </div>
+            </div>
+            <div class="quick-win-card__why">
+              <h4>Why This Is a Quick Win</h4>
+              <p>${win.why}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+      document.querySelectorAll('.checkbox-pill input').forEach(c => { c.checked = false; c.closest('.checkbox-pill').classList.remove('selected'); });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your Quick Win Implementation Kit will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAG Solutions | Retrieval Augmented Generation | Brite.AI</title>
+  <meta name="description" content="Build AI systems that answer questions using your organization's knowledge. RAG solutions that ground AI responses in authoritative data.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero hero--centered">
+    <div class="container">
+      <div class="hero__content">
+        <span class="hero__badge">Generative AI</span>
+        <h1 class="hero__title">AI That Knows Your Knowledge</h1>
+        <p class="hero__subtitle">
+          Retrieval Augmented Generation (RAG) connects large language models to your
+          authoritative data sources—enabling accurate, grounded AI responses.
+        </p>
+        <div class="hero__actions">
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">Explore RAG Solutions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <span class="section-header__label">The Problem</span>
+          <h2>LLMs Don't Know Your Data</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Out-of-the-box language models are trained on general knowledge, not your
+            policies, procedures, and program rules. They can hallucinate, provide outdated
+            information, or simply guess when asked about your specific context.
+          </p>
+          <div class="card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: none;">
+            <h4 style="color: #92400e;">Without RAG</h4>
+            <ul style="padding-left: var(--space-5); color: #78350f;">
+              <li>Generic responses not specific to your agency</li>
+              <li>Risk of hallucinated information</li>
+              <li>No awareness of policy changes</li>
+              <li>Cannot cite authoritative sources</li>
+            </ul>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <div class="card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); border: none;">
+            <h4 style="color: #065f46;">With RAG</h4>
+            <ul style="padding-left: var(--space-5); color: #064e3b;">
+              <li>Answers grounded in your documents</li>
+              <li>Citations to authoritative sources</li>
+              <li>Always current with your latest content</li>
+              <li>Reduced hallucination risk</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">How It Works</span>
+        <h2 class="section-header__title">RAG Architecture</h2>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step" data-animate>
+          <div class="process-step__number">1</div>
+          <h3 class="process-step__title">Index</h3>
+          <p class="process-step__description">Your documents are processed, chunked, and stored in a vector database with semantic embeddings.</p>
+        </div>
+        <div class="process-step" data-animate data-delay="100">
+          <div class="process-step__number">2</div>
+          <h3 class="process-step__title">Retrieve</h3>
+          <p class="process-step__description">When a question is asked, relevant document chunks are retrieved based on semantic similarity.</p>
+        </div>
+        <div class="process-step" data-animate data-delay="200">
+          <div class="process-step__number">3</div>
+          <h3 class="process-step__title">Augment</h3>
+          <p class="process-step__description">Retrieved context is added to the prompt, grounding the LLM in your authoritative content.</p>
+        </div>
+        <div class="process-step" data-animate data-delay="300">
+          <div class="process-step__number">4</div>
+          <h3 class="process-step__title">Generate</h3>
+          <p class="process-step__description">The LLM generates a response based on the retrieved context, with citations to sources.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: var(--space-10); padding: var(--space-8); text-align: center;">
+        <div style="display: flex; justify-content: center; align-items: center; gap: var(--space-4); flex-wrap: wrap;">
+          <div style="padding: var(--space-4); background: var(--color-background-alt); border-radius: var(--radius-lg);">
+            <div style="font-size: 2rem;">📚</div>
+            <div style="font-size: var(--text-sm);">Your Documents</div>
+          </div>
+          <div style="font-size: 1.5rem; color: var(--color-text-muted);">→</div>
+          <div style="padding: var(--space-4); background: var(--color-background-alt); border-radius: var(--radius-lg);">
+            <div style="font-size: 2rem;">🗄️</div>
+            <div style="font-size: var(--text-sm);">Vector Database</div>
+          </div>
+          <div style="font-size: 1.5rem; color: var(--color-text-muted);">→</div>
+          <div style="padding: var(--space-4); background: var(--color-background-alt); border-radius: var(--radius-lg);">
+            <div style="font-size: 2rem;">🔍</div>
+            <div style="font-size: var(--text-sm);">Retrieval</div>
+          </div>
+          <div style="font-size: 1.5rem; color: var(--color-text-muted);">→</div>
+          <div style="padding: var(--space-4); background: var(--color-primary); color: #fff; border-radius: var(--radius-lg);">
+            <div style="font-size: 2rem;">🤖</div>
+            <div style="font-size: var(--text-sm);">LLM + Context</div>
+          </div>
+          <div style="font-size: 1.5rem; color: var(--color-text-muted);">→</div>
+          <div style="padding: var(--space-4); background: var(--color-background-alt); border-radius: var(--radius-lg);">
+            <div style="font-size: 2rem;">💬</div>
+            <div style="font-size: var(--text-sm);">Grounded Answer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Use Cases</span>
+        <h2 class="section-header__title">RAG Applications for Government</h2>
+      </div>
+      <div class="grid grid--3">
+        <div class="card" data-animate>
+          <div class="card__icon">📖</div>
+          <h3 class="card__title">Policy Q&A</h3>
+          <p class="card__description">Enable staff and constituents to ask questions about policies and get accurate answers with citations.</p>
+        </div>
+        <div class="card" data-animate data-delay="100">
+          <div class="card__icon">📞</div>
+          <h3 class="card__title">Contact Center Support</h3>
+          <p class="card__description">Arm agents with instant access to knowledge bases to answer constituent questions accurately.</p>
+        </div>
+        <div class="card" data-animate data-delay="200">
+          <div class="card__icon">📋</div>
+          <h3 class="card__title">Case Worker Assist</h3>
+          <p class="card__description">Help case workers find relevant program rules and guidance for specific case situations.</p>
+        </div>
+        <div class="card" data-animate data-delay="300">
+          <div class="card__icon">⚖️</div>
+          <h3 class="card__title">Legal Research</h3>
+          <p class="card__description">Search statutes, regulations, and case law to find relevant legal precedents and guidance.</p>
+        </div>
+        <div class="card" data-animate data-delay="400">
+          <div class="card__icon">🎓</div>
+          <h3 class="card__title">Training Assistant</h3>
+          <p class="card__description">Help new employees learn policies and procedures through conversational Q&A.</p>
+        </div>
+        <div class="card" data-animate data-delay="500">
+          <div class="card__icon">📝</div>
+          <h3 class="card__title">Document Drafting</h3>
+          <p class="card__description">Generate policy-compliant documents grounded in templates and guidelines.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Approach</span>
+        <h2 class="section-header__title">RAG Implementation Services</h2>
+      </div>
+      <div class="grid grid--2">
+        <div class="card" data-animate>
+          <h3 class="card__title">Knowledge Base Development</h3>
+          <p class="card__description">We prepare your content for RAG by:</p>
+          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
+            <li>Content audit and inventory</li>
+            <li>Document processing and cleaning</li>
+            <li>Optimal chunking strategies</li>
+            <li>Metadata enrichment</li>
+            <li>Ongoing content sync pipelines</li>
+          </ul>
+        </div>
+        <div class="card" data-animate data-delay="100">
+          <h3 class="card__title">RAG System Architecture</h3>
+          <p class="card__description">We design and build production RAG systems with:</p>
+          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
+            <li>Vector database selection and setup</li>
+            <li>Embedding model optimization</li>
+            <li>Retrieval tuning and hybrid search</li>
+            <li>Prompt engineering for accuracy</li>
+            <li>Citation and source tracking</li>
+          </ul>
+        </div>
+        <div class="card" data-animate data-delay="200">
+          <h3 class="card__title">Quality & Evaluation</h3>
+          <p class="card__description">We ensure RAG systems deliver accurate results:</p>
+          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
+            <li>Evaluation dataset creation</li>
+            <li>Retrieval accuracy testing</li>
+            <li>Answer quality assessment</li>
+            <li>Hallucination detection</li>
+            <li>Continuous monitoring</li>
+          </ul>
+        </div>
+        <div class="card" data-animate data-delay="300">
+          <h3 class="card__title">Enterprise Integration</h3>
+          <p class="card__description">We connect RAG to your ecosystem:</p>
+          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
+            <li>Content management system integration</li>
+            <li>Authentication and access control</li>
+            <li>API development</li>
+            <li>UI/UX design</li>
+            <li>Audit logging</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Ground Your AI in Your Knowledge</h2>
+        <p>Build AI systems that answer questions accurately using your authoritative sources.</p>
+        <div class="cta__actions">
+          <a href="../contact/index.html" class="btn btn--white btn--lg">Discuss RAG Solutions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="../js/main.js"></script>
+</body>
+</html>

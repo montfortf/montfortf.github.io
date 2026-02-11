@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technology Infrastructure Compatibility Checker | Brite.AI</title>
+  <meta name="description" content="Check your current tech stack compatibility for AI deployment options.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .tool-header { background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-body { padding: var(--space-8); }
+    .checklist-section { margin-bottom: var(--space-8); }
+    .checklist-section h3 { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
+    .checklist-section h3 span { background: #06b6d4; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--text-sm); }
+    .checklist-grid { display: grid; gap: var(--space-3); }
+    .check-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); background: var(--color-background-alt); border-radius: var(--radius-lg); cursor: pointer; transition: all 0.2s; border: 2px solid transparent; }
+    .check-item:hover { border-color: #06b6d4; }
+    .check-item.checked { border-color: #22c55e; background: rgba(34, 197, 94, 0.1); }
+    .check-item input { width: 20px; height: 20px; accent-color: #22c55e; }
+    .check-item__text { flex: 1; }
+    .check-item__label { font-weight: 500; }
+    .check-item__desc { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .results-section { display: none; }
+    .compat-score { background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff; border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; margin-bottom: var(--space-8); }
+    .compat-score__value { font-size: var(--text-6xl); font-weight: 800; }
+    .compat-score__label { font-size: var(--text-xl); margin-top: var(--space-2); }
+    .deployment-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-8); }
+    @media (max-width: 900px) { .deployment-options { grid-template-columns: 1fr; } }
+    .deploy-card { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); border: 3px solid transparent; }
+    .deploy-card.recommended { border-color: #22c55e; }
+    .deploy-card__header { text-align: center; margin-bottom: var(--space-4); }
+    .deploy-card__icon { font-size: 2.5rem; }
+    .deploy-card__title { font-size: var(--text-lg); font-weight: 700; margin-top: var(--space-2); }
+    .deploy-card__badge { display: inline-block; padding: var(--space-1) var(--space-3); background: #22c55e; color: #fff; border-radius: var(--radius-full); font-size: var(--text-xs); font-weight: 600; margin-top: var(--space-2); }
+    .deploy-card__compat { text-align: center; padding: var(--space-3); background: var(--color-background); border-radius: var(--radius-lg); margin-bottom: var(--space-4); }
+    .deploy-card__compat-label { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .deploy-card__compat-value { font-size: var(--text-2xl); font-weight: 700; }
+    .deploy-card__compat-value.high { color: #22c55e; }
+    .deploy-card__compat-value.medium { color: #f59e0b; }
+    .deploy-card__compat-value.low { color: #ef4444; }
+    .deploy-card__list { font-size: var(--text-sm); }
+    .deploy-card__list li { padding: var(--space-1) 0; }
+    .gaps-section { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); }
+    .gaps-section h3 { margin-bottom: var(--space-4); }
+    .gap-item { display: flex; gap: var(--space-3); padding: var(--space-3); background: var(--color-background); border-radius: var(--radius-lg); margin-bottom: var(--space-3); border-left: 4px solid #f59e0b; }
+    .gap-item__icon { font-size: 1.25rem; }
+    .gap-item__text { flex: 1; }
+    .gap-item__text strong { display: block; margin-bottom: var(--space-1); }
+    .gap-item__text p { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Infrastructure Compatibility Checker</h2>
+          <p>Assess your tech stack readiness for AI deployment</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="checklist-section">
+              <h3><span>1</span> Cloud & Infrastructure</h3>
+              <div class="checklist-grid">
+                <label class="check-item"><input type="checkbox" data-cat="cloud" data-weight="3"> <div class="check-item__text"><div class="check-item__label">Cloud environment available</div><div class="check-item__desc">AWS, Azure, GCP, or government cloud (FedRAMP/StateRAMP)</div></div></label>
+                <label class="check-item"><input type="checkbox" data-cat="cloud" data-weight="2"> <div class="check-item__text"><div class="check-item__label">Container orchestration</div><div class="check-item__desc">Kubernetes, Docker Swarm, or managed container service</div></div></label>
+                <label class="check-item"><input type="checkbox" data-cat="cloud" data-weight="2"> <div class="check-item__text"><div class="check-item__label">GPU compute available</div><div class="check-item__desc">Access to GPU instances for ML training/inference</div></div></label>
+                <label class="check-item"><input type="checkbox" data-cat="cloud" data-weight="1"> <div class="check-item__text"><div class="check-item__label">Auto-scaling capability</div><div class="check-item__desc">Can scale resources based on demand</div></div></label>
+              </div>
+            </div>
+
+            <div class="checklist-section">
+              <h3><span>2</span> Data Infrastructure</h3>
+              <div class="checklist-grid">
+                <label class="check-item"><input type="checkbox" data-cat="data" data-weight="3"> <div class="check-item__text"><div class="check-item__label">Data warehouse or lake</div><div class="check-item__desc">Centralized data storage (Snowflake, Databricks, etc.)</div></div></label>
+                <label class="check-item"><input type="checkbox" data-cat="data" data-weight="2"> <div class="check-item__text"><div class="check-item__label">Data pipeline tools</div><div class="check-item__desc">ETL/ELT capabilities (Airflow, dbt, etc.)</div></div></label>
+                <label class="check-item"><input type="checkbox" data-cat="data" data-weight="2"> <div class="check-item__text"><div class="check-item__label">Real-time data streaming</div><div class="check-item__desc">Kafka, Kinesis, or similar streaming platform</div></div></label>
+                <label class="check-item"><input type="checkbox" data-cat="data" data-weight="1"> <div class="check-item__text"><div class="check-item__label">Feature store</div><div class="check-item__desc">ML feature management and serving</div></div></label>
+              </div>
+            </div>
+
+            <div class="checklist-section">
+              <h3><span>3</span> Integration & APIs</h3>
+              <div class="checklist-grid">
+                <label class="check-item"><input type="checkbox" data-cat="api" data-weight="3"> <div class="check-item__text"><div class="check-item__label">API gateway</div><div class="check-item__desc">Centralized API management and security</div></div></label>
+                <label class="check-item"><input type="checkbox" data-cat="api" data-weight="2"> <div class="check-item__text"><div class="check-item__label">REST APIs for core systems</div><div class="check-item__desc">Programmatic access to key applications</div></div></label>
+                <label class="check-item"><input type="checkbox" data-cat="api" data-weight="2"> <div class="check-item__text"><div class="check-item__label">Integration platform</div><div class="check-item__desc">MuleSoft, Dell Boomi, or similar iPaaS</div></div></label>
+                <label class="check-item"><input type="checkbox" data-cat="api" data-weight="1"> <div class="check-item__text"><div class="check-item__label">Event-driven architecture</div><div class="check-item__desc">Message queues and event buses</div></div></label>
+              </div>
+            </div>
+
+            <div class="checklist-section">
+              <h3><span>4</span> Security & Compliance</h3>
+              <div class="checklist-grid">
+                <label class="check-item"><input type="checkbox" data-cat="security" data-weight="3"> <div class="check-item__text"><div class="check-item__label">Identity management</div><div class="check-item__desc">SSO, MFA, and role-based access control</div></div></label>
+                <label class="check-item"><input type="checkbox" data-cat="security" data-weight="2"> <div class="check-item__text"><div class="check-item__label">Data encryption</div><div class="check-item__desc">Encryption at rest and in transit</div></div></label>
+                <label class="check-item"><input type="checkbox" data-cat="security" data-weight="2"> <div class="check-item__text"><div class="check-item__label">Audit logging</div><div class="check-item__desc">Comprehensive activity logging and monitoring</div></div></label>
+                <label class="check-item"><input type="checkbox" data-cat="security" data-weight="2"> <div class="check-item__text"><div class="check-item__label">Network segmentation</div><div class="check-item__desc">VPCs, subnets, and firewall rules</div></div></label>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="checkCompatibility()" style="width: 100%;">Check Compatibility</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="compat-score">
+              <div class="compat-score__value" id="overallScore">0%</div>
+              <div class="compat-score__label">Infrastructure Compatibility</div>
+            </div>
+
+            <div class="deployment-options" id="deploymentOptions"></div>
+
+            <div class="gaps-section">
+              <h3>Infrastructure Gaps to Address</h3>
+              <div id="gapsList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Infrastructure Roadmap</h3>
+              <p>Receive a detailed infrastructure modernization plan for AI readiness.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <button type="submit" class="btn btn--primary">Download Roadmap</button>
+              </form>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-6);">
+              <button class="btn btn--secondary" onclick="resetForm()">Start Over</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.check-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        if (e.target.type !== 'checkbox') {
+          const checkbox = this.querySelector('input');
+          checkbox.checked = !checkbox.checked;
+        }
+        this.classList.toggle('checked', this.querySelector('input').checked);
+      });
+    });
+
+    function checkCompatibility() {
+      const scores = { cloud: 0, data: 0, api: 0, security: 0 };
+      const maxScores = { cloud: 8, data: 8, api: 8, security: 9 };
+      const gaps = [];
+
+      document.querySelectorAll('.check-item input').forEach(input => {
+        const cat = input.dataset.cat;
+        const weight = parseInt(input.dataset.weight);
+        if (input.checked) {
+          scores[cat] += weight;
+        } else {
+          const label = input.closest('.check-item').querySelector('.check-item__label').textContent;
+          const desc = input.closest('.check-item').querySelector('.check-item__desc').textContent;
+          gaps.push({ cat, label, desc, weight });
+        }
+      });
+
+      const cloudPct = Math.round((scores.cloud / maxScores.cloud) * 100);
+      const dataPct = Math.round((scores.data / maxScores.data) * 100);
+      const apiPct = Math.round((scores.api / maxScores.api) * 100);
+      const securityPct = Math.round((scores.security / maxScores.security) * 100);
+      const overall = Math.round((cloudPct + dataPct + apiPct + securityPct) / 4);
+
+      document.getElementById('overallScore').textContent = overall + '%';
+
+      // Deployment options
+      const saasCompat = Math.min(100, apiPct + 20);
+      const hybridCompat = Math.round((cloudPct + apiPct + securityPct) / 3);
+      const onPremCompat = Math.round((dataPct + securityPct) / 2);
+
+      const options = [
+        { icon: '☁️', title: 'SaaS / API', compat: saasCompat, pros: ['Fastest deployment', 'Minimal infrastructure', 'Automatic updates'], cons: ['Less control', 'Data leaves premises'] },
+        { icon: '🔀', title: 'Hybrid Cloud', compat: hybridCompat, pros: ['Balanced control', 'Scalable', 'Data flexibility'], cons: ['More complex', 'Requires cloud skills'] },
+        { icon: '🏢', title: 'On-Premise', compat: onPremCompat, pros: ['Full control', 'Data stays local', 'Custom security'], cons: ['Slower to deploy', 'Higher maintenance'] }
+      ];
+
+      const maxCompat = Math.max(saasCompat, hybridCompat, onPremCompat);
+      const optionsEl = document.getElementById('deploymentOptions');
+      optionsEl.innerHTML = options.map(opt => {
+        const isRec = opt.compat === maxCompat;
+        const level = opt.compat >= 70 ? 'high' : opt.compat >= 40 ? 'medium' : 'low';
+        return `
+          <div class="deploy-card ${isRec ? 'recommended' : ''}">
+            <div class="deploy-card__header">
+              <div class="deploy-card__icon">${opt.icon}</div>
+              <div class="deploy-card__title">${opt.title}</div>
+              ${isRec ? '<div class="deploy-card__badge">Recommended</div>' : ''}
+            </div>
+            <div class="deploy-card__compat">
+              <div class="deploy-card__compat-label">Compatibility</div>
+              <div class="deploy-card__compat-value ${level}">${opt.compat}%</div>
+            </div>
+            <div class="deploy-card__list">
+              <strong style="color: #22c55e;">Pros:</strong>
+              <ul>${opt.pros.map(p => `<li>${p}</li>`).join('')}</ul>
+              <strong style="color: #ef4444;">Cons:</strong>
+              <ul>${opt.cons.map(c => `<li>${c}</li>`).join('')}</ul>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Gaps
+      gaps.sort((a, b) => b.weight - a.weight);
+      const gapsEl = document.getElementById('gapsList');
+      gapsEl.innerHTML = gaps.slice(0, 5).map(g => `
+        <div class="gap-item">
+          <div class="gap-item__icon">⚠️</div>
+          <div class="gap-item__text">
+            <strong>${g.label}</strong>
+            <p>${g.desc}</p>
+          </div>
+        </div>
+      `).join('') || '<p>No significant gaps identified. Your infrastructure is well-prepared for AI deployment.</p>';
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetForm() {
+      document.querySelectorAll('.check-item input').forEach(input => {
+        input.checked = false;
+        input.closest('.check-item').classList.remove('checked');
+      });
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your infrastructure roadmap will be sent to your email.');
+    }
+  </script>
+</body>
+</html>

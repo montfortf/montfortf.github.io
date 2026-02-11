@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salesforce Data Cloud Implementation | Unified Data Platform | Brite.AI</title>
+  <meta name="description" content="Create a unified view of constituents across programs with Salesforce Data Cloud. Break down silos and enable coordinated, whole-person service delivery.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
+          <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" style="background: linear-gradient(135deg, #0066CC 0%, #00A878 100%); color: #fff;">
+    <div class="container">
+      <div class="hero__content">
+        <span class="hero__badge" style="background: rgba(255,255,255,0.2);">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          Salesforce Data Cloud Partner
+        </span>
+        <h1 class="hero__title" style="color: #fff;">
+          Unified Data for<br>Unified Service
+        </h1>
+        <p class="hero__subtitle" style="color: rgba(255,255,255,0.9);">
+          Create a single view of constituents across programs and systems.
+          Break down silos. Enable coordinated, whole-person service delivery.
+        </p>
+        <div class="hero__actions">
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Request Data Cloud Demo
+          </a>
+          <a href="#capabilities" class="btn btn--secondary btn--lg" style="border-color: #fff; color: #fff;">
+            See Capabilities
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Statement -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <span class="section-header__label">The Challenge</span>
+          <h2>Your Data Lives in Silos</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Constituents don't experience life in program silos. But your data does.
+            Information about the same family lives in multiple systems that don't
+            talk to each other—making coordinated service delivery nearly impossible.
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-error); font-size: var(--text-xl);">✕</span>
+              <span>Staff can't see the full picture of constituent needs</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-error); font-size: var(--text-xl);">✕</span>
+              <span>Constituents repeat their story at every touchpoint</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-error); font-size: var(--text-xl);">✕</span>
+              <span>Programs can't coordinate services effectively</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-error); font-size: var(--text-xl);">✕</span>
+              <span>AI and analytics lack the data foundation to deliver value</span>
+            </li>
+          </ul>
+        </div>
+        <div data-animate data-delay="200">
+          <!-- Visual representation of data silos -->
+          <div style="text-align: center;">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-8);">
+              <div class="card" style="padding: var(--space-4); text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: var(--space-2);">📋</div>
+                <div style="font-size: var(--text-sm); font-weight: 600;">Benefits</div>
+              </div>
+              <div class="card" style="padding: var(--space-4); text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: var(--space-2);">👨‍👩‍👧</div>
+                <div style="font-size: var(--text-sm); font-weight: 600;">Family Services</div>
+              </div>
+              <div class="card" style="padding: var(--space-4); text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: var(--space-2);">🏥</div>
+                <div style="font-size: var(--text-sm); font-weight: 600;">Healthcare</div>
+              </div>
+            </div>
+            <div style="font-size: 2rem; margin-bottom: var(--space-4);">↓</div>
+            <div class="card" style="padding: var(--space-6); background: linear-gradient(135deg, var(--color-primary-light) 0%, #fff 100%); border: 2px solid var(--color-primary);">
+              <div style="font-size: 2rem; margin-bottom: var(--space-2);">☁️</div>
+              <div style="font-weight: 700; color: var(--color-primary);">Salesforce Data Cloud</div>
+              <div style="font-size: var(--text-sm); color: var(--color-text-muted);">360° Constituent View</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capabilities Section - Tabs -->
+  <section id="capabilities" class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Data Cloud Capabilities</span>
+        <h2 class="section-header__title">Unified Data Platform</h2>
+        <p class="section-header__subtitle">
+          Salesforce Data Cloud brings together all your constituent data—
+          enabling personalized, coordinated service delivery.
+        </p>
+      </div>
+
+      <div class="tabs">
+        <nav class="tabs__nav">
+          <button class="tabs__btn active" data-tab="unification">Data Unification</button>
+          <button class="tabs__btn" data-tab="view360">360° View</button>
+          <button class="tabs__btn" data-tab="segmentation">Segmentation</button>
+          <button class="tabs__btn" data-tab="activation">Activation</button>
+          <button class="tabs__btn" data-tab="ai-foundation">AI Foundation</button>
+        </nav>
+
+        <div class="tabs__content active" data-tab-content="unification">
+          <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+            <div>
+              <h3>Connect All Your Data Sources</h3>
+              <p style="color: var(--color-text-light); margin-bottom: var(--space-6);">
+                Ingest data from any source—Salesforce clouds, legacy systems,
+                external databases, and third-party sources—into a unified platform.
+              </p>
+              <ul style="list-style: none; padding: 0;">
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Pre-built connectors for common systems</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Real-time and batch data ingestion</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Data transformation and mapping</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Data quality and governance</span>
+                </li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4 style="margin-bottom: var(--space-4);">Connected Data Sources</h4>
+              <div style="display: flex; flex-wrap: wrap; gap: var(--space-2);">
+                <span style="padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm);">Salesforce CRM</span>
+                <span style="padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm);">Legacy Systems</span>
+                <span style="padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm);">State HIE</span>
+                <span style="padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm);">Benefits Systems</span>
+                <span style="padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm);">Contact Center</span>
+                <span style="padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm);">Portal Activity</span>
+                <span style="padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm);">Case Management</span>
+                <span style="padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm);">External Data</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs__content" data-tab-content="view360">
+          <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+            <div>
+              <h3>Complete Constituent Picture</h3>
+              <p style="color: var(--color-text-light); margin-bottom: var(--space-6);">
+                See everything you know about a constituent in one place—
+                identity, interactions, programs, services, and outcomes.
+              </p>
+              <ul style="list-style: none; padding: 0;">
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Identity resolution across systems</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Household and relationship mapping</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Complete interaction history</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Cross-program visibility</span>
+                </li>
+              </ul>
+            </div>
+            <div class="card" style="text-align: center;">
+              <div style="font-size: 4rem; margin-bottom: var(--space-4);">👤</div>
+              <h4>Unified Constituent Profile</h4>
+              <p style="color: var(--color-text-muted); font-size: var(--text-sm);">
+                All programs, all interactions, all in one view
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs__content" data-tab-content="segmentation">
+          <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+            <div>
+              <h3>Smart Constituent Segmentation</h3>
+              <p style="color: var(--color-text-light); margin-bottom: var(--space-6);">
+                Create dynamic segments based on any attribute or behavior—
+                enabling targeted outreach and personalized service.
+              </p>
+              <ul style="list-style: none; padding: 0;">
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>AI-powered segment recommendations</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Dynamic, real-time segments</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Cross-channel activation</span>
+                </li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4 style="margin-bottom: var(--space-4);">Example Segments</h4>
+              <ul style="list-style: none; padding: 0;">
+                <li style="padding: var(--space-3); margin-bottom: var(--space-2); background: var(--color-primary-light); border-radius: var(--radius-lg);">
+                  <strong>Renewal Coming</strong> - Benefits expiring in 30 days
+                </li>
+                <li style="padding: var(--space-3); margin-bottom: var(--space-2); background: var(--color-background-alt); border-radius: var(--radius-lg);">
+                  <strong>High Risk</strong> - Multiple service flags
+                </li>
+                <li style="padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-lg);">
+                  <strong>Multi-Program</strong> - Enrolled in 3+ programs
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs__content" data-tab-content="activation">
+          <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+            <div>
+              <h3>Activate Data Everywhere</h3>
+              <p style="color: var(--color-text-light); margin-bottom: var(--space-6);">
+                Push unified data to every touchpoint—CRM, marketing, service,
+                analytics, and AI applications.
+              </p>
+              <ul style="list-style: none; padding: 0;">
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Real-time data activation</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Personalization at every touchpoint</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Journey orchestration</span>
+                </li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4 style="margin-bottom: var(--space-4);">Activation Channels</h4>
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3);">
+                <div style="padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-lg); text-align: center;">
+                  <div>📧</div>
+                  <div style="font-size: var(--text-sm);">Email</div>
+                </div>
+                <div style="padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-lg); text-align: center;">
+                  <div>📱</div>
+                  <div style="font-size: var(--text-sm);">SMS</div>
+                </div>
+                <div style="padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-lg); text-align: center;">
+                  <div>💬</div>
+                  <div style="font-size: var(--text-sm);">Chat</div>
+                </div>
+                <div style="padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-lg); text-align: center;">
+                  <div>📞</div>
+                  <div style="font-size: var(--text-sm);">Voice</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs__content" data-tab-content="ai-foundation">
+          <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+            <div>
+              <h3>Foundation for AI</h3>
+              <p style="color: var(--color-text-light); margin-bottom: var(--space-6);">
+                Data Cloud provides the unified, high-quality data that AI
+                needs to deliver real value—from predictive analytics to
+                generative AI to agentic automation.
+              </p>
+              <ul style="list-style: none; padding: 0;">
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Clean, unified data for ML training</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Real-time data for AI applications</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Einstein AI integration</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; gap: var(--space-3);">
+                  <span style="color: var(--color-success);">✓</span>
+                  <span>Agentforce data layer</span>
+                </li>
+              </ul>
+            </div>
+            <div class="card" style="background: linear-gradient(135deg, var(--color-primary-light) 0%, #fff 100%);">
+              <div style="text-align: center; font-size: 3rem; margin-bottom: var(--space-4);">
+                🤖 + ☁️
+              </div>
+              <h4 style="text-align: center;">Data Cloud + AI</h4>
+              <p style="text-align: center; color: var(--color-text-muted); font-size: var(--text-sm);">
+                Unified data enables AI that actually understands your constituents
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Results</span>
+        <h2 class="section-header__title">Data Cloud Impact</h2>
+      </div>
+
+      <div class="stats">
+        <div class="stat" data-animate>
+          <div class="stat__value">360°</div>
+          <div class="stat__label">Constituent visibility</div>
+        </div>
+        <div class="stat" data-animate data-delay="100">
+          <div class="stat__value" data-counter="40" data-suffix="%">0%</div>
+          <div class="stat__label">Improvement in coordination</div>
+        </div>
+        <div class="stat" data-animate data-delay="200">
+          <div class="stat__value" data-counter="30" data-suffix="%">0%</div>
+          <div class="stat__label">Reduction in duplicate outreach</div>
+        </div>
+        <div class="stat" data-animate data-delay="300">
+          <div class="stat__value">Real-time</div>
+          <div class="stat__label">Data synchronization</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Ready to Unify Your Data?</h2>
+        <p>
+          See how Data Cloud can create a foundation for coordinated,
+          personalized constituent service.
+        </p>
+        <div class="cta__actions">
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Request Data Cloud Demo
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Data Services</h4>
+          <ul class="footer__links">
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+            <li><a href="data-readiness.html">Data Readiness</a></li>
+            <li><a href="analytics.html">Analytics</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="genai-strategy.html">Generative AI</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

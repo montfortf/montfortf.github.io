@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Skills Gap Analyzer | Brite.AI</title>
+  <meta name="description" content="Identify AI training needs and hiring gaps in your organization.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .tool-header { background: linear-gradient(135deg, #ec4899, #db2777); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-body { padding: var(--space-8); }
+    .form-section { margin-bottom: var(--space-8); }
+    .form-section h3 { margin-bottom: var(--space-4); }
+    .form-group { margin-bottom: var(--space-4); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group select, .form-group input { width: 100%; padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+    .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .skill-grid { grid-template-columns: 1fr; } }
+    .skill-item { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-4); }
+    .skill-item__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+    .skill-item__name { font-weight: 600; }
+    .skill-item__select { padding: var(--space-2); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-sm); }
+    .results-section { display: none; }
+    .gap-summary { background: linear-gradient(135deg, #ec4899, #db2777); color: #fff; border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; margin-bottom: var(--space-8); }
+    .gap-summary__score { font-size: var(--text-5xl); font-weight: 800; }
+    .gap-summary__label { font-size: var(--text-xl); margin-top: var(--space-2); }
+    .gap-chart { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .gap-bar { margin-bottom: var(--space-4); }
+    .gap-bar__header { display: flex; justify-content: space-between; margin-bottom: var(--space-2); }
+    .gap-bar__name { font-weight: 500; }
+    .gap-bar__levels { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .gap-bar__track { height: 24px; background: var(--color-border); border-radius: var(--radius-md); position: relative; overflow: hidden; }
+    .gap-bar__current { position: absolute; left: 0; top: 0; height: 100%; background: #f87171; border-radius: var(--radius-md); }
+    .gap-bar__needed { position: absolute; top: 0; height: 100%; border-left: 3px dashed #22c55e; }
+    .recommendations { margin-top: var(--space-8); }
+    .rec-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-4); border-left: 4px solid var(--color-primary); }
+    .rec-card__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2); }
+    .rec-card__title { font-weight: 600; }
+    .rec-card__badge { padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-xs); font-weight: 600; }
+    .rec-card__badge.train { background: #dbeafe; color: #1e40af; }
+    .rec-card__badge.hire { background: #fce7f3; color: #9d174d; }
+    .rec-card__badge.partner { background: #d1fae5; color: #065f46; }
+    .rec-card__desc { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Skills Gap Analyzer</h2>
+          <p>Identify training needs and hiring gaps for AI success</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-section">
+              <h3>Organization Profile</h3>
+              <div class="form-group">
+                <label>AI Initiative Scope</label>
+                <select id="scope">
+                  <option value="pilot">Pilot Project - Single use case</option>
+                  <option value="program">Program - Multiple use cases</option>
+                  <option value="enterprise">Enterprise - Organization-wide AI</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Current IT/Data Team Size</label>
+                <select id="teamSize">
+                  <option value="small">Small (1-10 people)</option>
+                  <option value="medium">Medium (11-50 people)</option>
+                  <option value="large">Large (50+ people)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3>Current Skill Levels</h3>
+              <p style="color: var(--color-text-muted); margin-bottom: var(--space-4);">Rate your team's current capability (1=None, 5=Expert)</p>
+              <div class="skill-grid">
+                <div class="skill-item">
+                  <div class="skill-item__header">
+                    <span class="skill-item__name">Data Engineering</span>
+                    <select class="skill-item__select" data-skill="dataEng">
+                      <option value="1">1 - None</option>
+                      <option value="2">2 - Basic</option>
+                      <option value="3" selected>3 - Intermediate</option>
+                      <option value="4">4 - Advanced</option>
+                      <option value="5">5 - Expert</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-item__header">
+                    <span class="skill-item__name">Machine Learning</span>
+                    <select class="skill-item__select" data-skill="ml">
+                      <option value="1">1 - None</option>
+                      <option value="2" selected>2 - Basic</option>
+                      <option value="3">3 - Intermediate</option>
+                      <option value="4">4 - Advanced</option>
+                      <option value="5">5 - Expert</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-item__header">
+                    <span class="skill-item__name">Cloud Platforms</span>
+                    <select class="skill-item__select" data-skill="cloud">
+                      <option value="1">1 - None</option>
+                      <option value="2">2 - Basic</option>
+                      <option value="3" selected>3 - Intermediate</option>
+                      <option value="4">4 - Advanced</option>
+                      <option value="5">5 - Expert</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-item__header">
+                    <span class="skill-item__name">AI/ML Operations</span>
+                    <select class="skill-item__select" data-skill="mlops">
+                      <option value="1" selected>1 - None</option>
+                      <option value="2">2 - Basic</option>
+                      <option value="3">3 - Intermediate</option>
+                      <option value="4">4 - Advanced</option>
+                      <option value="5">5 - Expert</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-item__header">
+                    <span class="skill-item__name">AI Governance</span>
+                    <select class="skill-item__select" data-skill="governance">
+                      <option value="1" selected>1 - None</option>
+                      <option value="2">2 - Basic</option>
+                      <option value="3">3 - Intermediate</option>
+                      <option value="4">4 - Advanced</option>
+                      <option value="5">5 - Expert</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-item__header">
+                    <span class="skill-item__name">Generative AI</span>
+                    <select class="skill-item__select" data-skill="genai">
+                      <option value="1">1 - None</option>
+                      <option value="2" selected>2 - Basic</option>
+                      <option value="3">3 - Intermediate</option>
+                      <option value="4">4 - Advanced</option>
+                      <option value="5">5 - Expert</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-item__header">
+                    <span class="skill-item__name">Change Management</span>
+                    <select class="skill-item__select" data-skill="change">
+                      <option value="1">1 - None</option>
+                      <option value="2">2 - Basic</option>
+                      <option value="3" selected>3 - Intermediate</option>
+                      <option value="4">4 - Advanced</option>
+                      <option value="5">5 - Expert</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="skill-item">
+                  <div class="skill-item__header">
+                    <span class="skill-item__name">AI Product Management</span>
+                    <select class="skill-item__select" data-skill="product">
+                      <option value="1" selected>1 - None</option>
+                      <option value="2">2 - Basic</option>
+                      <option value="3">3 - Intermediate</option>
+                      <option value="4">4 - Advanced</option>
+                      <option value="5">5 - Expert</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="analyzeGaps()" style="width: 100%;">Analyze Skills Gap</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="gap-summary">
+              <div class="gap-summary__score" id="gapScore">45%</div>
+              <div class="gap-summary__label">Overall Skills Gap</div>
+            </div>
+
+            <div class="gap-chart">
+              <h3>Skills Gap Analysis</h3>
+              <div id="gapBars"></div>
+              <div style="display: flex; gap: var(--space-6); margin-top: var(--space-4); font-size: var(--text-sm);">
+                <div style="display: flex; align-items: center; gap: var(--space-2);"><div style="width: 16px; height: 16px; background: #f87171; border-radius: 4px;"></div> Current Level</div>
+                <div style="display: flex; align-items: center; gap: var(--space-2);"><div style="width: 16px; height: 3px; border-top: 3px dashed #22c55e;"></div> Needed Level</div>
+              </div>
+            </div>
+
+            <div class="recommendations">
+              <h3>Recommendations</h3>
+              <div id="recsList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your AI Training Plan</h3>
+              <p>Receive a customized training curriculum and hiring roadmap.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <button type="submit" class="btn btn--primary">Download Training Plan</button>
+              </form>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-6);">
+              <button class="btn btn--secondary" onclick="resetForm()">Start Over</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const skillNames = {
+      dataEng: 'Data Engineering',
+      ml: 'Machine Learning',
+      cloud: 'Cloud Platforms',
+      mlops: 'AI/ML Operations',
+      governance: 'AI Governance',
+      genai: 'Generative AI',
+      change: 'Change Management',
+      product: 'AI Product Management'
+    };
+
+    const neededLevels = {
+      pilot: { dataEng: 3, ml: 3, cloud: 3, mlops: 2, governance: 3, genai: 3, change: 3, product: 2 },
+      program: { dataEng: 4, ml: 4, cloud: 4, mlops: 3, governance: 4, genai: 4, change: 4, product: 3 },
+      enterprise: { dataEng: 5, ml: 5, cloud: 5, mlops: 4, governance: 5, genai: 5, change: 5, product: 4 }
+    };
+
+    function analyzeGaps() {
+      const scope = document.getElementById('scope').value;
+      const teamSize = document.getElementById('teamSize').value;
+      const needed = neededLevels[scope];
+
+      const skills = {};
+      document.querySelectorAll('.skill-item__select').forEach(select => {
+        skills[select.dataset.skill] = parseInt(select.value);
+      });
+
+      let totalGap = 0;
+      let maxGap = 0;
+      const gaps = [];
+
+      Object.keys(skills).forEach(skill => {
+        const current = skills[skill];
+        const need = needed[skill];
+        const gap = Math.max(0, need - current);
+        totalGap += gap;
+        maxGap += need;
+        gaps.push({ skill, current, need, gap, name: skillNames[skill] });
+      });
+
+      const gapPercent = Math.round((totalGap / maxGap) * 100);
+      document.getElementById('gapScore').textContent = gapPercent + '%';
+
+      // Render gap bars
+      const barsEl = document.getElementById('gapBars');
+      barsEl.innerHTML = gaps.map(g => `
+        <div class="gap-bar">
+          <div class="gap-bar__header">
+            <span class="gap-bar__name">${g.name}</span>
+            <span class="gap-bar__levels">Current: ${g.current} | Needed: ${g.need}</span>
+          </div>
+          <div class="gap-bar__track">
+            <div class="gap-bar__current" style="width: ${g.current * 20}%;"></div>
+            <div class="gap-bar__needed" style="left: ${g.need * 20}%;"></div>
+          </div>
+        </div>
+      `).join('');
+
+      // Generate recommendations
+      const recs = [];
+      gaps.sort((a, b) => b.gap - a.gap).forEach(g => {
+        if (g.gap > 0) {
+          if (g.gap <= 1) {
+            recs.push({ title: `Train: ${g.name}`, type: 'train', desc: `Upskill existing team with targeted training programs.` });
+          } else if (g.gap === 2) {
+            recs.push({ title: `Hire or Partner: ${g.name}`, type: 'hire', desc: `Consider hiring specialists or engaging partners for this capability.` });
+          } else {
+            recs.push({ title: `Partner: ${g.name}`, type: 'partner', desc: `Significant gap - recommend partnering while building internal capability.` });
+          }
+        }
+      });
+
+      const recsEl = document.getElementById('recsList');
+      recsEl.innerHTML = recs.slice(0, 5).map(r => `
+        <div class="rec-card">
+          <div class="rec-card__header">
+            <span class="rec-card__title">${r.title}</span>
+            <span class="rec-card__badge ${r.type}">${r.type === 'train' ? 'Training' : r.type === 'hire' ? 'Hire' : 'Partner'}</span>
+          </div>
+          <p class="rec-card__desc">${r.desc}</p>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your AI training plan will be sent to your email.');
+    }
+  </script>
+</body>
+</html>

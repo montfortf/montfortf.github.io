@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Use Case Prioritization Tool | Brite.AI</title>
+  <meta name="description" content="Prioritize your AI initiatives based on impact, feasibility, and strategic alignment. Build a data-driven AI roadmap.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 1100px; margin: 0 auto; }
+    .tool-card {
+      background: var(--color-background);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .tool-header {
+      background: linear-gradient(135deg, #ea580c, #f97316);
+      color: #fff;
+      padding: var(--space-8);
+      text-align: center;
+    }
+    .tool-body { padding: var(--space-8); }
+    .use-case-form {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-4);
+    }
+    .use-case-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-4);
+    }
+    .use-case-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ea580c;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+    .remove-btn:hover { color: #dc2626; }
+    .form-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: var(--space-3);
+      align-items: end;
+    }
+    @media (max-width: 900px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+    .form-group label {
+      display: block;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      margin-bottom: var(--space-2);
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: var(--space-3);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-base);
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: #ea580c;
+    }
+    .add-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      width: 100%;
+      padding: var(--space-4);
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-lg);
+      background: none;
+      cursor: pointer;
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+      transition: all 0.2s;
+      margin-bottom: var(--space-6);
+    }
+    .add-btn:hover {
+      border-color: #ea580c;
+      color: #ea580c;
+    }
+    .criteria-weights {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+    .criteria-weights h3 { margin-bottom: var(--space-4); }
+    .weight-sliders {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 768px) { .weight-sliders { grid-template-columns: repeat(2, 1fr); } }
+    .weight-item { text-align: center; }
+    .weight-item label { display: block; font-size: var(--text-sm); margin-bottom: var(--space-2); }
+    .weight-item input[type="range"] { width: 100%; }
+    .weight-value { font-weight: 600; color: #ea580c; }
+    .results-panel {
+      background: linear-gradient(135deg, #fff7ed, #ffedd5);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-6);
+    }
+    .matrix-container {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+      overflow-x: auto;
+    }
+    .matrix-chart {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      height: 400px;
+      margin: 0 auto;
+      border-left: 2px solid var(--color-border);
+      border-bottom: 2px solid var(--color-border);
+    }
+    .matrix-chart__quadrant {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      opacity: 0.5;
+    }
+    .matrix-chart__quadrant--tl { top: 0; left: 0; background: #fef3c7; }
+    .matrix-chart__quadrant--tr { top: 0; right: 0; background: #d1fae5; }
+    .matrix-chart__quadrant--bl { bottom: 0; left: 0; background: #fee2e2; }
+    .matrix-chart__quadrant--br { bottom: 0; right: 0; background: #dbeafe; }
+    .matrix-dot {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ea580c;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: var(--text-sm);
+      transform: translate(-50%, 50%);
+      cursor: pointer;
+      transition: transform 0.2s;
+      z-index: 1;
+    }
+    .matrix-dot:hover { transform: translate(-50%, 50%) scale(1.2); }
+    .matrix-label {
+      position: absolute;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    .matrix-label--x { bottom: -25px; left: 50%; transform: translateX(-50%); }
+    .matrix-label--y { left: -80px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+    .priority-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .priority-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: #fff;
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+    }
+    .priority-rank {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .priority-rank--1 { background: #059669; }
+    .priority-rank--2 { background: #0891b2; }
+    .priority-rank--3 { background: #7c3aed; }
+    .priority-rank--other { background: #6b7280; }
+    .priority-content { flex: 1; }
+    .priority-content h4 { margin-bottom: var(--space-1); }
+    .priority-content p { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+    .priority-score {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: #ea580c;
+    }
+    .recommendation-box {
+      background: #fff;
+      border-left: 4px solid #059669;
+      padding: var(--space-5);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      margin-top: var(--space-6);
+    }
+    .recommendation-box h4 { color: #059669; margin-bottom: var(--space-2); }
+    .lead-capture {
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-8);
+      text-align: center;
+    }
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      max-width: 400px;
+      margin: var(--space-6) auto 0;
+    }
+    .lead-form input {
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../ai-data/index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h1>AI Use Case Prioritization</h1>
+          <p>Evaluate and prioritize AI initiatives to build your optimal AI roadmap</p>
+        </div>
+
+        <div class="tool-body">
+          <p style="margin-bottom: var(--space-6); color: var(--color-text-light);">Enter up to 5 AI use cases you're considering, then rate each on impact and feasibility to see a prioritized recommendation.</p>
+
+          <div id="useCasesContainer">
+            <!-- Use case 1 -->
+            <div class="use-case-form" data-index="1">
+              <div class="use-case-header">
+                <div class="use-case-number">1</div>
+                <button class="remove-btn" onclick="removeUseCase(this)" style="display: none;">&times;</button>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Use Case Name</label>
+                  <input type="text" placeholder="e.g., Document Processing Automation" class="use-case-name">
+                </div>
+                <div class="form-group">
+                  <label>Business Impact</label>
+                  <select class="impact-score">
+                    <option value="">Select...</option>
+                    <option value="1">1 - Minimal</option>
+                    <option value="2">2 - Low</option>
+                    <option value="3">3 - Moderate</option>
+                    <option value="4">4 - High</option>
+                    <option value="5">5 - Transformative</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Technical Feasibility</label>
+                  <select class="feasibility-score">
+                    <option value="">Select...</option>
+                    <option value="1">1 - Very Difficult</option>
+                    <option value="2">2 - Challenging</option>
+                    <option value="3">3 - Moderate</option>
+                    <option value="4">4 - Straightforward</option>
+                    <option value="5">5 - Easy</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Data Readiness</label>
+                  <select class="data-score">
+                    <option value="">Select...</option>
+                    <option value="1">1 - Not Available</option>
+                    <option value="2">2 - Poor Quality</option>
+                    <option value="3">3 - Needs Work</option>
+                    <option value="4">4 - Good</option>
+                    <option value="5">5 - Excellent</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Strategic Alignment</label>
+                  <select class="strategic-score">
+                    <option value="">Select...</option>
+                    <option value="1">1 - Low</option>
+                    <option value="2">2 - Moderate</option>
+                    <option value="3">3 - Good</option>
+                    <option value="4">4 - High</option>
+                    <option value="5">5 - Critical</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="add-btn" onclick="addUseCase()">
+            <span>+</span> Add Another Use Case
+          </button>
+
+          <div class="criteria-weights">
+            <h3>Adjust Criteria Weights (Optional)</h3>
+            <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-4);">Customize how much each factor influences the final score</p>
+            <div class="weight-sliders">
+              <div class="weight-item">
+                <label>Business Impact</label>
+                <input type="range" id="weightImpact" min="1" max="5" value="5" oninput="updateWeight('weightImpact')">
+                <div class="weight-value" id="weightImpactValue">5</div>
+              </div>
+              <div class="weight-item">
+                <label>Technical Feasibility</label>
+                <input type="range" id="weightFeasibility" min="1" max="5" value="4" oninput="updateWeight('weightFeasibility')">
+                <div class="weight-value" id="weightFeasibilityValue">4</div>
+              </div>
+              <div class="weight-item">
+                <label>Data Readiness</label>
+                <input type="range" id="weightData" min="1" max="5" value="3" oninput="updateWeight('weightData')">
+                <div class="weight-value" id="weightDataValue">3</div>
+              </div>
+              <div class="weight-item">
+                <label>Strategic Alignment</label>
+                <input type="range" id="weightStrategic" min="1" max="5" value="4" oninput="updateWeight('weightStrategic')">
+                <div class="weight-value" id="weightStrategicValue">4</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn--primary btn--lg" style="width: 100%; background: #ea580c;" onclick="prioritizeUseCases()">Generate Prioritization</button>
+
+          <!-- Results -->
+          <div class="results-panel" id="resultsPanel" style="display: none;">
+            <h3 style="text-align: center; margin-bottom: var(--space-6);">Your AI Use Case Prioritization</h3>
+
+            <div class="matrix-container">
+              <h4 style="text-align: center; margin-bottom: var(--space-4);">Impact vs. Feasibility Matrix</h4>
+              <div class="matrix-chart" id="matrixChart">
+                <div class="matrix-chart__quadrant matrix-chart__quadrant--tl">Strategic Bets</div>
+                <div class="matrix-chart__quadrant matrix-chart__quadrant--tr">Quick Wins</div>
+                <div class="matrix-chart__quadrant matrix-chart__quadrant--bl">Reconsider</div>
+                <div class="matrix-chart__quadrant matrix-chart__quadrant--br">Fill-Ins</div>
+                <span class="matrix-label matrix-label--x">Feasibility →</span>
+                <span class="matrix-label matrix-label--y">Impact →</span>
+              </div>
+            </div>
+
+            <h4 style="margin-bottom: var(--space-4);">Recommended Priority Order</h4>
+            <ul class="priority-list" id="priorityList"></ul>
+
+            <div class="recommendation-box" id="recommendationBox">
+              <h4>Our Recommendation</h4>
+              <p id="recommendationText"></p>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your AI Roadmap</h3>
+              <p>Receive a detailed roadmap with implementation guidance for your prioritized use cases.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <button type="submit" class="btn btn--primary" style="background: #ea580c;">Download Roadmap</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let useCaseCount = 1;
+
+    function addUseCase() {
+      if (useCaseCount >= 5) {
+        alert('Maximum 5 use cases allowed');
+        return;
+      }
+      useCaseCount++;
+      const container = document.getElementById('useCasesContainer');
+      const template = container.querySelector('.use-case-form').cloneNode(true);
+      template.dataset.index = useCaseCount;
+      template.querySelector('.use-case-number').textContent = useCaseCount;
+      template.querySelector('.remove-btn').style.display = 'block';
+      template.querySelector('.use-case-name').value = '';
+      template.querySelectorAll('select').forEach(s => s.value = '');
+      container.appendChild(template);
+    }
+
+    function removeUseCase(btn) {
+      btn.closest('.use-case-form').remove();
+      useCaseCount--;
+      // Renumber
+      document.querySelectorAll('.use-case-form').forEach((form, idx) => {
+        form.dataset.index = idx + 1;
+        form.querySelector('.use-case-number').textContent = idx + 1;
+      });
+    }
+
+    function updateWeight(id) {
+      document.getElementById(id + 'Value').textContent = document.getElementById(id).value;
+    }
+
+    function prioritizeUseCases() {
+      const useCases = [];
+      document.querySelectorAll('.use-case-form').forEach(form => {
+        const name = form.querySelector('.use-case-name').value;
+        const impact = parseInt(form.querySelector('.impact-score').value) || 0;
+        const feasibility = parseInt(form.querySelector('.feasibility-score').value) || 0;
+        const data = parseInt(form.querySelector('.data-score').value) || 0;
+        const strategic = parseInt(form.querySelector('.strategic-score').value) || 0;
+
+        if (name && impact && feasibility) {
+          useCases.push({ name, impact, feasibility, data, strategic });
+        }
+      });
+
+      if (useCases.length === 0) {
+        alert('Please enter at least one use case with all scores');
+        return;
+      }
+
+      // Get weights
+      const weights = {
+        impact: parseInt(document.getElementById('weightImpact').value),
+        feasibility: parseInt(document.getElementById('weightFeasibility').value),
+        data: parseInt(document.getElementById('weightData').value),
+        strategic: parseInt(document.getElementById('weightStrategic').value)
+      };
+      const totalWeight = weights.impact + weights.feasibility + weights.data + weights.strategic;
+
+      // Calculate scores
+      useCases.forEach(uc => {
+        uc.score = (
+          (uc.impact * weights.impact) +
+          (uc.feasibility * weights.feasibility) +
+          (uc.data * weights.data) +
+          (uc.strategic * weights.strategic)
+        ) / totalWeight;
+      });
+
+      // Sort by score
+      useCases.sort((a, b) => b.score - a.score);
+
+      // Display results
+      document.getElementById('resultsPanel').style.display = 'block';
+
+      // Matrix chart
+      const matrixChart = document.getElementById('matrixChart');
+      // Remove old dots
+      matrixChart.querySelectorAll('.matrix-dot').forEach(d => d.remove());
+      // Add new dots
+      useCases.forEach((uc, idx) => {
+        const dot = document.createElement('div');
+        dot.className = 'matrix-dot';
+        dot.textContent = idx + 1;
+        dot.title = uc.name;
+        // Position: feasibility on X (1-5 → 10%-90%), impact on Y (1-5 → 90%-10%)
+        const left = (uc.feasibility - 1) / 4 * 80 + 10;
+        const bottom = (uc.impact - 1) / 4 * 80 + 10;
+        dot.style.left = left + '%';
+        dot.style.bottom = bottom + '%';
+        matrixChart.appendChild(dot);
+      });
+
+      // Priority list
+      const priorityList = document.getElementById('priorityList');
+      priorityList.innerHTML = useCases.map((uc, idx) => `
+        <li class="priority-item">
+          <div class="priority-rank priority-rank--${idx < 3 ? idx + 1 : 'other'}">${idx + 1}</div>
+          <div class="priority-content">
+            <h4>${uc.name}</h4>
+            <p>Impact: ${uc.impact}/5 | Feasibility: ${uc.feasibility}/5 | Data: ${uc.data}/5 | Strategic: ${uc.strategic}/5</p>
+          </div>
+          <div class="priority-score">${uc.score.toFixed(1)}</div>
+        </li>
+      `).join('');
+
+      // Recommendation
+      const top = useCases[0];
+      let recommendation = '';
+      if (top.impact >= 4 && top.feasibility >= 4) {
+        recommendation = `<strong>${top.name}</strong> is a clear "Quick Win" - high impact with high feasibility. We recommend starting here to demonstrate AI value quickly and build momentum for your AI program.`;
+      } else if (top.impact >= 4 && top.feasibility < 4) {
+        recommendation = `<strong>${top.name}</strong> is a "Strategic Bet" - high impact but more challenging to implement. Consider this as a flagship initiative with proper planning and potentially external expertise.`;
+      } else if (top.impact < 4 && top.feasibility >= 4) {
+        recommendation = `<strong>${top.name}</strong> is a good starting point due to its feasibility. While impact is moderate, success here will build confidence and capability for larger initiatives.`;
+      } else {
+        recommendation = `Based on your scores, <strong>${top.name}</strong> shows the best balance. Consider improving data readiness or choosing a higher-impact use case if possible.`;
+      }
+      document.getElementById('recommendationText').innerHTML = recommendation;
+
+      document.getElementById('resultsPanel').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your customized AI roadmap will be sent to your email.');
+    }
+  </script>
+</body>
+</html>

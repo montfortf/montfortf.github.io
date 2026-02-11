@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Center AI ROI Calculator | Brite.AI</title>
+  <meta name="description" content="Calculate savings from AI chatbots and agent assist in your government contact center. Reduce call volume and improve constituent service.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 1000px; margin: 0 auto; }
+    .calculator-card {
+      background: var(--color-background);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .calculator-header {
+      background: linear-gradient(135deg, #0891b2, #06b6d4);
+      color: #fff;
+      padding: var(--space-8);
+      text-align: center;
+    }
+    .calculator-body { padding: var(--space-8); }
+    .ai-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+    @media (max-width: 768px) { .ai-options { grid-template-columns: 1fr; } }
+    .ai-option {
+      padding: var(--space-5);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .ai-option:hover { border-color: #0891b2; }
+    .ai-option.selected {
+      border-color: #0891b2;
+      background: #ecfeff;
+    }
+    .ai-option__icon { font-size: 2rem; margin-bottom: var(--space-2); }
+    .ai-option__title { font-weight: 600; margin-bottom: var(--space-1); }
+    .ai-option__desc { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .input-section {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+    .input-section__title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
+    .form-group label { display: block; font-weight: 500; margin-bottom: var(--space-2); }
+    .form-group small { display: block; font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-2); }
+    .input-with-unit {
+      display: flex;
+    }
+    .input-with-unit input {
+      flex: 1;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      font-size: var(--text-base);
+      border-right: none;
+    }
+    .input-with-unit input:focus { outline: none; border-color: #0891b2; }
+    .input-unit {
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-border);
+      border: 2px solid var(--color-border);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+    .channel-breakdown {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+    @media (max-width: 768px) { .channel-breakdown { grid-template-columns: 1fr; } }
+    .channel-item {
+      padding: var(--space-4);
+      background: var(--color-background);
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+    .channel-item__icon { font-size: 1.5rem; margin-bottom: var(--space-2); }
+    .channel-item__label { font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-2); }
+    .channel-item__input {
+      width: 80px;
+      padding: var(--space-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+    .results-panel {
+      background: linear-gradient(135deg, #ecfeff, #cffafe);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-6);
+    }
+    .savings-highlight {
+      background: linear-gradient(135deg, #0891b2, #0e7490);
+      color: #fff;
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      text-align: center;
+      margin-bottom: var(--space-6);
+    }
+    .savings-highlight__value { font-size: 4rem; font-weight: 800; line-height: 1; }
+    .savings-highlight__label { font-size: var(--text-lg); opacity: 0.9; margin-top: var(--space-2); }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 768px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
+    .metric-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      text-align: center;
+    }
+    .metric-card__icon { font-size: 1.5rem; margin-bottom: var(--space-2); }
+    .metric-card__value { font-size: var(--text-xl); font-weight: 700; color: #0891b2; }
+    .metric-card__label { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .experience-impact {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-top: var(--space-6);
+    }
+    .experience-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+    @media (max-width: 768px) { .experience-metrics { grid-template-columns: 1fr; } }
+    .exp-metric {
+      text-align: center;
+      padding: var(--space-4);
+    }
+    .exp-metric__before { color: #dc2626; font-size: var(--text-lg); }
+    .exp-metric__arrow { margin: var(--space-2) 0; color: #0891b2; }
+    .exp-metric__after { color: #059669; font-size: var(--text-lg); font-weight: 600; }
+    .exp-metric__label { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .use-case-examples {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-top: var(--space-6);
+    }
+    .example-list { list-style: none; padding: 0; margin: var(--space-4) 0 0; }
+    .example-list li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .example-list li:last-child { border-bottom: none; }
+    .example-list .icon { font-size: 1.25rem; }
+    .example-list .deflection { margin-left: auto; font-weight: 600; color: #059669; }
+    .lead-capture {
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-8);
+      text-align: center;
+    }
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      max-width: 400px;
+      margin: var(--space-6) auto 0;
+    }
+    .lead-form input {
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../ai-data/index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="calculator-card">
+        <div class="calculator-header">
+          <h1>Contact Center AI Calculator</h1>
+          <p>Calculate savings from AI chatbots and agent assist for your government contact center</p>
+        </div>
+
+        <div class="calculator-body">
+          <!-- AI Solution Selection -->
+          <div class="input-section">
+            <div class="input-section__title">Select AI Solutions to Evaluate</div>
+            <div class="ai-options">
+              <div class="ai-option selected" data-option="chatbot" onclick="toggleOption(this)">
+                <div class="ai-option__icon">🤖</div>
+                <div class="ai-option__title">AI Chatbot</div>
+                <div class="ai-option__desc">24/7 self-service for common questions and transactions</div>
+              </div>
+              <div class="ai-option selected" data-option="agentassist" onclick="toggleOption(this)">
+                <div class="ai-option__icon">🎧</div>
+                <div class="ai-option__title">Agent Assist</div>
+                <div class="ai-option__desc">Real-time suggestions and automation for live agents</div>
+              </div>
+              <div class="ai-option" data-option="voicebot" onclick="toggleOption(this)">
+                <div class="ai-option__icon">📞</div>
+                <div class="ai-option__title">Voice AI / IVR</div>
+                <div class="ai-option__desc">Intelligent voice automation for phone channel</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Center Metrics -->
+          <div class="input-section">
+            <div class="input-section__title">Current Contact Center Metrics</div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Monthly Contact Volume</label>
+                <small>Total inbound contacts across all channels</small>
+                <div class="input-with-unit">
+                  <input type="number" id="monthlyContacts" value="50000">
+                  <span class="input-unit">/month</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Average Handle Time (AHT)</label>
+                <small>Average call/chat duration including wrap-up</small>
+                <div class="input-with-unit">
+                  <input type="number" id="avgHandleTime" value="8">
+                  <span class="input-unit">minutes</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Cost Per Contact</label>
+                <small>Fully-loaded cost (typically $5-15)</small>
+                <div class="input-with-unit">
+                  <input type="number" id="costPerContact" value="8">
+                  <span class="input-unit">$</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Number of Agents</label>
+                <div class="input-with-unit">
+                  <input type="number" id="agentCount" value="75">
+                  <span class="input-unit">FTEs</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Average Wait Time</label>
+                <small>Time constituents wait before reaching agent</small>
+                <div class="input-with-unit">
+                  <input type="number" id="avgWaitTime" value="12">
+                  <span class="input-unit">minutes</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>First Contact Resolution Rate</label>
+                <div class="input-with-unit">
+                  <input type="number" id="fcrRate" value="65">
+                  <span class="input-unit">%</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: var(--space-6);">
+              <label style="font-weight: 500; margin-bottom: var(--space-3); display: block;">Channel Mix (% of contacts)</label>
+              <div class="channel-breakdown">
+                <div class="channel-item">
+                  <div class="channel-item__icon">📞</div>
+                  <div class="channel-item__label">Phone</div>
+                  <input type="number" class="channel-item__input" id="phonePercent" value="60">%
+                </div>
+                <div class="channel-item">
+                  <div class="channel-item__icon">💬</div>
+                  <div class="channel-item__label">Chat/Web</div>
+                  <input type="number" class="channel-item__input" id="chatPercent" value="25">%
+                </div>
+                <div class="channel-item">
+                  <div class="channel-item__icon">✉️</div>
+                  <div class="channel-item__label">Email</div>
+                  <input type="number" class="channel-item__input" id="emailPercent" value="15">%
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn--primary btn--lg" style="width: 100%; background: #0891b2;" onclick="calculateSavings()">Calculate Contact Center AI Savings</button>
+
+          <!-- Results -->
+          <div class="results-panel" id="resultsPanel" style="display: none;">
+            <div class="savings-highlight">
+              <div class="savings-highlight__value" id="annualSavings">$0</div>
+              <div class="savings-highlight__label">Annual Savings with Contact Center AI</div>
+            </div>
+
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <div class="metric-card__icon">📉</div>
+                <div class="metric-card__value" id="callDeflection">0%</div>
+                <div class="metric-card__label">Contact Deflection</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-card__icon">⏱️</div>
+                <div class="metric-card__value" id="ahtReduction">0%</div>
+                <div class="metric-card__label">AHT Reduction</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-card__icon">👥</div>
+                <div class="metric-card__value" id="fteImpact">0</div>
+                <div class="metric-card__label">FTE Equivalent Saved</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-card__icon">✓</div>
+                <div class="metric-card__value" id="fcrImprovement">0%</div>
+                <div class="metric-card__label">FCR Improvement</div>
+              </div>
+            </div>
+
+            <div class="experience-impact">
+              <h4 style="text-align: center;">Constituent Experience Impact</h4>
+              <div class="experience-metrics">
+                <div class="exp-metric">
+                  <div class="exp-metric__before" id="waitBefore">12 min</div>
+                  <div class="exp-metric__arrow">↓</div>
+                  <div class="exp-metric__after" id="waitAfter">0 min</div>
+                  <div class="exp-metric__label">Wait Time (Chatbot)</div>
+                </div>
+                <div class="exp-metric">
+                  <div class="exp-metric__before">Business Hours</div>
+                  <div class="exp-metric__arrow">↓</div>
+                  <div class="exp-metric__after">24/7</div>
+                  <div class="exp-metric__label">Availability</div>
+                </div>
+                <div class="exp-metric">
+                  <div class="exp-metric__before" id="fcrBefore">65%</div>
+                  <div class="exp-metric__arrow">↓</div>
+                  <div class="exp-metric__after" id="fcrAfter">80%</div>
+                  <div class="exp-metric__label">First Contact Resolution</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="use-case-examples">
+              <h4>Top Inquiries for AI Automation</h4>
+              <ul class="example-list">
+                <li>
+                  <span class="icon">📋</span>
+                  <span>Application/case status checks</span>
+                  <span class="deflection">85% deflection</span>
+                </li>
+                <li>
+                  <span class="icon">📍</span>
+                  <span>Office hours & locations</span>
+                  <span class="deflection">95% deflection</span>
+                </li>
+                <li>
+                  <span class="icon">📝</span>
+                  <span>Document requirements</span>
+                  <span class="deflection">80% deflection</span>
+                </li>
+                <li>
+                  <span class="icon">📅</span>
+                  <span>Appointment scheduling</span>
+                  <span class="deflection">90% deflection</span>
+                </li>
+                <li>
+                  <span class="icon">❓</span>
+                  <span>Eligibility questions</span>
+                  <span class="deflection">70% deflection</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="lead-capture">
+              <h3>See How AI Can Transform Your Contact Center</h3>
+              <p>Get a personalized analysis of AI opportunities for your specific contact types.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <button type="submit" class="btn btn--primary" style="background: #0891b2;">Get Custom Analysis</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleOption(el) {
+      el.classList.toggle('selected');
+    }
+
+    function calculateSavings() {
+      const monthlyContacts = parseFloat(document.getElementById('monthlyContacts').value) || 0;
+      const avgHandleTime = parseFloat(document.getElementById('avgHandleTime').value) || 0;
+      const costPerContact = parseFloat(document.getElementById('costPerContact').value) || 0;
+      const agentCount = parseFloat(document.getElementById('agentCount').value) || 0;
+      const avgWaitTime = parseFloat(document.getElementById('avgWaitTime').value) || 0;
+      const fcrRate = parseFloat(document.getElementById('fcrRate').value) || 0;
+
+      const hasChatbot = document.querySelector('[data-option="chatbot"]').classList.contains('selected');
+      const hasAgentAssist = document.querySelector('[data-option="agentassist"]').classList.contains('selected');
+      const hasVoicebot = document.querySelector('[data-option="voicebot"]').classList.contains('selected');
+
+      // AI impact assumptions
+      let deflectionRate = 0;
+      let ahtReduction = 0;
+
+      if (hasChatbot) {
+        deflectionRate += 0.35; // 35% of contacts can be handled by chatbot
+      }
+      if (hasVoicebot) {
+        deflectionRate += 0.15; // Additional 15% for voice
+      }
+      if (hasAgentAssist) {
+        ahtReduction = 0.20; // 20% faster handle time with agent assist
+      }
+
+      deflectionRate = Math.min(deflectionRate, 0.50); // Cap at 50%
+
+      // Calculations
+      const annualContacts = monthlyContacts * 12;
+      const currentAnnualCost = annualContacts * costPerContact;
+
+      const deflectedContacts = annualContacts * deflectionRate;
+      const deflectedSavings = deflectedContacts * costPerContact * 0.9; // Chatbot costs ~10% of agent
+
+      const remainingContacts = annualContacts * (1 - deflectionRate);
+      const ahtSavings = remainingContacts * costPerContact * ahtReduction;
+
+      const totalSavings = deflectedSavings + ahtSavings;
+      const aiPlatformCost = annualContacts * 0.15; // Estimate AI platform cost
+      const netSavings = totalSavings - aiPlatformCost;
+
+      const fteHoursSaved = (deflectedContacts * avgHandleTime / 60) + (remainingContacts * avgHandleTime * ahtReduction / 60);
+      const fteEquivalent = fteHoursSaved / 2080;
+
+      const newFCR = Math.min(fcrRate + 15, 95);
+
+      // Display results
+      document.getElementById('resultsPanel').style.display = 'block';
+      document.getElementById('annualSavings').textContent = '$' + Math.round(netSavings).toLocaleString();
+      document.getElementById('callDeflection').textContent = Math.round(deflectionRate * 100) + '%';
+      document.getElementById('ahtReduction').textContent = Math.round(ahtReduction * 100) + '%';
+      document.getElementById('fteImpact').textContent = Math.round(fteEquivalent * 10) / 10;
+      document.getElementById('fcrImprovement').textContent = '+' + Math.round(newFCR - fcrRate) + '%';
+
+      document.getElementById('waitBefore').textContent = avgWaitTime + ' min';
+      document.getElementById('waitAfter').textContent = '0 min';
+      document.getElementById('fcrBefore').textContent = fcrRate + '%';
+      document.getElementById('fcrAfter').textContent = newFCR + '%';
+
+      document.getElementById('resultsPanel').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! We\'ll send you a customized contact center AI analysis.');
+    }
+  </script>
+</body>
+</html>

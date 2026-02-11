@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Compliance Requirements Finder | Brite.AI</title>
+  <meta name="description" content="Identify all compliance requirements for your AI project based on jurisdiction and use case.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .checkbox-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+    @media (max-width: 768px) { .checkbox-grid { grid-template-columns: 1fr; } }
+    .checkbox-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; }
+    .checkbox-item:hover { border-color: var(--color-primary); }
+    .checkbox-item.selected { border-color: var(--color-primary); background: rgba(79, 70, 229, 0.1); }
+    .results-section { display: none; }
+    .compliance-summary { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); text-align: center; }
+    @media (max-width: 768px) { .compliance-summary { grid-template-columns: repeat(2, 1fr); } }
+    .summary-item__value { font-size: var(--text-2xl); font-weight: 800; color: #0284c7; }
+    .summary-item__label { font-size: var(--text-sm); color: #0369a1; }
+    .requirement-category { background: var(--color-background-alt); border-radius: var(--radius-xl); margin-bottom: var(--space-4); overflow: hidden; }
+    .category-header { padding: var(--space-4) var(--space-6); background: #0ea5e9; color: #fff; display: flex; justify-content: space-between; align-items: center; }
+    .category-header h3 { margin: 0; font-size: var(--text-lg); }
+    .category-badge { background: rgba(255,255,255,0.2); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-sm); }
+    .category-body { padding: var(--space-6); }
+    .requirement-item { padding: var(--space-4); border-bottom: 1px solid var(--color-border); }
+    .requirement-item:last-child { border-bottom: none; }
+    .requirement-item__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-2); }
+    .requirement-item__title { font-weight: 600; }
+    .requirement-item__mandatory { font-size: var(--text-xs); padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); }
+    .requirement-item__mandatory.required { background: #fee2e2; color: #991b1b; }
+    .requirement-item__mandatory.recommended { background: #fef3c7; color: #92400e; }
+    .requirement-item__mandatory.optional { background: #e0f2fe; color: #0369a1; }
+    .requirement-item__desc { font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-3); }
+    .requirement-item__details { display: flex; gap: var(--space-6); font-size: var(--text-sm); }
+    .requirement-item__detail { display: flex; align-items: center; gap: var(--space-2); }
+    .timeline-warning { background: #fef3c7; border: 2px solid #f59e0b; border-radius: var(--radius-lg); padding: var(--space-4); margin-bottom: var(--space-6); display: flex; align-items: center; gap: var(--space-4); }
+    .timeline-warning__icon { font-size: 2rem; }
+    .timeline-warning__content h4 { color: #92400e; margin-bottom: var(--space-1); }
+    .timeline-warning__content p { font-size: var(--text-sm); color: #92400e; margin: 0; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Compliance Requirements Finder</h2>
+          <p>Identify all regulatory requirements for your AI implementation</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>State/Jurisdiction</label>
+              <select id="jurisdiction">
+                <option value="federal">Federal Agency</option>
+                <option value="california">California</option>
+                <option value="colorado">Colorado</option>
+                <option value="illinois">Illinois</option>
+                <option value="newyork">New York</option>
+                <option value="texas">Texas</option>
+                <option value="other">Other State</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Primary Use Case</label>
+              <select id="useCase">
+                <option value="benefits">Benefits/Eligibility Determination</option>
+                <option value="employment">Employment Decisions</option>
+                <option value="healthcare">Healthcare/Medicaid</option>
+                <option value="childwelfare">Child Welfare</option>
+                <option value="lawenforcement">Law Enforcement/Justice</option>
+                <option value="education">Education</option>
+                <option value="general">General Government Services</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Data Types Involved (select all that apply)</label>
+              <div class="checkbox-grid" id="dataTypes">
+                <label class="checkbox-item"><input type="checkbox" value="pii"> Personal Identifiable Information (PII)</label>
+                <label class="checkbox-item"><input type="checkbox" value="health"> Health/Medical Data (PHI)</label>
+                <label class="checkbox-item"><input type="checkbox" value="financial"> Financial Data</label>
+                <label class="checkbox-item"><input type="checkbox" value="biometric"> Biometric Data</label>
+                <label class="checkbox-item"><input type="checkbox" value="children"> Children's Data</label>
+                <label class="checkbox-item"><input type="checkbox" value="criminal"> Criminal Justice Data</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>AI Decision Impact</label>
+              <select id="decisionImpact">
+                <option value="advisory">Advisory Only (human makes final decision)</option>
+                <option value="semiautomated">Semi-Automated (AI recommends, human approves)</option>
+                <option value="automated">Fully Automated Decisions</option>
+              </select>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="findRequirements()" style="width: 100%;">Find Compliance Requirements</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="compliance-summary">
+              <div class="summary-item">
+                <div class="summary-item__value" id="totalReqs">0</div>
+                <div class="summary-item__label">Total Requirements</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-item__value" id="mandatoryReqs">0</div>
+                <div class="summary-item__label">Mandatory</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-item__value" id="frameworkCount">0</div>
+                <div class="summary-item__label">Frameworks</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-item__value" id="timelineWeeks">0</div>
+                <div class="summary-item__label">Weeks to Comply</div>
+              </div>
+            </div>
+
+            <div class="timeline-warning" id="timelineWarning" style="display: none;">
+              <div class="timeline-warning__icon">⚠️</div>
+              <div class="timeline-warning__content">
+                <h4>Compliance Timeline Alert</h4>
+                <p id="warningText">Some requirements have strict timelines. Plan accordingly.</p>
+              </div>
+            </div>
+
+            <div id="requirementsList"></div>
+
+            <div class="lead-capture">
+              <h3>Get Your Compliance Roadmap</h3>
+              <p>Receive detailed compliance documentation templates and implementation guidance.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Roadmap</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Check Another Project</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Handle checkbox selection styling
+    document.querySelectorAll('.checkbox-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (e.target.type !== 'checkbox') {
+          const checkbox = item.querySelector('input');
+          checkbox.checked = !checkbox.checked;
+        }
+        item.classList.toggle('selected', item.querySelector('input').checked);
+      });
+    });
+
+    const requirements = {
+      federal: [
+        { category: "Executive Orders", items: [
+          { title: "EO 14110 - Safe, Secure, and Trustworthy AI", desc: "Federal agencies must implement AI governance frameworks", mandatory: "required", timeline: "12 weeks", authority: "White House" },
+          { title: "OMB M-24-10 - AI Governance", desc: "Agencies must designate Chief AI Officers and inventory AI use cases", mandatory: "required", timeline: "Ongoing", authority: "OMB" }
+        ]},
+        { category: "Privacy & Data", items: [
+          { title: "Privacy Act of 1974", desc: "Governs collection and use of personal information", mandatory: "required", timeline: "Immediate", authority: "Congress" },
+          { title: "E-Government Act Privacy Provisions", desc: "Requires Privacy Impact Assessments for IT systems", mandatory: "required", timeline: "Before deployment", authority: "Congress" }
+        ]},
+        { category: "Procurement", items: [
+          { title: "FAR AI Provisions", desc: "Federal Acquisition Regulation requirements for AI contracts", mandatory: "required", timeline: "At procurement", authority: "FAR Council" }
+        ]}
+      ],
+      california: [
+        { category: "State AI Laws", items: [
+          { title: "AB 2013 - GenAI Training Data Transparency", desc: "Requires disclosure of data used to train generative AI", mandatory: "required", timeline: "Jan 2026", authority: "California Legislature" },
+          { title: "SB 1047 - Safe and Secure AI", desc: "Safety requirements for large AI models", mandatory: "required", timeline: "2025", authority: "California Legislature" }
+        ]},
+        { category: "Privacy", items: [
+          { title: "CCPA/CPRA", desc: "California Consumer Privacy Act requirements for AI processing", mandatory: "required", timeline: "Immediate", authority: "California AG" },
+          { title: "Automated Decision-Making Rights", desc: "Consumers can opt-out of automated decision-making", mandatory: "required", timeline: "Immediate", authority: "CPPA" }
+        ]}
+      ],
+      colorado: [
+        { category: "AI-Specific Laws", items: [
+          { title: "Colorado AI Act (SB 21-169)", desc: "Governance requirements for high-risk AI systems", mandatory: "required", timeline: "Feb 2026", authority: "Colorado Legislature" }
+        ]},
+        { category: "Privacy", items: [
+          { title: "Colorado Privacy Act", desc: "Data protection requirements including AI profiling", mandatory: "required", timeline: "Immediate", authority: "Colorado AG" }
+        ]}
+      ],
+      illinois: [
+        { category: "AI-Specific Laws", items: [
+          { title: "BIPA - Biometric Information Privacy Act", desc: "Strict requirements for biometric AI applications", mandatory: "required", timeline: "Immediate", authority: "Illinois Legislature" },
+          { title: "AI Video Interview Act", desc: "Disclosure requirements for AI in employment screening", mandatory: "required", timeline: "Immediate", authority: "Illinois Legislature" }
+        ]}
+      ],
+      newyork: [
+        { category: "AI Employment Laws", items: [
+          { title: "NYC Local Law 144", desc: "Bias audits required for AI employment tools", mandatory: "required", timeline: "Immediate", authority: "NYC Council" }
+        ]},
+        { category: "Privacy", items: [
+          { title: "SHIELD Act", desc: "Data security requirements for AI systems", mandatory: "required", timeline: "Immediate", authority: "NY Legislature" }
+        ]}
+      ]
+    };
+
+    const useCaseRequirements = {
+      benefits: [
+        { title: "Fair Credit Reporting Act (FCRA)", desc: "If using consumer reports in eligibility decisions", mandatory: "required", timeline: "Immediate", authority: "FTC" },
+        { title: "ADA Compliance", desc: "AI must not discriminate against people with disabilities", mandatory: "required", timeline: "Immediate", authority: "DOJ" }
+      ],
+      healthcare: [
+        { title: "HIPAA Privacy Rule", desc: "PHI protection requirements for AI processing health data", mandatory: "required", timeline: "Immediate", authority: "HHS" },
+        { title: "HIPAA Security Rule", desc: "Technical safeguards for AI systems handling PHI", mandatory: "required", timeline: "Immediate", authority: "HHS" }
+      ],
+      employment: [
+        { title: "EEOC AI Guidance", desc: "Non-discrimination requirements in AI hiring tools", mandatory: "required", timeline: "Immediate", authority: "EEOC" },
+        { title: "Title VII Compliance", desc: "AI cannot cause disparate impact in employment", mandatory: "required", timeline: "Immediate", authority: "EEOC" }
+      ],
+      childwelfare: [
+        { title: "CAPTA Requirements", desc: "Child Abuse Prevention and Treatment Act data protections", mandatory: "required", timeline: "Immediate", authority: "HHS" },
+        { title: "Title IV-E Data Standards", desc: "Foster care data handling requirements", mandatory: "required", timeline: "Immediate", authority: "ACF" }
+      ],
+      education: [
+        { title: "FERPA", desc: "Student education records privacy protections", mandatory: "required", timeline: "Immediate", authority: "ED" },
+        { title: "COPPA", desc: "Children's Online Privacy Protection for AI with minors", mandatory: "required", timeline: "Immediate", authority: "FTC" }
+      ]
+    };
+
+    function findRequirements() {
+      const jurisdiction = document.getElementById('jurisdiction').value;
+      const useCase = document.getElementById('useCase').value;
+      const decisionImpact = document.getElementById('decisionImpact').value;
+      const selectedData = Array.from(document.querySelectorAll('#dataTypes input:checked')).map(c => c.value);
+
+      let allRequirements = [];
+
+      // Add jurisdiction-specific requirements
+      if (requirements[jurisdiction]) {
+        allRequirements = allRequirements.concat(requirements[jurisdiction]);
+      }
+
+      // Add federal requirements for all
+      if (jurisdiction !== 'federal') {
+        allRequirements = allRequirements.concat(requirements.federal || []);
+      }
+
+      // Add use case requirements
+      if (useCaseRequirements[useCase]) {
+        allRequirements.push({ category: "Use Case Specific", items: useCaseRequirements[useCase] });
+      }
+
+      // Add data-specific requirements
+      const dataReqs = [];
+      if (selectedData.includes('health')) {
+        dataReqs.push({ title: "HIPAA Compliance", desc: "Full HIPAA compliance required for health data", mandatory: "required", timeline: "Immediate", authority: "HHS" });
+      }
+      if (selectedData.includes('children')) {
+        dataReqs.push({ title: "COPPA Compliance", desc: "Parental consent required for children's data", mandatory: "required", timeline: "Immediate", authority: "FTC" });
+      }
+      if (selectedData.includes('biometric')) {
+        dataReqs.push({ title: "Biometric Data Protections", desc: "Enhanced consent and security for biometric data", mandatory: "required", timeline: "Immediate", authority: "Various" });
+      }
+      if (dataReqs.length > 0) {
+        allRequirements.push({ category: "Data Type Requirements", items: dataReqs });
+      }
+
+      // Calculate totals
+      let totalReqs = 0;
+      let mandatoryReqs = 0;
+      allRequirements.forEach(cat => {
+        totalReqs += cat.items.length;
+        mandatoryReqs += cat.items.filter(i => i.mandatory === 'required').length;
+      });
+
+      document.getElementById('totalReqs').textContent = totalReqs;
+      document.getElementById('mandatoryReqs').textContent = mandatoryReqs;
+      document.getElementById('frameworkCount').textContent = allRequirements.length;
+      document.getElementById('timelineWeeks').textContent = decisionImpact === 'automated' ? '16+' : '8-12';
+
+      // Show warning for automated decisions
+      if (decisionImpact === 'automated') {
+        document.getElementById('timelineWarning').style.display = 'flex';
+        document.getElementById('warningText').textContent = 'Fully automated decision-making triggers additional compliance requirements and longer review timelines.';
+      } else {
+        document.getElementById('timelineWarning').style.display = 'none';
+      }
+
+      // Generate requirements list
+      document.getElementById('requirementsList').innerHTML = allRequirements.map(cat => `
+        <div class="requirement-category">
+          <div class="category-header">
+            <h3>${cat.category}</h3>
+            <span class="category-badge">${cat.items.length} requirements</span>
+          </div>
+          <div class="category-body">
+            ${cat.items.map(item => `
+              <div class="requirement-item">
+                <div class="requirement-item__header">
+                  <div class="requirement-item__title">${item.title}</div>
+                  <span class="requirement-item__mandatory ${item.mandatory}">${item.mandatory}</span>
+                </div>
+                <div class="requirement-item__desc">${item.desc}</div>
+                <div class="requirement-item__details">
+                  <div class="requirement-item__detail">⏱️ ${item.timeline}</div>
+                  <div class="requirement-item__detail">🏛️ ${item.authority}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+      document.querySelectorAll('.checkbox-item input').forEach(c => { c.checked = false; c.closest('.checkbox-item').classList.remove('selected'); });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your Compliance Roadmap will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Platform Comparison Matrix | Brite.AI</title>
+  <meta name="description" content="Compare AI platforms side-by-side based on your specific requirements.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 1000px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #0891b2, #0e7490); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .checkbox-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+    @media (max-width: 768px) { .checkbox-grid { grid-template-columns: 1fr; } }
+    .checkbox-item { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; font-size: var(--text-sm); }
+    .checkbox-item:hover { border-color: var(--color-primary); }
+    .checkbox-item.selected { border-color: #0891b2; background: rgba(8, 145, 178, 0.1); }
+    .results-section { display: none; }
+    .comparison-header { display: grid; gap: var(--space-4); margin-bottom: var(--space-6); }
+    .platform-header { display: flex; gap: var(--space-4); }
+    .platform-card { flex: 1; background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-4); text-align: center; }
+    .platform-card__logo { font-size: 2.5rem; margin-bottom: var(--space-2); }
+    .platform-card__name { font-weight: 700; margin-bottom: var(--space-1); }
+    .platform-card__score { font-size: var(--text-xl); font-weight: 800; color: #0891b2; }
+    .platform-card__match { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .platform-card.recommended { border: 3px solid #22c55e; position: relative; }
+    .platform-card.recommended::after { content: '✓ Best Match'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #22c55e; color: #fff; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-xs); font-weight: 600; }
+    .comparison-table { width: 100%; border-collapse: collapse; margin-bottom: var(--space-6); }
+    .comparison-table th, .comparison-table td { padding: var(--space-3); text-align: center; border-bottom: 1px solid var(--color-border); font-size: var(--text-sm); }
+    .comparison-table th { background: var(--color-background-alt); font-weight: 600; }
+    .comparison-table td:first-child { text-align: left; font-weight: 500; }
+    .comparison-table .category-row { background: #f0fdfa; font-weight: 600; color: #0e7490; }
+    .check { color: #22c55e; font-weight: 700; }
+    .partial { color: #f59e0b; }
+    .missing { color: #e5e7eb; }
+    .strength { background: #dcfce7; }
+    .weakness { background: #fee2e2; }
+    .summary-section { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); }
+    .summary-card { background: var(--color-background); border-radius: var(--radius-lg); padding: var(--space-4); }
+    .summary-card__title { font-weight: 600; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2); }
+    .summary-card__content { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Platform Comparison Matrix</h2>
+          <p>Find the right AI platform for your government needs</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>Primary Use Case</label>
+              <select id="useCase">
+                <option value="nlp">Natural Language Processing / Chatbots</option>
+                <option value="vision">Computer Vision / Document AI</option>
+                <option value="ml">Machine Learning / Predictive Analytics</option>
+                <option value="genai">Generative AI / LLM Applications</option>
+                <option value="multimodal">Multi-modal AI (Multiple Use Cases)</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Deployment Preference</label>
+                <select id="deployment">
+                  <option value="cloud">Cloud (Public)</option>
+                  <option value="govcloud">Government Cloud (FedRAMP)</option>
+                  <option value="hybrid">Hybrid</option>
+                  <option value="onprem">On-Premise</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Technical Expertise Level</label>
+                <select id="expertise">
+                  <option value="low">Low - Need low-code/no-code</option>
+                  <option value="medium">Medium - Some development capability</option>
+                  <option value="high">High - Full development team</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Key Requirements (select all that apply)</label>
+              <div class="checkbox-grid" id="requirements">
+                <label class="checkbox-item"><input type="checkbox" value="fedramp"> FedRAMP Authorized</label>
+                <label class="checkbox-item"><input type="checkbox" value="hipaa"> HIPAA Compliant</label>
+                <label class="checkbox-item"><input type="checkbox" value="stateramp"> StateRAMP</label>
+                <label class="checkbox-item"><input type="checkbox" value="sso"> SSO Integration</label>
+                <label class="checkbox-item"><input type="checkbox" value="api"> REST API Access</label>
+                <label class="checkbox-item"><input type="checkbox" value="explainability"> AI Explainability</label>
+                <label class="checkbox-item"><input type="checkbox" value="monitoring"> Model Monitoring</label>
+                <label class="checkbox-item"><input type="checkbox" value="automl"> AutoML Capabilities</label>
+                <label class="checkbox-item"><input type="checkbox" value="multicloud"> Multi-cloud Support</label>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="comparePlatforms()" style="width: 100%;">Compare Platforms</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="comparison-header">
+              <div class="platform-header" id="platformHeader"></div>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="comparison-table" id="comparisonTable"></table>
+            </div>
+
+            <div class="summary-section">
+              <h3 style="margin-bottom: var(--space-4);">Recommendation Summary</h3>
+              <div class="summary-grid" id="summaryGrid"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Detailed Platform Analysis</h3>
+              <p>Receive in-depth reviews, pricing guides, and implementation recommendations.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Analysis</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Compare Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.checkbox-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (e.target.type !== 'checkbox') {
+          const checkbox = item.querySelector('input');
+          checkbox.checked = !checkbox.checked;
+        }
+        item.classList.toggle('selected', item.querySelector('input').checked);
+      });
+    });
+
+    const platforms = {
+      nlp: [
+        { name: "AWS AI Services", logo: "☁️", scores: { fedramp: true, hipaa: true, api: true, monitoring: true, automl: false, explainability: true }, strengths: ["Comprehensive services", "FedRAMP High"], weaknesses: ["Complex pricing", "Steep learning curve"] },
+        { name: "Azure AI", logo: "🔷", scores: { fedramp: true, hipaa: true, api: true, monitoring: true, automl: true, explainability: true }, strengths: ["Government cloud", "Easy integration"], weaknesses: ["Azure lock-in"] },
+        { name: "Google Cloud AI", logo: "🔴", scores: { fedramp: true, hipaa: true, api: true, monitoring: true, automl: true, explainability: true }, strengths: ["Best NLU", "AutoML strength"], weaknesses: ["Newer to gov market"] }
+      ],
+      vision: [
+        { name: "AWS Textract", logo: "☁️", scores: { fedramp: true, hipaa: true, api: true, monitoring: true }, strengths: ["Document AI leader", "Table extraction"], weaknesses: ["Per-page pricing"] },
+        { name: "Azure Form Recognizer", logo: "🔷", scores: { fedramp: true, hipaa: true, api: true, monitoring: true }, strengths: ["Custom models", "Prebuilt extractors"], weaknesses: ["Training data needed"] },
+        { name: "Google Document AI", logo: "🔴", scores: { fedramp: true, hipaa: true, api: true, monitoring: true }, strengths: ["High accuracy", "Specialized processors"], weaknesses: ["Limited customization"] }
+      ],
+      ml: [
+        { name: "AWS SageMaker", logo: "☁️", scores: { fedramp: true, hipaa: true, api: true, monitoring: true, automl: true, explainability: true }, strengths: ["Full MLOps", "Flexible"], weaknesses: ["Complexity"] },
+        { name: "Azure ML", logo: "🔷", scores: { fedramp: true, hipaa: true, api: true, monitoring: true, automl: true, explainability: true }, strengths: ["Designer UI", "AutoML"], weaknesses: ["Resource limits"] },
+        { name: "Dataiku", logo: "🟢", scores: { fedramp: false, hipaa: true, api: true, monitoring: true, automl: true, explainability: true }, strengths: ["Collaboration", "Governance"], weaknesses: ["No FedRAMP yet"] }
+      ],
+      genai: [
+        { name: "Azure OpenAI", logo: "🔷", scores: { fedramp: true, hipaa: true, api: true, monitoring: true, explainability: false }, strengths: ["GPT-4 access", "Enterprise security"], weaknesses: ["Cost at scale"] },
+        { name: "AWS Bedrock", logo: "☁️", scores: { fedramp: true, hipaa: true, api: true, monitoring: true, explainability: false }, strengths: ["Model choice", "Fine-tuning"], weaknesses: ["Newer service"] },
+        { name: "Google Vertex AI", logo: "🔴", scores: { fedramp: true, hipaa: true, api: true, monitoring: true, explainability: true }, strengths: ["Gemini models", "Grounding"], weaknesses: ["Government adoption"] }
+      ]
+    };
+
+    function comparePlatforms() {
+      const useCase = document.getElementById('useCase').value;
+      const deployment = document.getElementById('deployment').value;
+      const expertise = document.getElementById('expertise').value;
+      const selectedReqs = Array.from(document.querySelectorAll('#requirements input:checked')).map(c => c.value);
+
+      const platformList = platforms[useCase] || platforms.nlp;
+
+      // Score platforms based on requirements
+      const scored = platformList.map(p => {
+        let score = 50; // Base score
+        selectedReqs.forEach(req => {
+          if (p.scores[req]) score += 15;
+        });
+        if (deployment === 'govcloud' && p.scores.fedramp) score += 10;
+        if (expertise === 'low' && p.scores.automl) score += 10;
+        return { ...p, matchScore: Math.min(score, 98) };
+      }).sort((a, b) => b.matchScore - a.matchScore);
+
+      // Platform header cards
+      document.getElementById('platformHeader').innerHTML = scored.map((p, i) => `
+        <div class="platform-card ${i === 0 ? 'recommended' : ''}">
+          <div class="platform-card__logo">${p.logo}</div>
+          <div class="platform-card__name">${p.name}</div>
+          <div class="platform-card__score">${p.matchScore}%</div>
+          <div class="platform-card__match">Match Score</div>
+        </div>
+      `).join('');
+
+      // Comparison table
+      const features = [
+        { category: "Compliance & Security", items: [
+          { name: "FedRAMP Authorization", key: "fedramp" },
+          { name: "HIPAA Compliance", key: "hipaa" },
+          { name: "SOC 2 Type II", key: "soc2", default: true }
+        ]},
+        { category: "Technical Capabilities", items: [
+          { name: "REST API Access", key: "api" },
+          { name: "Model Monitoring", key: "monitoring" },
+          { name: "AutoML Capabilities", key: "automl" },
+          { name: "AI Explainability", key: "explainability" }
+        ]},
+        { category: "Integration & Support", items: [
+          { name: "SSO Integration", key: "sso", default: true },
+          { name: "24/7 Support", key: "support", default: true },
+          { name: "Government Contract Vehicle", key: "contract", default: true }
+        ]}
+      ];
+
+      let tableHTML = `<thead><tr><th>Feature</th>${scored.map(p => `<th>${p.name}</th>`).join('')}</tr></thead><tbody>`;
+
+      features.forEach(cat => {
+        tableHTML += `<tr class="category-row"><td colspan="${scored.length + 1}">${cat.category}</td></tr>`;
+        cat.items.forEach(item => {
+          tableHTML += `<tr><td>${item.name}</td>`;
+          scored.forEach(p => {
+            const hasFeature = item.default || p.scores[item.key];
+            tableHTML += `<td class="${hasFeature ? '' : 'weakness'}"><span class="${hasFeature ? 'check' : 'missing'}">${hasFeature ? '✓' : '—'}</span></td>`;
+          });
+          tableHTML += '</tr>';
+        });
+      });
+
+      tableHTML += '</tbody>';
+      document.getElementById('comparisonTable').innerHTML = tableHTML;
+
+      // Summary cards
+      document.getElementById('summaryGrid').innerHTML = scored.map(p => `
+        <div class="summary-card">
+          <div class="summary-card__title">${p.logo} ${p.name}</div>
+          <div class="summary-card__content">
+            <p><strong>Strengths:</strong> ${p.strengths.join(', ')}</p>
+            <p style="margin-top: var(--space-2);"><strong>Consider:</strong> ${p.weaknesses.join(', ')}</p>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+      document.querySelectorAll('.checkbox-item input').forEach(c => { c.checked = false; c.closest('.checkbox-item').classList.remove('selected'); });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your detailed platform analysis will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

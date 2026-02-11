@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cost of Inaction Calculator | Brite.AI</title>
+  <meta name="description" content="Calculate the true cost of NOT implementing AI. See how delays compound backlogs, costs, and constituent impact over time.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 1000px; margin: 0 auto; }
+    .calculator-card {
+      background: var(--color-background);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .calculator-header {
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+      color: #fff;
+      padding: var(--space-8);
+      text-align: center;
+    }
+    .calculator-body { padding: var(--space-8); }
+    .warning-banner {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border-left: 4px solid #f59e0b;
+      padding: var(--space-4) var(--space-5);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin-bottom: var(--space-6);
+    }
+    .warning-banner p { margin: 0; color: #92400e; }
+    .input-section {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+    .input-section__title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
+    .form-group { margin-bottom: var(--space-4); }
+    .form-group label { display: block; font-weight: 500; margin-bottom: var(--space-2); }
+    .form-group small { display: block; font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-2); }
+    .input-with-unit {
+      display: flex;
+      align-items: stretch;
+    }
+    .input-with-unit input {
+      flex: 1;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      font-size: var(--text-base);
+      border-right: none;
+    }
+    .input-with-unit input:focus { outline: none; border-color: var(--color-primary); }
+    .input-unit {
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-border);
+      border: 2px solid var(--color-border);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+    .delay-selector {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      margin-top: var(--space-4);
+    }
+    .delay-option {
+      padding: var(--space-3) var(--space-5);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .delay-option:hover { border-color: var(--color-primary); }
+    .delay-option.selected {
+      border-color: #dc2626;
+      background: #fef2f2;
+      color: #dc2626;
+    }
+    .delay-option span { display: block; font-size: var(--text-sm); color: var(--color-text-muted); }
+    .delay-option.selected span { color: #dc2626; }
+    .results-panel {
+      background: linear-gradient(135deg, #fef2f2, #fee2e2);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-6);
+    }
+    .cost-highlight {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      color: #fff;
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      text-align: center;
+      margin-bottom: var(--space-6);
+    }
+    .cost-highlight__label { font-size: var(--text-lg); opacity: 0.9; }
+    .cost-highlight__value {
+      font-size: 4rem;
+      font-weight: 800;
+      line-height: 1;
+      margin: var(--space-2) 0;
+    }
+    .cost-highlight__sublabel { font-size: var(--text-base); opacity: 0.8; }
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+    @media (max-width: 768px) { .impact-grid { grid-template-columns: 1fr; } }
+    .impact-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      text-align: center;
+      border-left: 4px solid #dc2626;
+    }
+    .impact-card__icon { font-size: 2rem; margin-bottom: var(--space-2); }
+    .impact-card__value {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: #dc2626;
+    }
+    .impact-card__label {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+    .timeline-chart {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-top: var(--space-6);
+    }
+    .timeline-bars {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      height: 200px;
+      margin-top: var(--space-4);
+      padding: 0 var(--space-4);
+    }
+    .timeline-bar {
+      flex: 1;
+      margin: 0 var(--space-2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .timeline-bar__fill {
+      width: 100%;
+      max-width: 60px;
+      background: linear-gradient(to top, #dc2626, #ef4444);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      transition: height 0.5s ease;
+    }
+    .timeline-bar__value {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+    .timeline-bar__label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: var(--space-2);
+      text-align: center;
+    }
+    .opportunity-cost {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-top: var(--space-6);
+    }
+    .opportunity-list {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-4) 0 0;
+    }
+    .opportunity-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .opportunity-list li:last-child { border-bottom: none; }
+    .opportunity-list .cost { font-weight: 600; color: #dc2626; }
+    .lead-capture {
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-8);
+      text-align: center;
+    }
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      max-width: 400px;
+      margin: var(--space-6) auto 0;
+    }
+    .lead-form input {
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../ai-data/index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="calculator-card">
+        <div class="calculator-header">
+          <h1>Cost of Inaction Calculator</h1>
+          <p>What does waiting cost your agency? Calculate the true price of delaying AI adoption.</p>
+        </div>
+
+        <div class="calculator-body">
+          <div class="warning-banner">
+            <p><strong>The Hidden Cost:</strong> Every month you delay AI implementation, costs accumulate—backlogs grow, staff burn out, constituents wait longer, and errors compound. This calculator reveals the true cost of "waiting until next year."</p>
+          </div>
+
+          <div class="input-section">
+            <div class="input-section__title">
+              <span>📋</span> Current Process Metrics
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Monthly Transaction Volume</label>
+                <div class="input-with-unit">
+                  <input type="number" id="monthlyVolume" value="5000">
+                  <span class="input-unit">/month</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Cost Per Transaction</label>
+                <small>Labor cost to process each item</small>
+                <div class="input-with-unit">
+                  <input type="number" id="costPerTransaction" value="25">
+                  <span class="input-unit">$</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Current Backlog</label>
+                <small>Pending items waiting to be processed</small>
+                <div class="input-with-unit">
+                  <input type="number" id="currentBacklog" value="3000">
+                  <span class="input-unit">items</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Monthly Backlog Growth</label>
+                <small>Net increase in backlog per month</small>
+                <div class="input-with-unit">
+                  <input type="number" id="backlogGrowth" value="200">
+                  <span class="input-unit">/month</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Error/Rework Rate</label>
+                <div class="input-with-unit">
+                  <input type="number" id="errorRate" value="6">
+                  <span class="input-unit">%</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Average Constituent Wait Time</label>
+                <div class="input-with-unit">
+                  <input type="number" id="waitTime" value="21">
+                  <span class="input-unit">days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-section">
+            <div class="input-section__title">
+              <span>🤖</span> AI Impact Potential
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Expected Cost Reduction with AI</label>
+                <div class="input-with-unit">
+                  <input type="number" id="costReduction" value="60">
+                  <span class="input-unit">%</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Expected Processing Speed Increase</label>
+                <div class="input-with-unit">
+                  <input type="number" id="speedIncrease" value="75">
+                  <span class="input-unit">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-section">
+            <div class="input-section__title">
+              <span>⏰</span> How Long Will You Wait?
+            </div>
+            <p style="color: var(--color-text-muted); margin-bottom: var(--space-4);">Select the delay period to see cumulative costs:</p>
+            <div class="delay-selector">
+              <div class="delay-option" data-months="6" onclick="selectDelay(this)">
+                <strong>6 Months</strong>
+                <span>"Let's revisit next quarter"</span>
+              </div>
+              <div class="delay-option selected" data-months="12" onclick="selectDelay(this)">
+                <strong>12 Months</strong>
+                <span>"Next budget cycle"</span>
+              </div>
+              <div class="delay-option" data-months="24" onclick="selectDelay(this)">
+                <strong>24 Months</strong>
+                <span>"After this initiative"</span>
+              </div>
+              <div class="delay-option" data-months="36" onclick="selectDelay(this)">
+                <strong>36 Months</strong>
+                <span>"When we're ready"</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn--primary btn--lg" style="width: 100%; background: #dc2626;" onclick="calculateCost()">Calculate Cost of Waiting</button>
+
+          <div class="results-panel" id="resultsPanel" style="display: none;">
+            <div class="cost-highlight">
+              <div class="cost-highlight__label">Total Cost of Waiting</div>
+              <div class="cost-highlight__value" id="totalCost">$0</div>
+              <div class="cost-highlight__sublabel">Over <span id="delayPeriod">12</span> months of delay</div>
+            </div>
+
+            <div class="impact-grid">
+              <div class="impact-card">
+                <div class="impact-card__icon">💸</div>
+                <div class="impact-card__value" id="wastedSpend">$0</div>
+                <div class="impact-card__label">Excess Labor Costs</div>
+              </div>
+              <div class="impact-card">
+                <div class="impact-card__icon">📈</div>
+                <div class="impact-card__value" id="backlogImpact">0</div>
+                <div class="impact-card__label">Additional Backlog Items</div>
+              </div>
+              <div class="impact-card">
+                <div class="impact-card__icon">⚠️</div>
+                <div class="impact-card__value" id="additionalErrors">0</div>
+                <div class="impact-card__label">Additional Errors</div>
+              </div>
+              <div class="impact-card">
+                <div class="impact-card__icon">👥</div>
+                <div class="impact-card__value" id="constituentImpact">0</div>
+                <div class="impact-card__label">Constituents Waiting Longer</div>
+              </div>
+            </div>
+
+            <div class="timeline-chart">
+              <h4 style="text-align: center;">Cumulative Cost Over Time</h4>
+              <div class="timeline-bars" id="timelineBars"></div>
+            </div>
+
+            <div class="opportunity-cost">
+              <h4>What This Money Could Fund Instead</h4>
+              <ul class="opportunity-list" id="opportunityList"></ul>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Ready to Stop the Bleeding?</h3>
+              <p>Get a detailed analysis of how AI can transform this process and eliminate these costs.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <button type="submit" class="btn btn--primary">Get Action Plan</button>
+              </form>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-6);">
+              <a href="../contact/index.html" class="btn btn--lg" style="background: #dc2626; color: #fff;">Stop Waiting - Talk to Us Today</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let selectedMonths = 12;
+
+    function selectDelay(el) {
+      document.querySelectorAll('.delay-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedMonths = parseInt(el.dataset.months);
+    }
+
+    function calculateCost() {
+      const monthlyVolume = parseFloat(document.getElementById('monthlyVolume').value) || 0;
+      const costPerTransaction = parseFloat(document.getElementById('costPerTransaction').value) || 0;
+      const currentBacklog = parseFloat(document.getElementById('currentBacklog').value) || 0;
+      const backlogGrowth = parseFloat(document.getElementById('backlogGrowth').value) || 0;
+      const errorRate = parseFloat(document.getElementById('errorRate').value) / 100;
+      const costReduction = parseFloat(document.getElementById('costReduction').value) / 100;
+
+      // Calculate costs
+      const monthlyProcessingCost = monthlyVolume * costPerTransaction;
+      const potentialMonthlySavings = monthlyProcessingCost * costReduction;
+
+      // Cumulative calculations
+      let totalWastedSpend = 0;
+      let totalBacklogGrowth = 0;
+      let totalErrors = 0;
+      const cumulativeCosts = [];
+
+      for (let month = 1; month <= selectedMonths; month++) {
+        totalWastedSpend += potentialMonthlySavings;
+        totalBacklogGrowth += backlogGrowth;
+        totalErrors += monthlyVolume * errorRate;
+        cumulativeCosts.push({ month, cost: totalWastedSpend });
+      }
+
+      const totalCost = totalWastedSpend;
+      const constituentImpact = monthlyVolume * selectedMonths;
+
+      // Display results
+      document.getElementById('resultsPanel').style.display = 'block';
+      document.getElementById('totalCost').textContent = '$' + Math.round(totalCost).toLocaleString();
+      document.getElementById('delayPeriod').textContent = selectedMonths;
+      document.getElementById('wastedSpend').textContent = '$' + Math.round(totalWastedSpend).toLocaleString();
+      document.getElementById('backlogImpact').textContent = '+' + Math.round(totalBacklogGrowth).toLocaleString();
+      document.getElementById('additionalErrors').textContent = Math.round(totalErrors).toLocaleString();
+      document.getElementById('constituentImpact').textContent = Math.round(constituentImpact).toLocaleString();
+
+      // Timeline chart
+      const maxCost = cumulativeCosts[cumulativeCosts.length - 1].cost;
+      const intervals = selectedMonths <= 12 ? [3, 6, 9, 12].filter(m => m <= selectedMonths) : [6, 12, 18, 24, 30, 36].filter(m => m <= selectedMonths);
+      const timelineBars = document.getElementById('timelineBars');
+      timelineBars.innerHTML = intervals.map(month => {
+        const data = cumulativeCosts[month - 1];
+        const height = (data.cost / maxCost) * 150;
+        return `
+          <div class="timeline-bar">
+            <div class="timeline-bar__value">$${Math.round(data.cost / 1000)}K</div>
+            <div class="timeline-bar__fill" style="height: ${height}px;"></div>
+            <div class="timeline-bar__label">Month ${month}</div>
+          </div>
+        `;
+      }).join('');
+
+      // Opportunity cost
+      const opportunities = [
+        { name: 'FTE positions for a year', amount: Math.floor(totalCost / 80000), icon: '👥' },
+        { name: 'AI pilot projects', amount: Math.floor(totalCost / 75000), icon: '🤖' },
+        { name: 'Staff training programs', amount: Math.floor(totalCost / 15000), icon: '🎓' },
+        { name: 'Technology upgrades', amount: Math.floor(totalCost / 50000), icon: '💻' }
+      ];
+      document.getElementById('opportunityList').innerHTML = opportunities.map(o =>
+        `<li><span>${o.icon} ${o.name}</span><span class="cost">${o.amount}</span></li>`
+      ).join('');
+
+      document.getElementById('resultsPanel').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! We\'ll send you a detailed action plan to address these costs.');
+    }
+  </script>
+</body>
+</html>

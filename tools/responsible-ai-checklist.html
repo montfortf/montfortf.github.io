@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsible AI Checklist Generator | Brite.AI</title>
+  <meta name="description" content="Generate a customized responsible AI checklist based on your project type and risk level.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group select:focus { outline: none; border-color: var(--color-primary); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .results-section { display: none; }
+    .checklist-header { background: linear-gradient(135deg, #f5f3ff, #ede9fe); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .checklist-header__title { font-size: var(--text-xl); font-weight: 700; margin-bottom: var(--space-2); }
+    .checklist-header__meta { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+    .meta-badge { background: var(--color-background); padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 500; }
+    .checklist-category { background: var(--color-background-alt); border-radius: var(--radius-xl); margin-bottom: var(--space-4); overflow: hidden; }
+    .category-header { padding: var(--space-4) var(--space-6); background: var(--color-primary); color: #fff; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .category-header h3 { display: flex; align-items: center; gap: var(--space-3); margin: 0; font-size: var(--text-lg); }
+    .category-progress { background: rgba(255,255,255,0.3); border-radius: var(--radius-full); padding: var(--space-1) var(--space-3); font-size: var(--text-sm); }
+    .category-body { padding: var(--space-6); }
+    .checklist-item { display: flex; align-items: flex-start; gap: var(--space-4); padding: var(--space-4); border-bottom: 1px solid var(--color-border); }
+    .checklist-item:last-child { border-bottom: none; }
+    .checklist-item input[type="checkbox"] { width: 24px; height: 24px; margin-top: 2px; cursor: pointer; }
+    .checklist-item__content { flex: 1; }
+    .checklist-item__title { font-weight: 600; margin-bottom: var(--space-1); }
+    .checklist-item__desc { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .checklist-item__priority { font-size: var(--text-xs); padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); margin-left: auto; }
+    .checklist-item__priority.critical { background: #fee2e2; color: #991b1b; }
+    .checklist-item__priority.high { background: #fef3c7; color: #92400e; }
+    .checklist-item__priority.medium { background: #dbeafe; color: #1e40af; }
+    .progress-summary { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .progress-bar { height: 24px; background: #e5e7eb; border-radius: var(--radius-full); overflow: hidden; margin-bottom: var(--space-4); }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #8b5cf6, #7c3aed); transition: width 0.3s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: var(--space-3); color: #fff; font-weight: 600; font-size: var(--text-sm); }
+    .progress-stats { display: flex; justify-content: space-between; font-size: var(--text-sm); color: var(--color-text-muted); }
+    .export-buttons { display: flex; gap: var(--space-4); margin-bottom: var(--space-6); }
+    .export-buttons button { flex: 1; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Responsible AI Checklist Generator</h2>
+          <p>Generate a customized checklist for ethical AI implementation</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>AI Project Type</label>
+              <select id="projectType">
+                <option value="decision">Automated Decision-Making</option>
+                <option value="prediction">Predictive Analytics</option>
+                <option value="nlp">Natural Language Processing / Chatbot</option>
+                <option value="vision">Computer Vision / Document Processing</option>
+                <option value="recommendation">Recommendation System</option>
+                <option value="automation">Process Automation (RPA + AI)</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Impact Level</label>
+                <select id="impactLevel">
+                  <option value="low">Low - Internal operations only</option>
+                  <option value="medium">Medium - Affects service delivery</option>
+                  <option value="high">High - Directly impacts constituents</option>
+                  <option value="critical">Critical - Life/safety implications</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Data Sensitivity</label>
+                <select id="dataSensitivity">
+                  <option value="public">Public data only</option>
+                  <option value="pii">Contains PII</option>
+                  <option value="sensitive">Sensitive (health, financial)</option>
+                  <option value="protected">Protected classes involved</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Regulatory Environment</label>
+              <select id="regulations">
+                <option value="general">General government compliance</option>
+                <option value="hipaa">HIPAA (Health)</option>
+                <option value="ferpa">FERPA (Education)</option>
+                <option value="irs">IRS / Tax regulations</option>
+                <option value="multi">Multiple regulatory frameworks</option>
+              </select>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="generateChecklist()" style="width: 100%;">Generate Checklist</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="checklist-header">
+              <div class="checklist-header__title" id="checklistTitle">Responsible AI Checklist</div>
+              <div class="checklist-header__meta">
+                <span class="meta-badge" id="projectBadge">Decision-Making</span>
+                <span class="meta-badge" id="impactBadge">High Impact</span>
+                <span class="meta-badge" id="itemCount">0 items</span>
+              </div>
+            </div>
+
+            <div class="progress-summary">
+              <h4 style="margin-bottom: var(--space-3);">Completion Progress</h4>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%;">0%</div>
+              </div>
+              <div class="progress-stats">
+                <span id="completedCount">0 completed</span>
+                <span id="remainingCount">0 remaining</span>
+              </div>
+            </div>
+
+            <div id="checklistContent"></div>
+
+            <div class="export-buttons">
+              <button class="btn btn--secondary" onclick="exportPDF()">📄 Export as PDF</button>
+              <button class="btn btn--secondary" onclick="copyChecklist()">📋 Copy to Clipboard</button>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Full Implementation Guidance</h3>
+              <p>Receive detailed documentation templates and policy frameworks for responsible AI.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Templates</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Generate New Checklist</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const checklistItems = {
+      transparency: [
+        { title: "Document AI decision-making logic", desc: "Create clear documentation of how the AI system makes decisions", priority: "critical", levels: ["medium", "high", "critical"] },
+        { title: "Publish algorithmic impact assessment", desc: "Make public-facing summary of AI system impacts", priority: "high", levels: ["high", "critical"] },
+        { title: "Create constituent notification system", desc: "Notify people when AI is involved in decisions affecting them", priority: "critical", levels: ["medium", "high", "critical"] },
+        { title: "Establish explanation capabilities", desc: "Ensure the system can explain individual decisions when requested", priority: "high", levels: ["medium", "high", "critical"] },
+        { title: "Document training data sources", desc: "Maintain records of all data used to train the AI", priority: "medium", levels: ["low", "medium", "high", "critical"] }
+      ],
+      fairness: [
+        { title: "Conduct bias audit before deployment", desc: "Test for disparate impact across protected classes", priority: "critical", levels: ["high", "critical"] },
+        { title: "Implement ongoing bias monitoring", desc: "Continuously monitor outputs for emerging bias patterns", priority: "high", levels: ["medium", "high", "critical"] },
+        { title: "Establish demographic parity metrics", desc: "Define and track fairness metrics across groups", priority: "high", levels: ["high", "critical"] },
+        { title: "Create bias remediation procedures", desc: "Document steps to address identified bias issues", priority: "high", levels: ["medium", "high", "critical"] },
+        { title: "Review training data for historical bias", desc: "Audit input data for embedded historical inequities", priority: "critical", levels: ["high", "critical"] }
+      ],
+      accountability: [
+        { title: "Assign AI system owner", desc: "Designate accountable individual for AI system performance", priority: "critical", levels: ["low", "medium", "high", "critical"] },
+        { title: "Establish human oversight process", desc: "Define when and how humans review AI decisions", priority: "critical", levels: ["medium", "high", "critical"] },
+        { title: "Create appeals process", desc: "Allow constituents to contest AI-influenced decisions", priority: "critical", levels: ["high", "critical"] },
+        { title: "Implement audit logging", desc: "Log all AI decisions for review and accountability", priority: "high", levels: ["medium", "high", "critical"] },
+        { title: "Define escalation procedures", desc: "Document when AI decisions require human review", priority: "high", levels: ["medium", "high", "critical"] }
+      ],
+      privacy: [
+        { title: "Complete data protection impact assessment", desc: "Assess privacy risks of AI data processing", priority: "critical", levels: ["medium", "high", "critical"] },
+        { title: "Implement data minimization", desc: "Ensure AI only uses necessary data", priority: "high", levels: ["medium", "high", "critical"] },
+        { title: "Establish data retention policies", desc: "Define how long AI training/input data is kept", priority: "medium", levels: ["low", "medium", "high", "critical"] },
+        { title: "Enable data subject rights", desc: "Allow individuals to access/delete their data", priority: "critical", levels: ["high", "critical"] },
+        { title: "Anonymize/pseudonymize where possible", desc: "Reduce identifiability of data in AI systems", priority: "high", levels: ["medium", "high", "critical"] }
+      ],
+      security: [
+        { title: "Conduct AI-specific security assessment", desc: "Evaluate vulnerabilities unique to AI systems", priority: "high", levels: ["medium", "high", "critical"] },
+        { title: "Implement model access controls", desc: "Restrict who can access/modify the AI model", priority: "critical", levels: ["low", "medium", "high", "critical"] },
+        { title: "Test for adversarial attacks", desc: "Evaluate system resistance to manipulation", priority: "high", levels: ["high", "critical"] },
+        { title: "Establish model versioning", desc: "Track all changes to the AI model over time", priority: "medium", levels: ["low", "medium", "high", "critical"] },
+        { title: "Create incident response plan", desc: "Document procedures for AI security incidents", priority: "high", levels: ["medium", "high", "critical"] }
+      ],
+      performance: [
+        { title: "Define accuracy thresholds", desc: "Set minimum performance standards before deployment", priority: "critical", levels: ["low", "medium", "high", "critical"] },
+        { title: "Implement continuous monitoring", desc: "Track model performance over time for drift", priority: "high", levels: ["medium", "high", "critical"] },
+        { title: "Establish rollback procedures", desc: "Define how to revert if AI performance degrades", priority: "high", levels: ["medium", "high", "critical"] },
+        { title: "Create testing protocols", desc: "Document pre-deployment and ongoing testing requirements", priority: "medium", levels: ["low", "medium", "high", "critical"] },
+        { title: "Define success metrics", desc: "Establish measurable outcomes for AI effectiveness", priority: "medium", levels: ["low", "medium", "high", "critical"] }
+      ]
+    };
+
+    const categoryIcons = {
+      transparency: "👁️",
+      fairness: "⚖️",
+      accountability: "🎯",
+      privacy: "🔒",
+      security: "🛡️",
+      performance: "📊"
+    };
+
+    const categoryNames = {
+      transparency: "Transparency & Explainability",
+      fairness: "Fairness & Non-Discrimination",
+      accountability: "Accountability & Oversight",
+      privacy: "Privacy & Data Protection",
+      security: "Security & Robustness",
+      performance: "Performance & Reliability"
+    };
+
+    function generateChecklist() {
+      const projectType = document.getElementById('projectType');
+      const impactLevel = document.getElementById('impactLevel').value;
+      const dataSensitivity = document.getElementById('dataSensitivity').value;
+
+      // Filter items based on impact level
+      const filteredCategories = {};
+      let totalItems = 0;
+
+      Object.entries(checklistItems).forEach(([category, items]) => {
+        const filtered = items.filter(item => item.levels.includes(impactLevel));
+        if (filtered.length > 0) {
+          filteredCategories[category] = filtered;
+          totalItems += filtered.length;
+        }
+      });
+
+      // Update header
+      document.getElementById('projectBadge').textContent = projectType.options[projectType.selectedIndex].text;
+      document.getElementById('impactBadge').textContent = impactLevel.charAt(0).toUpperCase() + impactLevel.slice(1) + ' Impact';
+      document.getElementById('itemCount').textContent = totalItems + ' items';
+
+      // Generate checklist HTML
+      const contentEl = document.getElementById('checklistContent');
+      contentEl.innerHTML = Object.entries(filteredCategories).map(([category, items]) => `
+        <div class="checklist-category" data-category="${category}">
+          <div class="category-header">
+            <h3>${categoryIcons[category]} ${categoryNames[category]}</h3>
+            <span class="category-progress">0/${items.length}</span>
+          </div>
+          <div class="category-body">
+            ${items.map((item, idx) => `
+              <div class="checklist-item">
+                <input type="checkbox" id="${category}-${idx}" onchange="updateProgress()">
+                <div class="checklist-item__content">
+                  <div class="checklist-item__title">${item.title}</div>
+                  <div class="checklist-item__desc">${item.desc}</div>
+                </div>
+                <span class="checklist-item__priority ${item.priority}">${item.priority}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      updateProgress();
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function updateProgress() {
+      const allCheckboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+      const checkedBoxes = document.querySelectorAll('.checklist-item input[type="checkbox"]:checked');
+      const total = allCheckboxes.length;
+      const completed = checkedBoxes.length;
+      const percentage = Math.round((completed / total) * 100);
+
+      document.getElementById('progressFill').style.width = percentage + '%';
+      document.getElementById('progressFill').textContent = percentage + '%';
+      document.getElementById('completedCount').textContent = completed + ' completed';
+      document.getElementById('remainingCount').textContent = (total - completed) + ' remaining';
+
+      // Update category progress
+      document.querySelectorAll('.checklist-category').forEach(cat => {
+        const catCheckboxes = cat.querySelectorAll('input[type="checkbox"]');
+        const catChecked = cat.querySelectorAll('input[type="checkbox"]:checked');
+        cat.querySelector('.category-progress').textContent = `${catChecked.length}/${catCheckboxes.length}`;
+      });
+    }
+
+    function exportPDF() {
+      alert('PDF export functionality would be implemented here. Your checklist will be formatted as a printable PDF.');
+    }
+
+    function copyChecklist() {
+      const categories = document.querySelectorAll('.checklist-category');
+      let text = 'RESPONSIBLE AI CHECKLIST\n========================\n\n';
+
+      categories.forEach(cat => {
+        const title = cat.querySelector('.category-header h3').textContent;
+        text += title + '\n' + '-'.repeat(40) + '\n';
+        cat.querySelectorAll('.checklist-item').forEach(item => {
+          const checkbox = item.querySelector('input').checked ? '☑' : '☐';
+          const itemTitle = item.querySelector('.checklist-item__title').textContent;
+          text += `${checkbox} ${itemTitle}\n`;
+        });
+        text += '\n';
+      });
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Checklist copied to clipboard!');
+      });
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your Responsible AI templates and guidance will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

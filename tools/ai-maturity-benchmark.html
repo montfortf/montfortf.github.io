@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Government AI Maturity Benchmark | Brite.AI</title>
+  <meta name="description" content="Benchmark your AI maturity against other government agencies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .results-section { display: none; }
+    .maturity-hero { text-align: center; margin-bottom: var(--space-8); }
+    .maturity-level { display: inline-block; padding: var(--space-4) var(--space-8); border-radius: var(--radius-xl); font-size: var(--text-2xl); font-weight: 800; }
+    .maturity-level.level-1 { background: #fee2e2; color: #991b1b; }
+    .maturity-level.level-2 { background: #fef3c7; color: #92400e; }
+    .maturity-level.level-3 { background: #dbeafe; color: #1e40af; }
+    .maturity-level.level-4 { background: #dcfce7; color: #166534; }
+    .maturity-level.level-5 { background: #f3e8ff; color: #7c3aed; }
+    .percentile-banner { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin: var(--space-6) 0; text-align: center; }
+    .percentile-banner__value { font-size: var(--text-4xl); font-weight: 800; color: var(--color-primary); }
+    .percentile-banner__label { color: var(--color-text-muted); }
+    .dimension-scores { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    @media (max-width: 768px) { .dimension-scores { grid-template-columns: 1fr; } }
+    .dimension-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); }
+    .dimension-card__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+    .dimension-card__title { font-weight: 600; display: flex; align-items: center; gap: var(--space-2); }
+    .dimension-card__score { font-weight: 700; color: var(--color-primary); }
+    .dimension-card__bar { height: 8px; background: #e5e7eb; border-radius: var(--radius-full); overflow: hidden; margin-bottom: var(--space-2); }
+    .dimension-card__fill { height: 100%; border-radius: var(--radius-full); }
+    .dimension-card__fill.low { background: #ef4444; }
+    .dimension-card__fill.medium { background: #f59e0b; }
+    .dimension-card__fill.high { background: #22c55e; }
+    .dimension-card__benchmark { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .comparison-section { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .comparison-row { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
+    .comparison-row:last-child { border-bottom: none; }
+    .comparison-row__label { width: 150px; font-size: var(--text-sm); }
+    .comparison-row__bars { flex: 1; display: flex; flex-direction: column; gap: var(--space-2); }
+    .comparison-bar { display: flex; align-items: center; gap: var(--space-2); }
+    .comparison-bar__label { width: 80px; font-size: var(--text-xs); }
+    .comparison-bar__track { flex: 1; height: 16px; background: #e5e7eb; border-radius: var(--radius-md); overflow: hidden; }
+    .comparison-bar__fill { height: 100%; display: flex; align-items: center; justify-content: flex-end; padding-right: var(--space-2); font-size: var(--text-xs); color: #fff; font-weight: 600; }
+    .comparison-bar__fill.you { background: #f59e0b; }
+    .comparison-bar__fill.avg { background: #9ca3af; }
+    .comparison-bar__fill.leader { background: #22c55e; }
+    .recommendations { background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .recommendations h3 { color: #92400e; margin-bottom: var(--space-4); }
+    .recommendation-item { display: flex; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid rgba(0,0,0,0.1); }
+    .recommendation-item:last-child { border-bottom: none; }
+    .recommendation-item__number { width: 32px; height: 32px; background: #f59e0b; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+    .recommendation-item__content { flex: 1; }
+    .recommendation-item__content strong { color: #92400e; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Government AI Maturity Benchmark</h2>
+          <p>See how your AI capabilities compare to peers</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Agency Type</label>
+                <select id="agencyType">
+                  <option value="hhs">Health & Human Services</option>
+                  <option value="workforce">Workforce Development</option>
+                  <option value="revenue">Revenue / Tax</option>
+                  <option value="general">General Government</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Agency Size</label>
+                <select id="agencySize">
+                  <option value="small">Small (< 500 employees)</option>
+                  <option value="medium">Medium (500-2000)</option>
+                  <option value="large">Large (2000+)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>AI Strategy & Governance</label>
+              <select id="strategy">
+                <option value="1">No formal AI strategy</option>
+                <option value="2">Exploring AI, informal discussions</option>
+                <option value="3">Documented AI strategy exists</option>
+                <option value="4">Governance framework in place</option>
+                <option value="5">Mature governance with continuous improvement</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>AI in Production</label>
+              <select id="production">
+                <option value="1">No AI projects</option>
+                <option value="2">Experimenting with proofs of concept</option>
+                <option value="3">1-2 AI systems in production</option>
+                <option value="4">Multiple AI systems deployed</option>
+                <option value="5">AI embedded across operations</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Data Infrastructure</label>
+              <select id="data">
+                <option value="1">Siloed data, mostly paper</option>
+                <option value="2">Basic digital records</option>
+                <option value="3">Centralized data warehouse</option>
+                <option value="4">Modern data platform with APIs</option>
+                <option value="5">Real-time data lake with ML pipelines</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>AI Talent & Skills</label>
+              <select id="talent">
+                <option value="1">No AI/ML skills in-house</option>
+                <option value="2">General IT team, no AI expertise</option>
+                <option value="3">Some data analysts, basic ML knowledge</option>
+                <option value="4">Dedicated data science team</option>
+                <option value="5">Full AI/ML engineering capability</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Change Management & Adoption</label>
+              <select id="change">
+                <option value="1">Resistant to technology change</option>
+                <option value="2">Cautiously open to AI</option>
+                <option value="3">Leadership supportive, training emerging</option>
+                <option value="4">Strong change management program</option>
+                <option value="5">AI-first culture, continuous learning</option>
+              </select>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="calculateMaturity()" style="width: 100%;">Calculate Maturity Score</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="maturity-hero">
+              <div class="maturity-level" id="maturityLevel">Level 3: Developing</div>
+              <p id="maturityDesc" style="margin-top: var(--space-4); color: var(--color-text-muted);"></p>
+            </div>
+
+            <div class="percentile-banner">
+              <div class="percentile-banner__value" id="percentile">65th</div>
+              <div class="percentile-banner__label">Percentile among similar government agencies</div>
+            </div>
+
+            <div class="dimension-scores" id="dimensionScores"></div>
+
+            <div class="comparison-section">
+              <h3 style="margin-bottom: var(--space-4);">How You Compare</h3>
+              <div id="comparisonBars"></div>
+            </div>
+
+            <div class="recommendations">
+              <h3>🎯 Priority Actions to Advance</h3>
+              <div id="recommendationsList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Full Maturity Assessment</h3>
+              <p>Receive detailed analysis, peer benchmarks, and customized roadmap.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Assessment</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Benchmark Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const levels = [
+      { level: 1, name: "Initial", desc: "AI is not yet on the radar. Focus on building awareness and basic digital capabilities." },
+      { level: 2, name: "Emerging", desc: "Beginning AI exploration. Need to develop strategy and build foundational capabilities." },
+      { level: 3, name: "Developing", desc: "AI strategy exists with early successes. Focus on scaling and building sustainable practices." },
+      { level: 4, name: "Advanced", desc: "Multiple AI systems delivering value. Work on optimization and advanced capabilities." },
+      { level: 5, name: "Leading", desc: "AI is embedded in operations. Focus on innovation and maintaining leadership position." }
+    ];
+
+    const benchmarks = {
+      strategy: { avg: 2.8, leader: 4.5 },
+      production: { avg: 2.3, leader: 4.2 },
+      data: { avg: 2.9, leader: 4.4 },
+      talent: { avg: 2.4, leader: 4.3 },
+      change: { avg: 2.6, leader: 4.1 }
+    };
+
+    const recommendations = {
+      strategy: [
+        { low: "Develop a formal AI strategy document aligned with agency mission", high: "Establish AI Center of Excellence with clear governance" },
+      ],
+      production: [
+        { low: "Start with one high-value AI pilot project", high: "Create AI deployment pipeline and standards" },
+      ],
+      data: [
+        { low: "Audit data assets and create data inventory", high: "Implement real-time data streaming capabilities" },
+      ],
+      talent: [
+        { low: "Partner with vendor for initial AI expertise", high: "Build internal AI/ML engineering capability" },
+      ],
+      change: [
+        { low: "Conduct AI awareness training for leadership", high: "Embed AI literacy in all roles" },
+      ]
+    };
+
+    function calculateMaturity() {
+      const scores = {
+        strategy: parseInt(document.getElementById('strategy').value),
+        production: parseInt(document.getElementById('production').value),
+        data: parseInt(document.getElementById('data').value),
+        talent: parseInt(document.getElementById('talent').value),
+        change: parseInt(document.getElementById('change').value)
+      };
+
+      const avgScore = (scores.strategy + scores.production + scores.data + scores.talent + scores.change) / 5;
+      const maturityLevel = Math.round(avgScore);
+      const levelInfo = levels[maturityLevel - 1];
+
+      // Calculate percentile
+      const overallAvg = 2.6;
+      const percentile = Math.min(95, Math.max(5, Math.round(50 + (avgScore - overallAvg) * 20)));
+
+      // Update maturity level display
+      const levelEl = document.getElementById('maturityLevel');
+      levelEl.textContent = `Level ${maturityLevel}: ${levelInfo.name}`;
+      levelEl.className = `maturity-level level-${maturityLevel}`;
+      document.getElementById('maturityDesc').textContent = levelInfo.desc;
+      document.getElementById('percentile').textContent = percentile + 'th';
+
+      // Dimension scores
+      const dimensionNames = {
+        strategy: '📋 Strategy & Governance',
+        production: '🚀 AI in Production',
+        data: '📊 Data Infrastructure',
+        talent: '👥 Talent & Skills',
+        change: '🔄 Change Management'
+      };
+
+      document.getElementById('dimensionScores').innerHTML = Object.entries(scores).map(([key, score]) => {
+        const pct = (score / 5) * 100;
+        const fillClass = pct < 40 ? 'low' : pct < 70 ? 'medium' : 'high';
+        const benchmark = benchmarks[key];
+        return `
+          <div class="dimension-card">
+            <div class="dimension-card__header">
+              <span class="dimension-card__title">${dimensionNames[key]}</span>
+              <span class="dimension-card__score">${score}/5</span>
+            </div>
+            <div class="dimension-card__bar">
+              <div class="dimension-card__fill ${fillClass}" style="width: ${pct}%;"></div>
+            </div>
+            <div class="dimension-card__benchmark">Peer avg: ${benchmark.avg.toFixed(1)} | Leaders: ${benchmark.leader.toFixed(1)}</div>
+          </div>
+        `;
+      }).join('');
+
+      // Comparison bars
+      document.getElementById('comparisonBars').innerHTML = Object.entries(scores).map(([key, score]) => {
+        const benchmark = benchmarks[key];
+        return `
+          <div class="comparison-row">
+            <div class="comparison-row__label">${dimensionNames[key].split(' ').slice(1).join(' ')}</div>
+            <div class="comparison-row__bars">
+              <div class="comparison-bar">
+                <div class="comparison-bar__label">You</div>
+                <div class="comparison-bar__track">
+                  <div class="comparison-bar__fill you" style="width: ${(score / 5) * 100}%;">${score}</div>
+                </div>
+              </div>
+              <div class="comparison-bar">
+                <div class="comparison-bar__label">Peer Avg</div>
+                <div class="comparison-bar__track">
+                  <div class="comparison-bar__fill avg" style="width: ${(benchmark.avg / 5) * 100}%;">${benchmark.avg.toFixed(1)}</div>
+                </div>
+              </div>
+              <div class="comparison-bar">
+                <div class="comparison-bar__label">Leaders</div>
+                <div class="comparison-bar__track">
+                  <div class="comparison-bar__fill leader" style="width: ${(benchmark.leader / 5) * 100}%;">${benchmark.leader.toFixed(1)}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Recommendations (prioritize lowest scores)
+      const sortedDimensions = Object.entries(scores).sort((a, b) => a[1] - b[1]);
+      const topRecs = sortedDimensions.slice(0, 3).map(([key, score], idx) => {
+        const rec = recommendations[key][0];
+        return {
+          title: dimensionNames[key],
+          action: score <= 2 ? rec.low : rec.high
+        };
+      });
+
+      document.getElementById('recommendationsList').innerHTML = topRecs.map((rec, idx) => `
+        <div class="recommendation-item">
+          <div class="recommendation-item__number">${idx + 1}</div>
+          <div class="recommendation-item__content">
+            <strong>${rec.title}</strong><br>
+            ${rec.action}
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your full maturity assessment will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

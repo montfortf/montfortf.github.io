@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Bias Audit & Fairness Testing | Brite.AI</title>
+  <meta name="description" content="Independent testing and auditing of AI systems for bias and fairness. Ensure your AI treats all constituents equitably.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero hero--centered">
+    <div class="container">
+      <div class="hero__content">
+        <span class="hero__badge">AI Governance</span>
+        <h1 class="hero__title">Is Your AI Fair?</h1>
+        <p class="hero__subtitle">
+          Independent bias audits and fairness testing to ensure your AI systems
+          treat all constituents equitably—before problems become headlines.
+        </p>
+        <div class="hero__actions">
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">Request Bias Audit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <span class="section-header__label">The Risk</span>
+          <h2>Bias in Government AI</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            AI systems can perpetuate and amplify existing biases, leading to unfair treatment
+            of protected groups. In government, this means real harm to real people—denied benefits,
+            wrongful investigations, unequal services.
+          </p>
+          <div class="card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: none;">
+            <h4 style="color: #92400e;">Common Sources of AI Bias</h4>
+            <ul style="padding-left: var(--space-5); color: #78350f;">
+              <li>Historical discrimination in training data</li>
+              <li>Underrepresentation of certain groups</li>
+              <li>Proxy variables that correlate with protected classes</li>
+              <li>Feedback loops that reinforce bias</li>
+            </ul>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <div class="card" style="padding: var(--space-8);">
+            <h3 style="margin-bottom: var(--space-6);">Real-World AI Bias Examples</h3>
+            <div style="padding: var(--space-4); background: var(--color-background-alt); border-radius: var(--radius-md); margin-bottom: var(--space-4);">
+              <strong>Healthcare Algorithm</strong>
+              <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin: 0;">Systematically recommended less care for Black patients due to cost-based proxy</p>
+            </div>
+            <div style="padding: var(--space-4); background: var(--color-background-alt); border-radius: var(--radius-md); margin-bottom: var(--space-4);">
+              <strong>Hiring Tools</strong>
+              <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin: 0;">Penalized resumes with women's colleges or activities</p>
+            </div>
+            <div style="padding: var(--space-4); background: var(--color-background-alt); border-radius: var(--radius-md);">
+              <strong>Risk Assessment</strong>
+              <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin: 0;">Higher false positive rates for minority defendants</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Approach</span>
+        <h2 class="section-header__title">Comprehensive Bias Audit Process</h2>
+      </div>
+      <div class="process-steps">
+        <div class="process-step" data-animate>
+          <div class="process-step__number">1</div>
+          <h3 class="process-step__title">Scope & Plan</h3>
+          <p class="process-step__description">Define audit scope, identify protected groups, select fairness metrics.</p>
+        </div>
+        <div class="process-step" data-animate data-delay="100">
+          <div class="process-step__number">2</div>
+          <h3 class="process-step__title">Data Analysis</h3>
+          <p class="process-step__description">Examine training data for representation, quality, and potential proxies.</p>
+        </div>
+        <div class="process-step" data-animate data-delay="200">
+          <div class="process-step__number">3</div>
+          <h3 class="process-step__title">Model Testing</h3>
+          <p class="process-step__description">Test model outputs across demographic groups using multiple fairness criteria.</p>
+        </div>
+        <div class="process-step" data-animate data-delay="300">
+          <div class="process-step__number">4</div>
+          <h3 class="process-step__title">Report & Remediate</h3>
+          <p class="process-step__description">Document findings, recommend mitigations, verify remediation effectiveness.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">What We Test</span>
+        <h2 class="section-header__title">Fairness Metrics & Criteria</h2>
+      </div>
+      <div class="grid grid--3">
+        <div class="card" data-animate>
+          <h3 class="card__title">Demographic Parity</h3>
+          <p class="card__description">Are positive outcomes distributed proportionally across groups?</p>
+          <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-md);">
+            <code style="font-size: var(--text-sm);">P(Ŷ=1|A=0) ≈ P(Ŷ=1|A=1)</code>
+          </div>
+        </div>
+        <div class="card" data-animate data-delay="100">
+          <h3 class="card__title">Equal Opportunity</h3>
+          <p class="card__description">Are true positive rates equal across groups?</p>
+          <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-md);">
+            <code style="font-size: var(--text-sm);">TPR(A=0) ≈ TPR(A=1)</code>
+          </div>
+        </div>
+        <div class="card" data-animate data-delay="200">
+          <h3 class="card__title">Equalized Odds</h3>
+          <p class="card__description">Are both true positive and false positive rates equal?</p>
+          <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-md);">
+            <code style="font-size: var(--text-sm);">TPR + FPR equal</code>
+          </div>
+        </div>
+        <div class="card" data-animate data-delay="300">
+          <h3 class="card__title">Calibration</h3>
+          <p class="card__description">Do predicted probabilities mean the same thing across groups?</p>
+          <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-md);">
+            <code style="font-size: var(--text-sm);">P(Y=1|Ŷ=p,A) = p</code>
+          </div>
+        </div>
+        <div class="card" data-animate data-delay="400">
+          <h3 class="card__title">Individual Fairness</h3>
+          <p class="card__description">Do similar individuals receive similar predictions?</p>
+          <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-md);">
+            <code style="font-size: var(--text-sm);">Similar → Similar</code>
+          </div>
+        </div>
+        <div class="card" data-animate data-delay="500">
+          <h3 class="card__title">Counterfactual Fairness</h3>
+          <p class="card__description">Would the prediction change if only the protected attribute changed?</p>
+          <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-md);">
+            <code style="font-size: var(--text-sm);">Ŷ(x) = Ŷ(x')</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Deliverables</span>
+        <h2 class="section-header__title">What You Receive</h2>
+      </div>
+      <div class="grid grid--2">
+        <div class="card" data-animate>
+          <h3 class="card__title">Bias Audit Report</h3>
+          <ul style="padding-left: var(--space-5); color: var(--color-text-light);">
+            <li>Executive summary of findings</li>
+            <li>Detailed statistical analysis</li>
+            <li>Fairness metric scores by group</li>
+            <li>Identified bias sources</li>
+            <li>Severity and risk assessment</li>
+          </ul>
+        </div>
+        <div class="card" data-animate data-delay="100">
+          <h3 class="card__title">Remediation Recommendations</h3>
+          <ul style="padding-left: var(--space-5); color: var(--color-text-light);">
+            <li>Prioritized mitigation strategies</li>
+            <li>Data collection improvements</li>
+            <li>Model adjustment techniques</li>
+            <li>Process and policy changes</li>
+            <li>Ongoing monitoring plan</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Use Cases</span>
+        <h2 class="section-header__title">Systems We Audit</h2>
+      </div>
+      <div class="grid grid--4">
+        <div class="card" style="text-align: center; padding: var(--space-6);">
+          <div style="font-size: 2rem; margin-bottom: var(--space-2);">📋</div>
+          <h4 style="font-size: var(--text-base);">Benefits Eligibility</h4>
+        </div>
+        <div class="card" style="text-align: center; padding: var(--space-6);">
+          <div style="font-size: 2rem; margin-bottom: var(--space-2);">⚠️</div>
+          <h4 style="font-size: var(--text-base);">Risk Assessment</h4>
+        </div>
+        <div class="card" style="text-align: center; padding: var(--space-6);">
+          <div style="font-size: 2rem; margin-bottom: var(--space-2);">🏥</div>
+          <h4 style="font-size: var(--text-base);">Healthcare Triage</h4>
+        </div>
+        <div class="card" style="text-align: center; padding: var(--space-6);">
+          <div style="font-size: 2rem; margin-bottom: var(--space-2);">👤</div>
+          <h4 style="font-size: var(--text-base);">Hiring & HR</h4>
+        </div>
+        <div class="card" style="text-align: center; padding: var(--space-6);">
+          <div style="font-size: 2rem; margin-bottom: var(--space-2);">🏠</div>
+          <h4 style="font-size: var(--text-base);">Housing Allocation</h4>
+        </div>
+        <div class="card" style="text-align: center; padding: var(--space-6);">
+          <div style="font-size: 2rem; margin-bottom: var(--space-2);">💰</div>
+          <h4 style="font-size: var(--text-base);">Fraud Detection</h4>
+        </div>
+        <div class="card" style="text-align: center; padding: var(--space-6);">
+          <div style="font-size: 2rem; margin-bottom: var(--space-2);">📞</div>
+          <h4 style="font-size: var(--text-base);">Service Prioritization</h4>
+        </div>
+        <div class="card" style="text-align: center; padding: var(--space-6);">
+          <div style="font-size: 2rem; margin-bottom: var(--space-2);">⚖️</div>
+          <h4 style="font-size: var(--text-base);">Case Decisions</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container">
+      <div class="cta" style="background: transparent; box-shadow: none;">
+        <h2 style="color: #fff;">Ensure Fairness Before It's Too Late</h2>
+        <p style="color: rgba(255,255,255,0.8);">Proactive bias audits protect your constituents and your agency's reputation.</p>
+        <div class="cta__actions">
+          <a href="../contact/index.html" class="btn btn--white btn--lg">Schedule Bias Audit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="../js/main.js"></script>
+</body>
+</html>

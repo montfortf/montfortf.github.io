@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tools & Calculators for Government | Brite.AI</title>
+  <meta name="description" content="43 free interactive tools to help government agencies plan, justify, and implement AI initiatives. ROI calculators, readiness assessments, benchmarks, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+    @media (max-width: 1024px) {
+      .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 640px) {
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .tool-card {
+      background: var(--color-background);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+    .tool-card__header {
+      padding: var(--space-5);
+      color: #fff;
+      position: relative;
+    }
+    .tool-card__icon {
+      font-size: 2rem;
+      margin-bottom: var(--space-2);
+    }
+    .tool-card__title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-1);
+    }
+    .tool-card__time {
+      font-size: var(--text-sm);
+      opacity: 0.85;
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+    .tool-card__body {
+      padding: var(--space-5);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .tool-card__description {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-4);
+      flex: 1;
+      font-size: var(--text-sm);
+    }
+    .tool-card__cta {
+      margin-top: auto;
+    }
+    .tool-card__cta .btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Category colors */
+    .cat-assessment { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    .cat-roi { background: linear-gradient(135deg, #10b981, #059669); }
+    .cat-planning { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+    .cat-risk { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+    .cat-funding { background: linear-gradient(135deg, #059669, #047857); }
+    .cat-decision { background: linear-gradient(135deg, var(--color-primary), #6366f1); }
+    .cat-discovery { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .cat-usecase { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+    .cat-governance { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .cat-technology { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+    .cat-benchmark { background: linear-gradient(135deg, #f97316, #ea580c); }
+    .cat-education { background: linear-gradient(135deg, #14b8a6, #0d9488); }
+
+    /* Featured tool */
+    .tool-card--featured {
+      grid-column: span 2;
+    }
+    .tool-card--featured .tool-card__header {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-6);
+      align-items: center;
+    }
+    .tool-card--featured .tool-card__icon {
+      font-size: 3rem;
+      margin-bottom: 0;
+    }
+    @media (max-width: 640px) {
+      .tool-card--featured {
+        grid-column: span 1;
+      }
+      .tool-card--featured .tool-card__header {
+        display: block;
+      }
+      .tool-card--featured .tool-card__icon {
+        margin-bottom: var(--space-3);
+      }
+    }
+
+    /* Category sections */
+    .category-section {
+      margin-bottom: var(--space-12);
+    }
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+    .category-header__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+    .category-header__text h3 {
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-1);
+    }
+    .category-header__text p {
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+
+    /* Quick access bar */
+    .quick-access {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+    .quick-access__title {
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+    }
+    .quick-access__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+    .quick-access__link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-background);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--color-text);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .quick-access__link:hover {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    /* Stats banner */
+    .stats-banner {
+      background: linear-gradient(135deg, var(--color-primary), #6366f1);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      color: #fff;
+      margin-bottom: var(--space-12);
+    }
+    .stats-banner__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      .stats-banner__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .stats-banner__stat {
+      padding: var(--space-4);
+    }
+    .stats-banner__value {
+      font-size: var(--text-4xl);
+      font-weight: 800;
+      margin-bottom: var(--space-1);
+    }
+    .stats-banner__label {
+      font-size: var(--text-sm);
+      opacity: 0.9;
+    }
+
+    /* Category nav */
+    .category-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-8);
+      padding: var(--space-4);
+      background: var(--color-background-alt);
+      border-radius: var(--radius-xl);
+    }
+    .category-nav__link {
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--color-text-muted);
+      transition: all 0.2s;
+    }
+    .category-nav__link:hover {
+      background: var(--color-background);
+      color: var(--color-text);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
+          <li><a href="../ai-data/index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero hero--centered">
+    <div class="container">
+      <div class="hero__content">
+        <span class="hero__badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          43 Free Interactive Tools
+        </span>
+        <h1 class="hero__title">
+          AI Planning Tools for<br>
+          <span class="text-gradient">Government Agencies</span>
+        </h1>
+        <p class="hero__subtitle">
+          Calculate ROI, assess readiness, benchmark performance, and build your business case
+          with our comprehensive toolkit designed specifically for government AI initiatives.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Access -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="quick-access">
+        <div class="quick-access__title">Most Popular Tools</div>
+        <div class="quick-access__links">
+          <a href="ai-readiness-assessment.html" class="quick-access__link"><span>📊</span> Readiness Assessment</a>
+          <a href="ai-roi-calculator.html" class="quick-access__link"><span>💰</span> ROI Calculator</a>
+          <a href="ai-maturity-benchmark.html" class="quick-access__link"><span>📈</span> Maturity Benchmark</a>
+          <a href="document-processing-calculator.html" class="quick-access__link"><span>📄</span> Document AI</a>
+          <a href="ai-opportunity-finder.html" class="quick-access__link"><span>🔍</span> Opportunity Finder</a>
+          <a href="roadmap-generator.html" class="quick-access__link"><span>🗺️</span> Roadmap Generator</a>
+          <a href="responsible-ai-checklist.html" class="quick-access__link"><span>✅</span> Responsible AI</a>
+          <a href="grant-funding-finder.html" class="quick-access__link"><span>💵</span> Grant Finder</a>
+        </div>
+      </div>
+
+      <!-- Stats Banner -->
+      <div class="stats-banner">
+        <div class="stats-banner__grid">
+          <div class="stats-banner__stat">
+            <div class="stats-banner__value">43</div>
+            <div class="stats-banner__label">Interactive Tools</div>
+          </div>
+          <div class="stats-banner__stat">
+            <div class="stats-banner__value">100%</div>
+            <div class="stats-banner__label">Free to Use</div>
+          </div>
+          <div class="stats-banner__stat">
+            <div class="stats-banner__value">9</div>
+            <div class="stats-banner__label">Tool Categories</div>
+          </div>
+          <div class="stats-banner__stat">
+            <div class="stats-banner__value">Gov</div>
+            <div class="stats-banner__label">Designed for Government</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Navigation -->
+      <div class="category-nav">
+        <a href="#assessment" class="category-nav__link">Assessment & Planning</a>
+        <a href="#roi" class="category-nav__link">ROI & Business Case</a>
+        <a href="#discovery" class="category-nav__link">Use Case Discovery</a>
+        <a href="#calculators" class="category-nav__link">Solution Calculators</a>
+        <a href="#governance" class="category-nav__link">Governance & Ethics</a>
+        <a href="#planning" class="category-nav__link">Planning & Scoping</a>
+        <a href="#technology" class="category-nav__link">Technology Selection</a>
+        <a href="#benchmarking" class="category-nav__link">Benchmarking</a>
+        <a href="#education" class="category-nav__link">Educational</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- All Tool Categories -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+
+      <!-- Category 1: Assessment & Planning -->
+      <div class="category-section" id="assessment">
+        <div class="category-header">
+          <div class="category-header__icon cat-assessment">📊</div>
+          <div class="category-header__text">
+            <h3>Assessment & Planning</h3>
+            <p>Evaluate your readiness and plan your AI journey</p>
+          </div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card tool-card--featured">
+            <div class="tool-card__header cat-assessment">
+              <div class="tool-card__icon">📊</div>
+              <div>
+                <div class="tool-card__title">AI Readiness Assessment</div>
+                <div class="tool-card__time">⏱️ 5 minutes</div>
+              </div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Comprehensive 20-question assessment evaluating Data Readiness, Technology, Organizational Capacity, and Governance. Get personalized recommendations.</p>
+              <div class="tool-card__cta"><a href="ai-readiness-assessment.html" class="btn btn--primary">Start Assessment</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-assessment">
+              <div class="tool-card__icon">🎯</div>
+              <div class="tool-card__title">Use Case Prioritization</div>
+              <div class="tool-card__time">⏱️ 10 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Score and rank AI use cases using an impact/feasibility matrix with visual quadrant chart.</p>
+              <div class="tool-card__cta"><a href="use-case-prioritization.html" class="btn btn--secondary">Prioritize Cases</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-assessment">
+              <div class="tool-card__icon">📋</div>
+              <div class="tool-card__title">Data Maturity Scorecard</div>
+              <div class="tool-card__time">⏱️ 8 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">16-question assessment evaluating your data quality, governance, and infrastructure readiness for AI.</p>
+              <div class="tool-card__cta"><a href="data-maturity-scorecard.html" class="btn btn--secondary">Assess Data</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-assessment">
+              <div class="tool-card__icon">👥</div>
+              <div class="tool-card__title">Skills Gap Analyzer</div>
+              <div class="tool-card__time">⏱️ 6 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Identify AI skill gaps in your team and get training recommendations by role.</p>
+              <div class="tool-card__cta"><a href="skills-gap-analyzer.html" class="btn btn--secondary">Analyze Skills</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-assessment">
+              <div class="tool-card__icon">🔄</div>
+              <div class="tool-card__title">Change Readiness Quiz</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">9-question quiz assessing organizational readiness for AI change management.</p>
+              <div class="tool-card__cta"><a href="change-readiness-quiz.html" class="btn btn--secondary">Take Quiz</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-assessment">
+              <div class="tool-card__icon">🖥️</div>
+              <div class="tool-card__title">Infrastructure Checker</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Evaluate your technical infrastructure readiness for AI workloads.</p>
+              <div class="tool-card__cta"><a href="infrastructure-checker.html" class="btn btn--secondary">Check Infrastructure</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category 2: ROI & Business Case -->
+      <div class="category-section" id="roi">
+        <div class="category-header">
+          <div class="category-header__icon cat-roi">💰</div>
+          <div class="category-header__text">
+            <h3>ROI & Business Case</h3>
+            <p>Quantify value and build compelling justifications</p>
+          </div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-card__header cat-roi">
+              <div class="tool-card__icon">💰</div>
+              <div class="tool-card__title">AI ROI Calculator</div>
+              <div class="tool-card__time">⏱️ 3 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Calculate potential ROI with pre-built use case presets and 3-year projections.</p>
+              <div class="tool-card__cta"><a href="ai-roi-calculator.html" class="btn btn--secondary">Calculate ROI</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+              <div class="tool-card__icon">⏱️</div>
+              <div class="tool-card__title">Cost of Inaction Calculator</div>
+              <div class="tool-card__time">⏱️ 2 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">See cumulative cost of delaying AI adoption over 6-36 months.</p>
+              <div class="tool-card__cta"><a href="cost-of-inaction-calculator.html" class="btn btn--secondary">Calculate Cost</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-planning">
+              <div class="tool-card__icon">📋</div>
+              <div class="tool-card__title">Budget Request Generator</div>
+              <div class="tool-card__time">⏱️ 10 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Generate formal budget justification documents ready for submission.</p>
+              <div class="tool-card__cta"><a href="budget-request-generator.html" class="btn btn--secondary">Generate Request</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-roi">
+              <div class="tool-card__icon">👤</div>
+              <div class="tool-card__title">FTE Impact Analyzer</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Calculate staff time redeployment potential from AI automation.</p>
+              <div class="tool-card__cta"><a href="fte-impact-analyzer.html" class="btn btn--secondary">Analyze Impact</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-roi">
+              <div class="tool-card__icon">📊</div>
+              <div class="tool-card__title">TCO Estimator</div>
+              <div class="tool-card__time">⏱️ 8 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Compare total cost of ownership between AI solutions.</p>
+              <div class="tool-card__cta"><a href="tco-estimator.html" class="btn btn--secondary">Estimate TCO</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category 3: Use Case Discovery -->
+      <div class="category-section" id="discovery">
+        <div class="category-header">
+          <div class="category-header__icon cat-discovery">🔍</div>
+          <div class="category-header__text">
+            <h3>Use Case Discovery</h3>
+            <p>Find the right AI opportunities for your agency</p>
+          </div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-card__header cat-discovery">
+              <div class="tool-card__icon">🔍</div>
+              <div class="tool-card__title">AI Opportunity Finder</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Discover AI opportunities based on your agency type, pain points, and budget.</p>
+              <div class="tool-card__cta"><a href="ai-opportunity-finder.html" class="btn btn--secondary">Find Opportunities</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-discovery">
+              <div class="tool-card__icon">⚡</div>
+              <div class="tool-card__title">Automation Scorer</div>
+              <div class="tool-card__time">⏱️ 4 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Score processes for automation potential across 6 key criteria.</p>
+              <div class="tool-card__cta"><a href="automation-scorer.html" class="btn btn--secondary">Score Process</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-discovery">
+              <div class="tool-card__icon">🎯</div>
+              <div class="tool-card__title">Quick Win Identifier</div>
+              <div class="tool-card__time">⏱️ 3 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Identify fastest AI wins based on your priorities and timeframe.</p>
+              <div class="tool-card__cta"><a href="quick-win-identifier.html" class="btn btn--secondary">Find Quick Wins</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category 4: Solution Calculators -->
+      <div class="category-section" id="calculators">
+        <div class="category-header">
+          <div class="category-header__icon cat-usecase">📄</div>
+          <div class="category-header__text">
+            <h3>Solution Calculators</h3>
+            <p>Calculate ROI for specific AI solutions</p>
+          </div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-card__header cat-usecase">
+              <div class="tool-card__icon">📄</div>
+              <div class="tool-card__title">Document AI Calculator</div>
+              <div class="tool-card__time">⏱️ 3 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Calculate savings from intelligent document processing across document types.</p>
+              <div class="tool-card__cta"><a href="document-processing-calculator.html" class="btn btn--secondary">Calculate Savings</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header" style="background: linear-gradient(135deg, #ec4899, #db2777);">
+              <div class="tool-card__icon">📞</div>
+              <div class="tool-card__title">Contact Center AI Calculator</div>
+              <div class="tool-card__time">⏱️ 4 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Estimate savings from chatbots, agent assist, and voicebots.</p>
+              <div class="tool-card__cta"><a href="contact-center-ai-calculator.html" class="btn btn--secondary">Calculate Savings</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-usecase">
+              <div class="tool-card__icon">📋</div>
+              <div class="tool-card__title">Benefits Processing Calculator</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Calculate efficiency gains from AI-powered benefits processing.</p>
+              <div class="tool-card__cta"><a href="benefits-processing-calculator.html" class="btn btn--secondary">Calculate Gains</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-usecase">
+              <div class="tool-card__icon">👨‍👩‍👧</div>
+              <div class="tool-card__title">Child Welfare Optimizer</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Optimize caseworker time and improve family contact with AI.</p>
+              <div class="tool-card__cta"><a href="child-welfare-optimizer.html" class="btn btn--secondary">Optimize Workflow</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-usecase">
+              <div class="tool-card__icon">🔒</div>
+              <div class="tool-card__title">Fraud Prevention Calculator</div>
+              <div class="tool-card__time">⏱️ 4 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Calculate fraud detection ROI with fraud type breakdown.</p>
+              <div class="tool-card__cta"><a href="fraud-prevention-calculator.html" class="btn btn--secondary">Calculate ROI</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-usecase">
+              <div class="tool-card__icon">⏱️</div>
+              <div class="tool-card__title">Wait Time Reducer</div>
+              <div class="tool-card__time">⏱️ 4 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Calculate constituent wait time reduction by service channel.</p>
+              <div class="tool-card__cta"><a href="wait-time-reducer.html" class="btn btn--secondary">Reduce Wait Times</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category 5: Governance & Ethics -->
+      <div class="category-section" id="governance">
+        <div class="category-header">
+          <div class="category-header__icon cat-governance">⚖️</div>
+          <div class="category-header__text">
+            <h3>Governance & Ethics</h3>
+            <p>Ensure responsible AI deployment</p>
+          </div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-card__header cat-governance">
+              <div class="tool-card__icon">⚠️</div>
+              <div class="tool-card__title">AI Risk Assessment</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Evaluate AI risk across ethics, security, compliance, and operations.</p>
+              <div class="tool-card__cta"><a href="ai-risk-assessment.html" class="btn btn--secondary">Assess Risk</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-governance">
+              <div class="tool-card__icon">✅</div>
+              <div class="tool-card__title">Responsible AI Checklist</div>
+              <div class="tool-card__time">⏱️ 8 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Generate customized responsible AI checklist with progress tracking.</p>
+              <div class="tool-card__cta"><a href="responsible-ai-checklist.html" class="btn btn--secondary">Get Checklist</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-governance">
+              <div class="tool-card__icon">📜</div>
+              <div class="tool-card__title">Compliance Finder</div>
+              <div class="tool-card__time">⏱️ 3 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Identify compliance requirements by jurisdiction and use case.</p>
+              <div class="tool-card__cta"><a href="compliance-finder.html" class="btn btn--secondary">Find Requirements</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-governance">
+              <div class="tool-card__icon">⚖️</div>
+              <div class="tool-card__title">Bias Risk Screener</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">8-question bias risk assessment with mitigation recommendations.</p>
+              <div class="tool-card__cta"><a href="bias-risk-screener.html" class="btn btn--secondary">Screen for Bias</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-governance">
+              <div class="tool-card__icon">🔐</div>
+              <div class="tool-card__title">Privacy Impact Estimator</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Assess privacy impact level with safeguards recommendations.</p>
+              <div class="tool-card__cta"><a href="privacy-impact-estimator.html" class="btn btn--secondary">Estimate Impact</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category 6: Planning & Scoping -->
+      <div class="category-section" id="planning">
+        <div class="category-header">
+          <div class="category-header__icon cat-planning">📅</div>
+          <div class="category-header__text">
+            <h3>Planning & Scoping</h3>
+            <p>Plan projects, build teams, and create roadmaps</p>
+          </div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-card__header cat-planning">
+              <div class="tool-card__icon">📐</div>
+              <div class="tool-card__title">Project Scope Estimator</div>
+              <div class="tool-card__time">⏱️ 6 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Estimate effort, timeline, team size, and budget for AI projects.</p>
+              <div class="tool-card__cta"><a href="project-scope-estimator.html" class="btn btn--secondary">Estimate Scope</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-planning">
+              <div class="tool-card__icon">📅</div>
+              <div class="tool-card__title">Timeline Generator</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Create project timelines with phases, milestones, and dependencies.</p>
+              <div class="tool-card__cta"><a href="timeline-generator.html" class="btn btn--secondary">Generate Timeline</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-planning">
+              <div class="tool-card__icon">👥</div>
+              <div class="tool-card__title">Team Builder</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Design optimal team structure with org chart visualization.</p>
+              <div class="tool-card__cta"><a href="team-builder.html" class="btn btn--secondary">Build Team</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-planning">
+              <div class="tool-card__icon">🗺️</div>
+              <div class="tool-card__title">Roadmap Generator</div>
+              <div class="tool-card__time">⏱️ 8 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Create multi-year AI roadmap with phased investments.</p>
+              <div class="tool-card__cta"><a href="roadmap-generator.html" class="btn btn--secondary">Generate Roadmap</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-planning">
+              <div class="tool-card__icon">📝</div>
+              <div class="tool-card__title">Vendor Scorecard</div>
+              <div class="tool-card__time">⏱️ 10 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Build vendor evaluation scorecard with weighted criteria.</p>
+              <div class="tool-card__cta"><a href="vendor-scorecard.html" class="btn btn--secondary">Create Scorecard</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category 7: Technology Selection -->
+      <div class="category-section" id="technology">
+        <div class="category-header">
+          <div class="category-header__icon cat-technology">🔧</div>
+          <div class="category-header__text">
+            <h3>Technology Selection</h3>
+            <p>Choose the right AI technologies and platforms</p>
+          </div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-card__header cat-decision">
+              <div class="tool-card__icon">🤝</div>
+              <div class="tool-card__title">Build vs. Buy vs. Partner</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Get data-driven recommendation on build, buy, or partner approach.</p>
+              <div class="tool-card__cta"><a href="build-buy-partner.html" class="btn btn--secondary">Get Recommendation</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-technology">
+              <div class="tool-card__icon">☁️</div>
+              <div class="tool-card__title">Platform Comparison</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Compare AI platforms (AWS, Azure, Google) for your needs.</p>
+              <div class="tool-card__cta"><a href="platform-comparison.html" class="btn btn--secondary">Compare Platforms</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-technology">
+              <div class="tool-card__icon">🏢</div>
+              <div class="tool-card__title">Cloud vs. On-Premise</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Evaluate cloud vs on-premise deployment with TCO comparison.</p>
+              <div class="tool-card__cta"><a href="cloud-vs-onprem.html" class="btn btn--secondary">Compare Options</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-technology">
+              <div class="tool-card__icon">🤖</div>
+              <div class="tool-card__title">GenAI vs. Traditional ML</div>
+              <div class="tool-card__time">⏱️ 4 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Decide between Generative AI and traditional ML for your use case.</p>
+              <div class="tool-card__cta"><a href="genai-vs-ml.html" class="btn btn--secondary">Compare Approaches</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category 8: Benchmarking -->
+      <div class="category-section" id="benchmarking">
+        <div class="category-header">
+          <div class="category-header__icon cat-benchmark">📈</div>
+          <div class="category-header__text">
+            <h3>Benchmarking</h3>
+            <p>Compare your performance against peers and leaders</p>
+          </div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card tool-card--featured">
+            <div class="tool-card__header cat-benchmark">
+              <div class="tool-card__icon">📈</div>
+              <div>
+                <div class="tool-card__title">AI Maturity Benchmark</div>
+                <div class="tool-card__time">⏱️ 10 minutes</div>
+              </div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Comprehensive 5-dimension maturity assessment with peer comparison. See where you stand against similar agencies.</p>
+              <div class="tool-card__cta"><a href="ai-maturity-benchmark.html" class="btn btn--primary">Benchmark Maturity</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-benchmark">
+              <div class="tool-card__icon">⏱️</div>
+              <div class="tool-card__title">Processing Time Benchmark</div>
+              <div class="tool-card__time">⏱️ 6 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Compare processing times to peer agencies and AI-enabled targets.</p>
+              <div class="tool-card__cta"><a href="processing-benchmark.html" class="btn btn--secondary">Benchmark Times</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header" style="background: linear-gradient(135deg, #ec4899, #db2777);">
+              <div class="tool-card__icon">😊</div>
+              <div class="tool-card__title">Constituent Experience Benchmark</div>
+              <div class="tool-card__time">⏱️ 8 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Measure CX metrics against government leaders.</p>
+              <div class="tool-card__cta"><a href="experience-benchmark.html" class="btn btn--secondary">Benchmark CX</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header" style="background: linear-gradient(135deg, #14b8a6, #0d9488);">
+              <div class="tool-card__icon">💰</div>
+              <div class="tool-card__title">AI Investment Benchmark</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Compare AI spending and ROI against peer agencies.</p>
+              <div class="tool-card__cta"><a href="investment-benchmark.html" class="btn btn--secondary">Benchmark Investment</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category 9: Educational -->
+      <div class="category-section" id="education">
+        <div class="category-header">
+          <div class="category-header__icon cat-education">📚</div>
+          <div class="category-header__text">
+            <h3>Educational Tools</h3>
+            <p>Learn about AI through interactive experiences</p>
+          </div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-card__header cat-education">
+              <div class="tool-card__icon">📖</div>
+              <div class="tool-card__title">AI Terminology Decoder</div>
+              <div class="tool-card__time">⏱️ Browse</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Searchable AI glossary with plain-language explanations for government.</p>
+              <div class="tool-card__cta"><a href="terminology-decoder.html" class="btn btn--secondary">Browse Terms</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+              <div class="tool-card__icon">🔍</div>
+              <div class="tool-card__title">AI Myth Buster Quiz</div>
+              <div class="tool-card__time">⏱️ 5 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Interactive 10-question quiz to test your AI knowledge and bust common myths.</p>
+              <div class="tool-card__cta"><a href="myth-buster-quiz.html" class="btn btn--secondary">Take Quiz</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-education">
+              <div class="tool-card__icon">🏛️</div>
+              <div class="tool-card__title">Use Case Explorer</div>
+              <div class="tool-card__time">⏱️ Browse</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Explore proven government AI use cases by agency type and category.</p>
+              <div class="tool-card__cta"><a href="use-case-explorer.html" class="btn btn--secondary">Explore Cases</a></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-card__header cat-education">
+              <div class="tool-card__icon">🎮</div>
+              <div class="tool-card__title">AI Simulator</div>
+              <div class="tool-card__time">⏱️ 10 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Interactive demos: document processing, chatbot, sentiment analysis, summarization.</p>
+              <div class="tool-card__cta"><a href="ai-simulator.html" class="btn btn--secondary">Try Demos</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Funding Tools -->
+      <div class="category-section" id="funding">
+        <div class="category-header">
+          <div class="category-header__icon cat-funding">💵</div>
+          <div class="category-header__text">
+            <h3>Funding Sources</h3>
+            <p>Find funding for your AI initiatives</p>
+          </div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-card__header cat-funding">
+              <div class="tool-card__icon">💵</div>
+              <div class="tool-card__title">Grant Funding Finder</div>
+              <div class="tool-card__time">⏱️ 3 minutes</div>
+            </div>
+            <div class="tool-card__body">
+              <p class="tool-card__description">Match your AI project with federal grant funding sources including SNAP E&T, CCDF, Title IV-E, and more.</p>
+              <div class="tool-card__cta"><a href="grant-funding-finder.html" class="btn btn--secondary">Find Funding</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Need Help With Your AI Initiative?</h2>
+        <p>
+          Our tools provide a starting point, but every agency's journey is unique.
+          Let's discuss your specific challenges and opportunities.
+        </p>
+        <div class="cta__actions">
+          <a href="ai-readiness-assessment.html" class="btn btn--white btn--lg">
+            Start With Assessment
+          </a>
+          <a href="../contact/index.html" class="btn btn--secondary btn--lg" style="border-color: #fff; color: #fff;">
+            Schedule Consultation
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="../ai-data/ai-strategy.html">AI Strategy</a></li>
+            <li><a href="../ai-data/agentic-ai.html">Agentic AI</a></li>
+            <li><a href="../ai-data/data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Popular Tools</h4>
+          <ul class="footer__links">
+            <li><a href="ai-readiness-assessment.html">Readiness Assessment</a></li>
+            <li><a href="ai-roi-calculator.html">ROI Calculator</a></li>
+            <li><a href="ai-maturity-benchmark.html">Maturity Benchmark</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

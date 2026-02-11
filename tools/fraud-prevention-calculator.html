@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fraud Prevention Value Calculator | Brite.AI</title>
+  <meta name="description" content="Calculate the value of AI-powered fraud detection for government benefits programs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group input, .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--color-primary); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .results-section { display: none; }
+    .savings-hero { background: linear-gradient(135deg, #22c55e, #16a34a); border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; color: #fff; margin-bottom: var(--space-6); }
+    .savings-hero__value { font-size: var(--text-5xl); font-weight: 800; }
+    .savings-hero__label { font-size: var(--text-lg); opacity: 0.9; margin-top: var(--space-2); }
+    .results-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    @media (max-width: 768px) { .results-grid { grid-template-columns: repeat(2, 1fr); } }
+    .result-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); text-align: center; }
+    .result-card__icon { font-size: 1.5rem; margin-bottom: var(--space-2); }
+    .result-card__value { font-size: var(--text-2xl); font-weight: 800; color: var(--color-primary); }
+    .result-card__label { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .fraud-types { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .fraud-item { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+    .fraud-item:last-child { border-bottom: none; }
+    .fraud-item__icon { width: 48px; height: 48px; background: #fee2e2; color: #ef4444; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .fraud-item__content { flex: 1; }
+    .fraud-item__name { font-weight: 600; margin-bottom: var(--space-1); }
+    .fraud-item__desc { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .fraud-item__value { text-align: right; }
+    .fraud-item__detected { font-size: var(--text-xl); font-weight: 700; color: #22c55e; }
+    .fraud-item__saved { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .detection-comparison { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .comparison-bars { display: grid; gap: var(--space-4); }
+    .bar-row { display: flex; align-items: center; gap: var(--space-4); }
+    .bar-label { width: 120px; font-weight: 500; font-size: var(--text-sm); }
+    .bar-track { flex: 1; height: 32px; background: #e5e7eb; border-radius: var(--radius-md); overflow: hidden; position: relative; }
+    .bar-fill { height: 100%; display: flex; align-items: center; justify-content: flex-end; padding-right: var(--space-3); color: #fff; font-weight: 600; font-size: var(--text-sm); transition: width 0.5s ease; }
+    .bar-fill.manual { background: #f97316; }
+    .bar-fill.ai { background: #22c55e; }
+    .roi-callout { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-radius: var(--radius-xl); padding: var(--space-6); text-align: center; margin-bottom: var(--space-6); }
+    .roi-callout__value { font-size: var(--text-4xl); font-weight: 800; color: #1d4ed8; }
+    .roi-callout__label { color: #1e40af; margin-top: var(--space-2); }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Fraud Prevention Value Calculator</h2>
+          <p>Calculate the ROI of AI-powered fraud detection</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>Program Type</label>
+              <select id="programType">
+                <option value="snap">SNAP (Food Assistance)</option>
+                <option value="medicaid">Medicaid</option>
+                <option value="unemployment">Unemployment Insurance</option>
+                <option value="tanf">TANF (Cash Assistance)</option>
+                <option value="childcare">Child Care Subsidy</option>
+                <option value="tax">Tax Credits (EITC, CTC)</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Annual Benefits Disbursed</label>
+                <input type="number" id="annualBenefits" value="500000000" min="1000000">
+                <p class="help-text">Total benefits paid per year</p>
+              </div>
+              <div class="form-group">
+                <label>Estimated Improper Payment Rate</label>
+                <select id="improperRate">
+                  <option value="0.03">3% - Below Average</option>
+                  <option value="0.05" selected>5% - Average</option>
+                  <option value="0.08">8% - Above Average</option>
+                  <option value="0.10">10% - High</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Current Fraud Detection Rate</label>
+                <select id="detectionRate">
+                  <option value="0.20">20% - Basic</option>
+                  <option value="0.35" selected>35% - Average</option>
+                  <option value="0.50">50% - Good</option>
+                  <option value="0.65">65% - Strong</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Investigation Staff (FTEs)</label>
+                <input type="number" id="investigationStaff" value="15" min="1">
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="calculateFraudValue()" style="width: 100%;">Calculate Fraud Prevention Value</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="savings-hero">
+              <div class="savings-hero__value" id="totalRecovery">$0</div>
+              <div class="savings-hero__label">Estimated Annual Fraud Prevention & Recovery</div>
+            </div>
+
+            <div class="results-grid">
+              <div class="result-card">
+                <div class="result-card__icon">🎯</div>
+                <div class="result-card__value" id="detectionImprove">0%</div>
+                <div class="result-card__label">Detection Rate Improvement</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">⚡</div>
+                <div class="result-card__value" id="fasterDetection">0x</div>
+                <div class="result-card__label">Faster Detection</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">📊</div>
+                <div class="result-card__value" id="caseCapacity">0%</div>
+                <div class="result-card__label">More Cases Reviewed</div>
+              </div>
+              <div class="result-card">
+                <div class="result-card__icon">🔍</div>
+                <div class="result-card__value" id="falsePositives">-0%</div>
+                <div class="result-card__label">Fewer False Positives</div>
+              </div>
+            </div>
+
+            <div class="detection-comparison">
+              <h3 style="margin-bottom: var(--space-4);">Detection Rate Comparison</h3>
+              <div class="comparison-bars">
+                <div class="bar-row">
+                  <span class="bar-label">Manual Review</span>
+                  <div class="bar-track">
+                    <div class="bar-fill manual" id="manualBar" style="width: 35%;">35%</div>
+                  </div>
+                </div>
+                <div class="bar-row">
+                  <span class="bar-label">With AI</span>
+                  <div class="bar-track">
+                    <div class="bar-fill ai" id="aiBar" style="width: 85%;">85%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="fraud-types">
+              <h3 style="margin-bottom: var(--space-4);">Fraud Types Detected by AI</h3>
+              <div id="fraudTypesList"></div>
+            </div>
+
+            <div class="roi-callout">
+              <div class="roi-callout__value" id="roiValue">0x</div>
+              <div class="roi-callout__label">Return on AI Investment</div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Fraud Prevention Assessment</h3>
+              <p>Receive a detailed analysis of fraud patterns and AI solution recommendations.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Assessment</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Calculate Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const fraudTypes = {
+      snap: [
+        { name: "Identity Fraud", desc: "Fake or stolen identities", pct: 0.25 },
+        { name: "Dual Enrollment", desc: "Benefits in multiple states", pct: 0.20 },
+        { name: "Income Misrepresentation", desc: "Unreported earnings", pct: 0.30 },
+        { name: "Trafficking", desc: "Selling benefits for cash", pct: 0.15 },
+        { name: "Retailer Collusion", desc: "Store fraud schemes", pct: 0.10 }
+      ],
+      medicaid: [
+        { name: "Provider Billing Fraud", desc: "Overbilling, phantom services", pct: 0.35 },
+        { name: "Patient Identity Fraud", desc: "Stolen or shared ID cards", pct: 0.20 },
+        { name: "Prescription Fraud", desc: "Doctor shopping, false scripts", pct: 0.25 },
+        { name: "Eligibility Fraud", desc: "Income/asset concealment", pct: 0.15 },
+        { name: "Kickback Schemes", desc: "Referral payments", pct: 0.05 }
+      ],
+      unemployment: [
+        { name: "Identity Theft", desc: "Fake claimant identities", pct: 0.40 },
+        { name: "Wage Misreporting", desc: "Inflated earnings history", pct: 0.25 },
+        { name: "Continued Claims", desc: "Working while collecting", pct: 0.20 },
+        { name: "Employer Collusion", desc: "False separation reasons", pct: 0.10 },
+        { name: "Multi-State Claims", desc: "Collecting in multiple states", pct: 0.05 }
+      ],
+      tanf: [
+        { name: "Income Concealment", desc: "Unreported earnings", pct: 0.35 },
+        { name: "Household Composition", desc: "False living arrangements", pct: 0.30 },
+        { name: "Identity Fraud", desc: "Fake identities for children", pct: 0.20 },
+        { name: "Dual Enrollment", desc: "Multiple state benefits", pct: 0.15 }
+      ],
+      childcare: [
+        { name: "Provider Attendance Fraud", desc: "False attendance records", pct: 0.40 },
+        { name: "Eligibility Misrepresentation", desc: "Income/work status", pct: 0.30 },
+        { name: "Ghost Children", desc: "Non-existent children", pct: 0.15 },
+        { name: "Related Provider Fraud", desc: "Payments to relatives", pct: 0.15 }
+      ],
+      tax: [
+        { name: "Identity Theft Refunds", desc: "Stolen SSNs", pct: 0.35 },
+        { name: "EITC Overclaims", desc: "False qualifying children", pct: 0.30 },
+        { name: "Income Manipulation", desc: "False W-2s", pct: 0.20 },
+        { name: "False Business Claims", desc: "Fake self-employment", pct: 0.15 }
+      ]
+    };
+
+    function calculateFraudValue() {
+      const programType = document.getElementById('programType').value;
+      const annualBenefits = parseInt(document.getElementById('annualBenefits').value);
+      const improperRate = parseFloat(document.getElementById('improperRate').value);
+      const currentDetection = parseFloat(document.getElementById('detectionRate').value);
+      const staff = parseInt(document.getElementById('investigationStaff').value);
+
+      // AI improves detection to 85%
+      const aiDetection = 0.85;
+      const totalFraud = annualBenefits * improperRate;
+      const currentRecovery = totalFraud * currentDetection;
+      const aiRecovery = totalFraud * aiDetection;
+      const additionalRecovery = aiRecovery - currentRecovery;
+
+      // AI system cost estimate (simplified)
+      const aiSystemCost = Math.max(500000, annualBenefits * 0.001);
+      const roi = additionalRecovery / aiSystemCost;
+
+      // Update results
+      document.getElementById('totalRecovery').textContent = '$' + (additionalRecovery / 1000000).toFixed(1) + 'M';
+      document.getElementById('detectionImprove').textContent = '+' + Math.round((aiDetection - currentDetection) * 100) + '%';
+      document.getElementById('fasterDetection').textContent = '10x';
+      document.getElementById('caseCapacity').textContent = '+300%';
+      document.getElementById('falsePositives').textContent = '-60%';
+      document.getElementById('roiValue').textContent = Math.round(roi) + 'x';
+
+      // Update bars
+      document.getElementById('manualBar').style.width = (currentDetection * 100) + '%';
+      document.getElementById('manualBar').textContent = Math.round(currentDetection * 100) + '%';
+      document.getElementById('aiBar').style.width = (aiDetection * 100) + '%';
+      document.getElementById('aiBar').textContent = Math.round(aiDetection * 100) + '%';
+
+      // Fraud types breakdown
+      const types = fraudTypes[programType] || fraudTypes.snap;
+      document.getElementById('fraudTypesList').innerHTML = types.map(type => {
+        const detected = Math.round(additionalRecovery * type.pct);
+        return `
+          <div class="fraud-item">
+            <div class="fraud-item__icon">🚨</div>
+            <div class="fraud-item__content">
+              <div class="fraud-item__name">${type.name}</div>
+              <div class="fraud-item__desc">${type.desc}</div>
+            </div>
+            <div class="fraud-item__value">
+              <div class="fraud-item__detected">$${(detected / 1000000).toFixed(1)}M</div>
+              <div class="fraud-item__saved">additional recovery</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your Fraud Prevention Assessment will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

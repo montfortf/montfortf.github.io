@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Process Automation Potential Scorer | Brite.AI</title>
+  <meta name="description" content="Score your processes to determine their AI automation potential and prioritize your automation roadmap.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--color-primary); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .criteria-grid { display: grid; gap: var(--space-4); }
+    .criteria-item { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); }
+    .criteria-item__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+    .criteria-item__title { font-weight: 600; }
+    .criteria-item__score { font-weight: 700; color: var(--color-primary); }
+    .criteria-item__description { font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-4); }
+    .rating-buttons { display: flex; gap: var(--space-2); }
+    .rating-btn { flex: 1; padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-background); cursor: pointer; text-align: center; transition: all 0.2s; font-size: var(--text-sm); }
+    .rating-btn:hover { border-color: var(--color-primary); }
+    .rating-btn.selected { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+    .results-section { display: none; }
+    .score-gauge { text-align: center; margin-bottom: var(--space-8); }
+    .gauge-circle { width: 200px; height: 200px; border-radius: 50%; background: conic-gradient(var(--gauge-color) var(--gauge-percent), #e5e7eb var(--gauge-percent)); display: flex; align-items: center; justify-content: center; margin: 0 auto; position: relative; }
+    .gauge-circle::before { content: ''; position: absolute; width: 160px; height: 160px; background: var(--color-background); border-radius: 50%; }
+    .gauge-inner { position: relative; z-index: 1; text-align: center; }
+    .gauge-score { font-size: var(--text-4xl); font-weight: 800; }
+    .gauge-label { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .score-interpretation { margin-top: var(--space-4); padding: var(--space-4); border-radius: var(--radius-lg); }
+    .score-interpretation.high { background: #dcfce7; color: #166534; }
+    .score-interpretation.medium { background: #fef3c7; color: #92400e; }
+    .score-interpretation.low { background: #fee2e2; color: #991b1b; }
+    .breakdown-section { margin-top: var(--space-6); }
+    .breakdown-item { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+    .breakdown-item__label { flex: 1; font-weight: 500; }
+    .breakdown-item__bar { width: 200px; height: 12px; background: #e5e7eb; border-radius: var(--radius-full); overflow: hidden; }
+    .breakdown-item__fill { height: 100%; border-radius: var(--radius-full); transition: width 0.5s ease; }
+    .breakdown-item__fill.high { background: #22c55e; }
+    .breakdown-item__fill.medium { background: #f59e0b; }
+    .breakdown-item__fill.low { background: #ef4444; }
+    .breakdown-item__score { width: 60px; text-align: right; font-weight: 700; }
+    .recommendations { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-top: var(--space-6); }
+    .recommendation-item { display: flex; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+    .recommendation-item:last-child { border-bottom: none; }
+    .recommendation-item__icon { width: 40px; height: 40px; background: var(--color-primary); color: #fff; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .recommendation-item__content h4 { font-weight: 600; margin-bottom: var(--space-1); }
+    .recommendation-item__content p { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Process Automation Potential Scorer</h2>
+          <p>Evaluate any process to determine its AI automation potential</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>Process Name</label>
+              <input type="text" id="processName" placeholder="e.g., Benefits Application Review">
+            </div>
+
+            <div class="form-group">
+              <label>Rate Each Automation Criterion</label>
+              <p class="help-text">Higher scores indicate better automation potential</p>
+            </div>
+
+            <div class="criteria-grid">
+              <div class="criteria-item" data-criteria="volume">
+                <div class="criteria-item__header">
+                  <span class="criteria-item__title">📊 Volume & Frequency</span>
+                  <span class="criteria-item__score">0/5</span>
+                </div>
+                <p class="criteria-item__description">How often is this process performed and at what volume?</p>
+                <div class="rating-buttons">
+                  <button class="rating-btn" data-value="1">Rarely<br>(1)</button>
+                  <button class="rating-btn" data-value="2">Monthly<br>(2)</button>
+                  <button class="rating-btn" data-value="3">Weekly<br>(3)</button>
+                  <button class="rating-btn" data-value="4">Daily<br>(4)</button>
+                  <button class="rating-btn" data-value="5">Constant<br>(5)</button>
+                </div>
+              </div>
+
+              <div class="criteria-item" data-criteria="rules">
+                <div class="criteria-item__header">
+                  <span class="criteria-item__title">📋 Rule-Based Nature</span>
+                  <span class="criteria-item__score">0/5</span>
+                </div>
+                <p class="criteria-item__description">How structured and rule-based are the decisions?</p>
+                <div class="rating-buttons">
+                  <button class="rating-btn" data-value="1">Very Subjective<br>(1)</button>
+                  <button class="rating-btn" data-value="2">Mostly Subjective<br>(2)</button>
+                  <button class="rating-btn" data-value="3">Mixed<br>(3)</button>
+                  <button class="rating-btn" data-value="4">Mostly Rules<br>(4)</button>
+                  <button class="rating-btn" data-value="5">Clear Rules<br>(5)</button>
+                </div>
+              </div>
+
+              <div class="criteria-item" data-criteria="digital">
+                <div class="criteria-item__header">
+                  <span class="criteria-item__title">💻 Digital Data Availability</span>
+                  <span class="criteria-item__score">0/5</span>
+                </div>
+                <p class="criteria-item__description">Is the data already in digital format?</p>
+                <div class="rating-buttons">
+                  <button class="rating-btn" data-value="1">All Paper<br>(1)</button>
+                  <button class="rating-btn" data-value="2">Mostly Paper<br>(2)</button>
+                  <button class="rating-btn" data-value="3">Mixed<br>(3)</button>
+                  <button class="rating-btn" data-value="4">Mostly Digital<br>(4)</button>
+                  <button class="rating-btn" data-value="5">All Digital<br>(5)</button>
+                </div>
+              </div>
+
+              <div class="criteria-item" data-criteria="repetitive">
+                <div class="criteria-item__header">
+                  <span class="criteria-item__title">🔄 Repetitiveness</span>
+                  <span class="criteria-item__score">0/5</span>
+                </div>
+                <p class="criteria-item__description">How repetitive are the tasks involved?</p>
+                <div class="rating-buttons">
+                  <button class="rating-btn" data-value="1">Always Unique<br>(1)</button>
+                  <button class="rating-btn" data-value="2">Mostly Unique<br>(2)</button>
+                  <button class="rating-btn" data-value="3">Some Pattern<br>(3)</button>
+                  <button class="rating-btn" data-value="4">Mostly Same<br>(4)</button>
+                  <button class="rating-btn" data-value="5">Highly Repetitive<br>(5)</button>
+                </div>
+              </div>
+
+              <div class="criteria-item" data-criteria="error">
+                <div class="criteria-item__header">
+                  <span class="criteria-item__title">⚠️ Error Prone</span>
+                  <span class="criteria-item__score">0/5</span>
+                </div>
+                <p class="criteria-item__description">How often do errors occur in this process?</p>
+                <div class="rating-buttons">
+                  <button class="rating-btn" data-value="1">Rarely<br>(1)</button>
+                  <button class="rating-btn" data-value="2">Occasionally<br>(2)</button>
+                  <button class="rating-btn" data-value="3">Sometimes<br>(3)</button>
+                  <button class="rating-btn" data-value="4">Often<br>(4)</button>
+                  <button class="rating-btn" data-value="5">Very Often<br>(5)</button>
+                </div>
+              </div>
+
+              <div class="criteria-item" data-criteria="time">
+                <div class="criteria-item__header">
+                  <span class="criteria-item__title">⏱️ Time Intensive</span>
+                  <span class="criteria-item__score">0/5</span>
+                </div>
+                <p class="criteria-item__description">How much staff time does this process consume?</p>
+                <div class="rating-buttons">
+                  <button class="rating-btn" data-value="1">Minutes<br>(1)</button>
+                  <button class="rating-btn" data-value="2">< 1 Hour<br>(2)</button>
+                  <button class="rating-btn" data-value="3">1-4 Hours<br>(3)</button>
+                  <button class="rating-btn" data-value="4">Half Day+<br>(4)</button>
+                  <button class="rating-btn" data-value="5">Full Day+<br>(5)</button>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="calculateScore()" style="width: 100%; margin-top: var(--space-6);">Calculate Automation Score</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="score-gauge">
+              <div class="gauge-circle" id="gaugeCircle" style="--gauge-percent: 0%; --gauge-color: #22c55e;">
+                <div class="gauge-inner">
+                  <div class="gauge-score" id="totalScore">0</div>
+                  <div class="gauge-label">out of 100</div>
+                </div>
+              </div>
+              <div class="score-interpretation" id="scoreInterpretation"></div>
+            </div>
+
+            <div class="breakdown-section">
+              <h3 style="margin-bottom: var(--space-4);">Score Breakdown</h3>
+              <div id="breakdownList"></div>
+            </div>
+
+            <div class="recommendations">
+              <h3 style="margin-bottom: var(--space-4);">Recommendations</h3>
+              <div id="recommendationsList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Implementation Guidance</h3>
+              <p>Receive a detailed automation roadmap for "<span id="processNameResult"></span>"</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Roadmap</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Score Another Process</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const scores = { volume: 0, rules: 0, digital: 0, repetitive: 0, error: 0, time: 0 };
+    const criteriaLabels = {
+      volume: "Volume & Frequency",
+      rules: "Rule-Based Nature",
+      digital: "Digital Data Availability",
+      repetitive: "Repetitiveness",
+      error: "Error Prone",
+      time: "Time Intensive"
+    };
+
+    // Handle rating button clicks
+    document.querySelectorAll('.criteria-item').forEach(item => {
+      const criteria = item.dataset.criteria;
+      item.querySelectorAll('.rating-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          item.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          scores[criteria] = parseInt(btn.dataset.value);
+          item.querySelector('.criteria-item__score').textContent = scores[criteria] + '/5';
+        });
+      });
+    });
+
+    function calculateScore() {
+      const processName = document.getElementById('processName').value || 'This Process';
+      const totalPoints = Object.values(scores).reduce((sum, s) => sum + s, 0);
+      const maxPoints = 30;
+      const percentage = Math.round((totalPoints / maxPoints) * 100);
+
+      // Determine interpretation
+      let interpretation, interpClass, gaugeColor;
+      if (percentage >= 70) {
+        interpretation = "Excellent automation candidate! This process has high potential for AI automation with strong ROI.";
+        interpClass = "high";
+        gaugeColor = "#22c55e";
+      } else if (percentage >= 40) {
+        interpretation = "Good automation candidate. Some aspects may need process improvement before full automation.";
+        interpClass = "medium";
+        gaugeColor = "#f59e0b";
+      } else {
+        interpretation = "Limited automation potential. Consider process redesign or focus on other processes first.";
+        interpClass = "low";
+        gaugeColor = "#ef4444";
+      }
+
+      // Update gauge
+      const gauge = document.getElementById('gaugeCircle');
+      gauge.style.setProperty('--gauge-percent', percentage + '%');
+      gauge.style.setProperty('--gauge-color', gaugeColor);
+      document.getElementById('totalScore').textContent = percentage;
+
+      const interp = document.getElementById('scoreInterpretation');
+      interp.textContent = interpretation;
+      interp.className = 'score-interpretation ' + interpClass;
+
+      // Generate breakdown
+      const breakdownEl = document.getElementById('breakdownList');
+      breakdownEl.innerHTML = Object.entries(scores).map(([key, value]) => {
+        const pct = (value / 5) * 100;
+        const fillClass = pct >= 60 ? 'high' : pct >= 40 ? 'medium' : 'low';
+        return `
+          <div class="breakdown-item">
+            <span class="breakdown-item__label">${criteriaLabels[key]}</span>
+            <div class="breakdown-item__bar">
+              <div class="breakdown-item__fill ${fillClass}" style="width: ${pct}%;"></div>
+            </div>
+            <span class="breakdown-item__score">${value}/5</span>
+          </div>
+        `;
+      }).join('');
+
+      // Generate recommendations
+      const recommendations = [];
+      if (scores.digital <= 2) recommendations.push({ icon: "📄", title: "Digitize Source Data", desc: "Consider document scanning and OCR to digitize paper inputs before automation." });
+      if (scores.rules <= 2) recommendations.push({ icon: "📝", title: "Document Decision Rules", desc: "Work with SMEs to capture and formalize the decision criteria used in this process." });
+      if (scores.volume >= 4) recommendations.push({ icon: "🚀", title: "Prioritize for Quick Wins", desc: "High volume processes deliver faster ROI - consider this for early implementation." });
+      if (scores.error >= 4) recommendations.push({ icon: "✅", title: "Quality Improvement Focus", desc: "AI can significantly reduce error rates - track current metrics to show improvement." });
+      if (percentage >= 70) recommendations.push({ icon: "🎯", title: "Ready for RPA + AI", desc: "This process is well-suited for robotic process automation combined with AI decision support." });
+      if (percentage < 40) recommendations.push({ icon: "🔄", title: "Process Redesign First", desc: "Consider redesigning this process to be more structured before attempting automation." });
+
+      const recsEl = document.getElementById('recommendationsList');
+      recsEl.innerHTML = recommendations.map(r => `
+        <div class="recommendation-item">
+          <div class="recommendation-item__icon">${r.icon}</div>
+          <div class="recommendation-item__content">
+            <h4>${r.title}</h4>
+            <p>${r.desc}</p>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('processNameResult').textContent = processName;
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      Object.keys(scores).forEach(k => scores[k] = 0);
+      document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('.criteria-item__score').forEach(s => s.textContent = '0/5');
+      document.getElementById('processName').value = '';
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your automation roadmap will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

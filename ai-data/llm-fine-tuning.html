@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Fine-Tuning & Custom Models | Brite.AI</title>
+  <meta name="description" content="Fine-tune large language models for government-specific tasks. Custom AI models trained on your domain for superior performance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero hero--centered">
+    <div class="container">
+      <div class="hero__content">
+        <span class="hero__badge">Generative AI</span>
+        <h1 class="hero__title">AI Models Built for Government</h1>
+        <p class="hero__subtitle">
+          Fine-tune large language models on your domain-specific data for superior
+          accuracy, consistency, and performance on government tasks.
+        </p>
+        <div class="hero__actions">
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">Explore Custom Models</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">When to Fine-Tune</span>
+        <h2 class="section-header__title">Fine-Tuning vs. Prompting vs. RAG</h2>
+      </div>
+      <div class="grid grid--3">
+        <div class="card" data-animate>
+          <h3 class="card__title">Prompt Engineering</h3>
+          <p class="card__description">Use when you need flexibility and have diverse tasks. Good for exploration and quick iteration.</p>
+          <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-md);">
+            <strong style="color: var(--color-primary);">Best for:</strong>
+            <p style="font-size: var(--text-sm); margin: 0;">General tasks, prototyping, low volume</p>
+          </div>
+        </div>
+        <div class="card" data-animate data-delay="100">
+          <h3 class="card__title">RAG</h3>
+          <p class="card__description">Use when you need AI to access specific knowledge that changes over time.</p>
+          <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-md);">
+            <strong style="color: var(--color-primary);">Best for:</strong>
+            <p style="font-size: var(--text-sm); margin: 0;">Q&A over documents, dynamic content</p>
+          </div>
+        </div>
+        <div class="card" data-animate data-delay="200" style="border: 2px solid var(--color-primary);">
+          <h3 class="card__title">Fine-Tuning</h3>
+          <p class="card__description">Use when you need consistent behavior, specific output formats, or domain expertise.</p>
+          <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-primary); color: #fff; border-radius: var(--radius-md);">
+            <strong>Best for:</strong>
+            <p style="font-size: var(--text-sm); margin: 0;">High-volume, specialized tasks</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Benefits</span>
+        <h2 class="section-header__title">Why Fine-Tune?</h2>
+      </div>
+      <div class="grid grid--2">
+        <div class="card" data-animate>
+          <div class="card__icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">🎯</div>
+          <h3 class="card__title">Higher Accuracy</h3>
+          <p class="card__description">Models trained on your specific task and data consistently outperform generic models on domain-specific tasks.</p>
+        </div>
+        <div class="card" data-animate data-delay="100">
+          <div class="card__icon" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">📋</div>
+          <h3 class="card__title">Consistent Output</h3>
+          <p class="card__description">Fine-tuned models reliably follow your desired format, tone, and style without lengthy prompts.</p>
+        </div>
+        <div class="card" data-animate data-delay="200">
+          <div class="card__icon" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff;">⚡</div>
+          <h3 class="card__title">Lower Latency</h3>
+          <p class="card__description">Shorter prompts mean faster responses. Fine-tuned models can use smaller, faster base models.</p>
+        </div>
+        <div class="card" data-animate data-delay="300">
+          <div class="card__icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff;">💰</div>
+          <h3 class="card__title">Cost Efficiency</h3>
+          <p class="card__description">Reduced prompt tokens and ability to use smaller models can significantly lower per-request costs at scale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Use Cases</span>
+        <h2 class="section-header__title">Government Fine-Tuning Applications</h2>
+      </div>
+      <div class="grid grid--3">
+        <div class="card" data-animate>
+          <h3 class="card__title">Document Classification</h3>
+          <p class="card__description">Train models to classify government documents into your specific taxonomy with high accuracy.</p>
+        </div>
+        <div class="card" data-animate data-delay="100">
+          <h3 class="card__title">Data Extraction</h3>
+          <p class="card__description">Fine-tune for extracting specific fields from forms and documents in your exact format.</p>
+        </div>
+        <div class="card" data-animate data-delay="200">
+          <h3 class="card__title">Case Summarization</h3>
+          <p class="card__description">Generate consistent case summaries following your agency's specific templates and standards.</p>
+        </div>
+        <div class="card" data-animate data-delay="300">
+          <h3 class="card__title">Eligibility Determination</h3>
+          <p class="card__description">Apply complex program rules to determine eligibility with explanations.</p>
+        </div>
+        <div class="card" data-animate data-delay="400">
+          <h3 class="card__title">Correspondence Generation</h3>
+          <p class="card__description">Generate letters and notices that follow your agency's tone, style, and compliance requirements.</p>
+        </div>
+        <div class="card" data-animate data-delay="500">
+          <h3 class="card__title">Code & Query Generation</h3>
+          <p class="card__description">Generate SQL queries or code specific to your systems and data schemas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Process</span>
+        <h2 class="section-header__title">Fine-Tuning Methodology</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline__item" data-animate>
+          <div class="timeline__marker">1</div>
+          <div class="timeline__content">
+            <h3>Requirements & Feasibility</h3>
+            <p>Define the task, assess data availability, and determine if fine-tuning is the right approach vs. prompting or RAG.</p>
+          </div>
+        </div>
+        <div class="timeline__item" data-animate data-delay="100">
+          <div class="timeline__marker">2</div>
+          <div class="timeline__content">
+            <h3>Data Preparation</h3>
+            <p>Collect, clean, and format training data. Create high-quality examples that represent the desired behavior.</p>
+          </div>
+        </div>
+        <div class="timeline__item" data-animate data-delay="200">
+          <div class="timeline__marker">3</div>
+          <div class="timeline__content">
+            <h3>Base Model Selection</h3>
+            <p>Choose the appropriate base model based on task requirements, cost, latency, and deployment constraints.</p>
+          </div>
+        </div>
+        <div class="timeline__item" data-animate data-delay="300">
+          <div class="timeline__marker">4</div>
+          <div class="timeline__content">
+            <h3>Training & Iteration</h3>
+            <p>Fine-tune the model, evaluate on held-out data, and iterate on training data and hyperparameters.</p>
+          </div>
+        </div>
+        <div class="timeline__item" data-animate data-delay="400">
+          <div class="timeline__marker">5</div>
+          <div class="timeline__content">
+            <h3>Evaluation & Testing</h3>
+            <p>Rigorous evaluation on diverse test cases, edge cases, and adversarial examples. Safety and bias testing.</p>
+          </div>
+        </div>
+        <div class="timeline__item" data-animate data-delay="500">
+          <div class="timeline__marker">6</div>
+          <div class="timeline__content">
+            <h3>Deployment & Monitoring</h3>
+            <p>Deploy to production with monitoring for quality, drift, and performance. Plan for periodic retraining.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Techniques</span>
+        <h2 class="section-header__title">Fine-Tuning Approaches</h2>
+      </div>
+      <div class="grid grid--3">
+        <div class="card" data-animate>
+          <h3 class="card__title">Full Fine-Tuning</h3>
+          <p class="card__description">Update all model parameters. Maximum customization but requires significant compute and data.</p>
+          <span style="display: inline-block; padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm); margin-top: var(--space-4);">High Resource</span>
+        </div>
+        <div class="card" data-animate data-delay="100">
+          <h3 class="card__title">LoRA / QLoRA</h3>
+          <p class="card__description">Low-rank adaptation updates a small subset of parameters. Efficient and effective for most tasks.</p>
+          <span style="display: inline-block; padding: var(--space-2) var(--space-3); background: var(--color-primary); color: #fff; border-radius: var(--radius-full); font-size: var(--text-sm); margin-top: var(--space-4);">Recommended</span>
+        </div>
+        <div class="card" data-animate data-delay="200">
+          <h3 class="card__title">Instruction Tuning</h3>
+          <p class="card__description">Train on instruction-response pairs to improve the model's ability to follow specific directions.</p>
+          <span style="display: inline-block; padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm); margin-top: var(--space-4);">Task-Specific</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container">
+      <div class="cta" style="background: transparent; box-shadow: none;">
+        <h2 style="color: #fff;">Build Your Custom AI Model</h2>
+        <p style="color: rgba(255,255,255,0.8);">Fine-tune language models for your specific government tasks and achieve superior results.</p>
+        <div class="cta__actions">
+          <a href="../contact/index.html" class="btn btn--white btn--lg">Discuss Fine-Tuning</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="../js/main.js"></script>
+</body>
+</html>

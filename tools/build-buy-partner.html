@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build vs. Buy vs. Partner Decision Tool | Brite.AI</title>
+  <meta name="description" content="Evaluate whether to build, buy, or partner for your AI initiative. Get data-driven recommendations based on your organization's capabilities and needs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .tool-card {
+      background: var(--color-background);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-6);
+    }
+    .tool-header {
+      background: linear-gradient(135deg, var(--color-primary), #6366f1);
+      color: #fff;
+      padding: var(--space-8);
+      text-align: center;
+    }
+    .tool-header h2 {
+      margin-bottom: var(--space-2);
+    }
+    .tool-body {
+      padding: var(--space-8);
+    }
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+    }
+    .step {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--color-border);
+      transition: all 0.3s;
+    }
+    .step.active {
+      background: var(--color-primary);
+      transform: scale(1.2);
+    }
+    .step.completed {
+      background: #10b981;
+    }
+    .form-step {
+      display: none;
+    }
+    .form-step.active {
+      display: block;
+    }
+    .step-title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-6);
+    }
+    .step-title__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, var(--color-primary), #6366f1);
+      color: #fff;
+    }
+    .form-group {
+      margin-bottom: var(--space-6);
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+      color: var(--color-text);
+    }
+    .slider-container {
+      padding: var(--space-4) 0;
+    }
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-2);
+    }
+    .slider {
+      width: 100%;
+      height: 8px;
+      -webkit-appearance: none;
+      background: var(--color-border);
+      border-radius: 4px;
+      outline: none;
+    }
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+    }
+    .slider-value {
+      text-align: center;
+      font-weight: 600;
+      margin-top: var(--space-2);
+      color: var(--color-primary);
+    }
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .radio-option {
+      display: flex;
+      align-items: flex-start;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .radio-option:hover {
+      border-color: var(--color-primary);
+      background: rgba(26, 86, 219, 0.05);
+    }
+    .radio-option.selected {
+      border-color: var(--color-primary);
+      background: rgba(26, 86, 219, 0.1);
+    }
+    .radio-option input {
+      margin-right: var(--space-3);
+      margin-top: 4px;
+    }
+    .radio-option .option-text {
+      flex: 1;
+    }
+    .radio-option .option-label {
+      font-weight: 500;
+      display: block;
+    }
+    .radio-option .option-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-top: var(--space-1);
+    }
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+    @media (max-width: 768px) {
+      .checkbox-group {
+        grid-template-columns: 1fr;
+      }
+    }
+    .checkbox-option {
+      display: flex;
+      align-items: center;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .checkbox-option:hover {
+      border-color: var(--color-primary);
+    }
+    .checkbox-option.selected {
+      border-color: var(--color-primary);
+      background: rgba(26, 86, 219, 0.1);
+    }
+    .checkbox-option input {
+      margin-right: var(--space-3);
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+    /* Results */
+    .results-section {
+      display: none;
+    }
+    .recommendation-banner {
+      text-align: center;
+      padding: var(--space-8);
+      border-radius: var(--radius-xl);
+      margin-bottom: var(--space-8);
+    }
+    .recommendation-banner.partner {
+      background: linear-gradient(135deg, var(--color-primary), #6366f1);
+      color: #fff;
+    }
+    .recommendation-banner.buy {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+    }
+    .recommendation-banner.build {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #fff;
+    }
+    .recommendation-banner__label {
+      font-size: var(--text-sm);
+      opacity: 0.9;
+      margin-bottom: var(--space-2);
+    }
+    .recommendation-banner__title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: var(--space-2);
+    }
+    .recommendation-banner__subtitle {
+      font-size: var(--text-lg);
+      opacity: 0.9;
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+    @media (max-width: 900px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .option-card {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      border: 3px solid transparent;
+      transition: all 0.3s;
+    }
+    .option-card.recommended {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-lg);
+    }
+    .option-card__header {
+      text-align: center;
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--space-4);
+    }
+    .option-card__icon {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-2);
+    }
+    .option-card__title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+    }
+    .option-card__badge {
+      display: inline-block;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      margin-top: var(--space-2);
+    }
+    .option-card.recommended .option-card__badge {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .option-card__score {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      margin: var(--space-4) 0;
+    }
+    .option-card__score-value {
+      font-size: var(--text-3xl);
+      font-weight: 700;
+    }
+    .option-card__score-label {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    .option-card__score-bar {
+      height: 8px;
+      background: var(--color-border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .option-card__score-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    .option-card__pros, .option-card__cons {
+      margin-top: var(--space-4);
+    }
+    .option-card__pros h4, .option-card__cons h4 {
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-2);
+    }
+    .option-card__pros h4 { color: #10b981; }
+    .option-card__cons h4 { color: #dc2626; }
+    .option-card__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: var(--text-sm);
+    }
+    .option-card__list li {
+      padding: var(--space-1) 0;
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+    .option-card__list li::before {
+      flex-shrink: 0;
+    }
+    .option-card__pros .option-card__list li::before {
+      content: '✓';
+      color: #10b981;
+    }
+    .option-card__cons .option-card__list li::before {
+      content: '✗';
+      color: #dc2626;
+    }
+    .factors-section {
+      margin-top: var(--space-8);
+    }
+    .factors-section h3 {
+      margin-bottom: var(--space-4);
+    }
+    .factor-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: var(--color-background-alt);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+    }
+    .factor-item__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .factor-item__content {
+      flex: 1;
+    }
+    .factor-item__title {
+      font-weight: 600;
+      margin-bottom: var(--space-1);
+    }
+    .factor-item__desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    .factor-item__indicator {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .factor-item__indicator span {
+      font-size: var(--text-sm);
+      font-weight: 600;
+    }
+    .factor-item__indicator.build { color: #f59e0b; }
+    .factor-item__indicator.buy { color: #10b981; }
+    .factor-item__indicator.partner { color: var(--color-primary); }
+    .next-steps {
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-8);
+    }
+    .next-steps h3 {
+      margin-bottom: var(--space-4);
+    }
+    .next-steps__list {
+      display: grid;
+      gap: var(--space-3);
+    }
+    .next-step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+    .next-step-item__number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .next-step-item__content h4 {
+      margin-bottom: var(--space-1);
+    }
+    .next-step-item__content p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+    .lead-capture {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-8);
+      text-align: center;
+    }
+    .lead-capture h3 {
+      margin-bottom: var(--space-2);
+    }
+    .lead-capture p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-6);
+    }
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .lead-form input {
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-base);
+    }
+    .lead-form input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../ai-data/index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Build vs. Buy vs. Partner</h2>
+          <p>Find the right approach for your AI initiative based on your capabilities and needs</p>
+        </div>
+
+        <div class="tool-body">
+          <div class="step-indicator">
+            <div class="step active" data-step="1"></div>
+            <div class="step" data-step="2"></div>
+            <div class="step" data-step="3"></div>
+            <div class="step" data-step="4"></div>
+          </div>
+
+          <div id="formSection">
+            <!-- Step 1: Internal Capabilities -->
+            <div class="form-step active" id="step1">
+              <div class="step-title">
+                <div class="step-title__icon">👥</div>
+                <span>Internal Capabilities</span>
+              </div>
+
+              <div class="form-group">
+                <label>What is your current AI/ML technical expertise?</label>
+                <div class="slider-container">
+                  <div class="slider-labels">
+                    <span>No expertise</span>
+                    <span>World-class</span>
+                  </div>
+                  <input type="range" class="slider" id="technical_expertise" min="1" max="5" value="2">
+                  <div class="slider-value" id="technical_expertise_value">Limited - Some basic knowledge</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>How many data scientists/ML engineers do you have?</label>
+                <div class="radio-group">
+                  <label class="radio-option">
+                    <input type="radio" name="team_size" value="1">
+                    <div class="option-text">
+                      <span class="option-label">None</span>
+                      <span class="option-desc">No dedicated AI/ML staff</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="team_size" value="2">
+                    <div class="option-text">
+                      <span class="option-label">1-2 people</span>
+                      <span class="option-desc">Small team or shared resources</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="team_size" value="3">
+                    <div class="option-text">
+                      <span class="option-label">3-5 people</span>
+                      <span class="option-desc">Dedicated small team</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="team_size" value="4">
+                    <div class="option-text">
+                      <span class="option-label">6+ people</span>
+                      <span class="option-desc">Full AI/ML team</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>What is your cloud/infrastructure maturity?</label>
+                <div class="slider-container">
+                  <div class="slider-labels">
+                    <span>All on-premise</span>
+                    <span>Cloud-native</span>
+                  </div>
+                  <input type="range" class="slider" id="cloud_maturity" min="1" max="5" value="2">
+                  <div class="slider-value" id="cloud_maturity_value">Legacy - Mostly on-premise</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Project Requirements -->
+            <div class="form-step" id="step2">
+              <div class="step-title">
+                <div class="step-title__icon">📋</div>
+                <span>Project Requirements</span>
+              </div>
+
+              <div class="form-group">
+                <label>How unique is your AI use case?</label>
+                <div class="radio-group">
+                  <label class="radio-option">
+                    <input type="radio" name="uniqueness" value="1">
+                    <div class="option-text">
+                      <span class="option-label">Common use case</span>
+                      <span class="option-desc">Standard problem with existing solutions (e.g., document OCR, chatbot)</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="uniqueness" value="2">
+                    <div class="option-text">
+                      <span class="option-label">Somewhat unique</span>
+                      <span class="option-desc">Common problem but government-specific requirements</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="uniqueness" value="3">
+                    <div class="option-text">
+                      <span class="option-label">Fairly unique</span>
+                      <span class="option-desc">Custom solution needed for specific workflow</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="uniqueness" value="4">
+                    <div class="option-text">
+                      <span class="option-label">Highly unique</span>
+                      <span class="option-desc">Novel problem requiring custom AI development</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>What level of customization do you need?</label>
+                <div class="slider-container">
+                  <div class="slider-labels">
+                    <span>Off-the-shelf OK</span>
+                    <span>Highly customized</span>
+                  </div>
+                  <input type="range" class="slider" id="customization" min="1" max="5" value="3">
+                  <div class="slider-value" id="customization_value">Moderate customization needed</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>What is the expected scale of deployment?</label>
+                <div class="radio-group">
+                  <label class="radio-option">
+                    <input type="radio" name="scale" value="1">
+                    <div class="option-text">
+                      <span class="option-label">Small pilot</span>
+                      <span class="option-desc">Limited users, proof of concept</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="scale" value="2">
+                    <div class="option-text">
+                      <span class="option-label">Single program</span>
+                      <span class="option-desc">One department or program</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="scale" value="3">
+                    <div class="option-text">
+                      <span class="option-label">Multiple programs</span>
+                      <span class="option-desc">Cross-program or agency-wide</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="scale" value="4">
+                    <div class="option-text">
+                      <span class="option-label">Enterprise/statewide</span>
+                      <span class="option-desc">Large-scale deployment across organization</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Constraints -->
+            <div class="form-step" id="step3">
+              <div class="step-title">
+                <div class="step-title__icon">⚡</div>
+                <span>Constraints & Priorities</span>
+              </div>
+
+              <div class="form-group">
+                <label>What is your timeline pressure?</label>
+                <div class="slider-container">
+                  <div class="slider-labels">
+                    <span>Flexible timeline</span>
+                    <span>Urgent need</span>
+                  </div>
+                  <input type="range" class="slider" id="timeline" min="1" max="5" value="3">
+                  <div class="slider-value" id="timeline_value">Moderate - 6-12 months</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>What is your available budget range?</label>
+                <div class="radio-group">
+                  <label class="radio-option">
+                    <input type="radio" name="budget" value="1">
+                    <div class="option-text">
+                      <span class="option-label">Limited ($0-100K)</span>
+                      <span class="option-desc">Small project budget</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="budget" value="2">
+                    <div class="option-text">
+                      <span class="option-label">Moderate ($100K-500K)</span>
+                      <span class="option-desc">Standard project funding</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="budget" value="3">
+                    <div class="option-text">
+                      <span class="option-label">Substantial ($500K-2M)</span>
+                      <span class="option-desc">Major initiative funding</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="budget" value="4">
+                    <div class="option-text">
+                      <span class="option-label">Enterprise ($2M+)</span>
+                      <span class="option-desc">Large transformation budget</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>How important is long-term ownership/control?</label>
+                <div class="slider-container">
+                  <div class="slider-labels">
+                    <span>Not important</span>
+                    <span>Critical</span>
+                  </div>
+                  <input type="range" class="slider" id="ownership" min="1" max="5" value="3">
+                  <div class="slider-value" id="ownership_value">Moderately important</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Additional Factors -->
+            <div class="form-step" id="step4">
+              <div class="step-title">
+                <div class="step-title__icon">🎯</div>
+                <span>Strategic Considerations</span>
+              </div>
+
+              <div class="form-group">
+                <label>What are your primary concerns? (Select all that apply)</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="concerns" value="security">
+                    <span>Data security & compliance</span>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="concerns" value="risk">
+                    <span>Minimizing project risk</span>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="concerns" value="speed">
+                    <span>Speed to deployment</span>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="concerns" value="cost">
+                    <span>Total cost of ownership</span>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="concerns" value="innovation">
+                    <span>Access to latest AI innovations</span>
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" name="concerns" value="skills">
+                    <span>Knowledge transfer & skill building</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Have you implemented AI projects before?</label>
+                <div class="radio-group">
+                  <label class="radio-option">
+                    <input type="radio" name="experience" value="1">
+                    <div class="option-text">
+                      <span class="option-label">First AI project</span>
+                      <span class="option-desc">No previous AI implementation experience</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="experience" value="2">
+                    <div class="option-text">
+                      <span class="option-label">Some experience</span>
+                      <span class="option-desc">1-2 small AI pilots or projects</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="experience" value="3">
+                    <div class="option-text">
+                      <span class="option-label">Experienced</span>
+                      <span class="option-desc">Multiple AI projects in production</span>
+                    </div>
+                  </label>
+                  <label class="radio-option">
+                    <input type="radio" name="experience" value="4">
+                    <div class="option-text">
+                      <span class="option-label">Mature practice</span>
+                      <span class="option-desc">Established AI program with track record</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>How critical is ongoing support and maintenance?</label>
+                <div class="slider-container">
+                  <div class="slider-labels">
+                    <span>Can handle internally</span>
+                    <span>Need full support</span>
+                  </div>
+                  <input type="range" class="slider" id="support" min="1" max="5" value="4">
+                  <div class="slider-value" id="support_value">Significant support needed</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-buttons">
+              <button type="button" class="btn btn--secondary" id="prevBtn" style="visibility: hidden;">Previous</button>
+              <button type="button" class="btn btn--primary" id="nextBtn">Continue</button>
+            </div>
+          </div>
+
+          <!-- Results Section -->
+          <div class="results-section" id="resultsSection">
+            <div class="recommendation-banner" id="recommendationBanner">
+              <div class="recommendation-banner__label">Our Recommendation</div>
+              <div class="recommendation-banner__title" id="recommendationTitle">Partner</div>
+              <div class="recommendation-banner__subtitle" id="recommendationSubtitle">Work with an AI implementation partner for optimal results</div>
+            </div>
+
+            <div class="comparison-grid">
+              <div class="option-card" id="buildCard">
+                <div class="option-card__header">
+                  <div class="option-card__icon">🔨</div>
+                  <div class="option-card__title">Build</div>
+                  <div class="option-card__badge" id="buildBadge"></div>
+                </div>
+                <div class="option-card__score">
+                  <div>
+                    <div class="option-card__score-value" id="buildScore">0</div>
+                    <div class="option-card__score-label">Fit Score</div>
+                  </div>
+                </div>
+                <div class="option-card__score-bar">
+                  <div class="option-card__score-fill" id="buildBar" style="width: 0%; background: #f59e0b;"></div>
+                </div>
+                <div class="option-card__pros">
+                  <h4>Pros</h4>
+                  <ul class="option-card__list">
+                    <li>Full control and ownership</li>
+                    <li>Custom to exact needs</li>
+                    <li>Build internal expertise</li>
+                  </ul>
+                </div>
+                <div class="option-card__cons">
+                  <h4>Cons</h4>
+                  <ul class="option-card__list">
+                    <li>Longest time to deploy</li>
+                    <li>Requires AI talent</li>
+                    <li>Highest ongoing burden</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="option-card" id="buyCard">
+                <div class="option-card__header">
+                  <div class="option-card__icon">📦</div>
+                  <div class="option-card__title">Buy</div>
+                  <div class="option-card__badge" id="buyBadge"></div>
+                </div>
+                <div class="option-card__score">
+                  <div>
+                    <div class="option-card__score-value" id="buyScore">0</div>
+                    <div class="option-card__score-label">Fit Score</div>
+                  </div>
+                </div>
+                <div class="option-card__score-bar">
+                  <div class="option-card__score-fill" id="buyBar" style="width: 0%; background: #10b981;"></div>
+                </div>
+                <div class="option-card__pros">
+                  <h4>Pros</h4>
+                  <ul class="option-card__list">
+                    <li>Fastest deployment</li>
+                    <li>Proven solutions</li>
+                    <li>Vendor support included</li>
+                  </ul>
+                </div>
+                <div class="option-card__cons">
+                  <h4>Cons</h4>
+                  <ul class="option-card__list">
+                    <li>Limited customization</li>
+                    <li>Vendor dependency</li>
+                    <li>May not fit exact needs</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="option-card" id="partnerCard">
+                <div class="option-card__header">
+                  <div class="option-card__icon">🤝</div>
+                  <div class="option-card__title">Partner</div>
+                  <div class="option-card__badge" id="partnerBadge"></div>
+                </div>
+                <div class="option-card__score">
+                  <div>
+                    <div class="option-card__score-value" id="partnerScore">0</div>
+                    <div class="option-card__score-label">Fit Score</div>
+                  </div>
+                </div>
+                <div class="option-card__score-bar">
+                  <div class="option-card__score-fill" id="partnerBar" style="width: 0%; background: var(--color-primary);"></div>
+                </div>
+                <div class="option-card__pros">
+                  <h4>Pros</h4>
+                  <ul class="option-card__list">
+                    <li>Expert guidance & delivery</li>
+                    <li>Balanced customization</li>
+                    <li>Risk mitigation</li>
+                    <li>Knowledge transfer</li>
+                  </ul>
+                </div>
+                <div class="option-card__cons">
+                  <h4>Cons</h4>
+                  <ul class="option-card__list">
+                    <li>Higher initial cost</li>
+                    <li>Requires collaboration</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="factors-section">
+              <h3>Key Decision Factors</h3>
+              <div id="factorsList"></div>
+            </div>
+
+            <div class="next-steps">
+              <h3>Recommended Next Steps</h3>
+              <div class="next-steps__list" id="nextStepsList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Detailed Analysis</h3>
+              <p>Receive a comprehensive report with vendor evaluation criteria, partner selection guide, and implementation roadmap.</p>
+              <form class="lead-form" id="leadForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <button type="submit" class="btn btn--primary">Download Full Report</button>
+              </form>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-8);">
+              <a href="../contact/index.html" class="btn btn--primary btn--lg">Discuss Your AI Project</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Slider value labels
+    const sliderLabels = {
+      technical_expertise: ['No expertise', 'Limited - Some basic knowledge', 'Moderate - Can do simple projects', 'Strong - Experienced team', 'World-class - Industry leaders'],
+      cloud_maturity: ['Legacy - All on-premise', 'Beginning - Some cloud pilots', 'Developing - Hybrid environment', 'Mature - Cloud-first strategy', 'Cloud-native - Full cloud'],
+      customization: ['Off-the-shelf is fine', 'Minor tweaks needed', 'Moderate customization needed', 'Significant customization', 'Highly custom solution required'],
+      timeline: ['Very flexible - 18+ months OK', 'Flexible - 12-18 months', 'Moderate - 6-12 months', 'Tight - 3-6 months', 'Urgent - Under 3 months'],
+      ownership: ['Not important - OK with SaaS', 'Slightly important', 'Moderately important', 'Important - Want significant control', 'Critical - Must own everything'],
+      support: ['Can handle all internally', 'Minimal support needed', 'Some support helpful', 'Significant support needed', 'Need full ongoing support']
+    };
+
+    // Initialize sliders
+    document.querySelectorAll('.slider').forEach(slider => {
+      slider.addEventListener('input', function() {
+        const id = this.id;
+        const value = parseInt(this.value);
+        const labels = sliderLabels[id];
+        if (labels) {
+          document.getElementById(id + '_value').textContent = labels[value - 1];
+        }
+      });
+      // Trigger initial update
+      slider.dispatchEvent(new Event('input'));
+    });
+
+    // Initialize radio/checkbox styling
+    document.querySelectorAll('.radio-option').forEach(option => {
+      option.addEventListener('click', function() {
+        const group = this.closest('.radio-group');
+        group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+        this.querySelector('input').checked = true;
+      });
+    });
+
+    document.querySelectorAll('.checkbox-option').forEach(option => {
+      option.addEventListener('click', function(e) {
+        if (e.target.type !== 'checkbox') {
+          const checkbox = this.querySelector('input');
+          checkbox.checked = !checkbox.checked;
+        }
+        this.classList.toggle('selected', this.querySelector('input').checked);
+      });
+    });
+
+    // Step navigation
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    function updateStepIndicator() {
+      document.querySelectorAll('.step').forEach((step, idx) => {
+        step.classList.remove('active', 'completed');
+        if (idx + 1 === currentStep) {
+          step.classList.add('active');
+        } else if (idx + 1 < currentStep) {
+          step.classList.add('completed');
+        }
+      });
+    }
+
+    function showStep(step) {
+      document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step' + step).classList.add('active');
+
+      document.getElementById('prevBtn').style.visibility = step > 1 ? 'visible' : 'hidden';
+      document.getElementById('nextBtn').textContent = step === totalSteps ? 'Get Recommendation' : 'Continue';
+
+      updateStepIndicator();
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', function() {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        showStep(currentStep);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        calculateRecommendation();
+      }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', function() {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    function calculateRecommendation() {
+      // Get all values
+      const technicalExpertise = parseInt(document.getElementById('technical_expertise').value);
+      const teamSize = parseInt(document.querySelector('input[name="team_size"]:checked')?.value || 1);
+      const cloudMaturity = parseInt(document.getElementById('cloud_maturity').value);
+      const uniqueness = parseInt(document.querySelector('input[name="uniqueness"]:checked')?.value || 2);
+      const customization = parseInt(document.getElementById('customization').value);
+      const scale = parseInt(document.querySelector('input[name="scale"]:checked')?.value || 2);
+      const timeline = parseInt(document.getElementById('timeline').value);
+      const budget = parseInt(document.querySelector('input[name="budget"]:checked')?.value || 2);
+      const ownership = parseInt(document.getElementById('ownership').value);
+      const experience = parseInt(document.querySelector('input[name="experience"]:checked')?.value || 1);
+      const support = parseInt(document.getElementById('support').value);
+
+      // Calculate Build score
+      let buildScore = 0;
+      buildScore += (technicalExpertise - 1) * 10; // High expertise favors build
+      buildScore += (teamSize - 1) * 12; // Large team favors build
+      buildScore += (cloudMaturity - 1) * 5; // Better infra favors build
+      buildScore += (uniqueness - 1) * 8; // Unique problems favor build
+      buildScore += (customization - 1) * 8; // High customization favors build
+      buildScore += (6 - timeline) * 5; // Flexible timeline favors build (inverted)
+      buildScore += (ownership - 1) * 10; // High ownership need favors build
+      buildScore += (experience - 1) * 8; // More experience favors build
+      buildScore += (6 - support) * 6; // Low support need favors build (inverted)
+      buildScore = Math.min(100, Math.max(0, buildScore));
+
+      // Calculate Buy score
+      let buyScore = 0;
+      buyScore += (6 - uniqueness) * 12; // Common problems favor buy (inverted)
+      buyScore += (6 - customization) * 10; // Low customization favors buy (inverted)
+      buyScore += (timeline - 1) * 12; // Urgent timeline favors buy
+      buyScore += (6 - ownership) * 8; // Low ownership need favors buy (inverted)
+      buyScore += (budget > 1 ? 15 : 5); // Moderate budget favors buy
+      buyScore += (scale < 3 ? 10 : 0); // Smaller scale can favor buy
+      buyScore = Math.min(100, Math.max(0, buyScore));
+
+      // Calculate Partner score
+      let partnerScore = 0;
+      partnerScore += (6 - technicalExpertise) * 8; // Low expertise favors partner (inverted)
+      partnerScore += (6 - teamSize) * 6; // Small team favors partner (inverted)
+      partnerScore += (uniqueness - 1) * 6; // Some uniqueness favors partner
+      partnerScore += (customization - 1) * 6; // Customization need favors partner
+      partnerScore += (timeline - 1) * 6; // Timeline pressure favors partner
+      partnerScore += (budget - 1) * 8; // Higher budget enables partner
+      partnerScore += (support - 1) * 10; // Support need favors partner
+      partnerScore += (6 - experience) * 10; // Less experience favors partner (inverted)
+      partnerScore += (scale - 1) * 5; // Larger scale favors partner
+
+      // Bonus for first AI project
+      if (experience === 1) partnerScore += 15;
+
+      partnerScore = Math.min(100, Math.max(0, partnerScore));
+
+      // Determine winner
+      let recommendation = 'partner';
+      let maxScore = partnerScore;
+      if (buildScore > maxScore) {
+        recommendation = 'build';
+        maxScore = buildScore;
+      }
+      if (buyScore > maxScore) {
+        recommendation = 'buy';
+        maxScore = buyScore;
+      }
+
+      // Show results
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+
+      // Update recommendation banner
+      const banner = document.getElementById('recommendationBanner');
+      banner.className = 'recommendation-banner ' + recommendation;
+
+      const titles = {
+        build: 'Build In-House',
+        buy: 'Buy a Solution',
+        partner: 'Partner with Experts'
+      };
+      const subtitles = {
+        build: 'Your capabilities support developing a custom solution internally',
+        buy: 'An off-the-shelf solution best fits your needs and timeline',
+        partner: 'Working with an AI implementation partner offers the best balance of expertise, speed, and customization'
+      };
+      document.getElementById('recommendationTitle').textContent = titles[recommendation];
+      document.getElementById('recommendationSubtitle').textContent = subtitles[recommendation];
+
+      // Update scores
+      document.getElementById('buildScore').textContent = buildScore;
+      document.getElementById('buildBar').style.width = buildScore + '%';
+      document.getElementById('buyScore').textContent = buyScore;
+      document.getElementById('buyBar').style.width = buyScore + '%';
+      document.getElementById('partnerScore').textContent = partnerScore;
+      document.getElementById('partnerBar').style.width = partnerScore + '%';
+
+      // Update badges
+      if (recommendation === 'build') {
+        document.getElementById('buildCard').classList.add('recommended');
+        document.getElementById('buildBadge').textContent = 'Recommended';
+      } else if (recommendation === 'buy') {
+        document.getElementById('buyCard').classList.add('recommended');
+        document.getElementById('buyBadge').textContent = 'Recommended';
+      } else {
+        document.getElementById('partnerCard').classList.add('recommended');
+        document.getElementById('partnerBadge').textContent = 'Recommended';
+      }
+
+      // Generate factors
+      generateFactors(technicalExpertise, teamSize, uniqueness, customization, timeline, support, experience);
+
+      // Generate next steps
+      generateNextSteps(recommendation);
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function generateFactors(expertise, team, uniqueness, customization, timeline, support, experience) {
+      const factors = [];
+
+      if (expertise <= 2) {
+        factors.push({ icon: '👥', bg: '#6366f1', title: 'Limited AI Expertise', desc: 'Low internal AI capability suggests partnering or buying to fill the gap.', indicator: 'partner' });
+      } else if (expertise >= 4) {
+        factors.push({ icon: '👥', bg: '#f59e0b', title: 'Strong AI Team', desc: 'Your technical expertise supports building solutions in-house.', indicator: 'build' });
+      }
+
+      if (uniqueness >= 3) {
+        factors.push({ icon: '🎯', bg: '#8b5cf6', title: 'Unique Requirements', desc: 'Custom needs suggest build or partner approach over off-the-shelf products.', indicator: 'partner' });
+      } else {
+        factors.push({ icon: '📦', bg: '#10b981', title: 'Common Use Case', desc: 'Standard problem type means proven solutions are available to buy.', indicator: 'buy' });
+      }
+
+      if (timeline >= 4) {
+        factors.push({ icon: '⏱️', bg: '#dc2626', title: 'Urgent Timeline', desc: 'Time pressure favors buying or partnering for faster deployment.', indicator: 'buy' });
+      }
+
+      if (support >= 4) {
+        factors.push({ icon: '🛠️', bg: '#6366f1', title: 'Support Requirements', desc: 'High ongoing support needs favor partnerships with dedicated resources.', indicator: 'partner' });
+      }
+
+      if (experience <= 1) {
+        factors.push({ icon: '🎓', bg: '#6366f1', title: 'First AI Project', desc: 'First-time AI implementation significantly benefits from expert guidance.', indicator: 'partner' });
+      }
+
+      const listEl = document.getElementById('factorsList');
+      listEl.innerHTML = factors.slice(0, 4).map(f => `
+        <div class="factor-item">
+          <div class="factor-item__icon" style="background: ${f.bg}; color: #fff;">${f.icon}</div>
+          <div class="factor-item__content">
+            <div class="factor-item__title">${f.title}</div>
+            <div class="factor-item__desc">${f.desc}</div>
+          </div>
+          <div class="factor-item__indicator ${f.indicator}">
+            <span>→ ${f.indicator.charAt(0).toUpperCase() + f.indicator.slice(1)}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function generateNextSteps(recommendation) {
+      const steps = {
+        build: [
+          { title: 'Assess Team Capacity', desc: 'Ensure your AI team has bandwidth for a new project alongside existing responsibilities.' },
+          { title: 'Define Technical Architecture', desc: 'Document the infrastructure, tools, and frameworks needed for your solution.' },
+          { title: 'Create Development Roadmap', desc: 'Build a phased implementation plan with clear milestones.' },
+          { title: 'Consider Hybrid Approach', desc: 'Even when building, partnering for specific components can accelerate delivery.' }
+        ],
+        buy: [
+          { title: 'Define Requirements', desc: 'Document your functional and technical requirements for vendor evaluation.' },
+          { title: 'Research Solutions', desc: 'Identify government-approved vendors with FedRAMP/StateRAMP solutions.' },
+          { title: 'Request Demos', desc: 'Schedule demonstrations with top vendors to evaluate fit.' },
+          { title: 'Plan Integration', desc: 'Consider how the solution will integrate with existing systems.' }
+        ],
+        partner: [
+          { title: 'Define Success Criteria', desc: 'Establish clear goals and metrics for what success looks like.' },
+          { title: 'Evaluate Partners', desc: 'Look for government AI experience, relevant case studies, and cultural fit.' },
+          { title: 'Plan Knowledge Transfer', desc: 'Ensure the engagement includes training and capability building for your team.' },
+          { title: 'Schedule Discovery Session', desc: 'Meet with potential partners to discuss your use case and approach.' }
+        ]
+      };
+
+      const listEl = document.getElementById('nextStepsList');
+      listEl.innerHTML = steps[recommendation].map((step, idx) => `
+        <div class="next-step-item">
+          <div class="next-step-item__number">${idx + 1}</div>
+          <div class="next-step-item__content">
+            <h4>${step.title}</h4>
+            <p>${step.desc}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Lead form
+    document.getElementById('leadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you! Your detailed analysis report will be sent to your email shortly.');
+    });
+  </script>
+</body>
+</html>

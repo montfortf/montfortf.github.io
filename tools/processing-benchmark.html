@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Processing Time Benchmark | Brite.AI</title>
+  <meta name="description" content="Compare your agency's processing times against industry benchmarks and AI-enabled targets.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .tool-header { background: linear-gradient(135deg, #f97316, #ea580c); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-section { margin-bottom: var(--space-6); }
+    .form-section label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-section select, .form-section input { width: 100%; padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-lg); font-size: var(--text-base); }
+    .form-section select:focus, .form-section input:focus { outline: none; border-color: #f97316; }
+    .form-hint { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .process-grid { display: grid; gap: var(--space-4); margin-bottom: var(--space-6); }
+    .process-item { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-4); }
+    .process-item__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+    .process-item__name { font-weight: 600; }
+    .process-item__input { display: flex; align-items: center; gap: var(--space-2); }
+    .process-item__input input { width: 100px; padding: var(--space-2); border: 2px solid var(--color-border); border-radius: var(--radius-md); text-align: center; }
+    .process-item__input span { color: var(--color-text-muted); font-size: var(--text-sm); }
+    .btn--calculate { width: 100%; background: linear-gradient(135deg, #f97316, #ea580c); border: none; color: #fff; padding: var(--space-4); font-size: var(--text-lg); font-weight: 700; border-radius: var(--radius-xl); cursor: pointer; }
+    .btn--calculate:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .results-section { display: none; margin-top: var(--space-8); }
+    .results-section.show { display: block; }
+    .benchmark-card { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-4); }
+    .benchmark-card__title { font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-2); }
+    .benchmark-bar { margin-bottom: var(--space-4); }
+    .benchmark-bar__header { display: flex; justify-content: space-between; margin-bottom: var(--space-2); }
+    .benchmark-bar__name { font-weight: 500; }
+    .benchmark-bar__values { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .benchmark-bar__track { height: 32px; background: #e5e7eb; border-radius: var(--radius-lg); position: relative; overflow: hidden; }
+    .benchmark-bar__marker { position: absolute; top: 0; bottom: 0; width: 4px; background: #374151; z-index: 10; }
+    .benchmark-bar__marker::after { content: attr(data-label); position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 10px; white-space: nowrap; }
+    .benchmark-bar__fill { height: 100%; border-radius: var(--radius-lg); transition: width 0.5s ease; }
+    .benchmark-bar__fill.slow { background: linear-gradient(90deg, #ef4444, #f87171); }
+    .benchmark-bar__fill.average { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .benchmark-bar__fill.fast { background: linear-gradient(90deg, #22c55e, #4ade80); }
+    .benchmark-bar__fill.target { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .legend { display: flex; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
+    .legend-item { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); }
+    .legend-color { width: 16px; height: 16px; border-radius: var(--radius-sm); }
+    .legend-color.your { background: #374151; }
+    .legend-color.peer { background: #f59e0b; }
+    .legend-color.leader { background: #22c55e; }
+    .legend-color.ai { background: #3b82f6; }
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6); }
+    .summary-stat { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); text-align: center; }
+    .summary-stat__value { font-size: var(--text-3xl); font-weight: 800; }
+    .summary-stat__value.good { color: #22c55e; }
+    .summary-stat__value.average { color: #f59e0b; }
+    .summary-stat__value.poor { color: #ef4444; }
+    .summary-stat__label { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .insights-section { background: linear-gradient(135deg, #fff7ed, #ffedd5); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .insights-section h3 { margin-bottom: var(--space-4); }
+    .insight-item { display: flex; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid rgba(249, 115, 22, 0.2); }
+    .insight-item:last-child { border-bottom: none; }
+    .insight-item__icon { font-size: 1.5rem; }
+    .insight-item__text { flex: 1; }
+    .insight-item__text strong { display: block; margin-bottom: var(--space-1); }
+    .cta-section { background: linear-gradient(135deg, #f97316, #ea580c); border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; color: #fff; margin-top: var(--space-6); }
+    .cta-section h3 { margin-bottom: var(--space-2); }
+    .cta-section p { opacity: 0.9; margin-bottom: var(--space-4); }
+    .cta-section .btn { background: #fff; color: #ea580c; }
+    .btn--reset { width: 100%; margin-top: var(--space-4); background: var(--color-background-alt); color: var(--color-text); border: 2px solid var(--color-border); padding: var(--space-3); border-radius: var(--radius-lg); cursor: pointer; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>⏱️ Processing Time Benchmark</h2>
+          <p>Compare your processing times to peer agencies and AI-enabled leaders</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-section">
+              <label for="agencyType">Agency Type</label>
+              <select id="agencyType">
+                <option value="">Select your agency type...</option>
+                <option value="benefits">Benefits Administration</option>
+                <option value="revenue">Tax/Revenue</option>
+                <option value="licensing">Licensing & Permits</option>
+                <option value="health">Health & Human Services</option>
+                <option value="child-welfare">Child Welfare</option>
+                <option value="workforce">Workforce/Unemployment</option>
+              </select>
+            </div>
+
+            <div class="form-section">
+              <label for="agencySize">Agency Size (Annual Transactions)</label>
+              <select id="agencySize">
+                <option value="">Select volume...</option>
+                <option value="small">Under 100,000</option>
+                <option value="medium">100,000 - 500,000</option>
+                <option value="large">500,000 - 1,000,000</option>
+                <option value="xlarge">Over 1,000,000</option>
+              </select>
+            </div>
+
+            <p style="font-weight: 600; margin-bottom: var(--space-4);">Enter your current processing times:</p>
+
+            <div class="process-grid" id="processGrid">
+              <!-- Populated dynamically -->
+            </div>
+
+            <button class="btn--calculate" onclick="calculateBenchmark()">Compare to Benchmarks →</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="summary-grid" id="summaryGrid">
+              <!-- Populated dynamically -->
+            </div>
+
+            <div class="benchmark-card">
+              <div class="benchmark-card__title">📊 Processing Time Comparison</div>
+              <div id="benchmarkBars"></div>
+              <div class="legend">
+                <div class="legend-item"><div class="legend-color your"></div> Your Agency</div>
+                <div class="legend-item"><div class="legend-color peer"></div> Peer Average</div>
+                <div class="legend-item"><div class="legend-color leader"></div> Top Performers</div>
+                <div class="legend-item"><div class="legend-color ai"></div> AI-Enabled Target</div>
+              </div>
+            </div>
+
+            <div class="insights-section">
+              <h3>💡 Key Insights</h3>
+              <div id="insightsList"></div>
+            </div>
+
+            <div class="cta-section">
+              <h3>Ready to Achieve AI-Level Performance?</h3>
+              <p>Get a custom analysis showing exactly how AI can transform your processing times.</p>
+              <a href="../contact/index.html" class="btn btn--lg">Get Custom Analysis</a>
+            </div>
+
+            <button class="btn--reset" onclick="resetForm()">← Start Over</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const processingTypes = {
+      benefits: [
+        { id: 'initial', name: 'Initial Application Review', unit: 'hours', peerAvg: 48, leader: 24, aiTarget: 4 },
+        { id: 'eligibility', name: 'Eligibility Determination', unit: 'days', peerAvg: 14, leader: 7, aiTarget: 1 },
+        { id: 'documents', name: 'Document Verification', unit: 'hours', peerAvg: 8, leader: 4, aiTarget: 0.5 },
+        { id: 'appeals', name: 'Appeal Processing', unit: 'days', peerAvg: 45, leader: 21, aiTarget: 7 }
+      ],
+      revenue: [
+        { id: 'return', name: 'Return Processing', unit: 'days', peerAvg: 21, leader: 10, aiTarget: 3 },
+        { id: 'refund', name: 'Refund Issuance', unit: 'days', peerAvg: 28, leader: 14, aiTarget: 5 },
+        { id: 'audit', name: 'Audit Case Review', unit: 'days', peerAvg: 90, leader: 45, aiTarget: 14 },
+        { id: 'correspondence', name: 'Correspondence Response', unit: 'hours', peerAvg: 72, leader: 24, aiTarget: 4 }
+      ],
+      licensing: [
+        { id: 'application', name: 'License Application', unit: 'days', peerAvg: 30, leader: 14, aiTarget: 3 },
+        { id: 'renewal', name: 'License Renewal', unit: 'days', peerAvg: 14, leader: 5, aiTarget: 1 },
+        { id: 'inspection', name: 'Inspection Scheduling', unit: 'days', peerAvg: 21, leader: 7, aiTarget: 2 },
+        { id: 'compliance', name: 'Compliance Review', unit: 'days', peerAvg: 45, leader: 21, aiTarget: 5 }
+      ],
+      health: [
+        { id: 'enrollment', name: 'Program Enrollment', unit: 'days', peerAvg: 30, leader: 14, aiTarget: 3 },
+        { id: 'claims', name: 'Claims Processing', unit: 'days', peerAvg: 30, leader: 14, aiTarget: 2 },
+        { id: 'authorization', name: 'Prior Authorization', unit: 'hours', peerAvg: 72, leader: 24, aiTarget: 2 },
+        { id: 'provider', name: 'Provider Credentialing', unit: 'days', peerAvg: 90, leader: 45, aiTarget: 14 }
+      ],
+      'child-welfare': [
+        { id: 'intake', name: 'Intake Screening', unit: 'hours', peerAvg: 24, leader: 8, aiTarget: 1 },
+        { id: 'investigation', name: 'Investigation Initiation', unit: 'hours', peerAvg: 48, leader: 24, aiTarget: 4 },
+        { id: 'placement', name: 'Placement Matching', unit: 'days', peerAvg: 14, leader: 5, aiTarget: 1 },
+        { id: 'review', name: 'Case Review', unit: 'days', peerAvg: 30, leader: 14, aiTarget: 3 }
+      ],
+      workforce: [
+        { id: 'claim', name: 'Initial Claim Filing', unit: 'days', peerAvg: 21, leader: 7, aiTarget: 1 },
+        { id: 'determination', name: 'Eligibility Determination', unit: 'days', peerAvg: 21, leader: 10, aiTarget: 2 },
+        { id: 'payment', name: 'First Payment', unit: 'days', peerAvg: 28, leader: 14, aiTarget: 3 },
+        { id: 'appeal', name: 'Appeal Resolution', unit: 'days', peerAvg: 45, leader: 21, aiTarget: 7 }
+      ]
+    };
+
+    let currentProcesses = [];
+
+    document.getElementById('agencyType').addEventListener('change', function() {
+      const type = this.value;
+      const grid = document.getElementById('processGrid');
+
+      if (!type) {
+        grid.innerHTML = '';
+        currentProcesses = [];
+        return;
+      }
+
+      currentProcesses = processingTypes[type];
+      grid.innerHTML = currentProcesses.map(p => `
+        <div class="process-item">
+          <div class="process-item__header">
+            <span class="process-item__name">${p.name}</span>
+          </div>
+          <div class="process-item__input">
+            <input type="number" id="input-${p.id}" min="0" step="0.5" placeholder="0">
+            <span>${p.unit}</span>
+          </div>
+        </div>
+      `).join('');
+    });
+
+    function calculateBenchmark() {
+      const agencyType = document.getElementById('agencyType').value;
+      const agencySize = document.getElementById('agencySize').value;
+
+      if (!agencyType || !agencySize) {
+        alert('Please select agency type and size.');
+        return;
+      }
+
+      const results = currentProcesses.map(p => {
+        const yourValue = parseFloat(document.getElementById(`input-${p.id}`).value) || 0;
+        return {
+          ...p,
+          yourValue,
+          vsPercentile: yourValue > 0 ? calculatePercentile(yourValue, p.peerAvg, p.leader) : null,
+          improvementPotential: yourValue > 0 ? ((yourValue - p.aiTarget) / yourValue * 100).toFixed(0) : null
+        };
+      });
+
+      const validResults = results.filter(r => r.yourValue > 0);
+
+      if (validResults.length === 0) {
+        alert('Please enter at least one processing time.');
+        return;
+      }
+
+      renderResults(validResults, agencySize);
+    }
+
+    function calculatePercentile(value, peerAvg, leader) {
+      if (value <= leader) return 95;
+      if (value <= peerAvg * 0.7) return 75;
+      if (value <= peerAvg) return 50;
+      if (value <= peerAvg * 1.5) return 25;
+      return 10;
+    }
+
+    function renderResults(results, agencySize) {
+      // Calculate summary stats
+      const avgPercentile = Math.round(results.reduce((sum, r) => sum + r.vsPercentile, 0) / results.length);
+      const avgImprovement = Math.round(results.reduce((sum, r) => sum + parseFloat(r.improvementPotential), 0) / results.length);
+      const belowAvgCount = results.filter(r => r.yourValue > r.peerAvg).length;
+
+      let overallRating, ratingClass;
+      if (avgPercentile >= 75) {
+        overallRating = 'Leader';
+        ratingClass = 'good';
+      } else if (avgPercentile >= 50) {
+        overallRating = 'Average';
+        ratingClass = 'average';
+      } else {
+        overallRating = 'Below Avg';
+        ratingClass = 'poor';
+      }
+
+      document.getElementById('summaryGrid').innerHTML = `
+        <div class="summary-stat">
+          <div class="summary-stat__value ${ratingClass}">${overallRating}</div>
+          <div class="summary-stat__label">Overall Performance</div>
+        </div>
+        <div class="summary-stat">
+          <div class="summary-stat__value">${avgPercentile}th</div>
+          <div class="summary-stat__label">Percentile Ranking</div>
+        </div>
+        <div class="summary-stat">
+          <div class="summary-stat__value" style="color: #3b82f6;">${avgImprovement}%</div>
+          <div class="summary-stat__label">AI Improvement Potential</div>
+        </div>
+        <div class="summary-stat">
+          <div class="summary-stat__value ${belowAvgCount > 0 ? 'poor' : 'good'}">${belowAvgCount}</div>
+          <div class="summary-stat__label">Processes Below Average</div>
+        </div>
+      `;
+
+      // Render benchmark bars
+      const maxValue = Math.max(...results.map(r => Math.max(r.yourValue, r.peerAvg * 1.2)));
+
+      document.getElementById('benchmarkBars').innerHTML = results.map(r => {
+        const yourPercent = (r.yourValue / maxValue) * 100;
+        const peerPercent = (r.peerAvg / maxValue) * 100;
+        const leaderPercent = (r.leader / maxValue) * 100;
+        const aiPercent = (r.aiTarget / maxValue) * 100;
+
+        let barClass = 'average';
+        if (r.yourValue <= r.leader) barClass = 'fast';
+        else if (r.yourValue > r.peerAvg) barClass = 'slow';
+
+        return `
+          <div class="benchmark-bar">
+            <div class="benchmark-bar__header">
+              <span class="benchmark-bar__name">${r.name}</span>
+              <span class="benchmark-bar__values">You: ${r.yourValue} ${r.unit} | Peer: ${r.peerAvg} ${r.unit} | AI: ${r.aiTarget} ${r.unit}</span>
+            </div>
+            <div class="benchmark-bar__track">
+              <div class="benchmark-bar__fill ${barClass}" style="width: ${yourPercent}%"></div>
+              <div class="benchmark-bar__marker" style="left: ${peerPercent}%" data-label="Peer Avg"></div>
+              <div class="benchmark-bar__marker" style="left: ${leaderPercent}%; background: #22c55e;" data-label="Leaders"></div>
+              <div class="benchmark-bar__marker" style="left: ${aiPercent}%; background: #3b82f6;" data-label="AI Target"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Generate insights
+      const insights = [];
+
+      const slowest = results.reduce((max, r) =>
+        (r.yourValue / r.peerAvg) > (max.yourValue / max.peerAvg) ? r : max
+      );
+      insights.push({
+        icon: '🎯',
+        title: 'Biggest Opportunity',
+        text: `${slowest.name} is ${((slowest.yourValue / slowest.peerAvg - 1) * 100).toFixed(0)}% slower than peers. AI could reduce this by ${slowest.improvementPotential}%.`
+      });
+
+      const fastest = results.reduce((min, r) =>
+        (r.yourValue / r.peerAvg) < (min.yourValue / min.peerAvg) ? r : min
+      );
+      if (fastest.yourValue <= fastest.leader) {
+        insights.push({
+          icon: '🏆',
+          title: 'Top Performance',
+          text: `${fastest.name} is already at leader level. With AI, you could achieve ${fastest.aiTarget} ${fastest.unit}.`
+        });
+      }
+
+      const totalCurrentTime = results.reduce((sum, r) => sum + r.yourValue, 0);
+      const totalAITime = results.reduce((sum, r) => sum + r.aiTarget, 0);
+      insights.push({
+        icon: '⚡',
+        title: 'Total Time Savings',
+        text: `AI could reduce total processing time from ${totalCurrentTime.toFixed(1)} to ${totalAITime.toFixed(1)} (combined units) - a ${((1 - totalAITime/totalCurrentTime) * 100).toFixed(0)}% reduction.`
+      });
+
+      const volumeMultiplier = { small: 50000, medium: 300000, large: 750000, xlarge: 1500000 }[agencySize];
+      const avgHoursSaved = (totalCurrentTime - totalAITime) / results.length;
+      insights.push({
+        icon: '💰',
+        title: 'Estimated Annual Impact',
+        text: `At your volume, faster processing could save ${Math.round(avgHoursSaved * volumeMultiplier / 1000)}K+ staff hours annually.`
+      });
+
+      document.getElementById('insightsList').innerHTML = insights.map(i => `
+        <div class="insight-item">
+          <div class="insight-item__icon">${i.icon}</div>
+          <div class="insight-item__text">
+            <strong>${i.title}</strong>
+            ${i.text}
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').classList.add('show');
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').classList.remove('show');
+      document.getElementById('agencyType').value = '';
+      document.getElementById('agencySize').value = '';
+      document.getElementById('processGrid').innerHTML = '';
+      currentProcesses = [];
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Readiness Assessment | Brite.AI</title>
+  <meta name="description" content="Comprehensive assessment of your organization's readiness for AI adoption. Evaluate data, technology, organization, and governance capabilities.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .assessment-card {
+      background: var(--color-background);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-6);
+    }
+    .assessment-header {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      color: #fff;
+      padding: var(--space-8);
+      text-align: center;
+    }
+    .assessment-header h2 {
+      margin-bottom: var(--space-2);
+    }
+    .assessment-body {
+      padding: var(--space-8);
+    }
+    .progress-bar {
+      background: var(--color-background-alt);
+      height: 8px;
+      border-radius: 4px;
+      margin-bottom: var(--space-6);
+      overflow: hidden;
+    }
+    .progress-bar__fill {
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    .progress-text {
+      text-align: center;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+    }
+    .dimension-section {
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-8);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .dimension-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .dimension-title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+    }
+    .dimension-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .question-group {
+      margin-bottom: var(--space-6);
+    }
+    .question-label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: var(--space-3);
+      color: var(--color-text);
+    }
+    .question-help {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .radio-option:hover {
+      border-color: var(--color-primary);
+      background: rgba(26, 86, 219, 0.05);
+    }
+    .radio-option.selected {
+      border-color: var(--color-primary);
+      background: rgba(26, 86, 219, 0.1);
+    }
+    .radio-option input {
+      margin-right: var(--space-3);
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+    .results-section {
+      display: none;
+    }
+    .score-overview {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+    @media (max-width: 768px) {
+      .score-overview {
+        grid-template-columns: 1fr;
+      }
+    }
+    .score-card {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-align: center;
+    }
+    .score-card__icon {
+      font-size: 2rem;
+      margin-bottom: var(--space-2);
+    }
+    .score-card__title {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-2);
+    }
+    .score-card__value {
+      font-size: var(--text-3xl);
+      font-weight: 700;
+    }
+    .score-card__bar {
+      height: 8px;
+      background: var(--color-border);
+      border-radius: 4px;
+      margin-top: var(--space-3);
+      overflow: hidden;
+    }
+    .score-card__bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    .overall-score {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      color: #fff;
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      text-align: center;
+      margin-bottom: var(--space-8);
+    }
+    .overall-score__value {
+      font-size: 5rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .overall-score__label {
+      font-size: var(--text-xl);
+      opacity: 0.9;
+      margin-top: var(--space-2);
+    }
+    .overall-score__level {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      margin-top: var(--space-4);
+      font-weight: 600;
+    }
+    .recommendations {
+      margin-top: var(--space-8);
+    }
+    .recommendation-item {
+      display: flex;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: var(--color-background-alt);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+    }
+    .recommendation-item__priority {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .recommendation-item__content h4 {
+      margin-bottom: var(--space-1);
+    }
+    .recommendation-item__content p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+    .lead-capture {
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-8);
+      text-align: center;
+    }
+    .lead-capture h3 {
+      margin-bottom: var(--space-2);
+    }
+    .lead-capture p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-6);
+    }
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .lead-form input {
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-base);
+    }
+    .lead-form input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../ai-data/index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="assessment-card">
+        <div class="assessment-header">
+          <h2>AI Readiness Assessment</h2>
+          <p>Evaluate your organization's readiness for AI across four key dimensions</p>
+        </div>
+
+        <div class="assessment-body">
+          <!-- Progress -->
+          <div class="progress-text">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">20</span></div>
+          <div class="progress-bar">
+            <div class="progress-bar__fill" id="progressFill" style="width: 5%;"></div>
+          </div>
+
+          <!-- Questions Section -->
+          <div id="questionsSection">
+            <!-- Data Readiness -->
+            <div class="dimension-section" id="dimension-data">
+              <div class="dimension-title">
+                <div class="dimension-icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">📊</div>
+                <span>Data Readiness</span>
+              </div>
+
+              <div class="question-group" data-dimension="data" data-question="1">
+                <label class="question-label">1. How would you describe your organization's data quality?</label>
+                <p class="question-help">Consider accuracy, completeness, and consistency of your data.</p>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q1" value="1"> Poor - Data is often inaccurate, incomplete, or inconsistent</label>
+                  <label class="radio-option"><input type="radio" name="q1" value="2"> Fair - Some data quality issues but generally usable</label>
+                  <label class="radio-option"><input type="radio" name="q1" value="3"> Good - Most data is accurate and reliable</label>
+                  <label class="radio-option"><input type="radio" name="q1" value="4"> Excellent - High-quality data with active quality management</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="data" data-question="2">
+                <label class="question-label">2. How accessible is data across your organization?</label>
+                <p class="question-help">Consider whether teams can access the data they need.</p>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q2" value="1"> Siloed - Data is trapped in separate systems with no integration</label>
+                  <label class="radio-option"><input type="radio" name="q2" value="2"> Limited - Some data sharing but significant barriers exist</label>
+                  <label class="radio-option"><input type="radio" name="q2" value="3"> Moderate - Most data accessible with some effort</label>
+                  <label class="radio-option"><input type="radio" name="q2" value="4"> Open - Data is readily accessible through modern platforms</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="data" data-question="3">
+                <label class="question-label">3. Do you have data governance policies and processes?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q3" value="1"> None - No formal data governance</label>
+                  <label class="radio-option"><input type="radio" name="q3" value="2"> Informal - Some practices but not documented</label>
+                  <label class="radio-option"><input type="radio" name="q3" value="3"> Documented - Policies exist but inconsistently applied</label>
+                  <label class="radio-option"><input type="radio" name="q3" value="4"> Mature - Comprehensive governance actively enforced</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="data" data-question="4">
+                <label class="question-label">4. How would you rate your data documentation (data dictionaries, metadata)?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q4" value="1"> None - No documentation exists</label>
+                  <label class="radio-option"><input type="radio" name="q4" value="2"> Minimal - Some documentation but outdated or incomplete</label>
+                  <label class="radio-option"><input type="radio" name="q4" value="3"> Adequate - Key data sources documented</label>
+                  <label class="radio-option"><input type="radio" name="q4" value="4"> Comprehensive - Full data catalog with metadata management</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="data" data-question="5">
+                <label class="question-label">5. What is your current analytics capability?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q5" value="1"> Basic - Manual reports, spreadsheets only</label>
+                  <label class="radio-option"><input type="radio" name="q5" value="2"> Developing - Some dashboards and BI tools</label>
+                  <label class="radio-option"><input type="radio" name="q5" value="3"> Advanced - Self-service analytics, predictive models</label>
+                  <label class="radio-option"><input type="radio" name="q5" value="4"> Leading - Real-time analytics, ML in production</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Technology Readiness -->
+            <div class="dimension-section" id="dimension-technology">
+              <div class="dimension-title">
+                <div class="dimension-icon" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">⚙️</div>
+                <span>Technology Readiness</span>
+              </div>
+
+              <div class="question-group" data-dimension="technology" data-question="6">
+                <label class="question-label">6. What is the state of your IT infrastructure?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q6" value="1"> Legacy - Aging systems, limited integration capability</label>
+                  <label class="radio-option"><input type="radio" name="q6" value="2"> Mixed - Combination of legacy and modern systems</label>
+                  <label class="radio-option"><input type="radio" name="q6" value="3"> Modern - Cloud-enabled, API-capable systems</label>
+                  <label class="radio-option"><input type="radio" name="q6" value="4"> Advanced - Cloud-native, microservices architecture</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="technology" data-question="7">
+                <label class="question-label">7. How would you rate your cloud adoption?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q7" value="1"> None - All on-premise, no cloud</label>
+                  <label class="radio-option"><input type="radio" name="q7" value="2"> Exploring - Piloting cloud services</label>
+                  <label class="radio-option"><input type="radio" name="q7" value="3"> Partial - Significant cloud adoption</label>
+                  <label class="radio-option"><input type="radio" name="q7" value="4"> Cloud-First - Government cloud (FedRAMP/StateRAMP) in use</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="technology" data-question="8">
+                <label class="question-label">8. What is your integration capability?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q8" value="1"> Manual - Data moved manually between systems</label>
+                  <label class="radio-option"><input type="radio" name="q8" value="2"> Batch - Scheduled batch integrations</label>
+                  <label class="radio-option"><input type="radio" name="q8" value="3"> Real-time - API-based integrations for key systems</label>
+                  <label class="radio-option"><input type="radio" name="q8" value="4"> Platform - Enterprise integration platform in place</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="technology" data-question="9">
+                <label class="question-label">9. How mature is your cybersecurity posture?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q9" value="1"> Basic - Minimal security controls</label>
+                  <label class="radio-option"><input type="radio" name="q9" value="2"> Developing - Standard security practices</label>
+                  <label class="radio-option"><input type="radio" name="q9" value="3"> Strong - Comprehensive security program</label>
+                  <label class="radio-option"><input type="radio" name="q9" value="4"> Advanced - Zero-trust, continuous monitoring</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="technology" data-question="10">
+                <label class="question-label">10. Do you have experience with AI/ML tools?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q10" value="1"> None - No AI/ML tools in use</label>
+                  <label class="radio-option"><input type="radio" name="q10" value="2"> Exploring - Investigating AI tools</label>
+                  <label class="radio-option"><input type="radio" name="q10" value="3"> Piloting - Running AI pilots or POCs</label>
+                  <label class="radio-option"><input type="radio" name="q10" value="4"> Production - AI in production use</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Organizational Readiness -->
+            <div class="dimension-section" id="dimension-organization">
+              <div class="dimension-title">
+                <div class="dimension-icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff;">👥</div>
+                <span>Organizational Readiness</span>
+              </div>
+
+              <div class="question-group" data-dimension="organization" data-question="11">
+                <label class="question-label">11. How supportive is leadership of AI initiatives?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q11" value="1"> Skeptical - Leadership is cautious or resistant</label>
+                  <label class="radio-option"><input type="radio" name="q11" value="2"> Neutral - Open but not actively championing</label>
+                  <label class="radio-option"><input type="radio" name="q11" value="3"> Supportive - Leadership endorses AI exploration</label>
+                  <label class="radio-option"><input type="radio" name="q11" value="4"> Champion - Executive sponsor actively driving AI</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="organization" data-question="12">
+                <label class="question-label">12. What AI/data science skills exist in your organization?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q12" value="1"> None - No AI/ML expertise</label>
+                  <label class="radio-option"><input type="radio" name="q12" value="2"> Limited - A few people with some knowledge</label>
+                  <label class="radio-option"><input type="radio" name="q12" value="3"> Growing - Small team or dedicated resources</label>
+                  <label class="radio-option"><input type="radio" name="q12" value="4"> Strong - Established AI/data science team</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="organization" data-question="13">
+                <label class="question-label">13. How would you describe your organization's culture around innovation?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q13" value="1"> Risk-averse - Change is difficult and slow</label>
+                  <label class="radio-option"><input type="radio" name="q13" value="2"> Cautious - Open to change with proven solutions</label>
+                  <label class="radio-option"><input type="radio" name="q13" value="3"> Adaptive - Willing to experiment and learn</label>
+                  <label class="radio-option"><input type="radio" name="q13" value="4"> Innovative - Culture of continuous improvement</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="organization" data-question="14">
+                <label class="question-label">14. What is your capacity for change management?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q14" value="1"> Limited - Struggle with organizational change</label>
+                  <label class="radio-option"><input type="radio" name="q14" value="2"> Basic - Can manage change with effort</label>
+                  <label class="radio-option"><input type="radio" name="q14" value="3"> Good - Established change management practices</label>
+                  <label class="radio-option"><input type="radio" name="q14" value="4"> Strong - Proven track record of successful change</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="organization" data-question="15">
+                <label class="question-label">15. Is there budget allocated or available for AI initiatives?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q15" value="1"> None - No budget for AI</label>
+                  <label class="radio-option"><input type="radio" name="q15" value="2"> Uncertain - May be able to find funding</label>
+                  <label class="radio-option"><input type="radio" name="q15" value="3"> Partial - Some budget available</label>
+                  <label class="radio-option"><input type="radio" name="q15" value="4"> Dedicated - Specific AI budget allocated</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Governance Readiness -->
+            <div class="dimension-section" id="dimension-governance">
+              <div class="dimension-title">
+                <div class="dimension-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff;">🛡️</div>
+                <span>Governance Readiness</span>
+              </div>
+
+              <div class="question-group" data-dimension="governance" data-question="16">
+                <label class="question-label">16. Do you have AI-specific policies or guidelines?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q16" value="1"> None - No AI policies</label>
+                  <label class="radio-option"><input type="radio" name="q16" value="2"> Exploring - Beginning to develop policies</label>
+                  <label class="radio-option"><input type="radio" name="q16" value="3"> Draft - Policies in development</label>
+                  <label class="radio-option"><input type="radio" name="q16" value="4"> Established - AI governance framework in place</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="governance" data-question="17">
+                <label class="question-label">17. How prepared are you for AI ethics and bias considerations?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q17" value="1"> Unaware - Haven't considered AI ethics</label>
+                  <label class="radio-option"><input type="radio" name="q17" value="2"> Aware - Understand the issues but no action</label>
+                  <label class="radio-option"><input type="radio" name="q17" value="3"> Planning - Developing ethical AI guidelines</label>
+                  <label class="radio-option"><input type="radio" name="q17" value="4"> Mature - Responsible AI framework implemented</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="governance" data-question="18">
+                <label class="question-label">18. What is your compliance posture for AI-related regulations?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q18" value="1"> Unaware - Don't know what regulations apply</label>
+                  <label class="radio-option"><input type="radio" name="q18" value="2"> Learning - Beginning to understand requirements</label>
+                  <label class="radio-option"><input type="radio" name="q18" value="3"> Prepared - Understand and planning for compliance</label>
+                  <label class="radio-option"><input type="radio" name="q18" value="4"> Compliant - Meeting current AI regulatory requirements</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="governance" data-question="19">
+                <label class="question-label">19. Do you have processes for AI risk assessment?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q19" value="1"> None - No AI risk assessment process</label>
+                  <label class="radio-option"><input type="radio" name="q19" value="2"> Ad-hoc - Case-by-case evaluation</label>
+                  <label class="radio-option"><input type="radio" name="q19" value="3"> Developing - Creating risk assessment framework</label>
+                  <label class="radio-option"><input type="radio" name="q19" value="4"> Established - Formal risk assessment process</label>
+                </div>
+              </div>
+
+              <div class="question-group" data-dimension="governance" data-question="20">
+                <label class="question-label">20. How prepared are you for AI transparency and explainability requirements?</label>
+                <div class="radio-group">
+                  <label class="radio-option"><input type="radio" name="q20" value="1"> Unaware - Haven't considered explainability</label>
+                  <label class="radio-option"><input type="radio" name="q20" value="2"> Aware - Understand the need</label>
+                  <label class="radio-option"><input type="radio" name="q20" value="3"> Planning - Developing explainability standards</label>
+                  <label class="radio-option"><input type="radio" name="q20" value="4"> Ready - Explainability requirements defined</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-buttons">
+              <button type="button" class="btn btn--secondary" id="prevBtn" style="display: none;">Previous</button>
+              <button type="button" class="btn btn--primary" id="nextBtn">Continue</button>
+              <button type="button" class="btn btn--primary" id="submitBtn" style="display: none;">Get Your Results</button>
+            </div>
+          </div>
+
+          <!-- Results Section -->
+          <div class="results-section" id="resultsSection">
+            <div class="overall-score">
+              <div class="overall-score__value" id="overallScore">0</div>
+              <div class="overall-score__label">Overall AI Readiness Score</div>
+              <div class="overall-score__level" id="readinessLevel">Calculating...</div>
+            </div>
+
+            <div class="score-overview">
+              <div class="score-card">
+                <div class="score-card__icon">📊</div>
+                <div class="score-card__title">Data Readiness</div>
+                <div class="score-card__value" id="dataScore" style="color: #3b82f6;">0%</div>
+                <div class="score-card__bar"><div class="score-card__bar-fill" id="dataBar" style="background: #3b82f6; width: 0%;"></div></div>
+              </div>
+              <div class="score-card">
+                <div class="score-card__icon">⚙️</div>
+                <div class="score-card__title">Technology Readiness</div>
+                <div class="score-card__value" id="techScore" style="color: #10b981;">0%</div>
+                <div class="score-card__bar"><div class="score-card__bar-fill" id="techBar" style="background: #10b981; width: 0%;"></div></div>
+              </div>
+              <div class="score-card">
+                <div class="score-card__icon">👥</div>
+                <div class="score-card__title">Organizational Readiness</div>
+                <div class="score-card__value" id="orgScore" style="color: #8b5cf6;">0%</div>
+                <div class="score-card__bar"><div class="score-card__bar-fill" id="orgBar" style="background: #8b5cf6; width: 0%;"></div></div>
+              </div>
+              <div class="score-card">
+                <div class="score-card__icon">🛡️</div>
+                <div class="score-card__title">Governance Readiness</div>
+                <div class="score-card__value" id="govScore" style="color: #f59e0b;">0%</div>
+                <div class="score-card__bar"><div class="score-card__bar-fill" id="govBar" style="background: #f59e0b; width: 0%;"></div></div>
+              </div>
+            </div>
+
+            <div class="recommendations">
+              <h3>Priority Recommendations</h3>
+              <div id="recommendationsList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Full Report</h3>
+              <p>Enter your email to receive a detailed PDF report with personalized recommendations and next steps.</p>
+              <form class="lead-form" id="leadForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <input type="tel" placeholder="Phone (Optional)">
+                <button type="submit" class="btn btn--primary">Download Full Report</button>
+              </form>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-8);">
+              <a href="../contact/index.html" class="btn btn--primary btn--lg">Schedule a Consultation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Assessment logic
+    const dimensions = ['data', 'technology', 'organization', 'governance'];
+    let currentDimension = 0;
+    const questionsPerDimension = 5;
+    const totalQuestions = 20;
+
+    // Initialize radio option selection styling
+    document.querySelectorAll('.radio-option').forEach(option => {
+      option.addEventListener('click', function() {
+        const group = this.closest('.radio-group');
+        group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+        this.querySelector('input').checked = true;
+        updateProgress();
+      });
+    });
+
+    function updateProgress() {
+      const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+      const progress = (answered / totalQuestions) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+      document.getElementById('currentQuestion').textContent = Math.min(answered + 1, totalQuestions);
+    }
+
+    // Navigation
+    document.getElementById('nextBtn').addEventListener('click', function() {
+      if (currentDimension < dimensions.length - 1) {
+        currentDimension++;
+        updateVisibility();
+      }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', function() {
+      if (currentDimension > 0) {
+        currentDimension--;
+        updateVisibility();
+      }
+    });
+
+    function updateVisibility() {
+      dimensions.forEach((dim, idx) => {
+        document.getElementById('dimension-' + dim).style.display = idx === currentDimension ? 'block' : 'none';
+      });
+
+      document.getElementById('prevBtn').style.display = currentDimension > 0 ? 'inline-block' : 'none';
+      document.getElementById('nextBtn').style.display = currentDimension < dimensions.length - 1 ? 'inline-block' : 'none';
+      document.getElementById('submitBtn').style.display = currentDimension === dimensions.length - 1 ? 'inline-block' : 'none';
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Initialize - show only first dimension
+    updateVisibility();
+
+    // Calculate results
+    document.getElementById('submitBtn').addEventListener('click', calculateResults);
+
+    function calculateResults() {
+      const scores = { data: 0, technology: 0, organization: 0, governance: 0 };
+
+      // Calculate dimension scores
+      for (let i = 1; i <= 5; i++) {
+        const val = document.querySelector(`input[name="q${i}"]:checked`)?.value || 0;
+        scores.data += parseInt(val);
+      }
+      for (let i = 6; i <= 10; i++) {
+        const val = document.querySelector(`input[name="q${i}"]:checked`)?.value || 0;
+        scores.technology += parseInt(val);
+      }
+      for (let i = 11; i <= 15; i++) {
+        const val = document.querySelector(`input[name="q${i}"]:checked`)?.value || 0;
+        scores.organization += parseInt(val);
+      }
+      for (let i = 16; i <= 20; i++) {
+        const val = document.querySelector(`input[name="q${i}"]:checked`)?.value || 0;
+        scores.governance += parseInt(val);
+      }
+
+      // Convert to percentages (max score per dimension is 20)
+      const dataPercent = Math.round((scores.data / 20) * 100);
+      const techPercent = Math.round((scores.technology / 20) * 100);
+      const orgPercent = Math.round((scores.organization / 20) * 100);
+      const govPercent = Math.round((scores.governance / 20) * 100);
+      const overallPercent = Math.round((dataPercent + techPercent + orgPercent + govPercent) / 4);
+
+      // Determine readiness level
+      let level = '';
+      if (overallPercent >= 80) level = 'AI Ready - Ready to Scale';
+      else if (overallPercent >= 60) level = 'AI Capable - Ready for Production';
+      else if (overallPercent >= 40) level = 'AI Emerging - Ready for Pilots';
+      else if (overallPercent >= 20) level = 'AI Aware - Foundation Building Needed';
+      else level = 'AI Starting - Significant Preparation Required';
+
+      // Display results
+      document.getElementById('questionsSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+
+      // Animate scores
+      animateValue('overallScore', 0, overallPercent, 1500);
+      document.getElementById('readinessLevel').textContent = level;
+
+      setTimeout(() => {
+        document.getElementById('dataScore').textContent = dataPercent + '%';
+        document.getElementById('dataBar').style.width = dataPercent + '%';
+        document.getElementById('techScore').textContent = techPercent + '%';
+        document.getElementById('techBar').style.width = techPercent + '%';
+        document.getElementById('orgScore').textContent = orgPercent + '%';
+        document.getElementById('orgBar').style.width = orgPercent + '%';
+        document.getElementById('govScore').textContent = govPercent + '%';
+        document.getElementById('govBar').style.width = govPercent + '%';
+      }, 500);
+
+      // Generate recommendations
+      generateRecommendations({ data: dataPercent, technology: techPercent, organization: orgPercent, governance: govPercent });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function animateValue(id, start, end, duration) {
+      const obj = document.getElementById(id);
+      const range = end - start;
+      const startTime = performance.now();
+
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeProgress = 1 - Math.pow(1 - progress, 3);
+        obj.textContent = Math.round(start + range * easeProgress);
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    function generateRecommendations(scores) {
+      const recommendations = [];
+      const sorted = Object.entries(scores).sort((a, b) => a[1] - b[1]);
+
+      // Add recommendations based on weakest areas
+      sorted.forEach(([dimension, score], index) => {
+        if (score < 60) {
+          const recs = getRecommendationsForDimension(dimension, score);
+          recommendations.push(...recs);
+        }
+      });
+
+      // Limit to top 5
+      const topRecs = recommendations.slice(0, 5);
+
+      const list = document.getElementById('recommendationsList');
+      list.innerHTML = topRecs.map((rec, idx) => `
+        <div class="recommendation-item">
+          <div class="recommendation-item__priority">${idx + 1}</div>
+          <div class="recommendation-item__content">
+            <h4>${rec.title}</h4>
+            <p>${rec.description}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function getRecommendationsForDimension(dimension, score) {
+      const recs = {
+        data: [
+          { title: 'Conduct Data Quality Assessment', description: 'Evaluate current data quality across key systems and establish baseline metrics.' },
+          { title: 'Develop Data Governance Framework', description: 'Create policies for data ownership, quality standards, and access controls.' },
+          { title: 'Build Data Integration Capabilities', description: 'Connect siloed systems to enable unified data access for AI applications.' }
+        ],
+        technology: [
+          { title: 'Evaluate Cloud Readiness', description: 'Assess infrastructure for cloud migration to enable AI platform deployment.' },
+          { title: 'Modernize Integration Layer', description: 'Implement API-based integration to connect AI services with existing systems.' },
+          { title: 'Strengthen Security Posture', description: 'Enhance cybersecurity to meet requirements for AI deployment.' }
+        ],
+        organization: [
+          { title: 'Secure Executive Sponsorship', description: 'Identify and engage an executive champion for AI initiatives.' },
+          { title: 'Develop AI Skills Program', description: 'Create training programs to build AI literacy across the organization.' },
+          { title: 'Establish Change Management Process', description: 'Build organizational capacity to manage AI-driven transformation.' }
+        ],
+        governance: [
+          { title: 'Create AI Policy Framework', description: 'Develop policies governing AI use, ethics, and accountability.' },
+          { title: 'Implement Risk Assessment Process', description: 'Establish procedures for evaluating AI risks before deployment.' },
+          { title: 'Build Responsible AI Guidelines', description: 'Create standards for fairness, transparency, and explainability in AI.' }
+        ]
+      };
+      return recs[dimension] || [];
+    }
+
+    // Lead form
+    document.getElementById('leadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you! Your detailed report will be sent to your email shortly.');
+    });
+  </script>
+</body>
+</html>

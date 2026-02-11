@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Bias Risk Screener | Brite.AI</title>
+  <meta name="description" content="Screen your AI project for potential bias risks and get mitigation recommendations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #f97316, #ea580c); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .question-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-6); margin-bottom: var(--space-4); }
+    .question-card__number { font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-2); }
+    .question-card__text { font-weight: 600; margin-bottom: var(--space-4); }
+    .answer-options { display: flex; flex-direction: column; gap: var(--space-2); }
+    .answer-option { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s; }
+    .answer-option:hover { border-color: var(--color-primary); }
+    .answer-option.selected { border-color: var(--color-primary); background: rgba(79, 70, 229, 0.1); }
+    .answer-option input { display: none; }
+    .results-section { display: none; }
+    .risk-gauge { text-align: center; margin-bottom: var(--space-8); }
+    .risk-meter { height: 24px; background: linear-gradient(90deg, #22c55e, #f59e0b, #ef4444); border-radius: var(--radius-full); position: relative; margin: var(--space-4) 0; }
+    .risk-marker { position: absolute; width: 6px; height: 36px; background: #1f2937; top: -6px; border-radius: 3px; transition: left 0.5s ease; }
+    .risk-labels { display: flex; justify-content: space-between; font-size: var(--text-sm); color: var(--color-text-muted); }
+    .risk-score { font-size: var(--text-5xl); font-weight: 800; margin-bottom: var(--space-2); }
+    .risk-score.low { color: #22c55e; }
+    .risk-score.medium { color: #f59e0b; }
+    .risk-score.high { color: #ef4444; }
+    .risk-level { font-size: var(--text-xl); font-weight: 600; }
+    .risk-breakdown { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    @media (max-width: 768px) { .risk-breakdown { grid-template-columns: 1fr; } }
+    .risk-item { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); }
+    .risk-item__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+    .risk-item__title { font-weight: 600; }
+    .risk-item__badge { padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 600; }
+    .risk-item__badge.low { background: #dcfce7; color: #166534; }
+    .risk-item__badge.medium { background: #fef3c7; color: #92400e; }
+    .risk-item__badge.high { background: #fee2e2; color: #991b1b; }
+    .risk-item__bar { height: 8px; background: #e5e7eb; border-radius: var(--radius-full); overflow: hidden; }
+    .risk-item__fill { height: 100%; border-radius: var(--radius-full); }
+    .risk-item__fill.low { background: #22c55e; }
+    .risk-item__fill.medium { background: #f59e0b; }
+    .risk-item__fill.high { background: #ef4444; }
+    .mitigations { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .mitigation-item { display: flex; gap: var(--space-4); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); }
+    .mitigation-item:last-child { border-bottom: none; }
+    .mitigation-item__icon { width: 48px; height: 48px; background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+    .mitigation-item__content h4 { font-weight: 600; margin-bottom: var(--space-1); }
+    .mitigation-item__content p { font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; }
+    .mitigation-item__priority { font-size: var(--text-xs); padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); background: #fee2e2; color: #991b1b; white-space: nowrap; height: fit-content; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Bias Risk Screener</h2>
+          <p>Identify potential bias risks in your AI project</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>AI Application Type</label>
+              <select id="appType">
+                <option value="eligibility">Eligibility/Benefits Determination</option>
+                <option value="risk">Risk Assessment/Scoring</option>
+                <option value="hiring">Hiring/Employment</option>
+                <option value="allocation">Resource Allocation</option>
+                <option value="detection">Fraud/Anomaly Detection</option>
+                <option value="recommendation">Recommendations/Prioritization</option>
+              </select>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <button class="btn btn--primary btn--lg" onclick="calculateRisk()" style="width: 100%;">Screen for Bias Risk</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="risk-gauge">
+              <div class="risk-score" id="riskScore">0</div>
+              <div class="risk-level" id="riskLevel">Bias Risk Level</div>
+              <div class="risk-meter">
+                <div class="risk-marker" id="riskMarker" style="left: 0%;"></div>
+              </div>
+              <div class="risk-labels">
+                <span>Low Risk</span>
+                <span>Medium Risk</span>
+                <span>High Risk</span>
+              </div>
+            </div>
+
+            <h3 style="margin-bottom: var(--space-4);">Risk Breakdown by Category</h3>
+            <div class="risk-breakdown" id="riskBreakdown"></div>
+
+            <div class="mitigations">
+              <h3 style="margin-bottom: var(--space-4);">Recommended Mitigations</h3>
+              <div id="mitigationsList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Bias Mitigation Toolkit</h3>
+              <p>Receive detailed testing protocols, fairness metrics, and remediation playbooks.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Toolkit</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Screen Another Project</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const questions = [
+      { id: "data_source", category: "Data", text: "Where does your training data come from?", options: [
+        { label: "Curated, bias-audited dataset", risk: 0 },
+        { label: "Historical agency data", risk: 2 },
+        { label: "Third-party vendor data", risk: 3 },
+        { label: "Web-scraped or public data", risk: 4 }
+      ]},
+      { id: "data_representation", category: "Data", text: "Does your training data proportionally represent all affected populations?",  options: [
+        { label: "Yes, verified and documented", risk: 0 },
+        { label: "Mostly, some gaps exist", risk: 2 },
+        { label: "Unknown/not analyzed", risk: 3 },
+        { label: "No, known underrepresentation", risk: 4 }
+      ]},
+      { id: "protected_class", category: "Fairness", text: "Does your AI make decisions that could affect protected classes differently?", options: [
+        { label: "No, decisions don't vary by demographics", risk: 0 },
+        { label: "Possibly, but we have safeguards", risk: 2 },
+        { label: "Yes, but outcomes are monitored", risk: 3 },
+        { label: "Yes, and we haven't tested for impact", risk: 4 }
+      ]},
+      { id: "proxy_variables", category: "Fairness", text: "Could any input variables serve as proxies for protected characteristics?", options: [
+        { label: "No, all variables are audited", risk: 0 },
+        { label: "Unlikely, but not formally tested", risk: 2 },
+        { label: "Possible (zip code, education, etc.)", risk: 3 },
+        { label: "Yes, known proxy variables exist", risk: 4 }
+      ]},
+      { id: "historical_bias", category: "Data", text: "Does your historical data reflect past discriminatory practices?", options: [
+        { label: "No, or bias has been corrected", risk: 0 },
+        { label: "Minimal historical bias present", risk: 2 },
+        { label: "Some historical bias, not corrected", risk: 3 },
+        { label: "Significant historical bias present", risk: 4 }
+      ]},
+      { id: "testing", category: "Testing", text: "Have you tested the AI for disparate impact across groups?", options: [
+        { label: "Yes, comprehensive fairness testing", risk: 0 },
+        { label: "Some testing, limited scope", risk: 2 },
+        { label: "Planned but not completed", risk: 3 },
+        { label: "No disparate impact testing", risk: 4 }
+      ]},
+      { id: "human_oversight", category: "Oversight", text: "What level of human review exists for AI decisions?", options: [
+        { label: "All decisions reviewed by humans", risk: 0 },
+        { label: "High-impact decisions reviewed", risk: 1 },
+        { label: "Random sampling of decisions", risk: 2 },
+        { label: "No systematic human review", risk: 4 }
+      ]},
+      { id: "appeals", category: "Oversight", text: "Can affected individuals appeal or contest AI decisions?", options: [
+        { label: "Yes, clear appeals process exists", risk: 0 },
+        { label: "Yes, but process is limited", risk: 1 },
+        { label: "Informal mechanisms only", risk: 3 },
+        { label: "No appeals process", risk: 4 }
+      ]}
+    ];
+
+    const mitigations = {
+      Data: [
+        { icon: "📊", title: "Conduct Data Bias Audit", desc: "Systematically analyze training data for representation gaps and historical bias patterns.", priority: "Critical" },
+        { icon: "🔄", title: "Implement Data Rebalancing", desc: "Use techniques like oversampling or synthetic data to address representation imbalances.", priority: "High" }
+      ],
+      Fairness: [
+        { icon: "⚖️", title: "Define Fairness Metrics", desc: "Establish clear metrics (demographic parity, equalized odds) appropriate for your use case.", priority: "Critical" },
+        { icon: "🔍", title: "Audit for Proxy Discrimination", desc: "Analyze whether seemingly neutral variables correlate with protected characteristics.", priority: "High" }
+      ],
+      Testing: [
+        { icon: "🧪", title: "Implement Disparate Impact Testing", desc: "Test model outcomes across demographic groups using statistical significance tests.", priority: "Critical" },
+        { icon: "📈", title: "Establish Ongoing Monitoring", desc: "Deploy continuous monitoring to detect bias drift over time.", priority: "High" }
+      ],
+      Oversight: [
+        { icon: "👁️", title: "Design Human-in-the-Loop", desc: "Ensure meaningful human review for consequential decisions.", priority: "High" },
+        { icon: "📝", title: "Create Appeals Process", desc: "Develop clear procedures for individuals to contest AI-influenced decisions.", priority: "High" }
+      ]
+    };
+
+    // Generate questions
+    function renderQuestions() {
+      const container = document.getElementById('questionsContainer');
+      container.innerHTML = questions.map((q, idx) => `
+        <div class="question-card" data-question="${q.id}" data-category="${q.category}">
+          <div class="question-card__number">Question ${idx + 1} of ${questions.length}</div>
+          <div class="question-card__text">${q.text}</div>
+          <div class="answer-options">
+            ${q.options.map((opt, optIdx) => `
+              <label class="answer-option">
+                <input type="radio" name="${q.id}" value="${opt.risk}">
+                <span>${opt.label}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      // Add click handlers
+      document.querySelectorAll('.answer-option').forEach(opt => {
+        opt.addEventListener('click', function() {
+          const card = this.closest('.question-card');
+          card.querySelectorAll('.answer-option').forEach(o => o.classList.remove('selected'));
+          this.classList.add('selected');
+          this.querySelector('input').checked = true;
+        });
+      });
+    }
+
+    renderQuestions();
+
+    function calculateRisk() {
+      const categoryScores = { Data: 0, Fairness: 0, Testing: 0, Oversight: 0 };
+      const categoryCounts = { Data: 0, Fairness: 0, Testing: 0, Oversight: 0 };
+
+      questions.forEach(q => {
+        const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+        if (selected) {
+          categoryScores[q.category] += parseInt(selected.value);
+          categoryCounts[q.category]++;
+        }
+      });
+
+      // Calculate percentages
+      const categoryRisks = {};
+      let totalRisk = 0;
+      let totalQuestions = 0;
+
+      Object.keys(categoryScores).forEach(cat => {
+        if (categoryCounts[cat] > 0) {
+          categoryRisks[cat] = Math.round((categoryScores[cat] / (categoryCounts[cat] * 4)) * 100);
+          totalRisk += categoryScores[cat];
+          totalQuestions += categoryCounts[cat];
+        }
+      });
+
+      const overallRisk = Math.round((totalRisk / (totalQuestions * 4)) * 100);
+
+      // Determine risk level
+      let riskLevel, riskClass;
+      if (overallRisk <= 30) {
+        riskLevel = "Low Bias Risk";
+        riskClass = "low";
+      } else if (overallRisk <= 60) {
+        riskLevel = "Medium Bias Risk";
+        riskClass = "medium";
+      } else {
+        riskLevel = "High Bias Risk";
+        riskClass = "high";
+      }
+
+      // Update display
+      document.getElementById('riskScore').textContent = overallRisk;
+      document.getElementById('riskScore').className = 'risk-score ' + riskClass;
+      document.getElementById('riskLevel').textContent = riskLevel;
+      document.getElementById('riskMarker').style.left = overallRisk + '%';
+
+      // Risk breakdown
+      document.getElementById('riskBreakdown').innerHTML = Object.entries(categoryRisks).map(([cat, risk]) => {
+        const badgeClass = risk <= 30 ? 'low' : risk <= 60 ? 'medium' : 'high';
+        return `
+          <div class="risk-item">
+            <div class="risk-item__header">
+              <span class="risk-item__title">${cat} Risk</span>
+              <span class="risk-item__badge ${badgeClass}">${risk}%</span>
+            </div>
+            <div class="risk-item__bar">
+              <div class="risk-item__fill ${badgeClass}" style="width: ${risk}%;"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Mitigations - prioritize based on highest risk categories
+      const sortedCategories = Object.entries(categoryRisks)
+        .sort((a, b) => b[1] - a[1])
+        .filter(([cat, risk]) => risk > 30);
+
+      const recommendedMitigations = [];
+      sortedCategories.forEach(([cat]) => {
+        if (mitigations[cat]) {
+          recommendedMitigations.push(...mitigations[cat]);
+        }
+      });
+
+      document.getElementById('mitigationsList').innerHTML = recommendedMitigations.slice(0, 6).map(m => `
+        <div class="mitigation-item">
+          <div class="mitigation-item__icon">${m.icon}</div>
+          <div class="mitigation-item__content">
+            <h4>${m.title}</h4>
+            <p>${m.desc}</p>
+          </div>
+          <span class="mitigation-item__priority">${m.priority}</span>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+      document.querySelectorAll('.answer-option').forEach(opt => {
+        opt.classList.remove('selected');
+        opt.querySelector('input').checked = false;
+      });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your Bias Mitigation Toolkit will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

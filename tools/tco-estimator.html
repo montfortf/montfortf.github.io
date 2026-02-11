@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Total Cost of Ownership Estimator | Brite.AI</title>
+  <meta name="description" content="Compare Build vs. Buy vs. Partner total cost of ownership across 3-5 years including hidden costs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 1000px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .tool-header { background: linear-gradient(135deg, #059669, #047857); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-body { padding: var(--space-8); }
+    .form-section { margin-bottom: var(--space-8); }
+    .form-section h3 { margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-2); }
+    .form-section h3 span { background: var(--color-primary); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: var(--text-sm); }
+    .form-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .form-group { margin-bottom: var(--space-4); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); font-size: var(--text-sm); }
+    .form-group input, .form-group select { width: 100%; padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group .help-text { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .results-section { display: none; }
+    .comparison-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-8); }
+    @media (max-width: 900px) { .comparison-grid { grid-template-columns: 1fr; } }
+    .option-card { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); border: 3px solid transparent; }
+    .option-card.lowest { border-color: #22c55e; }
+    .option-card__header { text-align: center; margin-bottom: var(--space-4); }
+    .option-card__icon { font-size: 2.5rem; margin-bottom: var(--space-2); }
+    .option-card__title { font-size: var(--text-xl); font-weight: 700; }
+    .option-card__badge { display: inline-block; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: var(--text-xs); font-weight: 600; margin-top: var(--space-2); background: #22c55e; color: #fff; }
+    .option-card__total { text-align: center; padding: var(--space-4); background: var(--color-background); border-radius: var(--radius-lg); margin-bottom: var(--space-4); }
+    .option-card__total-label { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .option-card__total-value { font-size: var(--text-3xl); font-weight: 800; color: var(--color-primary); }
+    .cost-breakdown { font-size: var(--text-sm); }
+    .cost-item { display: flex; justify-content: space-between; padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); }
+    .cost-item:last-child { border-bottom: none; }
+    .cost-item__label { color: var(--color-text-muted); }
+    .cost-item__value { font-weight: 600; }
+    .timeline-chart { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .timeline-chart h3 { margin-bottom: var(--space-4); }
+    .chart-bars { display: flex; flex-direction: column; gap: var(--space-4); }
+    .chart-bar { display: flex; align-items: center; gap: var(--space-4); }
+    .chart-bar__label { width: 80px; font-weight: 500; font-size: var(--text-sm); }
+    .chart-bar__track { flex: 1; height: 40px; background: var(--color-border); border-radius: var(--radius-md); overflow: hidden; }
+    .chart-bar__segments { height: 100%; display: flex; }
+    .chart-bar__segment { height: 100%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: var(--text-xs); font-weight: 600; }
+    .segment-initial { background: #3b82f6; }
+    .segment-annual { background: #8b5cf6; }
+    .segment-hidden { background: #f59e0b; }
+    .chart-legend { display: flex; gap: var(--space-6); margin-top: var(--space-4); justify-content: center; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); }
+    .legend-color { width: 16px; height: 16px; border-radius: 4px; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>Total Cost of Ownership Estimator</h2>
+          <p>Compare Build vs. Buy vs. Partner costs over 3-5 years</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-section">
+              <h3><span>1</span> Project Parameters</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Project Complexity</label>
+                  <select id="complexity">
+                    <option value="low">Low - Single use case</option>
+                    <option value="medium" selected>Medium - Multiple integrations</option>
+                    <option value="high">High - Enterprise-wide</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Analysis Period</label>
+                  <select id="years">
+                    <option value="3">3 Years</option>
+                    <option value="5" selected>5 Years</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Expected Users</label>
+                  <input type="number" id="users" value="50" min="1">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><span>2</span> Build Option Costs</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Internal Dev Team Cost (Annual)</label>
+                  <input type="number" id="buildTeamCost" value="500000">
+                  <p class="help-text">Salaries for 3-5 developers</p>
+                </div>
+                <div class="form-group">
+                  <label>Development Duration (Months)</label>
+                  <input type="number" id="buildDuration" value="18" min="6" max="36">
+                </div>
+                <div class="form-group">
+                  <label>Infrastructure Cost (Annual)</label>
+                  <input type="number" id="buildInfra" value="100000">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><span>3</span> Buy Option Costs</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Software License (Annual)</label>
+                  <input type="number" id="buyLicense" value="150000">
+                </div>
+                <div class="form-group">
+                  <label>Implementation Cost (One-time)</label>
+                  <input type="number" id="buyImplementation" value="200000">
+                </div>
+                <div class="form-group">
+                  <label>Customization & Integration</label>
+                  <input type="number" id="buyCustomization" value="100000">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><span>4</span> Partner Option Costs</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Implementation Services</label>
+                  <input type="number" id="partnerImplementation" value="350000">
+                </div>
+                <div class="form-group">
+                  <label>Annual Managed Services</label>
+                  <input type="number" id="partnerManaged" value="120000">
+                </div>
+                <div class="form-group">
+                  <label>Platform/License (Annual)</label>
+                  <input type="number" id="partnerLicense" value="80000">
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="calculateTCO()" style="width: 100%;">Calculate Total Cost of Ownership</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="comparison-grid" id="comparisonGrid"></div>
+
+            <div class="timeline-chart">
+              <h3>Cost Accumulation Over Time</h3>
+              <div class="chart-bars" id="chartBars"></div>
+              <div class="chart-legend">
+                <div class="legend-item"><div class="legend-color segment-initial"></div> Initial Investment</div>
+                <div class="legend-item"><div class="legend-color segment-annual"></div> Annual Costs</div>
+                <div class="legend-item"><div class="legend-color segment-hidden"></div> Hidden Costs</div>
+              </div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Detailed TCO Analysis</h3>
+              <p>Receive a comprehensive breakdown with risk factors and recommendation rationale.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <button type="submit" class="btn btn--primary">Download Full Report</button>
+              </form>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-6);">
+              <button class="btn btn--secondary" onclick="resetForm()">Start Over</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function calculateTCO() {
+      const complexity = document.getElementById('complexity').value;
+      const years = parseInt(document.getElementById('years').value);
+      const users = parseInt(document.getElementById('users').value);
+
+      // Complexity multipliers
+      const multipliers = { low: 0.7, medium: 1, high: 1.5 };
+      const mult = multipliers[complexity];
+
+      // Build costs
+      const buildTeamCost = parseFloat(document.getElementById('buildTeamCost').value) * mult;
+      const buildDuration = parseInt(document.getElementById('buildDuration').value);
+      const buildInfra = parseFloat(document.getElementById('buildInfra').value) * mult;
+      const buildInitial = (buildTeamCost / 12) * buildDuration;
+      const buildAnnual = buildInfra + (buildTeamCost * 0.3); // 30% ongoing dev
+      const buildHidden = buildInitial * 0.25; // Opportunity cost, rework
+      const buildTotal = buildInitial + (buildAnnual * years) + buildHidden;
+
+      // Buy costs
+      const buyLicense = parseFloat(document.getElementById('buyLicense').value);
+      const buyImplementation = parseFloat(document.getElementById('buyImplementation').value) * mult;
+      const buyCustomization = parseFloat(document.getElementById('buyCustomization').value) * mult;
+      const buyInitial = buyImplementation + buyCustomization;
+      const buyAnnual = buyLicense + (buyLicense * 0.18); // Support & maintenance
+      const buyHidden = buyInitial * 0.15; // Training, change management
+      const buyTotal = buyInitial + (buyAnnual * years) + buyHidden;
+
+      // Partner costs
+      const partnerImplementation = parseFloat(document.getElementById('partnerImplementation').value) * mult;
+      const partnerManaged = parseFloat(document.getElementById('partnerManaged').value);
+      const partnerLicense = parseFloat(document.getElementById('partnerLicense').value);
+      const partnerInitial = partnerImplementation;
+      const partnerAnnual = partnerManaged + partnerLicense;
+      const partnerHidden = partnerInitial * 0.1; // Knowledge transfer
+      const partnerTotal = partnerInitial + (partnerAnnual * years) + partnerHidden;
+
+      // Find lowest
+      const totals = [
+        { name: 'build', total: buildTotal },
+        { name: 'buy', total: buyTotal },
+        { name: 'partner', total: partnerTotal }
+      ];
+      const lowest = totals.reduce((a, b) => a.total < b.total ? a : b).name;
+
+      // Render comparison cards
+      const grid = document.getElementById('comparisonGrid');
+      grid.innerHTML = `
+        <div class="option-card ${lowest === 'build' ? 'lowest' : ''}">
+          <div class="option-card__header">
+            <div class="option-card__icon">🔨</div>
+            <div class="option-card__title">Build</div>
+            ${lowest === 'build' ? '<div class="option-card__badge">Lowest TCO</div>' : ''}
+          </div>
+          <div class="option-card__total">
+            <div class="option-card__total-label">${years}-Year Total</div>
+            <div class="option-card__total-value">$${Math.round(buildTotal).toLocaleString()}</div>
+          </div>
+          <div class="cost-breakdown">
+            <div class="cost-item"><span class="cost-item__label">Initial Development</span><span class="cost-item__value">$${Math.round(buildInitial).toLocaleString()}</span></div>
+            <div class="cost-item"><span class="cost-item__label">Annual Costs (×${years})</span><span class="cost-item__value">$${Math.round(buildAnnual * years).toLocaleString()}</span></div>
+            <div class="cost-item"><span class="cost-item__label">Hidden Costs</span><span class="cost-item__value">$${Math.round(buildHidden).toLocaleString()}</span></div>
+          </div>
+        </div>
+        <div class="option-card ${lowest === 'buy' ? 'lowest' : ''}">
+          <div class="option-card__header">
+            <div class="option-card__icon">📦</div>
+            <div class="option-card__title">Buy</div>
+            ${lowest === 'buy' ? '<div class="option-card__badge">Lowest TCO</div>' : ''}
+          </div>
+          <div class="option-card__total">
+            <div class="option-card__total-label">${years}-Year Total</div>
+            <div class="option-card__total-value">$${Math.round(buyTotal).toLocaleString()}</div>
+          </div>
+          <div class="cost-breakdown">
+            <div class="cost-item"><span class="cost-item__label">Implementation</span><span class="cost-item__value">$${Math.round(buyInitial).toLocaleString()}</span></div>
+            <div class="cost-item"><span class="cost-item__label">License + Support (×${years})</span><span class="cost-item__value">$${Math.round(buyAnnual * years).toLocaleString()}</span></div>
+            <div class="cost-item"><span class="cost-item__label">Hidden Costs</span><span class="cost-item__value">$${Math.round(buyHidden).toLocaleString()}</span></div>
+          </div>
+        </div>
+        <div class="option-card ${lowest === 'partner' ? 'lowest' : ''}">
+          <div class="option-card__header">
+            <div class="option-card__icon">🤝</div>
+            <div class="option-card__title">Partner</div>
+            ${lowest === 'partner' ? '<div class="option-card__badge">Lowest TCO</div>' : ''}
+          </div>
+          <div class="option-card__total">
+            <div class="option-card__total-label">${years}-Year Total</div>
+            <div class="option-card__total-value">$${Math.round(partnerTotal).toLocaleString()}</div>
+          </div>
+          <div class="cost-breakdown">
+            <div class="cost-item"><span class="cost-item__label">Implementation</span><span class="cost-item__value">$${Math.round(partnerInitial).toLocaleString()}</span></div>
+            <div class="cost-item"><span class="cost-item__label">Managed + License (×${years})</span><span class="cost-item__value">$${Math.round(partnerAnnual * years).toLocaleString()}</span></div>
+            <div class="cost-item"><span class="cost-item__label">Hidden Costs</span><span class="cost-item__value">$${Math.round(partnerHidden).toLocaleString()}</span></div>
+          </div>
+        </div>
+      `;
+
+      // Render chart
+      const maxTotal = Math.max(buildTotal, buyTotal, partnerTotal);
+      const chartBars = document.getElementById('chartBars');
+      chartBars.innerHTML = [
+        { label: 'Build', initial: buildInitial, annual: buildAnnual * years, hidden: buildHidden, total: buildTotal },
+        { label: 'Buy', initial: buyInitial, annual: buyAnnual * years, hidden: buyHidden, total: buyTotal },
+        { label: 'Partner', initial: partnerInitial, annual: partnerAnnual * years, hidden: partnerHidden, total: partnerTotal }
+      ].map(item => {
+        const width = (item.total / maxTotal) * 100;
+        const initialP = (item.initial / item.total) * 100;
+        const annualP = (item.annual / item.total) * 100;
+        const hiddenP = (item.hidden / item.total) * 100;
+        return `
+          <div class="chart-bar">
+            <div class="chart-bar__label">${item.label}</div>
+            <div class="chart-bar__track">
+              <div class="chart-bar__segments" style="width: ${width}%;">
+                <div class="chart-bar__segment segment-initial" style="width: ${initialP}%;">${Math.round(initialP)}%</div>
+                <div class="chart-bar__segment segment-annual" style="width: ${annualP}%;">${Math.round(annualP)}%</div>
+                <div class="chart-bar__segment segment-hidden" style="width: ${hiddenP}%;">${Math.round(hiddenP)}%</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your detailed TCO analysis will be sent to your email.');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Investment Benchmark | Brite.AI</title>
+  <meta name="description" content="Compare your AI investment levels and ROI against peer government agencies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .tool-header { background: linear-gradient(135deg, #14b8a6, #0d9488); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-section { margin-bottom: var(--space-6); }
+    .form-section label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-section select, .form-section input { width: 100%; padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-lg); font-size: var(--text-base); }
+    .form-section select:focus, .form-section input:focus { outline: none; border-color: #14b8a6; }
+    .form-hint { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .input-group { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    @media (max-width: 640px) { .input-group { grid-template-columns: 1fr; } }
+    .input-prefix { position: relative; }
+    .input-prefix input { padding-left: 28px; }
+    .input-prefix::before { content: '$'; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--color-text-muted); }
+    .btn--calculate { width: 100%; background: linear-gradient(135deg, #14b8a6, #0d9488); border: none; color: #fff; padding: var(--space-4); font-size: var(--text-lg); font-weight: 700; border-radius: var(--radius-xl); cursor: pointer; }
+    .btn--calculate:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .results-section { display: none; margin-top: var(--space-8); }
+    .results-section.show { display: block; }
+    .summary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6); }
+    .summary-card { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-5); text-align: center; }
+    .summary-card__icon { font-size: 2rem; margin-bottom: var(--space-2); }
+    .summary-card__value { font-size: var(--text-3xl); font-weight: 800; margin-bottom: var(--space-1); }
+    .summary-card__value.high { color: #22c55e; }
+    .summary-card__value.medium { color: #f59e0b; }
+    .summary-card__value.low { color: #ef4444; }
+    .summary-card__label { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .benchmark-section { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .benchmark-section h3 { margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-2); }
+    .gauge-container { display: flex; justify-content: center; margin-bottom: var(--space-4); }
+    .gauge { width: 240px; height: 120px; position: relative; }
+    .gauge__arc { fill: none; stroke-width: 20; }
+    .gauge__arc--bg { stroke: #e5e7eb; }
+    .gauge__arc--fill { stroke: url(#gaugeGradient); stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+    .gauge__markers { position: absolute; width: 100%; bottom: 0; display: flex; justify-content: space-between; font-size: var(--text-xs); color: var(--color-text-muted); padding: 0 10px; }
+    .gauge__needle { position: absolute; bottom: 0; left: 50%; width: 4px; height: 90px; background: #374151; transform-origin: bottom center; border-radius: 2px; transition: transform 1s ease; }
+    .gauge__center { position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: #374151; border-radius: 50%; }
+    .gauge__value { position: absolute; bottom: -45px; left: 50%; transform: translateX(-50%); font-size: var(--text-2xl); font-weight: 800; }
+    .gauge__label { position: absolute; bottom: -65px; left: 50%; transform: translateX(-50%); font-size: var(--text-sm); color: var(--color-text-muted); white-space: nowrap; }
+    .comparison-table { width: 100%; border-collapse: collapse; margin-top: var(--space-4); }
+    .comparison-table th, .comparison-table td { padding: var(--space-3); text-align: left; border-bottom: 1px solid var(--color-border); }
+    .comparison-table th { font-weight: 600; background: var(--color-background); font-size: var(--text-sm); }
+    .comparison-table td:first-child { font-weight: 500; }
+    .comparison-table .highlight { background: #f0fdfa; }
+    .comparison-table .your-value { color: #0d9488; font-weight: 700; }
+    .investment-breakdown { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .investment-breakdown h3 { margin-bottom: var(--space-4); }
+    .breakdown-chart { display: flex; height: 40px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-4); }
+    .breakdown-segment { display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: var(--text-sm); transition: flex 0.5s ease; }
+    .breakdown-segment.infrastructure { background: #3b82f6; }
+    .breakdown-segment.software { background: #8b5cf6; }
+    .breakdown-segment.services { background: #ec4899; }
+    .breakdown-segment.training { background: #f59e0b; }
+    .breakdown-legend { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+    .legend-item { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); }
+    .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .roi-section { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .roi-section h3 { margin-bottom: var(--space-4); }
+    .roi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4); }
+    .roi-item { background: var(--color-background); border-radius: var(--radius-lg); padding: var(--space-4); text-align: center; }
+    .roi-item__value { font-size: var(--text-2xl); font-weight: 800; color: #0d9488; }
+    .roi-item__label { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .recommendations { margin-bottom: var(--space-6); }
+    .recommendations h3 { margin-bottom: var(--space-4); }
+    .rec-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-3); border-left: 4px solid #14b8a6; }
+    .rec-card__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2); }
+    .rec-card__title { font-weight: 700; }
+    .rec-card__impact { font-size: var(--text-sm); padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); background: #ccfbf1; color: #0d9488; }
+    .rec-card__text { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .cta-section { background: linear-gradient(135deg, #14b8a6, #0d9488); border-radius: var(--radius-xl); padding: var(--space-8); text-align: center; color: #fff; margin-top: var(--space-6); }
+    .cta-section h3 { margin-bottom: var(--space-2); }
+    .cta-section p { opacity: 0.9; margin-bottom: var(--space-4); }
+    .cta-section .btn { background: #fff; color: #0d9488; }
+    .btn--reset { width: 100%; margin-top: var(--space-4); background: var(--color-background-alt); color: var(--color-text); border: 2px solid var(--color-border); padding: var(--space-3); border-radius: var(--radius-lg); cursor: pointer; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>💰 AI Investment Benchmark</h2>
+          <p>See how your AI spending compares to peer agencies and industry leaders</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-section">
+              <label for="agencyType">Agency Type</label>
+              <select id="agencyType">
+                <option value="">Select your agency type...</option>
+                <option value="state">State Agency</option>
+                <option value="county">County Government</option>
+                <option value="city">City/Municipal</option>
+                <option value="federal">Federal Agency</option>
+                <option value="special">Special District</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <div class="form-section">
+                <label for="totalBudget">Total IT Budget (Annual)</label>
+                <div class="input-prefix">
+                  <input type="number" id="totalBudget" placeholder="10,000,000" min="0">
+                </div>
+              </div>
+              <div class="form-section">
+                <label for="aiBudget">AI/ML Investment (Annual)</label>
+                <div class="input-prefix">
+                  <input type="number" id="aiBudget" placeholder="500,000" min="0">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <label for="employees">Number of Employees</label>
+              <input type="number" id="employees" placeholder="1000" min="1">
+              <div class="form-hint">Total FTEs in your organization</div>
+            </div>
+
+            <p style="font-weight: 600; margin: var(--space-6) 0 var(--space-4);">How is your AI budget allocated?</p>
+
+            <div class="input-group">
+              <div class="form-section">
+                <label for="infrastructure">Infrastructure/Cloud (%)</label>
+                <input type="number" id="infrastructure" placeholder="30" min="0" max="100">
+              </div>
+              <div class="form-section">
+                <label for="software">Software/Platforms (%)</label>
+                <input type="number" id="software" placeholder="40" min="0" max="100">
+              </div>
+            </div>
+            <div class="input-group">
+              <div class="form-section">
+                <label for="services">Professional Services (%)</label>
+                <input type="number" id="services" placeholder="20" min="0" max="100">
+              </div>
+              <div class="form-section">
+                <label for="training">Training/Change Mgmt (%)</label>
+                <input type="number" id="training" placeholder="10" min="0" max="100">
+              </div>
+            </div>
+
+            <div class="form-section">
+              <label for="aiProjects">Number of AI Projects (Active)</label>
+              <input type="number" id="aiProjects" placeholder="5" min="0">
+            </div>
+
+            <button class="btn--calculate" onclick="calculateBenchmark()">See Your Benchmark →</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="summary-cards" id="summaryCards">
+              <!-- Populated dynamically -->
+            </div>
+
+            <div class="benchmark-section">
+              <h3>📊 AI Investment as % of IT Budget</h3>
+              <div class="gauge-container">
+                <div class="gauge">
+                  <svg width="240" height="120" viewBox="0 0 240 120">
+                    <defs>
+                      <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#ef4444"/>
+                        <stop offset="50%" style="stop-color:#f59e0b"/>
+                        <stop offset="100%" style="stop-color:#22c55e"/>
+                      </linearGradient>
+                    </defs>
+                    <path class="gauge__arc gauge__arc--bg" d="M 20 110 A 100 100 0 0 1 220 110"/>
+                    <path class="gauge__arc gauge__arc--fill" id="gaugeFill" d="M 20 110 A 100 100 0 0 1 220 110" stroke-dasharray="314" stroke-dashoffset="314"/>
+                  </svg>
+                  <div class="gauge__needle" id="gaugeNeedle"></div>
+                  <div class="gauge__center"></div>
+                  <div class="gauge__value" id="gaugeValue">0%</div>
+                  <div class="gauge__label">of IT Budget</div>
+                  <div class="gauge__markers">
+                    <span>0%</span>
+                    <span>5%</span>
+                    <span>10%</span>
+                    <span>15%</span>
+                    <span>20%+</span>
+                  </div>
+                </div>
+              </div>
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>Benchmark</th>
+                    <th>AI as % of IT</th>
+                    <th>AI per Employee</th>
+                    <th>Projects per $1M</th>
+                  </tr>
+                </thead>
+                <tbody id="comparisonTable">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="investment-breakdown">
+              <h3>💳 Your Investment Breakdown vs. Best Practice</h3>
+              <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-4);">Your allocation:</p>
+              <div class="breakdown-chart" id="yourBreakdown"></div>
+              <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-4);">Recommended allocation:</p>
+              <div class="breakdown-chart" id="recommendedBreakdown">
+                <div class="breakdown-segment infrastructure" style="flex: 25">25%</div>
+                <div class="breakdown-segment software" style="flex: 35">35%</div>
+                <div class="breakdown-segment services" style="flex: 25">25%</div>
+                <div class="breakdown-segment training" style="flex: 15">15%</div>
+              </div>
+              <div class="breakdown-legend">
+                <div class="legend-item"><div class="legend-dot" style="background: #3b82f6;"></div> Infrastructure/Cloud</div>
+                <div class="legend-item"><div class="legend-dot" style="background: #8b5cf6;"></div> Software/Platforms</div>
+                <div class="legend-item"><div class="legend-dot" style="background: #ec4899;"></div> Professional Services</div>
+                <div class="legend-item"><div class="legend-dot" style="background: #f59e0b;"></div> Training/Change Mgmt</div>
+              </div>
+            </div>
+
+            <div class="roi-section">
+              <h3>📈 Expected ROI at Your Investment Level</h3>
+              <div class="roi-grid" id="roiGrid">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+
+            <div class="recommendations">
+              <h3>💡 Investment Recommendations</h3>
+              <div id="recommendationsList"></div>
+            </div>
+
+            <div class="cta-section">
+              <h3>Maximize Your AI Investment ROI</h3>
+              <p>Get expert guidance on optimizing your AI budget allocation and project prioritization.</p>
+              <a href="../contact/index.html" class="btn btn--lg">Get Investment Strategy</a>
+            </div>
+
+            <button class="btn--reset" onclick="resetForm()">← Start Over</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const benchmarks = {
+      state: { aiPercent: 6.5, perEmployee: 850, projectsPer1M: 2.5, label: 'State Agency Average' },
+      county: { aiPercent: 4.2, perEmployee: 520, projectsPer1M: 3.2, label: 'County Average' },
+      city: { aiPercent: 3.8, perEmployee: 420, projectsPer1M: 3.8, label: 'City/Municipal Average' },
+      federal: { aiPercent: 8.2, perEmployee: 1200, projectsPer1M: 2.0, label: 'Federal Agency Average' },
+      special: { aiPercent: 3.5, perEmployee: 380, projectsPer1M: 4.0, label: 'Special District Average' },
+      leader: { aiPercent: 12, perEmployee: 1500, projectsPer1M: 4.5, label: 'Government Leaders' },
+      private: { aiPercent: 15, perEmployee: 2200, projectsPer1M: 5.0, label: 'Private Sector Leaders' }
+    };
+
+    function calculateBenchmark() {
+      const agencyType = document.getElementById('agencyType').value;
+      const totalBudget = parseFloat(document.getElementById('totalBudget').value) || 0;
+      const aiBudget = parseFloat(document.getElementById('aiBudget').value) || 0;
+      const employees = parseFloat(document.getElementById('employees').value) || 1;
+      const infrastructure = parseFloat(document.getElementById('infrastructure').value) || 0;
+      const software = parseFloat(document.getElementById('software').value) || 0;
+      const services = parseFloat(document.getElementById('services').value) || 0;
+      const training = parseFloat(document.getElementById('training').value) || 0;
+      const aiProjects = parseFloat(document.getElementById('aiProjects').value) || 0;
+
+      if (!agencyType || totalBudget === 0) {
+        alert('Please fill in agency type and total IT budget.');
+        return;
+      }
+
+      const aiPercent = (aiBudget / totalBudget) * 100;
+      const perEmployee = aiBudget / employees;
+      const projectsPer1M = aiBudget > 0 ? (aiProjects / (aiBudget / 1000000)) : 0;
+
+      const peerBench = benchmarks[agencyType];
+      const leaderBench = benchmarks.leader;
+
+      renderResults({
+        aiPercent,
+        perEmployee,
+        projectsPer1M,
+        aiBudget,
+        employees,
+        aiProjects,
+        allocation: { infrastructure, software, services, training },
+        peerBench,
+        leaderBench,
+        agencyType
+      });
+    }
+
+    function renderResults(data) {
+      // Summary cards
+      let percentRating = data.aiPercent >= 10 ? 'high' : (data.aiPercent >= 5 ? 'medium' : 'low');
+      let perEmpRating = data.perEmployee >= 1000 ? 'high' : (data.perEmployee >= 500 ? 'medium' : 'low');
+
+      document.getElementById('summaryCards').innerHTML = `
+        <div class="summary-card">
+          <div class="summary-card__icon">📊</div>
+          <div class="summary-card__value ${percentRating}">${data.aiPercent.toFixed(1)}%</div>
+          <div class="summary-card__label">AI % of IT Budget</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card__icon">👤</div>
+          <div class="summary-card__value ${perEmpRating}">$${Math.round(data.perEmployee).toLocaleString()}</div>
+          <div class="summary-card__label">AI Investment per Employee</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card__icon">🎯</div>
+          <div class="summary-card__value">${data.projectsPer1M.toFixed(1)}</div>
+          <div class="summary-card__label">Projects per $1M AI Spend</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card__icon">💵</div>
+          <div class="summary-card__value">$${(data.aiBudget / 1000000).toFixed(1)}M</div>
+          <div class="summary-card__label">Total AI Investment</div>
+        </div>
+      `;
+
+      // Gauge
+      const gaugePercent = Math.min(data.aiPercent / 20, 1);
+      const gaugeFill = document.getElementById('gaugeFill');
+      gaugeFill.style.strokeDashoffset = 314 - (314 * gaugePercent);
+
+      const needleAngle = -90 + (180 * gaugePercent);
+      document.getElementById('gaugeNeedle').style.transform = `rotate(${needleAngle}deg)`;
+      document.getElementById('gaugeValue').textContent = `${data.aiPercent.toFixed(1)}%`;
+
+      // Comparison table
+      document.getElementById('comparisonTable').innerHTML = `
+        <tr class="highlight">
+          <td>Your Agency</td>
+          <td class="your-value">${data.aiPercent.toFixed(1)}%</td>
+          <td class="your-value">$${Math.round(data.perEmployee).toLocaleString()}</td>
+          <td class="your-value">${data.projectsPer1M.toFixed(1)}</td>
+        </tr>
+        <tr>
+          <td>${data.peerBench.label}</td>
+          <td>${data.peerBench.aiPercent}%</td>
+          <td>$${data.peerBench.perEmployee.toLocaleString()}</td>
+          <td>${data.peerBench.projectsPer1M}</td>
+        </tr>
+        <tr>
+          <td>${data.leaderBench.label}</td>
+          <td>${data.leaderBench.aiPercent}%</td>
+          <td>$${data.leaderBench.perEmployee.toLocaleString()}</td>
+          <td>${data.leaderBench.projectsPer1M}</td>
+        </tr>
+        <tr>
+          <td>Private Sector Leaders</td>
+          <td>${benchmarks.private.aiPercent}%</td>
+          <td>$${benchmarks.private.perEmployee.toLocaleString()}</td>
+          <td>${benchmarks.private.projectsPer1M}</td>
+        </tr>
+      `;
+
+      // Allocation breakdown
+      const { infrastructure, software, services, training } = data.allocation;
+      const total = infrastructure + software + services + training || 100;
+      document.getElementById('yourBreakdown').innerHTML = `
+        <div class="breakdown-segment infrastructure" style="flex: ${infrastructure || 1}">${infrastructure > 10 ? infrastructure + '%' : ''}</div>
+        <div class="breakdown-segment software" style="flex: ${software || 1}">${software > 10 ? software + '%' : ''}</div>
+        <div class="breakdown-segment services" style="flex: ${services || 1}">${services > 10 ? services + '%' : ''}</div>
+        <div class="breakdown-segment training" style="flex: ${training || 1}">${training > 10 ? training + '%' : ''}</div>
+      `;
+
+      // ROI estimates
+      const roiMultiplier = data.aiPercent >= 10 ? 4.2 : (data.aiPercent >= 5 ? 3.1 : 2.2);
+      const expectedRoi = data.aiBudget * roiMultiplier;
+      const paybackMonths = Math.round(12 / roiMultiplier);
+
+      document.getElementById('roiGrid').innerHTML = `
+        <div class="roi-item">
+          <div class="roi-item__value">${roiMultiplier}x</div>
+          <div class="roi-item__label">Expected ROI Multiplier</div>
+        </div>
+        <div class="roi-item">
+          <div class="roi-item__value">$${(expectedRoi / 1000000).toFixed(1)}M</div>
+          <div class="roi-item__label">Projected Annual Value</div>
+        </div>
+        <div class="roi-item">
+          <div class="roi-item__value">${paybackMonths} mo</div>
+          <div class="roi-item__label">Typical Payback Period</div>
+        </div>
+        <div class="roi-item">
+          <div class="roi-item__value">${Math.round((expectedRoi - data.aiBudget) / data.employees).toLocaleString()}</div>
+          <div class="roi-item__label">Net Value per Employee</div>
+        </div>
+      `;
+
+      // Recommendations
+      const recommendations = [];
+
+      if (data.aiPercent < data.peerBench.aiPercent) {
+        recommendations.push({
+          title: 'Increase AI Investment',
+          text: `Your AI spend is ${(data.peerBench.aiPercent - data.aiPercent).toFixed(1)}% below peer average. Consider increasing to ${data.peerBench.aiPercent}% to stay competitive.`,
+          impact: `+$${Math.round((data.peerBench.aiPercent - data.aiPercent) / 100 * data.aiBudget / data.aiPercent * 100000) / 100000}M`
+        });
+      }
+
+      if (training < 15) {
+        recommendations.push({
+          title: 'Increase Training Investment',
+          text: 'Training is underfunded at ' + training + '%. Best practice is 15% to ensure successful AI adoption.',
+          impact: 'Higher adoption'
+        });
+      }
+
+      if (data.projectsPer1M < data.peerBench.projectsPer1M) {
+        recommendations.push({
+          title: 'Optimize Project Portfolio',
+          text: 'You have fewer projects per dollar than peers. Consider smaller, focused pilots to demonstrate value faster.',
+          impact: 'Faster ROI'
+        });
+      }
+
+      if (data.perEmployee < data.peerBench.perEmployee) {
+        recommendations.push({
+          title: 'Scale AI Across Organization',
+          text: `At $${Math.round(data.perEmployee)} per employee, you\'re below the $${data.peerBench.perEmployee} peer average. Broader deployment increases impact.`,
+          impact: 'Wider impact'
+        });
+      }
+
+      if (recommendations.length === 0) {
+        recommendations.push({
+          title: 'Maintain Leadership Position',
+          text: 'Your AI investment levels are strong. Focus on maximizing ROI from existing projects.',
+          impact: 'Sustained growth'
+        });
+      }
+
+      document.getElementById('recommendationsList').innerHTML = recommendations.map(r => `
+        <div class="rec-card">
+          <div class="rec-card__header">
+            <span class="rec-card__title">${r.title}</span>
+            <span class="rec-card__impact">${r.impact}</span>
+          </div>
+          <div class="rec-card__text">${r.text}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').classList.add('show');
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').classList.remove('show');
+      document.querySelectorAll('input').forEach(input => input.value = '');
+      document.getElementById('agencyType').value = '';
+    }
+  </script>
+</body>
+</html>

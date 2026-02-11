@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI ROI Calculator | Brite.AI</title>
+  <meta name="description" content="Estimate the potential return on investment from AI automation. Calculate cost savings, efficiency gains, and payback period.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .calculator {
+      background: var(--color-background);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .calculator__header {
+      background: var(--color-primary);
+      color: #fff;
+      padding: var(--space-6);
+      text-align: center;
+    }
+    .calculator__body {
+      padding: var(--space-8);
+    }
+    .calculator__section {
+      margin-bottom: var(--space-8);
+    }
+    .calculator__section-title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-2);
+      border-bottom: 2px solid var(--color-border);
+    }
+    .form-group {
+      margin-bottom: var(--space-5);
+    }
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: var(--space-2);
+      color: var(--color-text);
+    }
+    .form-group small {
+      display: block;
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-2);
+    }
+    .form-control {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-base);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.1);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    .results {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-top: var(--space-6);
+    }
+    .results__title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: var(--space-4);
+      text-align: center;
+    }
+    .results__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 768px) {
+      .results__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .results__item {
+      background: #fff;
+      padding: var(--space-4);
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+    .results__value {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+    .results__label {
+      font-size: var(--text-sm);
+      color: var(--color-text-light);
+      margin-top: var(--space-1);
+    }
+    .results__highlight {
+      grid-column: 1 / -1;
+      background: var(--color-primary);
+      color: #fff;
+      padding: var(--space-6);
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+    .results__highlight .results__value {
+      font-size: var(--text-4xl);
+      color: #fff;
+    }
+    .results__highlight .results__label {
+      color: rgba(255,255,255,0.8);
+      font-size: var(--text-base);
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+    }
+    .input-group .form-control {
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+    }
+    .input-group__append {
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-background-alt);
+      border: 1px solid var(--color-border);
+      border-left: none;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      color: var(--color-text-muted);
+    }
+    .slider-container {
+      margin-top: var(--space-2);
+    }
+    .slider-container input[type="range"] {
+      width: 100%;
+      margin-bottom: var(--space-2);
+    }
+    .slider-value {
+      text-align: center;
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+    .disclaimer {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      text-align: center;
+      margin-top: var(--space-6);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--color-border);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero hero--centered">
+    <div class="container">
+      <div class="hero__content">
+        <span class="hero__badge">Interactive Tool</span>
+        <h1 class="hero__title">AI ROI Calculator</h1>
+        <p class="hero__subtitle">
+          Estimate the potential return on investment from AI automation in your
+          organization. Enter your numbers to see projected savings and payback period.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="max-width: 900px;">
+      <div class="calculator">
+        <div class="calculator__header">
+          <h2>Calculate Your AI ROI</h2>
+          <p>Fill in the fields below to estimate your potential savings</p>
+        </div>
+        <div class="calculator__body">
+          <form id="roiCalculator">
+            <div class="calculator__section">
+              <h3 class="calculator__section-title">Current Process Information</h3>
+
+              <div class="form-group">
+                <label for="processName">Process Name (Optional)</label>
+                <input type="text" id="processName" class="form-control" placeholder="e.g., Benefits Application Processing">
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="volumePerMonth">Monthly Transaction Volume</label>
+                  <small>Number of cases, applications, or transactions processed per month</small>
+                  <input type="number" id="volumePerMonth" class="form-control" value="5000" min="0">
+                </div>
+                <div class="form-group">
+                  <label for="timePerTransaction">Time Per Transaction (Minutes)</label>
+                  <small>Average time staff spends on each transaction</small>
+                  <input type="number" id="timePerTransaction" class="form-control" value="30" min="0">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="hourlyRate">Fully-Loaded Hourly Rate ($)</label>
+                  <small>Average staff cost including benefits (typically $40-80/hour)</small>
+                  <div class="input-group">
+                    <input type="number" id="hourlyRate" class="form-control" value="55" min="0">
+                    <span class="input-group__append">/hour</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="errorRate">Current Error Rate (%)</label>
+                  <small>Percentage of transactions requiring rework</small>
+                  <div class="input-group">
+                    <input type="number" id="errorRate" class="form-control" value="5" min="0" max="100">
+                    <span class="input-group__append">%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="calculator__section">
+              <h3 class="calculator__section-title">AI Automation Assumptions</h3>
+
+              <div class="form-group">
+                <label>Automation Rate</label>
+                <small>Percentage of transactions that can be fully automated</small>
+                <div class="slider-container">
+                  <input type="range" id="automationRate" min="20" max="90" value="60">
+                  <div class="slider-value"><span id="automationRateValue">60</span>%</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Time Reduction for Remaining Tasks</label>
+                <small>Reduction in processing time for tasks still requiring human involvement</small>
+                <div class="slider-container">
+                  <input type="range" id="timeReduction" min="20" max="70" value="40">
+                  <div class="slider-value"><span id="timeReductionValue">40</span>%</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Error Rate Reduction</label>
+                <small>Reduction in errors due to AI automation</small>
+                <div class="slider-container">
+                  <input type="range" id="errorReduction" min="30" max="90" value="70">
+                  <div class="slider-value"><span id="errorReductionValue">70</span>%</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="calculator__section">
+              <h3 class="calculator__section-title">Implementation Investment</h3>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="implementationCost">Implementation Cost ($)</label>
+                  <small>One-time cost for AI development and deployment</small>
+                  <div class="input-group">
+                    <input type="number" id="implementationCost" class="form-control" value="250000" min="0">
+                    <span class="input-group__append">one-time</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="annualMaintenance">Annual Maintenance ($)</label>
+                  <small>Ongoing costs for AI operations and support</small>
+                  <div class="input-group">
+                    <input type="number" id="annualMaintenance" class="form-control" value="50000" min="0">
+                    <span class="input-group__append">/year</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn--primary btn--lg" style="width: 100%;" onclick="calculateROI()">Calculate ROI</button>
+          </form>
+
+          <div id="results" class="results" style="display: none;">
+            <h3 class="results__title">Your Estimated AI ROI</h3>
+            <div class="results__grid">
+              <div class="results__highlight">
+                <div class="results__value" id="roiPercent">0%</div>
+                <div class="results__label">3-Year ROI</div>
+              </div>
+              <div class="results__item">
+                <div class="results__value" id="annualSavings">$0</div>
+                <div class="results__label">Annual Cost Savings</div>
+              </div>
+              <div class="results__item">
+                <div class="results__value" id="paybackPeriod">0</div>
+                <div class="results__label">Payback Period (Months)</div>
+              </div>
+              <div class="results__item">
+                <div class="results__value" id="hoursReclaimed">0</div>
+                <div class="results__label">Staff Hours Reclaimed/Year</div>
+              </div>
+              <div class="results__item">
+                <div class="results__value" id="errorsAvoided">0</div>
+                <div class="results__label">Errors Avoided/Year</div>
+              </div>
+            </div>
+
+            <div style="margin-top: var(--space-6); text-align: center;">
+              <a href="../contact/index.html" class="btn btn--primary btn--lg">Discuss Your AI Project</a>
+            </div>
+          </div>
+
+          <p class="disclaimer">
+            This calculator provides rough estimates for planning purposes only. Actual results will vary based on
+            your specific circumstances, process complexity, data quality, and implementation approach.
+            Contact us for a detailed assessment of your AI opportunity.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-header__title">Common AI Automation Scenarios</h2>
+      </div>
+      <div class="grid grid--3">
+        <div class="card">
+          <h3 class="card__title">Document Processing</h3>
+          <p class="card__description">Automate extraction from applications, verifications, and forms.</p>
+          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm);">
+            <li>Typical automation: 60-80%</li>
+            <li>Time savings: 70-90%</li>
+            <li>Error reduction: 80%+</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 class="card__title">Contact Center</h3>
+          <p class="card__description">AI chatbots and agent assist for constituent inquiries.</p>
+          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm);">
+            <li>Typical automation: 40-60%</li>
+            <li>Handle time reduction: 30-50%</li>
+            <li>First contact resolution: +20%</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 class="card__title">Eligibility Determination</h3>
+          <p class="card__description">AI-assisted eligibility screening and determination.</p>
+          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm);">
+            <li>Typical automation: 50-70%</li>
+            <li>Processing time: -60%</li>
+            <li>Consistency improvement: 90%+</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Ready for a Detailed Assessment?</h2>
+        <p>Our team can provide a comprehensive analysis of AI opportunities in your organization.</p>
+        <div class="cta__actions">
+          <a href="../contact/index.html" class="btn btn--white btn--lg">Request Assessment</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Slider value updates
+    document.getElementById('automationRate').addEventListener('input', function() {
+      document.getElementById('automationRateValue').textContent = this.value;
+    });
+    document.getElementById('timeReduction').addEventListener('input', function() {
+      document.getElementById('timeReductionValue').textContent = this.value;
+    });
+    document.getElementById('errorReduction').addEventListener('input', function() {
+      document.getElementById('errorReductionValue').textContent = this.value;
+    });
+
+    function calculateROI() {
+      // Get input values
+      const volumePerMonth = parseFloat(document.getElementById('volumePerMonth').value) || 0;
+      const timePerTransaction = parseFloat(document.getElementById('timePerTransaction').value) || 0;
+      const hourlyRate = parseFloat(document.getElementById('hourlyRate').value) || 0;
+      const errorRate = parseFloat(document.getElementById('errorRate').value) / 100 || 0;
+      const automationRate = parseFloat(document.getElementById('automationRate').value) / 100 || 0;
+      const timeReduction = parseFloat(document.getElementById('timeReduction').value) / 100 || 0;
+      const errorReduction = parseFloat(document.getElementById('errorReduction').value) / 100 || 0;
+      const implementationCost = parseFloat(document.getElementById('implementationCost').value) || 0;
+      const annualMaintenance = parseFloat(document.getElementById('annualMaintenance').value) || 0;
+
+      // Current costs
+      const annualVolume = volumePerMonth * 12;
+      const hoursPerTransaction = timePerTransaction / 60;
+      const currentLaborHours = annualVolume * hoursPerTransaction;
+      const currentLaborCost = currentLaborHours * hourlyRate;
+      const currentErrors = annualVolume * errorRate;
+      const errorCostPerError = hoursPerTransaction * hourlyRate * 2; // Assume rework costs 2x
+      const currentErrorCost = currentErrors * errorCostPerError;
+      const totalCurrentCost = currentLaborCost + currentErrorCost;
+
+      // Future costs with AI
+      const automatedTransactions = annualVolume * automationRate;
+      const manualTransactions = annualVolume * (1 - automationRate);
+      const reducedTimePerManualTransaction = hoursPerTransaction * (1 - timeReduction);
+      const futureLaborHours = manualTransactions * reducedTimePerManualTransaction;
+      const futureLaborCost = futureLaborHours * hourlyRate;
+      const futureErrors = (annualVolume * errorRate) * (1 - errorReduction);
+      const futureErrorCost = futureErrors * errorCostPerError;
+      const totalFutureCost = futureLaborCost + futureErrorCost + annualMaintenance;
+
+      // Savings
+      const annualSavings = totalCurrentCost - totalFutureCost;
+      const hoursReclaimed = currentLaborHours - futureLaborHours;
+      const errorsAvoided = currentErrors - futureErrors;
+
+      // ROI calculations
+      const threeYearSavings = (annualSavings * 3);
+      const threeYearCost = implementationCost + (annualMaintenance * 3);
+      const threeYearROI = ((threeYearSavings - threeYearCost) / threeYearCost) * 100;
+      const paybackMonths = annualSavings > 0 ? (implementationCost / (annualSavings / 12)) : 0;
+
+      // Display results
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('roiPercent').textContent = Math.round(threeYearROI) + '%';
+      document.getElementById('annualSavings').textContent = '$' + Math.round(annualSavings).toLocaleString();
+      document.getElementById('paybackPeriod').textContent = Math.round(paybackMonths) + ' months';
+      document.getElementById('hoursReclaimed').textContent = Math.round(hoursReclaimed).toLocaleString();
+      document.getElementById('errorsAvoided').textContent = Math.round(errorsAvoided).toLocaleString();
+
+      // Scroll to results
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  </script>
+</body>
+</html>

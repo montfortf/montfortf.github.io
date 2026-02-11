@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Processing AI Savings Calculator | Brite.AI</title>
+  <meta name="description" content="Calculate savings from AI-powered document processing. See how intelligent document automation reduces costs and processing time.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 1000px; margin: 0 auto; }
+    .calculator-card {
+      background: var(--color-background);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .calculator-header {
+      background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+      color: #fff;
+      padding: var(--space-8);
+      text-align: center;
+    }
+    .calculator-body { padding: var(--space-8); }
+    .document-types {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+    @media (max-width: 768px) {
+      .document-types { grid-template-columns: repeat(2, 1fr); }
+    }
+    .doc-type {
+      padding: var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .doc-type:hover { border-color: #7c3aed; }
+    .doc-type.selected {
+      border-color: #7c3aed;
+      background: #f5f3ff;
+    }
+    .doc-type__icon { font-size: 2rem; margin-bottom: var(--space-2); }
+    .doc-type__name { font-weight: 500; font-size: var(--text-sm); }
+    .input-section {
+      background: var(--color-background-alt);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+    .input-section__title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
+    .form-group label { display: block; font-weight: 500; margin-bottom: var(--space-2); }
+    .form-group small { display: block; font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-2); }
+    .input-with-unit {
+      display: flex;
+    }
+    .input-with-unit input {
+      flex: 1;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      font-size: var(--text-base);
+      border-right: none;
+    }
+    .input-with-unit input:focus { outline: none; border-color: #7c3aed; }
+    .input-unit {
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-border);
+      border: 2px solid var(--color-border);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+    .accuracy-indicator {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: #f5f3ff;
+      border-radius: var(--radius-lg);
+      margin-top: var(--space-4);
+    }
+    .accuracy-indicator__icon { font-size: 2rem; }
+    .accuracy-indicator__text strong { color: #7c3aed; }
+    .results-panel {
+      background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-6);
+    }
+    .savings-highlight {
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      color: #fff;
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      text-align: center;
+      margin-bottom: var(--space-6);
+    }
+    .savings-highlight__value {
+      font-size: 4rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .savings-highlight__label { font-size: var(--text-lg); opacity: 0.9; margin-top: var(--space-2); }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 768px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
+    .metric-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      text-align: center;
+    }
+    .metric-card__icon { font-size: 1.5rem; margin-bottom: var(--space-2); }
+    .metric-card__value { font-size: var(--text-xl); font-weight: 700; color: #7c3aed; }
+    .metric-card__label { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-1); }
+    .comparison-visual {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: var(--space-4);
+      align-items: center;
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-top: var(--space-6);
+    }
+    @media (max-width: 768px) {
+      .comparison-visual { grid-template-columns: 1fr; text-align: center; }
+    }
+    .comparison-box {
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+    .comparison-box--current { background: #fee2e2; }
+    .comparison-box--future { background: #d1fae5; }
+    .comparison-box__title { font-weight: 600; margin-bottom: var(--space-2); }
+    .comparison-box__value { font-size: var(--text-2xl); font-weight: 700; }
+    .comparison-arrow { font-size: 2rem; color: #7c3aed; }
+    .process-flow {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-top: var(--space-6);
+    }
+    .flow-steps {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--space-4);
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+    .flow-step {
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+    }
+    .flow-step__icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin: 0 auto var(--space-2);
+    }
+    .flow-step__name { font-weight: 500; font-size: var(--text-sm); }
+    .flow-step__time { font-size: var(--text-xs); color: var(--color-text-muted); }
+    .flow-arrow { color: #7c3aed; font-size: 1.5rem; }
+    .lead-capture {
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-8);
+      text-align: center;
+    }
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      max-width: 400px;
+      margin: var(--space-6) auto 0;
+    }
+    .lead-form input {
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../ai-data/index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="calculator-card">
+        <div class="calculator-header">
+          <h1>Document Processing AI Calculator</h1>
+          <p>See how intelligent document processing transforms your document-heavy workflows</p>
+        </div>
+
+        <div class="calculator-body">
+          <!-- Document Type Selection -->
+          <div class="input-section">
+            <div class="input-section__title">Select Document Types You Process</div>
+            <div class="document-types">
+              <div class="doc-type selected" data-type="applications" onclick="toggleDocType(this)">
+                <div class="doc-type__icon">📋</div>
+                <div class="doc-type__name">Applications & Forms</div>
+              </div>
+              <div class="doc-type" data-type="identity" onclick="toggleDocType(this)">
+                <div class="doc-type__icon">🪪</div>
+                <div class="doc-type__name">Identity Documents</div>
+              </div>
+              <div class="doc-type" data-type="income" onclick="toggleDocType(this)">
+                <div class="doc-type__icon">💰</div>
+                <div class="doc-type__name">Income Verification</div>
+              </div>
+              <div class="doc-type" data-type="medical" onclick="toggleDocType(this)">
+                <div class="doc-type__icon">🏥</div>
+                <div class="doc-type__name">Medical Records</div>
+              </div>
+              <div class="doc-type" data-type="legal" onclick="toggleDocType(this)">
+                <div class="doc-type__icon">⚖️</div>
+                <div class="doc-type__name">Legal Documents</div>
+              </div>
+              <div class="doc-type" data-type="correspondence" onclick="toggleDocType(this)">
+                <div class="doc-type__icon">✉️</div>
+                <div class="doc-type__name">Correspondence</div>
+              </div>
+              <div class="doc-type" data-type="financial" onclick="toggleDocType(this)">
+                <div class="doc-type__icon">📊</div>
+                <div class="doc-type__name">Financial Statements</div>
+              </div>
+              <div class="doc-type" data-type="handwritten" onclick="toggleDocType(this)">
+                <div class="doc-type__icon">✍️</div>
+                <div class="doc-type__name">Handwritten Notes</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Volume & Process -->
+          <div class="input-section">
+            <div class="input-section__title">Current Processing Metrics</div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Monthly Document Volume</label>
+                <small>Total documents processed per month</small>
+                <div class="input-with-unit">
+                  <input type="number" id="monthlyDocuments" value="10000">
+                  <span class="input-unit">docs/month</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Pages Per Document (Avg)</label>
+                <div class="input-with-unit">
+                  <input type="number" id="pagesPerDoc" value="5">
+                  <span class="input-unit">pages</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Time to Review & Enter Data</label>
+                <small>Staff time per document</small>
+                <div class="input-with-unit">
+                  <input type="number" id="reviewTime" value="12">
+                  <span class="input-unit">minutes</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Staff Hourly Rate</label>
+                <small>Fully-loaded cost</small>
+                <div class="input-with-unit">
+                  <input type="number" id="hourlyRate" value="50">
+                  <span class="input-unit">$/hour</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Data Entry Error Rate</label>
+                <div class="input-with-unit">
+                  <input type="number" id="errorRate" value="4">
+                  <span class="input-unit">%</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Documents Requiring Re-scan/Rework</label>
+                <div class="input-with-unit">
+                  <input type="number" id="reworkRate" value="8">
+                  <span class="input-unit">%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="accuracy-indicator">
+              <div class="accuracy-indicator__icon">🎯</div>
+              <div class="accuracy-indicator__text">
+                <strong>Document AI Accuracy: 95-99%</strong><br>
+                <span style="font-size: var(--text-sm); color: var(--color-text-muted);">Modern OCR and extraction models achieve near-human accuracy on most document types</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn--primary btn--lg" style="width: 100%; background: #7c3aed;" onclick="calculateSavings()">Calculate Document AI Savings</button>
+
+          <!-- Results -->
+          <div class="results-panel" id="resultsPanel" style="display: none;">
+            <div class="savings-highlight">
+              <div class="savings-highlight__value" id="annualSavings">$0</div>
+              <div class="savings-highlight__label">Annual Savings with Document AI</div>
+            </div>
+
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <div class="metric-card__icon">⏱️</div>
+                <div class="metric-card__value" id="timeSaved">0</div>
+                <div class="metric-card__label">Hours Saved/Year</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-card__icon">⚡</div>
+                <div class="metric-card__value" id="speedIncrease">0x</div>
+                <div class="metric-card__label">Processing Speed</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-card__icon">✓</div>
+                <div class="metric-card__value" id="accuracyGain">0%</div>
+                <div class="metric-card__label">Accuracy Improvement</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-card__icon">📄</div>
+                <div class="metric-card__value" id="autoProcessed">0%</div>
+                <div class="metric-card__label">Auto-Processed</div>
+              </div>
+            </div>
+
+            <div class="comparison-visual">
+              <div class="comparison-box comparison-box--current">
+                <div class="comparison-box__title">Current Process</div>
+                <div class="comparison-box__value" id="currentTime">0 min</div>
+                <div>per document</div>
+              </div>
+              <div class="comparison-arrow">→</div>
+              <div class="comparison-box comparison-box--future">
+                <div class="comparison-box__title">With Document AI</div>
+                <div class="comparison-box__value" id="futureTime">0 min</div>
+                <div>per document</div>
+              </div>
+            </div>
+
+            <div class="process-flow">
+              <h4 style="text-align: center;">Document AI Processing Flow</h4>
+              <div class="flow-steps">
+                <div class="flow-step">
+                  <div class="flow-step__icon">📥</div>
+                  <div class="flow-step__name">Receive</div>
+                  <div class="flow-step__time">Instant</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                  <div class="flow-step__icon">🔍</div>
+                  <div class="flow-step__name">Classify</div>
+                  <div class="flow-step__time">&lt;1 sec</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                  <div class="flow-step__icon">📝</div>
+                  <div class="flow-step__name">Extract</div>
+                  <div class="flow-step__time">2-5 sec</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                  <div class="flow-step__icon">✓</div>
+                  <div class="flow-step__name">Validate</div>
+                  <div class="flow-step__time">&lt;1 sec</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                  <div class="flow-step__icon">🔗</div>
+                  <div class="flow-step__name">Integrate</div>
+                  <div class="flow-step__time">Instant</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>See Document AI in Action</h3>
+              <p>Request a demo with your actual document types to see real extraction results.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <input type="text" placeholder="Organization">
+                <button type="submit" class="btn btn--primary" style="background: #7c3aed;">Request Demo</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleDocType(el) {
+      el.classList.toggle('selected');
+    }
+
+    function calculateSavings() {
+      const monthlyDocs = parseFloat(document.getElementById('monthlyDocuments').value) || 0;
+      const pagesPerDoc = parseFloat(document.getElementById('pagesPerDoc').value) || 1;
+      const reviewTime = parseFloat(document.getElementById('reviewTime').value) || 0;
+      const hourlyRate = parseFloat(document.getElementById('hourlyRate').value) || 0;
+      const errorRate = parseFloat(document.getElementById('errorRate').value) / 100;
+      const reworkRate = parseFloat(document.getElementById('reworkRate').value) / 100;
+
+      // Document AI assumptions
+      const aiProcessingTime = 0.5; // minutes per doc (average)
+      const humanReviewRate = 0.15; // 15% need human review
+      const humanReviewTime = 3; // minutes for review cases
+      const aiErrorRate = 0.02; // 2% error rate
+
+      // Current costs
+      const annualDocs = monthlyDocs * 12;
+      const currentHoursPerDoc = reviewTime / 60;
+      const currentTotalHours = annualDocs * currentHoursPerDoc;
+      const currentLaborCost = currentTotalHours * hourlyRate;
+      const currentReworkCost = annualDocs * reworkRate * (reviewTime / 60) * hourlyRate * 0.5;
+      const totalCurrentCost = currentLaborCost + currentReworkCost;
+
+      // Future costs with AI
+      const autoProcessed = annualDocs * (1 - humanReviewRate);
+      const needsReview = annualDocs * humanReviewRate;
+      const futureAIHours = (autoProcessed * (aiProcessingTime / 60)) + (needsReview * (humanReviewTime / 60));
+      const futureLaborCost = futureAIHours * hourlyRate;
+      const aiPlatformCost = annualDocs * 0.10; // $0.10 per doc estimate
+      const totalFutureCost = futureLaborCost + aiPlatformCost;
+
+      // Savings
+      const annualSavings = totalCurrentCost - totalFutureCost;
+      const hoursSaved = currentTotalHours - futureAIHours;
+      const speedIncrease = reviewTime / ((aiProcessingTime * (1 - humanReviewRate)) + (humanReviewTime * humanReviewRate));
+      const accuracyImprovement = ((errorRate - aiErrorRate) / errorRate) * 100;
+
+      // Display results
+      document.getElementById('resultsPanel').style.display = 'block';
+      document.getElementById('annualSavings').textContent = '$' + Math.round(annualSavings).toLocaleString();
+      document.getElementById('timeSaved').textContent = Math.round(hoursSaved).toLocaleString();
+      document.getElementById('speedIncrease').textContent = Math.round(speedIncrease) + 'x';
+      document.getElementById('accuracyGain').textContent = '+' + Math.round(accuracyImprovement) + '%';
+      document.getElementById('autoProcessed').textContent = Math.round((1 - humanReviewRate) * 100) + '%';
+      document.getElementById('currentTime').textContent = reviewTime + ' min';
+      document.getElementById('futureTime').textContent = Math.round((aiProcessingTime * (1 - humanReviewRate)) + (humanReviewTime * humanReviewRate)) + ' min';
+
+      document.getElementById('resultsPanel').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! We\'ll contact you to schedule a personalized Document AI demo.');
+    }
+  </script>
+</body>
+</html>

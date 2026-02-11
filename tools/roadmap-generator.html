@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Roadmap Generator | Brite.AI</title>
+  <meta name="description" content="Generate a strategic AI roadmap for your organization.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 1000px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .checkbox-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+    @media (max-width: 768px) { .checkbox-grid { grid-template-columns: 1fr; } }
+    .checkbox-item { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border: 2px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; }
+    .checkbox-item:hover { border-color: var(--color-primary); }
+    .checkbox-item.selected { border-color: #2563eb; background: rgba(37, 99, 235, 0.1); }
+    .results-section { display: none; }
+    .roadmap-header { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); text-align: center; }
+    .roadmap-header h3 { color: #1d4ed8; margin-bottom: var(--space-2); }
+    .roadmap-header p { color: #3b82f6; }
+    .roadmap-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    @media (max-width: 768px) { .roadmap-timeline { grid-template-columns: 1fr; } }
+    .phase-column { background: var(--color-background-alt); border-radius: var(--radius-xl); overflow: hidden; }
+    .phase-header { padding: var(--space-4); text-align: center; color: #fff; }
+    .phase-header.phase-1 { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    .phase-header.phase-2 { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+    .phase-header.phase-3 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+    .phase-header.phase-4 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .phase-header__title { font-weight: 700; margin-bottom: var(--space-1); }
+    .phase-header__period { font-size: var(--text-sm); opacity: 0.9; }
+    .phase-body { padding: var(--space-4); }
+    .initiative-card { background: var(--color-background); border-radius: var(--radius-md); padding: var(--space-3); margin-bottom: var(--space-3); border-left: 3px solid var(--color-primary); }
+    .initiative-card:last-child { margin-bottom: 0; }
+    .initiative-card__title { font-weight: 600; font-size: var(--text-sm); margin-bottom: var(--space-1); }
+    .initiative-card__meta { display: flex; gap: var(--space-2); font-size: var(--text-xs); color: var(--color-text-muted); }
+    .investment-summary { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .investment-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); text-align: center; }
+    .investment-row:last-child { border-bottom: none; }
+    .investment-row.header { font-weight: 600; background: var(--color-background); border-radius: var(--radius-md); margin-bottom: var(--space-2); }
+    @media (max-width: 768px) { .investment-row { grid-template-columns: 1fr 1fr; } }
+    .success-metrics { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+    @media (max-width: 768px) { .metric-grid { grid-template-columns: repeat(2, 1fr); } }
+    .metric-item { text-align: center; }
+    .metric-item__value { font-size: var(--text-2xl); font-weight: 800; color: #166534; }
+    .metric-item__label { font-size: var(--text-sm); color: #166534; }
+    .dependencies-section { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .dependency-item { display: flex; gap: var(--space-3); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
+    .dependency-item:last-child { border-bottom: none; }
+    .dependency-item__icon { color: #f59e0b; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Roadmap Generator</h2>
+          <p>Create a strategic AI implementation roadmap for your organization</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>Organization Type</label>
+              <select id="orgType">
+                <option value="hhs">Health & Human Services</option>
+                <option value="workforce">Workforce Development</option>
+                <option value="childwelfare">Child Welfare</option>
+                <option value="revenue">Revenue / Tax</option>
+                <option value="general">General Government</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Current AI Maturity</label>
+                <select id="maturity">
+                  <option value="exploring">Exploring - No AI in production</option>
+                  <option value="piloting">Piloting - 1-2 experiments</option>
+                  <option value="scaling">Scaling - Some AI in production</option>
+                  <option value="optimizing">Optimizing - Multiple AI systems</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Roadmap Timeframe</label>
+                <select id="timeframe">
+                  <option value="1">1 Year</option>
+                  <option value="2">2 Years</option>
+                  <option value="3" selected>3 Years</option>
+                  <option value="5">5 Years</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Strategic Priorities (select top 3)</label>
+              <div class="checkbox-grid" id="priorities">
+                <label class="checkbox-item"><input type="checkbox" value="efficiency"> 📈 Operational Efficiency</label>
+                <label class="checkbox-item"><input type="checkbox" value="experience"> 👥 Constituent Experience</label>
+                <label class="checkbox-item"><input type="checkbox" value="compliance"> 📋 Compliance & Accuracy</label>
+                <label class="checkbox-item"><input type="checkbox" value="workforce"> 💼 Workforce Optimization</label>
+                <label class="checkbox-item"><input type="checkbox" value="fraud"> 🔍 Fraud Prevention</label>
+                <label class="checkbox-item"><input type="checkbox" value="modernization"> 🚀 IT Modernization</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Annual AI Budget Range</label>
+              <select id="budget">
+                <option value="small">Under $500K</option>
+                <option value="medium">$500K - $2M</option>
+                <option value="large">$2M - $5M</option>
+                <option value="xlarge">Over $5M</option>
+              </select>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="generateRoadmap()" style="width: 100%;">Generate AI Roadmap</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="roadmap-header">
+              <h3 id="roadmapTitle">Your 3-Year AI Roadmap</h3>
+              <p id="roadmapSubtitle">Strategic pathway to AI-enabled government services</p>
+            </div>
+
+            <div class="roadmap-timeline" id="roadmapTimeline"></div>
+
+            <div class="investment-summary">
+              <h3 style="margin-bottom: var(--space-4);">Investment Summary</h3>
+              <div class="investment-row header">
+                <span>Phase</span>
+                <span>Investment</span>
+                <span>Expected ROI</span>
+                <span>Risk Level</span>
+                <span>Value Created</span>
+              </div>
+              <div id="investmentRows"></div>
+            </div>
+
+            <div class="success-metrics">
+              <h3 style="margin-bottom: var(--space-4);">Projected Outcomes (End of Roadmap)</h3>
+              <div class="metric-grid" id="metricsGrid"></div>
+            </div>
+
+            <div class="dependencies-section">
+              <h3 style="margin-bottom: var(--space-4);">⚠️ Key Dependencies & Prerequisites</h3>
+              <div id="dependenciesList"></div>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Get Your Detailed Roadmap Package</h3>
+              <p>Receive executive presentation, detailed project plans, and business case templates.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Full Package</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Generate New Roadmap</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.checkbox-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const checkboxes = document.querySelectorAll('#priorities input:checked');
+        const checkbox = item.querySelector('input');
+        if (!checkbox.checked && checkboxes.length >= 3) {
+          alert('Please select up to 3 priorities');
+          e.preventDefault();
+          return;
+        }
+        if (e.target.type !== 'checkbox') {
+          checkbox.checked = !checkbox.checked;
+        }
+        item.classList.toggle('selected', checkbox.checked);
+      });
+    });
+
+    const initiatives = {
+      efficiency: [
+        { name: "Document Processing AI", duration: "6 mo", roi: "280%" },
+        { name: "Workflow Automation", duration: "4 mo", roi: "200%" },
+        { name: "Intelligent Routing", duration: "3 mo", roi: "150%" }
+      ],
+      experience: [
+        { name: "Virtual Assistant", duration: "5 mo", roi: "220%" },
+        { name: "Self-Service Portal AI", duration: "6 mo", roi: "180%" },
+        { name: "Proactive Notifications", duration: "3 mo", roi: "160%" }
+      ],
+      compliance: [
+        { name: "Automated Audit Trail", duration: "4 mo", roi: "150%" },
+        { name: "Policy Compliance Checker", duration: "5 mo", roi: "200%" },
+        { name: "Quality Assurance AI", duration: "4 mo", roi: "170%" }
+      ],
+      workforce: [
+        { name: "Case Prioritization AI", duration: "4 mo", roi: "190%" },
+        { name: "Knowledge Assistant", duration: "5 mo", roi: "160%" },
+        { name: "Training Recommendation", duration: "3 mo", roi: "140%" }
+      ],
+      fraud: [
+        { name: "Fraud Detection System", duration: "6 mo", roi: "450%" },
+        { name: "Identity Verification", duration: "4 mo", roi: "320%" },
+        { name: "Anomaly Alerting", duration: "3 mo", roi: "280%" }
+      ],
+      modernization: [
+        { name: "API Integration Layer", duration: "5 mo", roi: "150%" },
+        { name: "Data Lake Implementation", duration: "6 mo", roi: "180%" },
+        { name: "Cloud AI Platform", duration: "6 mo", roi: "200%" }
+      ]
+    };
+
+    function generateRoadmap() {
+      const orgType = document.getElementById('orgType').value;
+      const maturity = document.getElementById('maturity').value;
+      const timeframe = parseInt(document.getElementById('timeframe').value);
+      const budget = document.getElementById('budget').value;
+      const selectedPriorities = Array.from(document.querySelectorAll('#priorities input:checked')).map(c => c.value);
+
+      if (selectedPriorities.length === 0) {
+        selectedPriorities.push('efficiency', 'experience', 'compliance');
+      }
+
+      // Budget multipliers
+      const budgetAmounts = { small: 400000, medium: 1200000, large: 3500000, xlarge: 7000000 };
+      const totalBudget = budgetAmounts[budget] * timeframe;
+
+      // Generate phases
+      const phases = [
+        { name: "Foundation", period: "Q1-Q2 Year 1", color: "phase-1", focus: "Quick wins & infrastructure" },
+        { name: "Acceleration", period: "Q3-Q4 Year 1", color: "phase-2", focus: "Scale successful pilots" },
+        { name: "Expansion", period: "Year 2", color: "phase-3", focus: "Broader deployment" },
+        { name: "Optimization", period: "Year 3+", color: "phase-4", focus: "Advanced capabilities" }
+      ].slice(0, Math.min(4, timeframe + 1));
+
+      // Distribute initiatives across phases
+      const allInitiatives = selectedPriorities.flatMap(p => initiatives[p] || []);
+
+      document.getElementById('roadmapTitle').textContent = `Your ${timeframe}-Year AI Roadmap`;
+      document.getElementById('roadmapTimeline').innerHTML = phases.map((phase, idx) => {
+        const phaseInitiatives = allInitiatives.slice(idx * 2, idx * 2 + 3);
+        return `
+          <div class="phase-column">
+            <div class="phase-header ${phase.color}">
+              <div class="phase-header__title">${phase.name}</div>
+              <div class="phase-header__period">${phase.period}</div>
+            </div>
+            <div class="phase-body">
+              <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: var(--space-3);">${phase.focus}</p>
+              ${phaseInitiatives.map(init => `
+                <div class="initiative-card">
+                  <div class="initiative-card__title">${init.name}</div>
+                  <div class="initiative-card__meta">
+                    <span>⏱️ ${init.duration}</span>
+                    <span>📈 ${init.roi}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Investment summary
+      const phaseInvestments = [
+        { phase: "Foundation", investment: totalBudget * 0.2, roi: "180%", risk: "Low", value: "$" + Math.round(totalBudget * 0.2 * 1.8 / 1000000 * 10) / 10 + "M" },
+        { phase: "Acceleration", investment: totalBudget * 0.25, roi: "220%", risk: "Medium", value: "$" + Math.round(totalBudget * 0.25 * 2.2 / 1000000 * 10) / 10 + "M" },
+        { phase: "Expansion", investment: totalBudget * 0.30, roi: "280%", risk: "Medium", value: "$" + Math.round(totalBudget * 0.30 * 2.8 / 1000000 * 10) / 10 + "M" },
+        { phase: "Optimization", investment: totalBudget * 0.25, roi: "350%", risk: "Low", value: "$" + Math.round(totalBudget * 0.25 * 3.5 / 1000000 * 10) / 10 + "M" }
+      ].slice(0, phases.length);
+
+      document.getElementById('investmentRows').innerHTML = phaseInvestments.map(p => `
+        <div class="investment-row">
+          <span>${p.phase}</span>
+          <span>$${(p.investment / 1000000).toFixed(1)}M</span>
+          <span style="color: #22c55e;">${p.roi}</span>
+          <span>${p.risk}</span>
+          <span style="font-weight: 700;">${p.value}</span>
+        </div>
+      `).join('');
+
+      // Success metrics
+      const metrics = [
+        { value: "65%", label: "Processing Time Reduction" },
+        { value: "40%", label: "Cost Savings" },
+        { value: "+35%", label: "Constituent Satisfaction" },
+        { value: "85%", label: "Staff Adoption" }
+      ];
+
+      document.getElementById('metricsGrid').innerHTML = metrics.map(m => `
+        <div class="metric-item">
+          <div class="metric-item__value">${m.value}</div>
+          <div class="metric-item__label">${m.label}</div>
+        </div>
+      `).join('');
+
+      // Dependencies
+      const dependencies = [
+        "Executive sponsorship and governance structure",
+        "Data infrastructure and quality improvements",
+        "Change management and training programs",
+        "Vendor selection and procurement processes",
+        "Security and compliance framework updates"
+      ];
+
+      document.getElementById('dependenciesList').innerHTML = dependencies.map(d => `
+        <div class="dependency-item">
+          <span class="dependency-item__icon">⚠️</span>
+          <span>${d}</span>
+        </div>
+      `).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+      document.querySelectorAll('.checkbox-item input').forEach(c => { c.checked = false; c.closest('.checkbox-item').classList.remove('selected'); });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your detailed roadmap package will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

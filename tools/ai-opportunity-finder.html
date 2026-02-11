@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Opportunity Finder | Brite.AI</title>
+  <meta name="description" content="Discover AI opportunities across your agency operations with intelligent process analysis.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: var(--space-6); }
+    .tool-header { background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .form-group { margin-bottom: var(--space-6); }
+    .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); }
+    .form-group input, .form-group select { width: 100%; padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-base); }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--color-primary); }
+    .form-group .help-text { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .checkbox-group { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+    @media (max-width: 768px) { .checkbox-group { grid-template-columns: 1fr; } }
+    .checkbox-item { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s; }
+    .checkbox-item:hover { border-color: var(--color-primary); background: var(--color-background-alt); }
+    .checkbox-item.selected { border-color: var(--color-primary); background: rgba(79, 70, 229, 0.1); }
+    .checkbox-item input { margin-top: 4px; }
+    .checkbox-item__content h4 { font-size: var(--text-base); margin-bottom: var(--space-1); }
+    .checkbox-item__content p { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .results-section { display: none; }
+    .opportunity-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-6); margin-bottom: var(--space-4); border-left: 4px solid var(--color-primary); }
+    .opportunity-card__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-4); }
+    .opportunity-card__title { font-weight: 700; font-size: var(--text-lg); }
+    .opportunity-card__score { background: var(--color-primary); color: #fff; padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); font-weight: 700; }
+    .opportunity-card__score.high { background: #22c55e; }
+    .opportunity-card__score.medium { background: #f59e0b; }
+    .opportunity-card__score.low { background: #6b7280; }
+    .opportunity-card__details { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-bottom: var(--space-4); }
+    @media (max-width: 768px) { .opportunity-card__details { grid-template-columns: 1fr; } }
+    .detail-item { text-align: center; }
+    .detail-item__value { font-size: var(--text-xl); font-weight: 700; color: var(--color-primary); }
+    .detail-item__label { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .opportunity-card__benefits { list-style: none; padding: 0; }
+    .opportunity-card__benefits li { padding: var(--space-2) 0; padding-left: var(--space-6); position: relative; }
+    .opportunity-card__benefits li::before { content: "✓"; position: absolute; left: 0; color: #22c55e; font-weight: 700; }
+    .summary-banner { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius: var(--radius-xl); padding: var(--space-6); margin-bottom: var(--space-6); display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); text-align: center; }
+    @media (max-width: 768px) { .summary-banner { grid-template-columns: repeat(2, 1fr); } }
+    .summary-item__value { font-size: var(--text-2xl); font-weight: 800; color: #166534; }
+    .summary-item__label { font-size: var(--text-sm); color: #166534; }
+    .lead-capture { background: var(--color-background-alt); border-radius: var(--radius-xl); padding: var(--space-8); margin-top: var(--space-8); text-align: center; }
+    .lead-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 400px; margin: var(--space-6) auto 0; }
+    .lead-form input { padding: var(--space-3) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-md); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Opportunity Finder</h2>
+          <p>Discover where AI can create the most value across your agency</p>
+        </div>
+        <div class="tool-body">
+          <div id="formSection">
+            <div class="form-group">
+              <label>Select Your Agency Type</label>
+              <select id="agencyType">
+                <option value="hhs">Health & Human Services</option>
+                <option value="workforce">Workforce Development</option>
+                <option value="childwelfare">Child Welfare</option>
+                <option value="revenue">Revenue / Tax</option>
+                <option value="general">General Government Services</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Select Current Pain Points (choose all that apply)</label>
+              <div class="checkbox-group" id="painPoints">
+                <label class="checkbox-item">
+                  <input type="checkbox" value="backlog">
+                  <div class="checkbox-item__content">
+                    <h4>Application Backlogs</h4>
+                    <p>Growing queue of pending applications</p>
+                  </div>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="errors">
+                  <div class="checkbox-item__content">
+                    <h4>Manual Entry Errors</h4>
+                    <p>High error rates in data processing</p>
+                  </div>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="staffing">
+                  <div class="checkbox-item__content">
+                    <h4>Staff Shortages</h4>
+                    <p>Difficulty filling open positions</p>
+                  </div>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="compliance">
+                  <div class="checkbox-item__content">
+                    <h4>Compliance Challenges</h4>
+                    <p>Struggling to meet audit requirements</p>
+                  </div>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="waittime">
+                  <div class="checkbox-item__content">
+                    <h4>Long Wait Times</h4>
+                    <p>Constituents waiting too long for service</p>
+                  </div>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="legacy">
+                  <div class="checkbox-item__content">
+                    <h4>Legacy Systems</h4>
+                    <p>Outdated technology limiting efficiency</p>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Annual Operating Budget</label>
+              <select id="budget">
+                <option value="small">Under $10M</option>
+                <option value="medium">$10M - $50M</option>
+                <option value="large">$50M - $200M</option>
+                <option value="xlarge">Over $200M</option>
+              </select>
+            </div>
+
+            <button class="btn btn--primary btn--lg" onclick="findOpportunities()" style="width: 100%;">Find AI Opportunities</button>
+          </div>
+
+          <div class="results-section" id="resultsSection">
+            <div class="summary-banner">
+              <div class="summary-item">
+                <div class="summary-item__value" id="totalOpportunities">0</div>
+                <div class="summary-item__label">Opportunities Found</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-item__value" id="totalSavings">$0</div>
+                <div class="summary-item__label">Potential Annual Savings</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-item__value" id="hoursFreed">0</div>
+                <div class="summary-item__label">Hours Freed per Week</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-item__value" id="avgROI">0%</div>
+                <div class="summary-item__label">Average ROI</div>
+              </div>
+            </div>
+
+            <h3 style="margin-bottom: var(--space-4);">Top AI Opportunities for Your Agency</h3>
+            <div id="opportunitiesList"></div>
+
+            <div class="lead-capture">
+              <h3>Get Your Detailed Opportunity Report</h3>
+              <p>Receive a comprehensive analysis with implementation roadmap and business case templates.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="email" placeholder="Work email" required>
+                <input type="text" placeholder="Name">
+                <button type="submit" class="btn btn--primary">Get Full Report</button>
+              </form>
+            </div>
+
+            <button class="btn btn--secondary" onclick="resetForm()" style="width: 100%; margin-top: var(--space-4);">Start Over</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Add selected state to checkbox items
+    document.querySelectorAll('.checkbox-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        if (e.target.type !== 'checkbox') {
+          const checkbox = this.querySelector('input[type="checkbox"]');
+          checkbox.checked = !checkbox.checked;
+        }
+        this.classList.toggle('selected', this.querySelector('input').checked);
+      });
+    });
+
+    const opportunities = {
+      hhs: [
+        { name: "Benefits Eligibility Automation", painPoints: ["backlog", "staffing", "waittime"], savings: 850000, hours: 120, roi: 340, benefits: ["Process applications 70% faster", "Reduce eligibility errors by 45%", "Free staff for complex cases"] },
+        { name: "Document Processing AI", painPoints: ["backlog", "errors", "legacy"], savings: 620000, hours: 90, roi: 280, benefits: ["Auto-extract data from 50+ document types", "99% accuracy vs 92% manual", "Integrate with existing systems"] },
+        { name: "Constituent Service Chatbot", painPoints: ["waittime", "staffing"], savings: 480000, hours: 60, roi: 220, benefits: ["24/7 availability for common questions", "Handle 60% of inquiries automatically", "Reduce call center volume 40%"] },
+        { name: "Case Prioritization Engine", painPoints: ["backlog", "compliance"], savings: 320000, hours: 40, roi: 180, benefits: ["Identify urgent cases automatically", "Ensure compliance deadlines met", "Reduce case processing time 35%"] },
+        { name: "Fraud Detection System", painPoints: ["errors", "compliance"], savings: 950000, hours: 30, roi: 450, benefits: ["Catch fraud patterns in real-time", "Reduce improper payments 60%", "Automated audit trails"] }
+      ],
+      workforce: [
+        { name: "Resume Matching AI", painPoints: ["backlog", "staffing"], savings: 420000, hours: 80, roi: 260, benefits: ["Match candidates to jobs 10x faster", "Improve placement success 40%", "Reduce counselor workload"] },
+        { name: "Training Recommendation Engine", painPoints: ["waittime", "errors"], savings: 380000, hours: 50, roi: 200, benefits: ["Personalized training paths", "Improve completion rates 45%", "Better employment outcomes"] },
+        { name: "Employer Outreach Automation", painPoints: ["staffing", "legacy"], savings: 280000, hours: 35, roi: 180, benefits: ["Automated job posting collection", "Smart employer matching", "Track engagement automatically"] }
+      ],
+      childwelfare: [
+        { name: "Risk Assessment AI", painPoints: ["compliance", "errors"], savings: 520000, hours: 45, roi: 320, benefits: ["Evidence-based risk scoring", "Consistent assessment quality", "Earlier intervention triggers"] },
+        { name: "Case Documentation Assistant", painPoints: ["backlog", "staffing", "compliance"], savings: 680000, hours: 100, roi: 290, benefits: ["Auto-generate case notes", "Ensure compliance requirements", "More time for family visits"] },
+        { name: "Placement Matching System", painPoints: ["waittime", "errors"], savings: 440000, hours: 55, roi: 240, benefits: ["Better foster family matches", "Reduce placement disruptions 35%", "Track outcomes automatically"] }
+      ],
+      revenue: [
+        { name: "Tax Return Processing AI", painPoints: ["backlog", "errors", "legacy"], savings: 920000, hours: 150, roi: 380, benefits: ["Process returns 80% faster", "Catch errors before filing", "Reduce manual review 65%"] },
+        { name: "Audit Selection Engine", painPoints: ["compliance", "staffing"], savings: 1200000, hours: 40, roi: 520, benefits: ["AI-powered audit targeting", "Increase recovery rates 45%", "Focus resources on high-value cases"] },
+        { name: "Taxpayer Service Bot", painPoints: ["waittime", "staffing"], savings: 580000, hours: 70, roi: 240, benefits: ["Answer 70% of common questions", "24/7 availability", "Reduce call wait times 50%"] }
+      ],
+      general: [
+        { name: "Document Digitization AI", painPoints: ["legacy", "backlog"], savings: 340000, hours: 60, roi: 200, benefits: ["Convert paper to searchable digital", "Auto-classification and routing", "Improve retrieval time 90%"] },
+        { name: "Permitting Automation", painPoints: ["backlog", "waittime", "staffing"], savings: 520000, hours: 75, roi: 260, benefits: ["Auto-review standard permits", "Reduce approval time 60%", "Track status automatically"] },
+        { name: "Public Records AI", painPoints: ["compliance", "staffing", "backlog"], savings: 280000, hours: 45, roi: 180, benefits: ["Auto-redact sensitive info", "Faster FOIA responses", "Ensure consistent compliance"] }
+      ]
+    };
+
+    function findOpportunities() {
+      const agencyType = document.getElementById('agencyType').value;
+      const selectedPainPoints = Array.from(document.querySelectorAll('#painPoints input:checked')).map(c => c.value);
+      const budget = document.getElementById('budget').value;
+
+      const budgetMultiplier = { small: 0.5, medium: 1, large: 1.5, xlarge: 2 };
+      const multiplier = budgetMultiplier[budget];
+
+      const agencyOpps = opportunities[agencyType] || opportunities.general;
+
+      // Score and sort opportunities based on pain point matches
+      const scoredOpps = agencyOpps.map(opp => {
+        const matchCount = opp.painPoints.filter(p => selectedPainPoints.includes(p)).length;
+        return { ...opp, matchScore: matchCount, adjustedSavings: Math.round(opp.savings * multiplier) };
+      }).filter(opp => opp.matchScore > 0 || selectedPainPoints.length === 0)
+        .sort((a, b) => b.matchScore - a.matchScore || b.roi - a.roi);
+
+      const displayOpps = scoredOpps.length > 0 ? scoredOpps : agencyOpps.map(o => ({...o, adjustedSavings: Math.round(o.savings * multiplier)}));
+
+      // Calculate totals
+      const totalSavings = displayOpps.reduce((sum, o) => sum + o.adjustedSavings, 0);
+      const totalHours = displayOpps.reduce((sum, o) => sum + o.hours, 0);
+      const avgROI = Math.round(displayOpps.reduce((sum, o) => sum + o.roi, 0) / displayOpps.length);
+
+      document.getElementById('totalOpportunities').textContent = displayOpps.length;
+      document.getElementById('totalSavings').textContent = '$' + (totalSavings / 1000000).toFixed(1) + 'M';
+      document.getElementById('hoursFreed').textContent = totalHours.toLocaleString();
+      document.getElementById('avgROI').textContent = avgROI + '%';
+
+      // Generate opportunity cards
+      const listEl = document.getElementById('opportunitiesList');
+      listEl.innerHTML = displayOpps.map((opp, i) => {
+        const scoreClass = opp.roi >= 300 ? 'high' : opp.roi >= 200 ? 'medium' : 'low';
+        return `
+          <div class="opportunity-card">
+            <div class="opportunity-card__header">
+              <div class="opportunity-card__title">${i + 1}. ${opp.name}</div>
+              <div class="opportunity-card__score ${scoreClass}">${opp.roi}% ROI</div>
+            </div>
+            <div class="opportunity-card__details">
+              <div class="detail-item">
+                <div class="detail-item__value">$${(opp.adjustedSavings / 1000).toFixed(0)}K</div>
+                <div class="detail-item__label">Annual Savings</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-item__value">${opp.hours}</div>
+                <div class="detail-item__label">Hours/Week Freed</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-item__value">${opp.roi}%</div>
+                <div class="detail-item__label">Expected ROI</div>
+              </div>
+            </div>
+            <ul class="opportunity-card__benefits">
+              ${opp.benefits.map(b => `<li>${b}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('formSection').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+      document.querySelectorAll('.checkbox-item input').forEach(c => { c.checked = false; c.closest('.checkbox-item').classList.remove('selected'); });
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Your detailed AI Opportunity Report will be sent to your email within 24 hours.');
+    }
+  </script>
+</body>
+</html>

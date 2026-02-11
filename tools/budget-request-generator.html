@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Budget Request Generator | Brite.AI</title>
+  <meta name="description" content="Generate budget justification documents for your AI initiative. Create professional business cases ready for approval.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 1000px; margin: 0 auto; }
+    .tool-card {
+      background: var(--color-background);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .tool-header {
+      background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+      color: #fff;
+      padding: var(--space-8);
+      text-align: center;
+    }
+    .tool-body { padding: var(--space-8); }
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--color-text-muted);
+    }
+    .step.active { color: #1d4ed8; font-weight: 600; }
+    .step.completed { color: #059669; }
+    .step__number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-sm);
+    }
+    .step.active .step__number { background: #1d4ed8; color: #fff; border-color: #1d4ed8; }
+    .step.completed .step__number { background: #059669; color: #fff; border-color: #059669; }
+    .form-section {
+      display: none;
+    }
+    .form-section.active { display: block; }
+    .section-title {
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+    .section-desc {
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-6);
+    }
+    .form-group {
+      margin-bottom: var(--space-5);
+    }
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: var(--space-2);
+    }
+    .form-group small {
+      display: block;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-2);
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-base);
+      font-family: inherit;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: #1d4ed8;
+    }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-2);
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+    }
+    .checkbox-item:hover { border-color: #1d4ed8; }
+    .checkbox-item input { margin: 0; }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: var(--space-8);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--color-border);
+    }
+    .output-section {
+      display: none;
+    }
+    .output-section.active { display: block; }
+    .document-preview {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      font-family: 'Times New Roman', serif;
+      line-height: 1.6;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+    .document-preview h1 { font-size: 24px; text-align: center; margin-bottom: 20px; }
+    .document-preview h2 { font-size: 18px; margin-top: 24px; margin-bottom: 12px; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+    .document-preview h3 { font-size: 16px; margin-top: 16px; margin-bottom: 8px; }
+    .document-preview p { margin-bottom: 12px; text-align: justify; }
+    .document-preview ul { margin-bottom: 12px; padding-left: 24px; }
+    .document-preview li { margin-bottom: 6px; }
+    .document-preview table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    .document-preview th, .document-preview td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    .document-preview th { background: #f5f5f5; }
+    .action-buttons {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      margin-top: var(--space-6);
+    }
+    .action-buttons button {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .lead-capture {
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-top: var(--space-8);
+      text-align: center;
+    }
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      max-width: 400px;
+      margin: var(--space-6) auto 0;
+    }
+    .lead-form input {
+      padding: var(--space-3) var(--space-4);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../ai-data/index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h1>AI Budget Request Generator</h1>
+          <p>Create a professional budget justification document for your AI initiative</p>
+        </div>
+
+        <div class="tool-body">
+          <div class="step-indicator">
+            <div class="step active" data-step="1">
+              <div class="step__number">1</div>
+              <span>Project Info</span>
+            </div>
+            <div class="step" data-step="2">
+              <div class="step__number">2</div>
+              <span>Problem & Solution</span>
+            </div>
+            <div class="step" data-step="3">
+              <div class="step__number">3</div>
+              <span>Costs & Benefits</span>
+            </div>
+            <div class="step" data-step="4">
+              <div class="step__number">4</div>
+              <span>Review</span>
+            </div>
+          </div>
+
+          <!-- Step 1: Project Info -->
+          <div class="form-section active" data-section="1">
+            <h2 class="section-title">Project Information</h2>
+            <p class="section-desc">Basic details about your AI initiative</p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Project Name</label>
+                <input type="text" id="projectName" placeholder="e.g., AI-Powered Document Processing">
+              </div>
+              <div class="form-group">
+                <label>Requesting Department/Agency</label>
+                <input type="text" id="department" placeholder="e.g., Department of Human Services">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Fiscal Year</label>
+                <select id="fiscalYear">
+                  <option value="FY2026">FY2026</option>
+                  <option value="FY2027">FY2027</option>
+                  <option value="FY2028">FY2028</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Project Sponsor</label>
+                <input type="text" id="sponsor" placeholder="Name and Title">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Project Summary</label>
+              <small>Brief description of what this AI project will do (2-3 sentences)</small>
+              <textarea id="projectSummary" placeholder="This project will implement AI-powered automation to..."></textarea>
+            </div>
+
+            <div class="nav-buttons">
+              <div></div>
+              <button class="btn btn--primary" onclick="nextStep()">Continue</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Problem & Solution -->
+          <div class="form-section" data-section="2">
+            <h2 class="section-title">Problem Statement & Proposed Solution</h2>
+            <p class="section-desc">Describe the business problem and how AI will solve it</p>
+
+            <div class="form-group">
+              <label>Current Challenge</label>
+              <small>What problem does this project address?</small>
+              <textarea id="currentChallenge" placeholder="Currently, staff manually process thousands of documents each month, leading to..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Impact of Current State</label>
+              <small>How does this problem affect operations, constituents, or costs?</small>
+              <textarea id="currentImpact" placeholder="This results in processing backlogs of X days, constituent complaints, and an error rate of Y%..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Proposed AI Solution</label>
+              <small>How will AI address this challenge?</small>
+              <textarea id="proposedSolution" placeholder="The proposed AI solution will automatically classify, extract data from, and validate documents..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Strategic Alignment</label>
+              <small>Check all that apply</small>
+              <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" value="efficiency"> Operational Efficiency</label>
+                <label class="checkbox-item"><input type="checkbox" value="constituent"> Constituent Experience</label>
+                <label class="checkbox-item"><input type="checkbox" value="cost"> Cost Reduction</label>
+                <label class="checkbox-item"><input type="checkbox" value="compliance"> Compliance/Risk</label>
+                <label class="checkbox-item"><input type="checkbox" value="modernization"> IT Modernization</label>
+                <label class="checkbox-item"><input type="checkbox" value="workforce"> Workforce Optimization</label>
+              </div>
+            </div>
+
+            <div class="nav-buttons">
+              <button class="btn btn--secondary" onclick="prevStep()">Back</button>
+              <button class="btn btn--primary" onclick="nextStep()">Continue</button>
+            </div>
+          </div>
+
+          <!-- Step 3: Costs & Benefits -->
+          <div class="form-section" data-section="3">
+            <h2 class="section-title">Costs & Expected Benefits</h2>
+            <p class="section-desc">Financial details and projected return on investment</p>
+
+            <h3 style="margin-bottom: var(--space-4);">Requested Funding</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Year 1 Implementation Cost</label>
+                <input type="number" id="year1Cost" placeholder="e.g., 300000">
+              </div>
+              <div class="form-group">
+                <label>Annual Operating Cost (Year 2+)</label>
+                <input type="number" id="annualCost" placeholder="e.g., 75000">
+              </div>
+            </div>
+
+            <h3 style="margin-bottom: var(--space-4); margin-top: var(--space-6);">Expected Benefits</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Annual Cost Savings</label>
+                <input type="number" id="annualSavings" placeholder="e.g., 450000">
+              </div>
+              <div class="form-group">
+                <label>FTE Hours Redeployed/Year</label>
+                <input type="number" id="fteHours" placeholder="e.g., 8000">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Other Quantifiable Benefits</label>
+              <textarea id="otherBenefits" placeholder="e.g., 50% reduction in processing time, 75% reduction in errors, 90% improvement in constituent wait times..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Funding Source</label>
+              <select id="fundingSource">
+                <option value="general">General Fund</option>
+                <option value="federal">Federal Grant (specify below)</option>
+                <option value="special">Special Fund</option>
+                <option value="mixed">Mixed Funding</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Federal Funding Details (if applicable)</label>
+              <input type="text" id="federalDetails" placeholder="e.g., SNAP E&T, Title IV-E, CCDF">
+            </div>
+
+            <div class="nav-buttons">
+              <button class="btn btn--secondary" onclick="prevStep()">Back</button>
+              <button class="btn btn--primary" onclick="generateDocument()">Generate Document</button>
+            </div>
+          </div>
+
+          <!-- Step 4: Output -->
+          <div class="output-section" data-section="4">
+            <h2 class="section-title">Your Budget Request Document</h2>
+            <p class="section-desc">Review and download your generated budget justification</p>
+
+            <div class="document-preview" id="documentPreview"></div>
+
+            <div class="action-buttons">
+              <button class="btn btn--secondary" onclick="copyDocument()">📋 Copy to Clipboard</button>
+              <button class="btn btn--primary" onclick="downloadDocument()">📥 Download as Word</button>
+            </div>
+
+            <div class="lead-capture">
+              <h3>Need Help with Your Business Case?</h3>
+              <p>Our team can help refine your budget request and support the approval process.</p>
+              <form class="lead-form" onsubmit="submitLead(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Work Email" required>
+                <button type="submit" class="btn btn--primary">Request Consultation</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let currentStep = 1;
+
+    function updateSteps() {
+      document.querySelectorAll('.step').forEach(s => {
+        const step = parseInt(s.dataset.step);
+        s.classList.remove('active', 'completed');
+        if (step === currentStep) s.classList.add('active');
+        else if (step < currentStep) s.classList.add('completed');
+      });
+      document.querySelectorAll('.form-section').forEach(s => {
+        s.classList.remove('active');
+        if (parseInt(s.dataset.section) === currentStep) s.classList.add('active');
+      });
+    }
+
+    function nextStep() {
+      if (currentStep < 3) {
+        currentStep++;
+        updateSteps();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        currentStep--;
+        updateSteps();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function generateDocument() {
+      const data = {
+        projectName: document.getElementById('projectName').value || '[Project Name]',
+        department: document.getElementById('department').value || '[Department]',
+        fiscalYear: document.getElementById('fiscalYear').value,
+        sponsor: document.getElementById('sponsor').value || '[Sponsor Name]',
+        summary: document.getElementById('projectSummary').value || '[Project summary]',
+        challenge: document.getElementById('currentChallenge').value || '[Current challenge]',
+        impact: document.getElementById('currentImpact').value || '[Current impact]',
+        solution: document.getElementById('proposedSolution').value || '[Proposed solution]',
+        year1Cost: parseInt(document.getElementById('year1Cost').value) || 0,
+        annualCost: parseInt(document.getElementById('annualCost').value) || 0,
+        annualSavings: parseInt(document.getElementById('annualSavings').value) || 0,
+        fteHours: parseInt(document.getElementById('fteHours').value) || 0,
+        otherBenefits: document.getElementById('otherBenefits').value || '',
+        fundingSource: document.getElementById('fundingSource').value,
+        federalDetails: document.getElementById('federalDetails').value
+      };
+
+      const year3Total = data.year1Cost + (data.annualCost * 2);
+      const year3Savings = data.annualSavings * 3;
+      const roi = year3Savings > 0 ? Math.round(((year3Savings - year3Total) / year3Total) * 100) : 0;
+      const payback = data.annualSavings > 0 ? Math.round(data.year1Cost / (data.annualSavings / 12)) : 0;
+
+      const alignments = [];
+      document.querySelectorAll('.checkbox-group input:checked').forEach(cb => {
+        const labels = {
+          'efficiency': 'Operational Efficiency',
+          'constituent': 'Constituent Experience',
+          'cost': 'Cost Reduction',
+          'compliance': 'Compliance & Risk Management',
+          'modernization': 'IT Modernization',
+          'workforce': 'Workforce Optimization'
+        };
+        alignments.push(labels[cb.value]);
+      });
+
+      const html = `
+        <h1>BUDGET REQUEST<br>${data.fiscalYear}</h1>
+        <p style="text-align: center;"><strong>${data.projectName}</strong><br>${data.department}</p>
+
+        <h2>1. Executive Summary</h2>
+        <p>${data.summary}</p>
+        <p><strong>Total Funding Requested:</strong> $${data.year1Cost.toLocaleString()} (Year 1) + $${data.annualCost.toLocaleString()}/year ongoing</p>
+        <p><strong>Projected Annual Savings:</strong> $${data.annualSavings.toLocaleString()}</p>
+        <p><strong>Projected 3-Year ROI:</strong> ${roi}%</p>
+
+        <h2>2. Problem Statement</h2>
+        <h3>2.1 Current Challenge</h3>
+        <p>${data.challenge}</p>
+        <h3>2.2 Business Impact</h3>
+        <p>${data.impact}</p>
+
+        <h2>3. Proposed Solution</h2>
+        <p>${data.solution}</p>
+
+        <h2>4. Strategic Alignment</h2>
+        <p>This initiative aligns with the following organizational priorities:</p>
+        <ul>
+          ${alignments.map(a => `<li>${a}</li>`).join('')}
+        </ul>
+
+        <h2>5. Cost-Benefit Analysis</h2>
+        <h3>5.1 Investment Required</h3>
+        <table>
+          <tr><th>Category</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>3-Year Total</th></tr>
+          <tr><td>Implementation</td><td>$${data.year1Cost.toLocaleString()}</td><td>-</td><td>-</td><td>$${data.year1Cost.toLocaleString()}</td></tr>
+          <tr><td>Annual Operations</td><td>-</td><td>$${data.annualCost.toLocaleString()}</td><td>$${data.annualCost.toLocaleString()}</td><td>$${(data.annualCost * 2).toLocaleString()}</td></tr>
+          <tr style="font-weight: bold;"><td>Total Investment</td><td>$${data.year1Cost.toLocaleString()}</td><td>$${data.annualCost.toLocaleString()}</td><td>$${data.annualCost.toLocaleString()}</td><td>$${year3Total.toLocaleString()}</td></tr>
+        </table>
+
+        <h3>5.2 Expected Benefits</h3>
+        <table>
+          <tr><th>Benefit</th><th>Annual Value</th><th>3-Year Value</th></tr>
+          <tr><td>Cost Savings</td><td>$${data.annualSavings.toLocaleString()}</td><td>$${year3Savings.toLocaleString()}</td></tr>
+          <tr><td>FTE Hours Redeployed</td><td>${data.fteHours.toLocaleString()} hours</td><td>${(data.fteHours * 3).toLocaleString()} hours</td></tr>
+        </table>
+        ${data.otherBenefits ? `<p><strong>Additional Benefits:</strong> ${data.otherBenefits}</p>` : ''}
+
+        <h3>5.3 Return on Investment</h3>
+        <ul>
+          <li><strong>3-Year ROI:</strong> ${roi}%</li>
+          <li><strong>Payback Period:</strong> ${payback} months</li>
+          <li><strong>Net 3-Year Benefit:</strong> $${(year3Savings - year3Total).toLocaleString()}</li>
+        </ul>
+
+        <h2>6. Funding Source</h2>
+        <p><strong>Primary Funding:</strong> ${data.fundingSource === 'general' ? 'General Fund' : data.fundingSource === 'federal' ? 'Federal Grant Funds' : data.fundingSource === 'special' ? 'Special Fund' : 'Mixed Funding Sources'}</p>
+        ${data.federalDetails ? `<p><strong>Federal Program:</strong> ${data.federalDetails}</p>` : ''}
+
+        <h2>7. Recommendation</h2>
+        <p>Based on the analysis above, we recommend approval of $${data.year1Cost.toLocaleString()} in ${data.fiscalYear} for the ${data.projectName} initiative. This investment will generate an estimated $${data.annualSavings.toLocaleString()} in annual savings with a payback period of ${payback} months.</p>
+
+        <p style="margin-top: 40px;">
+          <strong>Prepared by:</strong> ${data.sponsor}<br>
+          <strong>Date:</strong> ${new Date().toLocaleDateString()}<br>
+          <strong>Department:</strong> ${data.department}
+        </p>
+      `;
+
+      document.getElementById('documentPreview').innerHTML = html;
+      document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+      document.querySelector('.output-section').classList.add('active');
+      currentStep = 4;
+      updateSteps();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function copyDocument() {
+      const text = document.getElementById('documentPreview').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Document copied to clipboard!');
+      });
+    }
+
+    function downloadDocument() {
+      const content = document.getElementById('documentPreview').innerHTML;
+      const blob = new Blob([`<html><head><meta charset="utf-8"><title>Budget Request</title></head><body>${content}</body></html>`], { type: 'application/msword' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'AI_Budget_Request.doc';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function submitLead(e) {
+      e.preventDefault();
+      alert('Thank you! Our team will contact you to discuss your budget request.');
+    }
+  </script>
+</body>
+</html>

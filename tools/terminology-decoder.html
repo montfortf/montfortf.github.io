@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Terminology Decoder | Brite.AI</title>
+  <meta name="description" content="Understand AI terms in plain language for government professionals.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .tool-container { max-width: 900px; margin: 0 auto; }
+    .tool-card { background: var(--color-background); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); overflow: hidden; }
+    .tool-header { background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff; padding: var(--space-8); text-align: center; }
+    .tool-header h2 { margin-bottom: var(--space-2); }
+    .tool-body { padding: var(--space-8); }
+    .search-box { position: relative; margin-bottom: var(--space-6); }
+    .search-box input { width: 100%; padding: var(--space-4) var(--space-6); padding-left: 50px; border: 2px solid var(--color-border); border-radius: var(--radius-xl); font-size: var(--text-lg); }
+    .search-box input:focus { outline: none; border-color: #06b6d4; }
+    .search-box__icon { position: absolute; left: var(--space-4); top: 50%; transform: translateY(-50%); font-size: 1.5rem; }
+    .category-tabs { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-6); }
+    .category-tab { padding: var(--space-2) var(--space-4); border: 2px solid var(--color-border); border-radius: var(--radius-full); cursor: pointer; font-size: var(--text-sm); font-weight: 500; transition: all 0.2s; }
+    .category-tab:hover { border-color: #06b6d4; }
+    .category-tab.active { background: #06b6d4; color: #fff; border-color: #06b6d4; }
+    .terms-grid { display: grid; gap: var(--space-4); }
+    .term-card { background: var(--color-background-alt); border-radius: var(--radius-lg); padding: var(--space-5); cursor: pointer; transition: all 0.2s; border: 2px solid transparent; }
+    .term-card:hover { border-color: #06b6d4; transform: translateY(-2px); }
+    .term-card.expanded { border-color: #06b6d4; }
+    .term-card__header { display: flex; justify-content: space-between; align-items: center; }
+    .term-card__term { font-size: var(--text-lg); font-weight: 700; color: #0891b2; }
+    .term-card__category { font-size: var(--text-xs); background: #e0f2fe; color: #0369a1; padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); }
+    .term-card__simple { margin-top: var(--space-3); color: var(--color-text-muted); }
+    .term-card__details { display: none; margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
+    .term-card.expanded .term-card__details { display: block; }
+    .term-card__example { background: var(--color-background); border-radius: var(--radius-md); padding: var(--space-4); margin-top: var(--space-3); }
+    .term-card__example-label { font-weight: 600; font-size: var(--text-sm); color: #0891b2; margin-bottom: var(--space-2); }
+    .term-card__related { margin-top: var(--space-3); }
+    .term-card__related-label { font-size: var(--text-sm); font-weight: 600; margin-bottom: var(--space-2); }
+    .term-card__related-tags { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+    .related-tag { font-size: var(--text-xs); background: #e5e7eb; padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); cursor: pointer; }
+    .related-tag:hover { background: #06b6d4; color: #fff; }
+    .no-results { text-align: center; padding: var(--space-8); color: var(--color-text-muted); }
+    .alphabet-nav { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-bottom: var(--space-6); justify-content: center; }
+    .alphabet-nav button { width: 32px; height: 32px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-background); cursor: pointer; font-weight: 600; font-size: var(--text-sm); }
+    .alphabet-nav button:hover { background: #06b6d4; color: #fff; border-color: #06b6d4; }
+    .alphabet-nav button.active { background: #06b6d4; color: #fff; border-color: #06b6d4; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="index.html" class="navbar__link">All Tools</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <h2>AI Terminology Decoder</h2>
+          <p>Plain-language explanations of AI terms for government professionals</p>
+        </div>
+        <div class="tool-body">
+          <div class="search-box">
+            <span class="search-box__icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search for a term..." oninput="filterTerms()">
+          </div>
+
+          <div class="category-tabs" id="categoryTabs">
+            <button class="category-tab active" data-category="all">All Terms</button>
+            <button class="category-tab" data-category="basics">AI Basics</button>
+            <button class="category-tab" data-category="ml">Machine Learning</button>
+            <button class="category-tab" data-category="nlp">Language AI</button>
+            <button class="category-tab" data-category="genai">Generative AI</button>
+            <button class="category-tab" data-category="governance">Governance</button>
+          </div>
+
+          <div class="alphabet-nav" id="alphabetNav"></div>
+
+          <div class="terms-grid" id="termsGrid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2025 Brite.AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const terms = [
+      { term: "Artificial Intelligence (AI)", simple: "Computer systems that can perform tasks that normally require human intelligence, like understanding language or making decisions.", category: "basics", example: "An AI system that reads benefit applications and determines if all required documents are included.", related: ["Machine Learning", "Algorithm"] },
+      { term: "Algorithm", simple: "A set of step-by-step instructions that a computer follows to solve a problem or complete a task.", category: "basics", example: "The rules that determine which applications get processed first based on date received and urgency.", related: ["AI", "Machine Learning"] },
+      { term: "Machine Learning (ML)", simple: "A type of AI where computers learn patterns from data instead of being explicitly programmed.", category: "ml", example: "A system that learns to identify fraudulent claims by studying thousands of past fraud cases.", related: ["AI", "Training Data", "Model"] },
+      { term: "Model", simple: "The mathematical representation that an AI system uses to make predictions or decisions after being trained on data.", category: "ml", example: "The trained system that can predict whether a benefits application is likely to be approved.", related: ["Training", "Algorithm"] },
+      { term: "Training", simple: "The process of teaching an AI system by showing it many examples so it can learn patterns.", category: "ml", example: "Showing the AI thousands of correctly processed applications so it learns what complete applications look like.", related: ["Model", "Training Data"] },
+      { term: "Training Data", simple: "The collection of examples used to teach an AI system.", category: "ml", example: "Historical records of past eligibility decisions used to train a new AI eligibility system.", related: ["Training", "Bias"] },
+      { term: "Natural Language Processing (NLP)", simple: "AI technology that helps computers understand, interpret, and respond to human language.", category: "nlp", example: "A chatbot that understands when someone asks 'Where's my refund?' and provides relevant information.", related: ["Chatbot", "Generative AI"] },
+      { term: "Chatbot", simple: "An AI program that can have text or voice conversations with users.", category: "nlp", example: "A virtual assistant on your website that answers common questions about benefits programs.", related: ["NLP", "Virtual Agent"] },
+      { term: "Large Language Model (LLM)", simple: "An AI system trained on massive amounts of text that can understand and generate human-like language.", category: "genai", example: "GPT-4 or Claude, which can draft responses, summarize documents, or answer complex questions.", related: ["Generative AI", "NLP"] },
+      { term: "Generative AI", simple: "AI that can create new content like text, images, or code based on what it has learned.", category: "genai", example: "An AI that drafts initial responses to constituent inquiries for staff to review.", related: ["LLM", "Prompt"] },
+      { term: "Prompt", simple: "The instruction or question you give to an AI system to get it to perform a task.", category: "genai", example: "Telling an AI: 'Summarize this 50-page policy document in 5 bullet points.'", related: ["Generative AI", "LLM"] },
+      { term: "Hallucination", simple: "When an AI generates information that sounds plausible but is actually incorrect or made up.", category: "genai", example: "An AI incorrectly stating that a policy was updated in 2023 when it was actually updated in 2021.", related: ["Generative AI", "Accuracy"] },
+      { term: "Bias", simple: "Systematic errors in AI that can lead to unfair outcomes for certain groups of people.", category: "governance", example: "An AI that denies more applications from certain zip codes because historical data reflected past discrimination.", related: ["Fairness", "Training Data"] },
+      { term: "Explainability", simple: "The ability to understand and explain why an AI made a particular decision.", category: "governance", example: "Being able to tell an applicant exactly why the AI flagged their application for additional review.", related: ["Transparency", "Accountability"] },
+      { term: "Supervised Learning", simple: "Teaching AI using examples where the correct answer is already known.", category: "ml", example: "Training fraud detection by showing it labeled examples of both fraudulent and legitimate claims.", related: ["Machine Learning", "Training"] },
+      { term: "Computer Vision", simple: "AI that can analyze and understand images and videos.", category: "basics", example: "AI that can read handwritten forms or extract data from photos of documents.", related: ["OCR", "Document Processing"] },
+      { term: "OCR (Optical Character Recognition)", simple: "Technology that converts images of text into actual text that computers can process.", category: "basics", example: "Scanning a paper application and converting it to digital text that can be searched.", related: ["Computer Vision", "Document Processing"] },
+      { term: "RPA (Robotic Process Automation)", simple: "Software that automates repetitive computer tasks by mimicking human actions like clicking and typing.", category: "basics", example: "A bot that automatically moves data from emails into your case management system.", related: ["Automation", "AI"] },
+      { term: "API (Application Programming Interface)", simple: "A way for different software systems to communicate and share information with each other.", category: "basics", example: "How your eligibility system connects to a federal database to verify income.", related: ["Integration"] },
+      { term: "Accuracy", simple: "How often the AI system gives the correct answer.", category: "ml", example: "If the AI correctly identifies 95 out of 100 fraudulent claims, it has 95% accuracy.", related: ["Model", "Validation"] },
+      { term: "False Positive", simple: "When the AI incorrectly says something is true when it's actually false.", category: "ml", example: "Flagging a legitimate claim as fraudulent.", related: ["Accuracy", "False Negative"] },
+      { term: "False Negative", simple: "When the AI incorrectly says something is false when it's actually true.", category: "ml", example: "Missing an actual fraud case and marking it as legitimate.", related: ["Accuracy", "False Positive"] },
+      { term: "Responsible AI", simple: "The practice of developing and using AI systems in ways that are ethical, fair, and transparent.", category: "governance", example: "Testing AI systems for bias before deployment and providing clear explanations for decisions.", related: ["Bias", "Explainability", "Governance"] },
+      { term: "AI Governance", simple: "The frameworks, policies, and practices that guide how AI is developed and used in an organization.", category: "governance", example: "Your agency's policy requiring human review of all AI-generated eligibility decisions.", related: ["Responsible AI", "Policy"] }
+    ];
+
+    // Generate alphabet nav
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    document.getElementById('alphabetNav').innerHTML = alphabet.map(letter =>
+      `<button onclick="filterByLetter('${letter}')">${letter}</button>`
+    ).join('');
+
+    // Render terms
+    function renderTerms(filteredTerms) {
+      const grid = document.getElementById('termsGrid');
+      if (filteredTerms.length === 0) {
+        grid.innerHTML = '<div class="no-results">No terms found. Try a different search.</div>';
+        return;
+      }
+      grid.innerHTML = filteredTerms.map(t => `
+        <div class="term-card" onclick="this.classList.toggle('expanded')">
+          <div class="term-card__header">
+            <span class="term-card__term">${t.term}</span>
+            <span class="term-card__category">${t.category}</span>
+          </div>
+          <div class="term-card__simple">${t.simple}</div>
+          <div class="term-card__details">
+            <div class="term-card__example">
+              <div class="term-card__example-label">💡 Government Example:</div>
+              ${t.example}
+            </div>
+            <div class="term-card__related">
+              <div class="term-card__related-label">Related Terms:</div>
+              <div class="term-card__related-tags">
+                ${t.related.map(r => `<span class="related-tag" onclick="event.stopPropagation(); searchTerm('${r}')">${r}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Filter functions
+    function filterTerms() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const activeCategory = document.querySelector('.category-tab.active').dataset.category;
+
+      let filtered = terms;
+      if (activeCategory !== 'all') {
+        filtered = filtered.filter(t => t.category === activeCategory);
+      }
+      if (search) {
+        filtered = filtered.filter(t =>
+          t.term.toLowerCase().includes(search) ||
+          t.simple.toLowerCase().includes(search)
+        );
+      }
+      renderTerms(filtered);
+    }
+
+    function filterByLetter(letter) {
+      document.getElementById('searchInput').value = '';
+      document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector('[data-category="all"]').classList.add('active');
+
+      const filtered = terms.filter(t => t.term.toUpperCase().startsWith(letter));
+      renderTerms(filtered);
+    }
+
+    function searchTerm(term) {
+      document.getElementById('searchInput').value = term;
+      filterTerms();
+    }
+
+    // Category tabs
+    document.querySelectorAll('.category-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        filterTerms();
+      });
+    });
+
+    // Initial render
+    renderTerms(terms);
+  </script>
+</body>
+</html>
