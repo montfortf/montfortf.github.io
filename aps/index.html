@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adult Protective Services &amp; Aging Solutions | Brite.AI</title>
+  <meta name="description" content="AI-powered solutions for Adult Protective Services and aging agencies. From case management and elder abuse prevention to NAMRS compliance and care coordination. Built on Salesforce Agentforce.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    /* Urgency section */
+    .urgency-bar {
+      background: linear-gradient(135deg, #1A1A2E 0%, #0066CC 100%);
+      color: #fff;
+      padding: var(--space-16) 0;
+    }
+    .urgency-bar .section-header__label { color: var(--color-accent); }
+    .urgency-bar .section-header__title { color: #fff; }
+    .urgency-bar .section-header__subtitle { color: rgba(255,255,255,0.8); }
+    .urgency-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-8);
+    }
+    .urgency-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    .urgency-card__stat {
+      font-size: var(--text-4xl);
+      font-weight: 800;
+      color: var(--color-accent);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin-bottom: var(--space-2);
+    }
+    .urgency-card__label {
+      font-size: var(--text-base);
+      color: rgba(255,255,255,0.9);
+      line-height: 1.5;
+    }
+    .urgency-card__source {
+      font-size: var(--text-xs);
+      color: rgba(255,255,255,0.5);
+      margin-top: var(--space-2);
+    }
+
+    /* Journey framework */
+    .journey {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      position: relative;
+    }
+    .journey::before {
+      content: '';
+      position: absolute;
+      top: 60px;
+      left: 15%;
+      right: 15%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+      border-radius: 2px;
+      z-index: 0;
+    }
+    .journey__stage {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: var(--space-6);
+    }
+    .journey__number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      font-size: var(--text-xl);
+      font-weight: 800;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin-bottom: var(--space-4);
+    }
+    .journey__stage:nth-child(1) .journey__number { background: var(--color-primary); color: #fff; }
+    .journey__stage:nth-child(2) .journey__number { background: var(--color-secondary); color: #fff; }
+    .journey__stage:nth-child(3) .journey__number { background: var(--color-accent); color: #fff; }
+    .journey__title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+      color: var(--color-text);
+    }
+    .journey__desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+
+    /* Case studies */
+    .case-study {
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: var(--transition-base);
+    }
+    .case-study:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .case-study__tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-3);
+    }
+    .case-study__body { padding: var(--space-6); }
+    .case-study__title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+      color: var(--color-text);
+    }
+    .case-study__desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-light);
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+    .case-study__metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-border);
+    }
+    .case-study__metric-value {
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      color: var(--color-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .case-study__metric-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* Trust badges */
+    .trust-badges {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-5);
+    }
+    .trust-badge {
+      text-align: center;
+      padding: var(--space-5);
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      transition: var(--transition-base);
+    }
+    .trust-badge:hover {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
+    }
+    .trust-badge__icon {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-3);
+    }
+    .trust-badge__title {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+    .trust-badge__desc {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* Insight cards */
+    .insight-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      transition: var(--transition-base);
+      height: 100%;
+    }
+    .insight-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary);
+    }
+    .insight-card__type {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-3);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      align-self: flex-start;
+    }
+    .insight-card__type--report { background: #EBF5FF; color: var(--color-primary); }
+    .insight-card__type--guide { background: #E6F9F1; color: var(--color-secondary); }
+    .insight-card__type--trend { background: #FFF3EB; color: var(--color-accent); }
+    .insight-card__title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+    .insight-card__link {
+      color: var(--color-primary);
+      font-weight: 600;
+      font-size: var(--text-sm);
+      text-decoration: none;
+    }
+    .insight-card__link:hover { text-decoration: underline; }
+
+    /* Testimonial */
+    .testimonial-featured {
+      background: linear-gradient(135deg, var(--color-primary-light), #fff);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-12);
+      text-align: center;
+      position: relative;
+    }
+    .testimonial-featured__quote {
+      font-size: var(--text-2xl);
+      font-weight: 500;
+      color: var(--color-text);
+      line-height: 1.5;
+      margin-bottom: var(--space-6);
+      font-style: italic;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .testimonial-featured__quote::before {
+      content: '\201C';
+      display: block;
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--color-primary);
+      font-family: serif;
+      margin-bottom: var(--space-2);
+    }
+    .testimonial-featured__author {
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+    .testimonial-featured__role {
+      font-size: var(--text-sm);
+      color: var(--color-text-light);
+    }
+
+    /* Partners */
+    .partners {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--space-10);
+      padding: var(--space-8) 0;
+    }
+    .partners__logo {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--color-text-muted);
+      opacity: 0.5;
+      transition: var(--transition-base);
+      letter-spacing: 0.02em;
+    }
+    .partners__logo:hover { opacity: 1; color: var(--color-primary); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .urgency-grid { grid-template-columns: repeat(2, 1fr); }
+      .trust-badges { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .urgency-grid { grid-template-columns: 1fr; }
+      .journey { grid-template-columns: 1fr; gap: var(--space-4); }
+      .journey::before { display: none; }
+      .trust-badges { grid-template-columns: 1fr; }
+      .testimonial-featured { padding: var(--space-8) var(--space-5); }
+      .testimonial-featured__quote { font-size: var(--text-xl); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
+          <li><a href="../ai-data/index.html" class="navbar__link">AI &amp; Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero hero--centered">
+    <div class="container">
+      <div class="hero__content">
+        <span class="hero__badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Protecting Vulnerable Adults
+        </span>
+        <h1 class="hero__title">
+          AI-Powered Solutions for<br>
+          <span class="text-gradient">Adult Protective Services &amp; Aging</span>
+        </h1>
+        <p class="hero__subtitle">
+          The trusted partner for APS agencies and aging services organizations.
+          We combine deep government expertise with responsible AI to modernize
+          case management, detect elder abuse earlier, and deliver better outcomes
+          for the most vulnerable members of our communities.
+        </p>
+        <div class="hero__actions">
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Request APS Demo
+          </a>
+          <a href="#services" class="btn btn--secondary btn--lg">
+            Explore APS Solutions
+          </a>
+        </div>
+        <div class="hero__stats">
+          <div class="hero__stat">
+            <div class="hero__stat-value" data-counter="80" data-suffix="+">0+</div>
+            <div class="hero__stat-label">Government Agencies Served</div>
+          </div>
+          <div class="hero__stat">
+            <div class="hero__stat-value" data-counter="18" data-suffix="+">0+</div>
+            <div class="hero__stat-label">Years in Public Sector</div>
+          </div>
+          <div class="hero__stat">
+            <div class="hero__stat-value" data-counter="622">0</div>
+            <div class="hero__stat-label">AAAs Nationwide We Can Serve</div>
+          </div>
+          <div class="hero__stat">
+            <div class="hero__stat-value" data-counter="100" data-suffix="%">0%</div>
+            <div class="hero__stat-label">Government Focused</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Elder Justice Imperative -->
+  <section class="urgency-bar">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-header__label">The Elder Justice Imperative</span>
+        <h2 class="section-header__title">Elder Abuse Is a Hidden Crisis Demanding Urgent Action</h2>
+        <p class="section-header__subtitle">
+          Millions of vulnerable adults suffer abuse, neglect, and exploitation every year&mdash;yet
+          most cases go unreported. APS agencies face overwhelming caseloads with legacy technology
+          while new federal regulations demand modernization by 2028.
+        </p>
+      </div>
+      <div class="urgency-grid">
+        <div class="urgency-card" data-animate>
+          <div class="urgency-card__stat">1 in 10</div>
+          <div class="urgency-card__label">Americans over 60 experience elder abuse annually</div>
+          <div class="urgency-card__source">DOJ Elder Justice Initiative</div>
+        </div>
+        <div class="urgency-card" data-animate data-delay="100">
+          <div class="urgency-card__stat">$28.3B</div>
+          <div class="urgency-card__label">stolen from seniors annually&mdash;72% by someone they know</div>
+          <div class="urgency-card__source">AARP Research</div>
+        </div>
+        <div class="urgency-card" data-animate data-delay="200">
+          <div class="urgency-card__stat">Only 1 in 24</div>
+          <div class="urgency-card__label">elder abuse cases are ever reported to authorities</div>
+          <div class="urgency-card__source">NCEA / ACL Research</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APS Modernization Journey -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-header__label">Your Modernization Journey</span>
+        <h2 class="section-header__title">From Legacy Systems to AI-Powered Protection</h2>
+        <p class="section-header__subtitle">
+          Whether you are preparing for ACL compliance or ready to deploy predictive
+          analytics, we meet you where you are and accelerate your path to better outcomes.
+        </p>
+      </div>
+
+      <div class="journey">
+        <div class="journey__stage" data-animate>
+          <div class="journey__number">1</div>
+          <h3 class="journey__title">Assess &amp; Comply</h3>
+          <p class="journey__desc">
+            Evaluate your current APS systems, data quality, and compliance posture.
+            Build a modernization roadmap aligned with the ACL APS Final Rule,
+            NAMRS reporting requirements, and CMS HCBS mandates.
+          </p>
+        </div>
+        <div class="journey__stage" data-animate data-delay="150">
+          <div class="journey__number">2</div>
+          <h3 class="journey__title">Modernize &amp; Integrate</h3>
+          <p class="journey__desc">
+            Deploy modern case management on Salesforce, unify siloed data across
+            APS, AAA, Medicaid, and law enforcement systems, and launch AI-powered
+            intake and investigation tools.
+          </p>
+        </div>
+        <div class="journey__stage" data-animate data-delay="300">
+          <div class="journey__number">3</div>
+          <h3 class="journey__title">Predict &amp; Prevent</h3>
+          <p class="journey__desc">
+            Scale predictive risk analytics, automate financial exploitation detection,
+            optimize caseloads with AI-driven prioritization, and continuously improve
+            outcomes with real-time dashboards.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APS Service Categories - Tabs -->
+  <section id="services" class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our APS &amp; Aging Capabilities</span>
+        <h2 class="section-header__title">End-to-End Solutions for Elder Protection</h2>
+        <p class="section-header__subtitle">
+          From intake and investigation through care coordination and compliance&mdash;comprehensive
+          AI-powered capabilities built for the unique demands of adult protective services and aging programs.
+        </p>
+      </div>
+
+      <div class="tabs">
+        <nav class="tabs__nav">
+          <button class="tabs__btn active" data-tab="casemanagement">Case Management</button>
+          <button class="tabs__btn" data-tab="elderprotection">Elder Protection</button>
+          <button class="tabs__btn" data-tab="agingservices">Aging Services</button>
+          <button class="tabs__btn" data-tab="analytics">AI &amp; Analytics</button>
+          <button class="tabs__btn" data-tab="constituent">Constituent Services</button>
+          <button class="tabs__btn" data-tab="workforce">Workforce &amp; Training</button>
+        </nav>
+
+        <!-- Case Management Tab -->
+        <div class="tabs__content active" data-tab-content="casemanagement">
+          <div class="grid grid--3">
+            <div class="card service-card" data-animate>
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <h3 class="card__title">APS Case Management</h3>
+              <p class="card__description">
+                Full lifecycle case management from intake through investigation,
+                disposition, service planning, and closure&mdash;built on Salesforce
+                with APS-specific workflows and ACL Final Rule compliance.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+
+            <div class="card service-card" data-animate data-delay="100">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
+              </div>
+              <h3 class="card__title">Eligibility &amp; Benefits</h3>
+              <p class="card__description">
+                Streamline eligibility determination for Medicaid HCBS waivers,
+                OAA programs, SNAP, LIHEAP, and Medicare benefits with
+                AI-assisted screening and automated enrollment.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+
+            <div class="card service-card" data-animate data-delay="200">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+              </div>
+              <h3 class="card__title">Investigation Management</h3>
+              <p class="card__description">
+                Evidence collection, chain of custody tracking, interview documentation,
+                multi-agency coordination, and structured disposition workflows
+                aligned with ACL tiered response requirements.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Elder Protection Tab -->
+        <div class="tabs__content" data-tab-content="elderprotection">
+          <div class="grid grid--3">
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <h3 class="card__title">Financial Exploitation Detection</h3>
+              <p class="card__description">
+                AI-powered analysis of financial transaction patterns to detect
+                exploitation, unusual withdrawals, and suspicious activity&mdash;catching
+                what manual review misses.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <h3 class="card__title">Abuse Risk Analytics</h3>
+              <p class="card__description">
+                Predictive risk models trained on APS investigation data to identify
+                high-risk individuals earlier, prioritize cases by severity, and
+                allocate resources where they matter most.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+              </div>
+              <h3 class="card__title">Guardianship Monitoring</h3>
+              <p class="card__description">
+                Digital tracking of guardianship and conservatorship cases with
+                automated alerts for late filings, financial reporting anomalies,
+                and compliance gaps.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aging Services Tab -->
+        <div class="tabs__content" data-tab-content="agingservices">
+          <div class="grid grid--3">
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <h3 class="card__title">Care Coordination</h3>
+              <p class="card__description">
+                Person-centered service planning and cross-agency coordination
+                across APS, AAA, Medicaid HCBS, behavioral health, and community
+                providers&mdash;the No Wrong Door vision realized.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+              </div>
+              <h3 class="card__title">Nutrition Services</h3>
+              <p class="card__description">
+                Meals on Wheels and congregate meal program management with
+                route optimization, dietary tracking, volunteer coordination,
+                and OAA Title III-C compliance reporting.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              </div>
+              <h3 class="card__title">Transportation Management</h3>
+              <p class="card__description">
+                NEMT scheduling and coordination, route optimization, fleet
+                management, and integration with care schedules for
+                transportation-disadvantaged older adults.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI & Analytics Tab -->
+        <div class="tabs__content" data-tab-content="analytics">
+          <div class="grid grid--3">
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              </div>
+              <h3 class="card__title">Predictive Risk Models</h3>
+              <p class="card__description">
+                Machine learning models validated on APS investigation data to
+                predict abuse risk, identify high-priority cases, and enable
+                proactive intervention before harm escalates.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <h3 class="card__title">Caseload Intelligence</h3>
+              <p class="card__description">
+                AI-driven workload management that balances caseloads, routes
+                cases to investigators by expertise, and ensures compliance with
+                ACL response time requirements.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <h3 class="card__title">NAMRS &amp; OAAPS Reporting</h3>
+              <p class="card__description">
+                Automated federal reporting for NAMRS Case Component data,
+                OAAPS performance metrics, and CMS HCBS quality measures&mdash;eliminating
+                manual extraction and ensuring compliance.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Constituent Services Tab -->
+        <div class="tabs__content" data-tab-content="constituent">
+          <div class="grid grid--3">
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <h3 class="card__title">24/7 Multi-Channel Intake</h3>
+              <p class="card__description">
+                AI-powered intake across phone, web, and mobile&mdash;meeting the
+                ACL mandate for 24/7 online reporting with intelligent screening,
+                risk classification, and automated case creation.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              </div>
+              <h3 class="card__title">Self-Service Portal</h3>
+              <p class="card__description">
+                Accessible portals for families to report concerns, check case
+                status, submit documentation, and access community resources&mdash;reducing
+                call volume while improving transparency.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+              <h3 class="card__title">Caregiver Support Platform</h3>
+              <p class="card__description">
+                Digital tools for family caregivers including respite care scheduling,
+                support group connections, training resources, and burnout prevention
+                assessments aligned with OAA Title III-E.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Workforce & Training Tab -->
+        <div class="tabs__content" data-tab-content="workforce">
+          <div class="grid grid--3">
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+              <h3 class="card__title">APS Training Academy</h3>
+              <p class="card__description">
+                Role-based training for APS investigators, supervisors, and intake
+                staff covering AI tools, investigation techniques, and compliance
+                with the NAPSA National Training Center curriculum.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <h3 class="card__title">Change Management</h3>
+              <p class="card__description">
+                Structured adoption programs that address workforce resistance,
+                union considerations, and organizational change unique to public
+                sector APS and aging services agencies.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+
+            <div class="card service-card">
+              <div class="card__icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              </div>
+              <h3 class="card__title">Workforce Planning</h3>
+              <p class="card__description">
+                Data-driven staffing models that address the APS investigator
+                shortage, optimize caseload distribution, and reduce burnout&mdash;using
+                the ACL Workload Toolkit framework.
+              </p>
+              <a href="#" class="card__link">Learn More <span>&rarr;</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compliance Countdown -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <span class="section-header__label">Federal Compliance</span>
+          <h2>The ACL APS Final Rule Changes Everything</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            On May 7, 2024, ACL published the first-ever federal regulations for Adult
+            Protective Services programs. Every state APS program must comply by
+            <strong>May 8, 2028</strong>&mdash;creating the largest APS technology
+            modernization mandate in history.
+          </p>
+          <ul style="padding-left: var(--space-5); color: var(--color-text-light); line-height: 2;">
+            <li><strong>Standardized definitions</strong> across all state programs</li>
+            <li><strong>Tiered response system</strong> with mandated timelines</li>
+            <li><strong>24/7 online reporting</strong> capability required</li>
+            <li><strong>Fiscal and performance reporting</strong> to ACL</li>
+            <li><strong>NAMRS Case Component</strong> data submission standards</li>
+          </ul>
+        </div>
+        <div data-animate data-delay="200">
+          <div class="card" style="border: 2px solid var(--color-primary); text-align: center; padding: var(--space-8);">
+            <div style="font-size: var(--text-6xl); font-weight: 800; color: var(--color-primary); font-family: 'Plus Jakarta Sans', sans-serif;">2028</div>
+            <div style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-4);">Federal Compliance Deadline</div>
+            <p style="color: var(--color-text-light); margin-bottom: var(--space-6);">
+              States that fail to modernize risk losing federal APS funding and
+              facing compliance findings. The clock is ticking.
+            </p>
+            <a href="../contact/index.html" class="btn btn--primary">Assess Your Compliance Gap</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Impact - Case Studies -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-header__label">Mission Impact</span>
+        <h2 class="section-header__title">Real Results for Vulnerable Adults</h2>
+        <p class="section-header__subtitle">
+          See how APS agencies and aging services organizations are achieving
+          measurable outcomes with AI-powered modernization.
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        <div class="case-study" data-animate>
+          <div class="case-study__body">
+            <span class="case-study__tag">State APS Agency</span>
+            <h3 class="case-study__title">APS Investigation Modernization</h3>
+            <p class="case-study__desc">
+              A state APS program replaced legacy paper-based investigation processes
+              with AI-powered case management, reducing investigation timelines while
+              improving evidence documentation and compliance.
+            </p>
+            <div class="case-study__metrics">
+              <div>
+                <div class="case-study__metric-value">40%</div>
+                <div class="case-study__metric-label">Faster Investigations</div>
+              </div>
+              <div>
+                <div class="case-study__metric-value">60%</div>
+                <div class="case-study__metric-label">Less Admin Time</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-study" data-animate data-delay="100">
+          <div class="case-study__body">
+            <span class="case-study__tag">County AAA Network</span>
+            <h3 class="case-study__title">Cross-Agency Data Unification</h3>
+            <p class="case-study__desc">
+              Unified constituent data across APS, Area Agency on Aging, Medicaid,
+              and community providers&mdash;enabling coordinated whole-person service
+              delivery through a No Wrong Door model.
+            </p>
+            <div class="case-study__metrics">
+              <div>
+                <div class="case-study__metric-value">5&rarr;1</div>
+                <div class="case-study__metric-label">Unified View</div>
+              </div>
+              <div>
+                <div class="case-study__metric-value">3x</div>
+                <div class="case-study__metric-label">Faster Referrals</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-study" data-animate data-delay="200">
+          <div class="case-study__body">
+            <span class="case-study__tag">State DHHS</span>
+            <h3 class="case-study__title">Financial Exploitation Detection</h3>
+            <p class="case-study__desc">
+              Deployed AI-powered financial pattern analysis to detect elder
+              financial exploitation earlier, identifying suspicious transactions
+              that manual review consistently missed.
+            </p>
+            <div class="case-study__metrics">
+              <div>
+                <div class="case-study__metric-value">73%</div>
+                <div class="case-study__metric-label">Earlier Detection</div>
+              </div>
+              <div>
+                <div class="case-study__metric-value">$2.1M</div>
+                <div class="case-study__metric-label">Assets Protected</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="section">
+    <div class="container">
+      <div class="testimonial-featured" data-animate>
+        <p class="testimonial-featured__quote">
+          Brite.AI understood the unique challenges of APS from day one. They helped
+          us modernize our investigation workflows while maintaining the human judgment
+          that is essential in elder protection cases. Our investigators now spend their
+          time protecting vulnerable adults instead of fighting with paperwork.
+        </p>
+        <div class="testimonial-featured__author">Director of Adult Protective Services</div>
+        <div class="testimonial-featured__role">State Department of Health and Human Services</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Brite.AI for APS -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div>
+          <span class="section-header__label">Why Brite.AI</span>
+          <h2>The Government APS Specialists</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-8);">
+            No major consulting firm has a dedicated APS practice. Legacy vendors
+            lack AI capabilities. We fill both gaps&mdash;combining deep government
+            expertise with responsible AI built specifically for elder protection.
+          </p>
+
+          <div class="accordion">
+            <div class="accordion__item active">
+              <button class="accordion__header">
+                APS Domain Expertise
+                <span class="accordion__icon">&#9660;</span>
+              </button>
+              <div class="accordion__content">
+                <div class="accordion__body">
+                  <p>We understand APS workflows, Elder Justice Act requirements, NAMRS
+                  reporting, HCBS quality measures, and the ACL Final Rule compliance
+                  timeline. Our team has spent 18+ years exclusively serving government
+                  agencies&mdash;we speak your language and understand your constraints.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion__item">
+              <button class="accordion__header">
+                AI-First, Not AI-Bolted-On
+                <span class="accordion__icon">&#9660;</span>
+              </button>
+              <div class="accordion__content">
+                <div class="accordion__body">
+                  <p>Legacy APS vendors like WellSky offer solid case management but
+                  lack predictive analytics, NLP-powered intake, or intelligent case
+                  routing. We build AI into the foundation&mdash;not as an afterthought.
+                  Predictive risk models, financial exploitation detection, and caseload
+                  intelligence are core capabilities, not add-ons.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion__item">
+              <button class="accordion__header">
+                Salesforce Agentforce Platform
+                <span class="accordion__icon">&#9660;</span>
+              </button>
+              <div class="accordion__content">
+                <div class="accordion__body">
+                  <p>Built on Salesforce&mdash;the world&rsquo;s leading CRM platform with
+                  purpose-built Public Sector Solutions. Agentforce AI agents handle
+                  routine constituent inquiries, automate intake screening, and support
+                  investigators with evidence analysis. Government-grade security,
+                  FedRAMP alignment, and enterprise scalability come standard.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion__item">
+              <button class="accordion__header">
+                Responsible AI for Elder Protection
+                <span class="accordion__icon">&#9660;</span>
+              </button>
+              <div class="accordion__content">
+                <div class="accordion__body">
+                  <p>In elder protection, AI bias can have devastating consequences.
+                  Every model we deploy is tested for fairness across protected classes,
+                  aligned with NIST AI RMF, and designed with human-in-the-loop oversight.
+                  Investigators make the decisions; AI provides the intelligence.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion__item">
+              <button class="accordion__header">
+                Change Management Included
+                <span class="accordion__icon">&#9660;</span>
+              </button>
+              <div class="accordion__content">
+                <div class="accordion__body">
+                  <p>APS modernization fails without workforce adoption. We build change
+                  management into every engagement&mdash;addressing union considerations,
+                  investigator workflow changes, and organizational resistance. Training,
+                  stakeholder alignment, and ongoing support are integral, not extra.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="stats" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="stat">
+              <div class="stat__value" data-counter="80" data-suffix="+">0+</div>
+              <div class="stat__label">Government Agencies</div>
+            </div>
+            <div class="stat">
+              <div class="stat__value" data-counter="18" data-suffix="+">0+</div>
+              <div class="stat__label">Years Experience</div>
+            </div>
+            <div class="stat">
+              <div class="stat__value" data-counter="100" data-suffix="%">0%</div>
+              <div class="stat__label">Government Focus</div>
+            </div>
+            <div class="stat">
+              <div class="stat__value" data-counter="85" data-suffix="%">0%</div>
+              <div class="stat__label">Adoption Rate</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Signals -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-header__label">Trust &amp; Compliance</span>
+        <h2 class="section-header__title">Built for Government Standards</h2>
+        <p class="section-header__subtitle">
+          Our solutions meet the security, privacy, and compliance requirements
+          that APS and aging services agencies demand.
+        </p>
+      </div>
+
+      <div class="trust-badges">
+        <div class="trust-badge" data-animate>
+          <div class="trust-badge__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="trust-badge__title">HIPAA Compliant</div>
+          <div class="trust-badge__desc">Full HIPAA compliance for protected health information</div>
+        </div>
+        <div class="trust-badge" data-animate data-delay="100">
+          <div class="trust-badge__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-secondary)" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+          <div class="trust-badge__title">ACL Final Rule</div>
+          <div class="trust-badge__desc">Designed for May 2028 APS compliance requirements</div>
+        </div>
+        <div class="trust-badge" data-animate data-delay="200">
+          <div class="trust-badge__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="trust-badge__title">AI Bias Audited</div>
+          <div class="trust-badge__desc">Every model tested for fairness across protected classes</div>
+        </div>
+        <div class="trust-badge" data-animate data-delay="300">
+          <div class="trust-badge__icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="trust-badge__title">FedRAMP Aligned</div>
+          <div class="trust-badge__desc">Built on FedRAMP-authorized Salesforce infrastructure</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology Partners -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-header__label">Technology Ecosystem</span>
+        <h2 class="section-header__title">Powered by Industry Leaders</h2>
+      </div>
+      <div class="partners">
+        <span class="partners__logo">Salesforce</span>
+        <span class="partners__logo">AWS</span>
+        <span class="partners__logo">Google Cloud</span>
+        <span class="partners__logo">Microsoft Azure</span>
+        <span class="partners__logo">Carahsoft</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Thought Leadership -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-header__label">Latest Thinking</span>
+        <h2 class="section-header__title">Insights for APS &amp; Aging Leaders</h2>
+        <p class="section-header__subtitle">
+          Research, frameworks, and practical guidance for modernizing
+          adult protective services and aging programs.
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        <div class="insight-card" data-animate>
+          <span class="insight-card__type insight-card__type--report">Report</span>
+          <h3 class="insight-card__title">ACL APS Final Rule Compliance Playbook: What States Need to Know by 2028</h3>
+          <a href="#" class="insight-card__link">Read the Report &rarr;</a>
+        </div>
+        <div class="insight-card" data-animate data-delay="100">
+          <span class="insight-card__type insight-card__type--guide">Guide</span>
+          <h3 class="insight-card__title">AI for Elder Protection: A Government Leader&rsquo;s Guide to Responsible Implementation</h3>
+          <a href="#" class="insight-card__link">Download Guide &rarr;</a>
+        </div>
+        <div class="insight-card" data-animate data-delay="200">
+          <span class="insight-card__type insight-card__type--trend">Trend</span>
+          <h3 class="insight-card__title">Predictive Analytics in APS: Moving from Reactive Investigation to Proactive Prevention</h3>
+          <a href="#" class="insight-card__link">Explore Trends &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Steps -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Approach</span>
+        <h2 class="section-header__title">How We Modernize APS Programs</h2>
+        <p class="section-header__subtitle">
+          A proven methodology refined across 80+ government implementations.
+        </p>
+      </div>
+
+      <div class="process">
+        <div class="process__step" data-animate>
+          <h4 class="process__title">Discover</h4>
+          <p class="process__description">
+            Map current APS workflows, assess compliance gaps,
+            and identify high-value modernization opportunities.
+          </p>
+        </div>
+
+        <div class="process__step" data-animate data-delay="100">
+          <h4 class="process__title">Design</h4>
+          <p class="process__description">
+            Architect the solution with ACL compliance, NAMRS
+            reporting, and cross-agency integration built in.
+          </p>
+        </div>
+
+        <div class="process__step" data-animate data-delay="200">
+          <h4 class="process__title">Build</h4>
+          <p class="process__description">
+            Configure Salesforce, deploy AI models, integrate
+            with existing systems and data sources.
+          </p>
+        </div>
+
+        <div class="process__step" data-animate data-delay="300">
+          <h4 class="process__title">Deploy</h4>
+          <p class="process__description">
+            Phased rollout with comprehensive training,
+            change management, and user adoption support.
+          </p>
+        </div>
+
+        <div class="process__step" data-animate data-delay="400">
+          <h4 class="process__title">Optimize</h4>
+          <p class="process__description">
+            Continuously improve models, expand capabilities,
+            and ensure ongoing compliance as regulations evolve.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Ready to Modernize Your APS Program?</h2>
+        <p>
+          Start with a conversation about your compliance timeline, technology gaps,
+          and modernization goals. No sales pitch&mdash;just honest advice from people
+          who understand adult protective services.
+        </p>
+        <div class="cta__actions">
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Request APS Consultation
+          </a>
+          <a href="../ai-data/readiness-assessment.html" class="btn btn--secondary btn--lg" style="border-color: #fff; color: #fff;">
+            Take AI Readiness Assessment
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health &amp; Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform &amp; Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">APS &amp; Aging</h4>
+          <ul class="footer__links">
+            <li><a href="index.html">APS Solutions</a></li>
+            <li><a href="../ai-data/ai-strategy.html">AI Strategy</a></li>
+            <li><a href="../ai-data/data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
