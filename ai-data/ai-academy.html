@@ -4,149 +4,493 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Government AI Academy | AI Training Programs | Brite.AI</title>
-  <meta name="description" content="Comprehensive AI training programs that build AI literacy and practical skills across your government organization.">
+  <meta name="description" content="Comprehensive AI training programs that build AI literacy and practical skills across your government organization -- from executives to front-line staff.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
       <div class="navbar__inner">
         <a href="../index.html" class="navbar__logo">Brite.AI</a>
         <ul class="navbar__menu">
           <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
           <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
           <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <section class="hero hero--centered">
+  <!-- Hero Section -->
+  <section class="hero">
     <div class="container">
       <div class="hero__content">
         <span class="hero__badge">AI Enablement</span>
-        <h1 class="hero__title">Build AI-Ready Teams</h1>
+        <h1 class="hero__title">Build AI-Ready Government Teams</h1>
         <p class="hero__subtitle">
-          Comprehensive training programs that build AI literacy and practical
-          skills across your organization—from executives to front-line staff.
+          Role-based AI training programs that build lasting AI literacy, practical skills,
+          and responsible AI fluency across your entire agency -- from executive leadership
+          to front-line caseworkers and IT practitioners.
         </p>
         <div class="hero__actions">
-          <a href="../contact/index.html" class="btn btn--primary btn--lg">Explore Training Programs</a>
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Explore Training Programs
+          </a>
+          <a href="#programs" class="btn btn--secondary btn--lg">
+            View Curriculum
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Problem Statement -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <span class="section-header__label">The Challenge</span>
+          <h2>The Government AI Skills Gap Is Widening</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light);">
+            Federal agencies are mandated to adopt AI, yet fewer than 1 in 5 government
+            employees report having the skills to work effectively with AI tools. The
+            U.S. Office of Personnel Management has identified AI workforce readiness
+            as a top-tier priority, calling for structured training programs at every
+            level of government.
+          </p>
+          <p style="color: var(--color-text-light);">
+            Without deliberate investment in AI education, agencies face mounting risks:
+            failed deployments driven by untrained users, ethical blind spots from teams
+            unfamiliar with responsible AI principles, and a growing inability to attract
+            and retain technical talent against private-sector competition.
+          </p>
+        </div>
+        <div data-animate data-delay="200">
+          <div class="card" style="background: var(--color-background-alt);">
+            <h4 style="color: var(--color-primary); margin-bottom: var(--space-4);">Without AI Training:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Staff resist or misuse AI tools
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Leaders cannot evaluate AI proposals
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Bias and compliance risks go undetected
+              </li>
+              <li style="padding: var(--space-3) 0; display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Agency loses talent to the private sector
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach / Methodology -->
+  <section id="programs" class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Approach</span>
+        <h2 class="section-header__title">Role-Based Learning Tracks</h2>
+        <p class="section-header__subtitle">
+          Every role in government interacts with AI differently. Our tiered curriculum
+          ensures each audience gets the depth and context they need -- from strategic
+          oversight to hands-on prompt engineering.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline__item" data-animate>
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Track 1</span>
+            <h3 class="timeline__title">Executive AI Leadership</h3>
+            <p>Half-day immersion for agency heads, CIOs, deputy directors, and program
+            executives. Designed to equip decision-makers with the strategic vocabulary
+            and evaluative framework to sponsor and govern AI initiatives responsibly.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>AI fundamentals, terminology, and capability landscape</li>
+              <li>Strategic opportunity assessment and risk evaluation</li>
+              <li>Responsible AI leadership and governance obligations</li>
+              <li>Building an AI-ready organization and culture</li>
+              <li>Budget justification and ROI frameworks for AI</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="100">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Track 2</span>
+            <h3 class="timeline__title">AI for Government Managers</h3>
+            <p>Full-day workshop for program managers, supervisors, and team leads who
+            must translate AI strategy into operational reality. Covers practical skills
+            for identifying use cases, managing AI vendor relationships, and leading
+            teams through technology transitions.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>How AI and machine learning actually work (demystified)</li>
+              <li>Government-specific AI use cases and success stories</li>
+              <li>Identifying and prioritizing AI opportunities in your division</li>
+              <li>Managing AI projects: scope, timelines, and vendor oversight</li>
+              <li>Change leadership during AI-driven process redesign</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="200">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Track 3</span>
+            <h3 class="timeline__title">AI Practitioner Fundamentals</h3>
+            <p>Two-day intensive for IT staff, data analysts, and technical power users
+            who will build, configure, or maintain AI systems. Participants gain hands-on
+            experience with real tools and government-relevant datasets.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Core AI and machine learning concepts and model types</li>
+              <li>Data requirements, quality standards, and pipeline design</li>
+              <li>Working with large language models and AI platforms</li>
+              <li>Prompt engineering, RAG architectures, and fine-tuning basics</li>
+              <li>AI testing, validation, and performance monitoring</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="300">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Track 4</span>
+            <h3 class="timeline__title">Responsible AI Certification</h3>
+            <p>One-day certification program for AI project teams, compliance officers,
+            and anyone involved in AI governance. Participants complete hands-on
+            exercises and earn a Brite.AI Responsible AI Practitioner certification upon
+            passing the assessment.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Ethical AI principles and government-specific obligations</li>
+              <li>Algorithmic bias detection, measurement, and mitigation</li>
+              <li>Transparency, explainability, and public trust requirements</li>
+              <li>AI compliance frameworks (EO 14110, NIST AI RMF, OMB M-24-10)</li>
+              <li>Audit readiness and continuous monitoring protocols</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deliverables / Features -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Training Programs</span>
-        <h2 class="section-header__title">AI Education for Every Role</h2>
+        <span class="section-header__label">What You Get</span>
+        <h2 class="section-header__title">Training Program Deliverables</h2>
+        <p class="section-header__subtitle">
+          More than slides and lectures -- our programs deliver lasting capability.
+        </p>
       </div>
 
-      <div class="grid grid--2">
-        <div class="card" data-animate>
-          <div class="card__icon" style="background: linear-gradient(135deg, #667eea, #764ba2); color: #fff;">👔</div>
-          <h3 class="card__title">Executive AI Leadership</h3>
-          <p class="card__description">Half-day workshop for agency leadership, CIOs, and program directors.</p>
-          <ul style="margin: var(--space-4) 0; padding-left: var(--space-5); color: var(--color-text-light);">
-            <li>AI fundamentals and terminology</li>
-            <li>Strategic opportunities and risks</li>
-            <li>Responsible AI leadership</li>
-            <li>Building an AI-ready organization</li>
-          </ul>
-          <span style="display: inline-block; padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm);">Half-Day Workshop</span>
+      <div class="features">
+        <div class="feature" data-animate>
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Custom Curriculum Design</h4>
+            <p class="feature__description">
+              Every program is tailored to your agency's mission, technology stack,
+              and workforce profile. We interview stakeholders, review existing
+              tools, and align content to your real-world context.
+            </p>
+          </div>
         </div>
 
-        <div class="card" data-animate data-delay="100">
-          <div class="card__icon" style="background: linear-gradient(135deg, #f093fb, #f5576c); color: #fff;">📋</div>
-          <h3 class="card__title">AI for Government Managers</h3>
-          <p class="card__description">Full-day workshop for program managers, supervisors, and team leads.</p>
-          <ul style="margin: var(--space-4) 0; padding-left: var(--space-5); color: var(--color-text-light);">
-            <li>How AI works (demystified)</li>
-            <li>AI use cases in government</li>
-            <li>Identifying AI opportunities</li>
-            <li>Managing AI projects</li>
-          </ul>
-          <span style="display: inline-block; padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm);">Full-Day Workshop</span>
+        <div class="feature" data-animate data-delay="50">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Train-the-Trainer Kits</h4>
+            <p class="feature__description">
+              Sustain learning after we leave. Each engagement includes facilitator
+              guides, slide decks, exercises, and assessment rubrics so your internal
+              champions can deliver training independently.
+            </p>
+          </div>
         </div>
 
-        <div class="card" data-animate data-delay="200">
-          <div class="card__icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: #fff;">💻</div>
-          <h3 class="card__title">AI Practitioner Fundamentals</h3>
-          <p class="card__description">Two-day training for IT staff, analysts, and power users.</p>
-          <ul style="margin: var(--space-4) 0; padding-left: var(--space-5); color: var(--color-text-light);">
-            <li>AI and machine learning concepts</li>
-            <li>Data requirements for AI</li>
-            <li>Working with AI tools</li>
-            <li>Prompt engineering basics</li>
-          </ul>
-          <span style="display: inline-block; padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm);">2-Day Training</span>
+        <div class="feature" data-animate data-delay="100">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Hands-On Labs</h4>
+            <p class="feature__description">
+              Government-relevant, scenario-based exercises using real AI platforms.
+              Participants practice prompt engineering, data evaluation, bias
+              testing, and use-case analysis in a safe sandbox environment.
+            </p>
+          </div>
         </div>
 
-        <div class="card" data-animate data-delay="300">
-          <div class="card__icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7); color: #fff;">🎓</div>
-          <h3 class="card__title">Responsible AI Certification</h3>
-          <p class="card__description">One-day training with certification for AI project teams.</p>
-          <ul style="margin: var(--space-4) 0; padding-left: var(--space-5); color: var(--color-text-light);">
-            <li>Ethical AI principles</li>
-            <li>Bias detection and mitigation</li>
-            <li>Transparency and explainability</li>
-            <li>Compliance and audit readiness</li>
-          </ul>
-          <span style="display: inline-block; padding: var(--space-2) var(--space-3); background: var(--color-primary); color: #fff; border-radius: var(--radius-full); font-size: var(--text-sm);">Certification Included</span>
+        <div class="feature" data-animate data-delay="150">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Skills Assessment</h4>
+            <p class="feature__description">
+              Pre- and post-training assessments measure knowledge gain and identify
+              areas for follow-up coaching. Results feed into your agency's AI
+              workforce development metrics.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="200">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">On-Demand Learning Portal</h4>
+            <p class="feature__description">
+              Recorded sessions, micro-learning modules, and reference materials
+              available 24/7 through a secure, FedRAMP-aligned learning platform
+              so staff can learn at their own pace.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="250">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Responsible AI Certification</h4>
+            <p class="feature__description">
+              Graduates of the Responsible AI track earn a recognized practitioner
+              certification, meeting the AI training requirements outlined in
+              federal executive orders and OMB guidance.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Stats / Proof Points -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <div class="stats" style="grid-template-columns: 1fr;">
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="94" data-suffix="%">0%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Of trained government employees report higher confidence working with AI tools within 30 days
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="3" data-suffix="x">0x</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Faster AI tool adoption in agencies with structured workforce training programs
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="2500" data-suffix="+">0+</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Government professionals trained through Brite.AI Academy programs across 40+ agencies
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <span class="section-header__label">Why Invest in AI Training</span>
+          <h2>Training Is the Single Biggest Predictor of AI Success</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            According to Deloitte's 2026 State of AI in the Enterprise report,
+            insufficient worker skills are the single largest barrier to integrating
+            AI into workflows. OPM's AI workforce initiative is hiring 250 AI Science
+            Fellows, but agencies need thousands of AI-literate staff. Our programs close
+            that gap at scale.
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>Meets federal mandates</strong> -- aligns to AI Executive Order training requirements and OMB M-24-10 guidance</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>Reduces deployment risk</strong> -- teams that understand AI capabilities and limits make better decisions</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>Builds internal capacity</strong> -- train-the-trainer model means your investment compounds over time</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>Improves retention</strong> -- employees who receive AI training are more engaged and less likely to leave</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="testimonial" data-animate>
+        <p class="testimonial__quote">
+          "Before the Brite.AI Academy, our staff viewed AI as a threat. After two
+          days of hands-on training, they were building their own prompt libraries
+          and identifying automation opportunities in their own workflows. The
+          transformation in mindset was remarkable -- and measurable. We saw a 40%
+          increase in AI tool utilization within the first quarter."
+        </p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">DIR</div>
+          <div>
+            <div class="testimonial__name">Director of Workforce Development</div>
+            <div class="testimonial__title">State Department of Labor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
   <section class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-header__title">Training Delivery Options</h2>
+        <span class="section-header__label">Related Services</span>
+        <h2 class="section-header__title">Continue Building AI Capability</h2>
       </div>
+
       <div class="grid grid--3">
-        <div class="card" style="text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: var(--space-4);">🏢</div>
-          <h3 class="card__title">On-Site</h3>
-          <p class="card__description">Training delivered at your location with hands-on exercises.</p>
+        <div class="card">
+          <h3 class="card__title">AI Change Management</h3>
+          <p class="card__description">
+            Pair training with organizational change management to ensure AI adoption
+            sticks and delivers sustained impact across your agency.
+          </p>
+          <a href="ai-change-management.html" class="card__link">Learn More</a>
         </div>
-        <div class="card" style="text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: var(--space-4);">💻</div>
-          <h3 class="card__title">Virtual</h3>
-          <p class="card__description">Live, interactive sessions delivered via video conference.</p>
+        <div class="card">
+          <h3 class="card__title">AI Center of Excellence</h3>
+          <p class="card__description">
+            Institutionalize AI capability with a dedicated CoE that provides governance,
+            shared services, and ongoing enablement.
+          </p>
+          <a href="ai-coe.html" class="card__link">Learn More</a>
         </div>
-        <div class="card" style="text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: var(--space-4);">🎯</div>
-          <h3 class="card__title">Custom</h3>
-          <p class="card__description">Tailored curriculum designed for your specific needs.</p>
+        <div class="card">
+          <h3 class="card__title">AI Readiness Assessment</h3>
+          <p class="card__description">
+            Benchmark your agency's technical, organizational, and cultural readiness
+            for AI before investing in large-scale training programs.
+          </p>
+          <a href="ai-readiness.html" class="card__link">Learn More</a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- CTA Section -->
   <section class="section">
     <div class="container">
       <div class="cta">
-        <h2>Build Your AI Capability</h2>
-        <p>Invest in your team's AI skills and prepare your organization for the future.</p>
+        <h2>Ready to Build Your AI-Ready Workforce?</h2>
+        <p>
+          Start with a training needs assessment. We will evaluate your current AI
+          skill levels, map learning paths to your strategic goals, and design a
+          program that fits your schedule, security requirements, and budget.
+        </p>
         <div class="cta__actions">
-          <a href="../contact/index.html" class="btn btn--white btn--lg">Discuss Training Needs</a>
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Discuss Training Needs
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="footer__bottom">
         <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <script src="../js/main.js"></script>
 </body>
 </html>

@@ -3,236 +3,496 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Data Readiness for AI | Brite.AI</title>
-  <meta name="description" content="Prepare your data for AI success. Data quality, integration, and governance services that build the foundation for effective AI.">
+  <title>Data Readiness for AI | Government Data Quality & Governance | Brite.AI</title>
+  <meta name="description" content="Prepare your government data for AI success. Data quality, integration, governance, and OPEN Data Act compliance services that build the foundation for effective, responsible AI.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
       <div class="navbar__inner">
         <a href="../index.html" class="navbar__logo">Brite.AI</a>
         <ul class="navbar__menu">
           <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
           <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
           <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <section class="hero hero--centered">
+  <!-- Hero Section -->
+  <section class="hero">
     <div class="container">
       <div class="hero__content">
         <span class="hero__badge">Data Services</span>
         <h1 class="hero__title">AI Is Only as Good as Your Data</h1>
         <p class="hero__subtitle">
-          Data readiness services that prepare your organization's data for AI—
-          addressing quality, integration, and governance challenges.
+          Data readiness services that prepare your organization's data for AI --
+          addressing quality, integration, governance, and OPEN Data Act compliance
+          so your AI investments deliver real mission value.
         </p>
         <div class="hero__actions">
-          <a href="../contact/index.html" class="btn btn--primary btn--lg">Assess Your Data</a>
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Assess Your Data Readiness
+          </a>
+          <a href="#approach" class="btn btn--secondary btn--lg">
+            See Our Process
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Problem Statement -->
   <section class="section">
     <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">The Reality</span>
-        <h2 class="section-header__title">Data Challenges Block AI Success</h2>
-      </div>
       <div class="grid grid--2" style="align-items: center; gap: 4rem;">
         <div data-animate>
+          <span class="section-header__label">The Reality</span>
+          <h2>Data Challenges Block AI Success</h2>
           <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
-            Most AI projects don't fail because of AI technology—they fail because of data.
-            Government agencies have rich data, but it's often siloed, inconsistent, incomplete,
-            or poorly documented.
+            Most AI projects don't fail because of AI technology -- they fail because
+            of data. Government agencies have rich data, but it's often siloed,
+            inconsistent, incomplete, or poorly documented. Gartner predicts that through
+            2026, organizations will abandon 60% of AI projects unsupported by AI-ready data.
           </p>
-          <div class="card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: none;">
-            <h4 style="color: #92400e;">Common Data Challenges</h4>
-            <ul style="padding-left: var(--space-5); color: #78350f;">
-              <li>Data trapped in silos across systems</li>
-              <li>Inconsistent formats and definitions</li>
-              <li>Missing values and quality issues</li>
-              <li>No documentation or data dictionary</li>
-              <li>Unclear ownership and governance</li>
+          <p style="color: var(--color-text-light);">
+            The CDO Council has made data readiness a top priority, and the OPEN Data Act
+            requires agencies to maintain comprehensive data inventories with machine-readable
+            metadata. Without addressing these foundations, AI initiatives stall before
+            they start -- and data sovereignty risks multiply as agencies share data
+            across jurisdictional boundaries.
+          </p>
+        </div>
+        <div data-animate data-delay="200">
+          <div class="card" style="background: var(--color-background-alt);">
+            <h4 style="color: var(--color-primary); margin-bottom: var(--space-4);">Common Data Challenges:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Data trapped in silos across legacy systems
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Inconsistent formats, definitions, and standards
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Missing values, duplicates, and quality gaps
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> No data dictionary, catalog, or lineage documentation
+              </li>
+              <li style="padding: var(--space-3) 0; display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Unclear ownership, governance, and stewardship
+              </li>
             </ul>
           </div>
         </div>
-        <div data-animate data-delay="200">
-          <div class="card" style="padding: var(--space-8); text-align: center;">
-            <div style="font-size: 4rem; margin-bottom: var(--space-4);">🗄️ → 🧹 → 🤖</div>
-            <h4>Data → Clean Data → AI Ready</h4>
-            <p style="color: var(--color-text-light);">We help you transform raw data into AI-ready assets</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach Section with Timeline -->
+  <section id="approach" class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Approach</span>
+        <h2 class="section-header__title">Four-Phase Data Readiness Process</h2>
+        <p class="section-header__subtitle">
+          A structured methodology that transforms raw, fragmented government data
+          into AI-ready assets -- with governance and compliance built in from the start.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline__item" data-animate>
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 1</span>
+            <h3 class="timeline__title">Discover</h3>
+            <p>Inventory all data sources, understand the current state, map to AI use
+            cases, and assess compliance posture against OPEN Data Act requirements
+            and CDO Council standards.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Comprehensive data source inventory</li>
+              <li>AI use case mapping and data requirements</li>
+              <li>OPEN Data Act compliance gap analysis</li>
+              <li>Data sovereignty and jurisdictional assessment</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="100">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 2</span>
+            <h3 class="timeline__title">Assess</h3>
+            <p>Profile data quality across every dimension, evaluate gaps against
+            AI requirements, and produce a scored readiness assessment with
+            prioritized remediation recommendations.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Data quality profiling (completeness, accuracy, consistency, timeliness)</li>
+              <li>AI readiness scoring and benchmarking</li>
+              <li>Governance maturity evaluation</li>
+              <li>Prioritized remediation roadmap</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="200">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 3</span>
+            <h3 class="timeline__title">Remediate</h3>
+            <p>Cleanse, integrate, and transform data to meet AI requirements.
+            Build ETL/ELT pipelines, implement master data management, and
+            create feature stores for machine learning.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Data cleansing, standardization, and deduplication</li>
+              <li>Integration pipelines and entity resolution</li>
+              <li>Feature engineering and training dataset creation</li>
+              <li>Metadata enrichment and catalog development</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="300">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 4</span>
+            <h3 class="timeline__title">Sustain</h3>
+            <p>Establish governance frameworks, data stewardship roles, automated
+            quality monitoring, and ongoing compliance processes that keep data
+            AI-ready over time.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Data governance framework and stewardship program</li>
+              <li>Automated data quality monitoring and alerting</li>
+              <li>CDO Council aligned reporting and metrics</li>
+              <li>Continuous compliance and audit readiness</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Services</span>
-        <h2 class="section-header__title">Data Readiness Services</h2>
-      </div>
-      <div class="grid grid--3">
-        <div class="card" data-animate>
-          <div class="card__icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">📊</div>
-          <h3 class="card__title">Data Assessment</h3>
-          <p class="card__description">Comprehensive evaluation of your data landscape, quality, and AI readiness.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Data inventory and mapping</li>
-            <li>Quality profiling</li>
-            <li>Gap analysis</li>
-            <li>Readiness scoring</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="100">
-          <div class="card__icon" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">🧹</div>
-          <h3 class="card__title">Data Quality</h3>
-          <p class="card__description">Cleanse, standardize, and enrich your data for AI consumption.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Data cleansing</li>
-            <li>Standardization</li>
-            <li>Deduplication</li>
-            <li>Enrichment</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="200">
-          <div class="card__icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff;">🔗</div>
-          <h3 class="card__title">Data Integration</h3>
-          <p class="card__description">Connect siloed data sources to create unified views for AI.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>ETL/ELT pipelines</li>
-            <li>Master data management</li>
-            <li>Entity resolution</li>
-            <li>API development</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="300">
-          <div class="card__icon" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff;">📋</div>
-          <h3 class="card__title">Data Governance</h3>
-          <p class="card__description">Establish policies, processes, and ownership for sustainable data management.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Governance framework</li>
-            <li>Data stewardship</li>
-            <li>Policy development</li>
-            <li>Compliance alignment</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="400">
-          <div class="card__icon" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff;">📖</div>
-          <h3 class="card__title">Data Documentation</h3>
-          <p class="card__description">Create data dictionaries, catalogs, and lineage documentation.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Data dictionaries</li>
-            <li>Data catalogs</li>
-            <li>Lineage mapping</li>
-            <li>Metadata management</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="500">
-          <div class="card__icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff;">🎯</div>
-          <h3 class="card__title">Feature Engineering</h3>
-          <p class="card__description">Transform raw data into features optimized for machine learning.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Feature design</li>
-            <li>Feature stores</li>
-            <li>Training dataset creation</li>
-            <li>Label generation</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <!-- Deliverables / Features Section -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Our Approach</span>
-        <h2 class="section-header__title">Data Readiness Process</h2>
+        <span class="section-header__label">What You Get</span>
+        <h2 class="section-header__title">Data Readiness Deliverables</h2>
+        <p class="section-header__subtitle">
+          Tangible outputs that transform your data from a liability into a
+          strategic asset for AI and mission delivery.
+        </p>
       </div>
-      <div class="process-steps">
-        <div class="process-step" data-animate>
-          <div class="process-step__number">1</div>
-          <h3 class="process-step__title">Discover</h3>
-          <p class="process-step__description">Inventory data sources, understand current state, and identify AI use cases.</p>
+
+      <div class="features">
+        <div class="feature" data-animate>
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Data Quality Assessment Report</h4>
+            <p class="feature__description">
+              Comprehensive profiling of your data across completeness, accuracy,
+              consistency, timeliness, and uniqueness -- with AI readiness scores
+              and prioritized remediation actions.
+            </p>
+          </div>
         </div>
-        <div class="process-step" data-animate data-delay="100">
-          <div class="process-step__number">2</div>
-          <h3 class="process-step__title">Assess</h3>
-          <p class="process-step__description">Profile data quality, evaluate gaps, and score AI readiness.</p>
+
+        <div class="feature" data-animate data-delay="50">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Data Cleansing and Standardization</h4>
+            <p class="feature__description">
+              Hands-on remediation that cleanses, deduplicates, and standardizes
+              your data -- transforming inconsistent records into reliable inputs
+              for AI models and analytics.
+            </p>
+          </div>
         </div>
-        <div class="process-step" data-animate data-delay="200">
-          <div class="process-step__number">3</div>
-          <h3 class="process-step__title">Remediate</h3>
-          <p class="process-step__description">Cleanse, integrate, and transform data to meet AI requirements.</p>
+
+        <div class="feature" data-animate data-delay="100">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Integration Pipelines</h4>
+            <p class="feature__description">
+              ETL/ELT pipelines that connect siloed data sources, resolve entity
+              identities across systems, and create unified views ready for AI
+              consumption and analytics.
+            </p>
+          </div>
         </div>
-        <div class="process-step" data-animate data-delay="300">
-          <div class="process-step__number">4</div>
-          <h3 class="process-step__title">Sustain</h3>
-          <p class="process-step__description">Establish governance and processes for ongoing data quality.</p>
+
+        <div class="feature" data-animate data-delay="150">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Governance Framework</h4>
+            <p class="feature__description">
+              Policies, stewardship roles, and oversight mechanisms aligned with
+              CDO Council best practices and OPEN Data Act requirements -- ensuring
+              sustainable data quality over time.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="200">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Data Catalog and Dictionary</h4>
+            <p class="feature__description">
+              Comprehensive documentation including data dictionaries, catalogs,
+              lineage maps, and machine-readable metadata that satisfy OPEN Data Act
+              inventory requirements.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="250">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Feature Store and ML Datasets</h4>
+            <p class="feature__description">
+              Engineered features, training datasets, and label generation
+              optimized for your specific AI use cases -- from predictive models
+              to natural language processing.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Stats / Proof Points Section -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <div class="stats" style="grid-template-columns: 1fr;">
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="60" data-suffix="%">0%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Of AI projects are abandoned due to insufficient data readiness (Gartner)
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="41" data-suffix="%">0%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Of leaders cite data governance as a top 2026 priority (Info-Tech Research)
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">4x</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Faster AI deployment when data readiness is addressed before model development
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <span class="section-header__label">Why Data Readiness Matters</span>
+          <h2>The Difference Between AI Success and Failure</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Data readiness isn't a prerequisite you check off -- it's the ongoing discipline
+            that determines whether your AI investments produce trusted results or
+            expensive noise.
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>CDO Council aligned</strong> -- governance frameworks that map to federal data sharing and stewardship standards</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>OPEN Data Act compliant</strong> -- machine-readable metadata, data inventories, and documentation that satisfy federal mandates</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>Data sovereignty preserved</strong> -- constituent PII protected with jurisdictional controls, audit trails, and access governance</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>AI lifecycle ready</strong> -- data quality assessed during concept phase, provisioned during development, maintained through deployment</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="testimonial" data-animate>
+        <p class="testimonial__quote">
+          "We thought our data was ready for AI until Brite.AI ran the readiness
+          assessment. They found critical quality gaps in 40% of our key datasets
+          and helped us remediate them in twelve weeks. When we finally deployed
+          our predictive model, accuracy was 35% higher than our initial pilot --
+          because the data underneath was finally trustworthy."
+        </p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">DIR</div>
+          <div>
+            <div class="testimonial__name">Director of Data and Analytics</div>
+            <div class="testimonial__title">State Department of Social Services</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
   <section class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Assessment</span>
-        <h2 class="section-header__title">Data Readiness Dimensions</h2>
+        <span class="section-header__label">Related Services</span>
+        <h2 class="section-header__title">Continue Your Data Journey</h2>
       </div>
-      <div class="grid grid--4">
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate>
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">✓</div>
-          <h4>Completeness</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Missing values</p>
+
+      <div class="grid grid--3">
+        <div class="card">
+          <h3 class="card__title">Salesforce Data Cloud</h3>
+          <p class="card__description">
+            Unify constituent data across programs and systems with a FedRAMP-authorized
+            platform for 360-degree visibility.
+          </p>
+          <a href="data-cloud.html" class="card__link">Learn More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
         </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="100">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">📏</div>
-          <h4>Consistency</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Format standardization</p>
+        <div class="card">
+          <h3 class="card__title">Analytics and BI</h3>
+          <p class="card__description">
+            Transform clean, governed data into actionable insights with modern
+            dashboards, reporting, and advanced analytics.
+          </p>
+          <a href="analytics.html" class="card__link">Learn More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
         </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="200">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">🎯</div>
-          <h4>Accuracy</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Correctness</p>
-        </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="300">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">⏰</div>
-          <h4>Timeliness</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Currency</p>
+        <div class="card">
+          <h3 class="card__title">AI Strategy and Roadmap</h3>
+          <p class="card__description">
+            Define your AI vision, identify high-value use cases, and create
+            a practical roadmap that accounts for data readiness.
+          </p>
+          <a href="ai-strategy.html" class="card__link">Learn More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- CTA Section -->
   <section class="section">
     <div class="container">
       <div class="cta">
         <h2>Build Your AI Data Foundation</h2>
-        <p>Get your data ready for AI with our comprehensive data readiness services.</p>
+        <p>
+          Get your data ready for AI with our comprehensive data readiness services.
+          Start with an assessment and get a clear roadmap to AI-ready data.
+        </p>
         <div class="cta__actions">
-          <a href="../contact/index.html" class="btn btn--white btn--lg">Start Data Assessment</a>
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Start Data Assessment
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="footer__bottom">
         <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <script src="../js/main.js"></script>
 </body>
 </html>

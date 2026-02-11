@@ -4,90 +4,212 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Predictive Analytics for Government | Brite.AI</title>
-  <meta name="description" content="AI-powered predictive analytics that help government agencies anticipate needs, prevent problems, and optimize resources.">
+  <meta name="description" content="AI-powered predictive analytics that help government agencies anticipate constituent needs, prevent fraud, forecast demand, and optimize resource allocation with responsible AI.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
       <div class="navbar__inner">
         <a href="../index.html" class="navbar__logo">Brite.AI</a>
         <ul class="navbar__menu">
           <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
           <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
           <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
+  <!-- Hero Section -->
   <section class="hero hero--centered">
     <div class="container">
       <div class="hero__content">
-        <span class="hero__badge">Specialized AI</span>
-        <h1 class="hero__title">Predict. Prevent. Prepare.</h1>
+        <span class="hero__badge">Data Science & AI</span>
+        <h1 class="hero__title">Predict. Prevent.<br>Prepare.</h1>
         <p class="hero__subtitle">
           AI-powered predictive analytics that help government agencies anticipate
-          constituent needs, prevent problems before they occur, and optimize resource allocation.
+          constituent needs, detect fraud before payments are made, forecast service
+          demand, and allocate resources where they matter most -- shifting from reactive
+          to proactive government.
         </p>
         <div class="hero__actions">
-          <a href="../contact/index.html" class="btn btn--primary btn--lg">Explore Predictive Analytics</a>
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Explore Predictive Analytics
+          </a>
+          <a href="#approach" class="btn btn--secondary btn--lg">
+            See Our Approach
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Problem Statement -->
   <section class="section">
     <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Why Prediction Matters</span>
-        <h2 class="section-header__title">From Reactive to Proactive Government</h2>
-      </div>
       <div class="grid grid--2" style="align-items: center; gap: 4rem;">
         <div data-animate>
+          <span class="section-header__label">The Challenge</span>
+          <h2>Government Operates Reactively While Problems Compound</h2>
           <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
-            Government traditionally operates reactively—responding to problems after they occur.
-            Predictive analytics enables a shift to proactive service delivery, identifying risks
-            and opportunities before they materialize.
+            Government traditionally responds to problems after they occur -- investigating
+            fraud after payments are made, intervening after crises escalate, and staffing
+            based on last year's numbers. Agencies handle massive datasets across citizen
+            services, healthcare, transportation, and emergency management, yet most of that
+            data goes unanalyzed. The cost of being reactive is billions in improper payments,
+            preventable emergencies, and misallocated resources.
           </p>
-          <div class="grid grid--2" style="gap: var(--space-4);">
-            <div class="card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: none; padding: var(--space-4);">
-              <strong style="color: #92400e;">Reactive</strong>
-              <p style="font-size: var(--text-sm); color: #78350f; margin: 0;">Respond to crisis</p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-error)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>Fraud detected months after improper payments are disbursed</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-error)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>Resource allocation based on outdated assumptions, not data</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-error)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>At-risk populations identified only after crises occur</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-error)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>Siloed datasets prevent cross-program insights and early intervention</span>
+            </li>
+          </ul>
+        </div>
+        <div data-animate data-delay="200">
+          <div class="card" style="background: var(--color-background-alt); padding: var(--space-8);">
+            <h4 style="margin-bottom: var(--space-6); text-align: center;">Reactive vs. Proactive Government</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+              <div style="padding: var(--space-5); border-radius: var(--radius-lg); background: linear-gradient(135deg, #fef3c7, #fde68a);">
+                <div style="margin-bottom: var(--space-3);">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#92400e" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <strong style="color: #92400e;">Reactive</strong>
+                <p style="font-size: var(--text-sm); color: #78350f; margin: var(--space-2) 0 0;">Respond to crisis after damage is done</p>
+              </div>
+              <div style="padding: var(--space-5); border-radius: var(--radius-lg); background: linear-gradient(135deg, #d1fae5, #a7f3d0);">
+                <div style="margin-bottom: var(--space-3);">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#065f46" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <strong style="color: #065f46;">Proactive</strong>
+                <p style="font-size: var(--text-sm); color: #064e3b; margin: var(--space-2) 0 0;">Predict and prevent before problems escalate</p>
+              </div>
             </div>
-            <div class="card" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); border: none; padding: var(--space-4);">
-              <strong style="color: #065f46;">Proactive</strong>
-              <p style="font-size: var(--text-sm); color: #064e3b; margin: 0;">Prevent crisis</p>
+            <div style="margin-top: var(--space-6);">
+              <h5 style="margin-bottom: var(--space-3); font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted);">Predictive Analytics Enables:</h5>
+              <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="padding: var(--space-2) 0; display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-sm);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Demand forecasting for services</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-sm);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Early risk identification</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-sm);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Fraud and error prevention</span>
+                </li>
+                <li style="padding: var(--space-2) 0; display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-sm);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Targeted interventions and resource optimization</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
-        <div data-animate data-delay="200">
-          <div class="card" style="padding: var(--space-8);">
-            <h4 style="margin-bottom: var(--space-4);">Predictive Analytics Enables:</h4>
-            <ul style="list-style: none; padding: 0; margin: 0;">
-              <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
-                <span style="color: var(--color-primary);">📈</span>
-                <span>Demand forecasting for services</span>
-              </li>
-              <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
-                <span style="color: var(--color-primary);">⚠️</span>
-                <span>Early risk identification</span>
-              </li>
-              <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
-                <span style="color: var(--color-primary);">💰</span>
-                <span>Resource optimization</span>
-              </li>
-              <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
-                <span style="color: var(--color-primary);">🎯</span>
-                <span>Targeted interventions</span>
-              </li>
-              <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
-                <span style="color: var(--color-primary);">🔍</span>
-                <span>Fraud and error prevention</span>
-              </li>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach / Methodology -->
+  <section id="approach" class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Approach</span>
+        <h2 class="section-header__title">Responsible Predictive Analytics Framework</h2>
+        <p class="section-header__subtitle">
+          Predictive models in government must be fair, explainable, and continuously validated.
+          We build responsibility into every phase.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline__item" data-animate>
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 1</span>
+            <h3 class="timeline__title">Data Assessment & Use Case Definition</h3>
+            <p>We evaluate your data landscape, identify high-value prediction opportunities,
+            and define success criteria with stakeholders. We assess data quality, availability,
+            and ethical considerations for each use case.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Data inventory and quality assessment</li>
+              <li>Use case prioritization (value vs. feasibility)</li>
+              <li>Ethical impact assessment and bias risk analysis</li>
+              <li>Success metrics and threshold definition</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="100">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 2</span>
+            <h3 class="timeline__title">Model Development & Fairness Testing</h3>
+            <p>We build predictive models using machine learning, time series analysis, and
+            anomaly detection -- with fairness constraints built in from the start. Every model
+            undergoes rigorous bias testing across protected groups.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Feature engineering and selection</li>
+              <li>Model training with fairness constraints</li>
+              <li>Disparate impact analysis across demographics</li>
+              <li>Explainability framework implementation</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="200">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 3</span>
+            <h3 class="timeline__title">Decision Support Integration</h3>
+            <p>Predictions are delivered as decision support tools -- informing human decisions,
+            not replacing them. We integrate predictions into caseworker workflows with plain-language
+            explanations and override capabilities.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Dashboard and alert system deployment</li>
+              <li>Caseworker workflow integration</li>
+              <li>Plain-language prediction explanations</li>
+              <li>Human override and appeal processes</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="300">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 4</span>
+            <h3 class="timeline__title">Continuous Monitoring & Validation</h3>
+            <p>Predictive models require ongoing validation. We monitor performance, detect
+            drift, retrain models, and provide regular accuracy and fairness reports to
+            oversight bodies.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Automated performance monitoring and drift detection</li>
+              <li>Regular model retraining and recalibration</li>
+              <li>Fairness auditing and compliance reporting</li>
+              <li>Feedback loop integration for continuous improvement</li>
             </ul>
           </div>
         </div>
@@ -95,178 +217,293 @@
     </div>
   </section>
 
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Use Cases</span>
-        <h2 class="section-header__title">Government Predictive Applications</h2>
-      </div>
-      <div class="grid grid--3">
-        <div class="card" data-animate>
-          <div class="card__icon" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff;">⚠️</div>
-          <h3 class="card__title">Risk Prediction</h3>
-          <p class="card__description">Identify high-risk cases early—child welfare, elder abuse, recidivism—to enable preventive intervention.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Child safety risk scoring</li>
-            <li>Homelessness risk prediction</li>
-            <li>Health deterioration alerts</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="100">
-          <div class="card__icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">📊</div>
-          <h3 class="card__title">Demand Forecasting</h3>
-          <p class="card__description">Predict service demand to optimize staffing, budgeting, and resource allocation.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Benefits application volume</li>
-            <li>Contact center demand</li>
-            <li>Seasonal service patterns</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="200">
-          <div class="card__icon" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff;">💰</div>
-          <h3 class="card__title">Fraud Detection</h3>
-          <p class="card__description">Identify suspicious patterns and anomalies in claims, applications, and payments.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Benefits fraud scoring</li>
-            <li>Provider fraud detection</li>
-            <li>Identity verification</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="300">
-          <div class="card__icon" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">🎯</div>
-          <h3 class="card__title">Outcome Prediction</h3>
-          <p class="card__description">Predict program outcomes to improve interventions and service matching.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Employment success likelihood</li>
-            <li>Treatment effectiveness</li>
-            <li>Program completion rates</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="400">
-          <div class="card__icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff;">🏥</div>
-          <h3 class="card__title">Health Analytics</h3>
-          <p class="card__description">Predict health risks, hospital readmissions, and care needs for proactive management.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Chronic disease progression</li>
-            <li>ED utilization prediction</li>
-            <li>Care coordination targeting</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="500">
-          <div class="card__icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff;">🔧</div>
-          <h3 class="card__title">Operational Optimization</h3>
-          <p class="card__description">Predict maintenance needs, processing times, and operational bottlenecks.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Infrastructure maintenance</li>
-            <li>Processing time estimation</li>
-            <li>Workload balancing</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <!-- Deliverables / Features -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Our Approach</span>
-        <h2 class="section-header__title">Responsible Predictive Analytics</h2>
+        <span class="section-header__label">Use Cases</span>
+        <h2 class="section-header__title">Government Predictive Analytics Applications</h2>
+        <p class="section-header__subtitle">
+          Purpose-built prediction capabilities for the challenges government agencies face every day.
+        </p>
       </div>
-      <div class="grid grid--2">
-        <div class="card" data-animate>
-          <h3 class="card__title">Fairness by Design</h3>
-          <p class="card__description">Predictive models in government must be fair. We build fairness into every step:</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-            <li>Bias testing across protected groups</li>
-            <li>Fairness constraints in model training</li>
-            <li>Disparate impact analysis</li>
-            <li>Ongoing monitoring for drift</li>
-          </ul>
+
+      <div class="features">
+        <div class="feature" data-animate>
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Fraud Detection & Prevention</h4>
+            <p class="feature__description">
+              Identify suspicious patterns in benefits claims, provider billing, and
+              payment requests before funds are disbursed. Machine learning models flag
+              anomalies and score risk in real time, protecting billions in public funds.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="100">
-          <h3 class="card__title">Explainability</h3>
-          <p class="card__description">Predictions must be explainable to staff, constituents, and oversight bodies:</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-            <li>Feature importance explanations</li>
-            <li>Individual prediction explanations</li>
-            <li>Plain-language summaries</li>
-            <li>Audit trail documentation</li>
-          </ul>
+
+        <div class="feature" data-animate data-delay="50">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Service Demand Forecasting</h4>
+            <p class="feature__description">
+              Predict benefits application volumes, contact center demand, and seasonal
+              service patterns. Optimize staffing levels, budget allocation, and facility
+              planning months in advance using time series and trend analysis.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="200">
-          <h3 class="card__title">Human Oversight</h3>
-          <p class="card__description">Predictions inform human decisions—they don't replace them:</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-            <li>Decision support, not automation</li>
-            <li>Human review for high-stakes decisions</li>
-            <li>Override capabilities</li>
-            <li>Appeal processes</li>
-          </ul>
+
+        <div class="feature" data-animate data-delay="100">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Risk Prediction & Early Intervention</h4>
+            <p class="feature__description">
+              Identify high-risk cases early in child welfare, elder care, homelessness
+              prevention, and health services. Enable caseworkers to intervene proactively
+              with targeted resources before situations escalate to crisis.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="300">
-          <h3 class="card__title">Continuous Validation</h3>
-          <p class="card__description">Predictive models require ongoing validation and improvement:</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-            <li>Performance monitoring</li>
-            <li>Accuracy tracking over time</li>
-            <li>Regular retraining</li>
-            <li>Feedback loops</li>
+
+        <div class="feature" data-animate data-delay="150">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Outcome Prediction</h4>
+            <p class="feature__description">
+              Predict program outcomes to improve service matching -- employment success
+              likelihood, treatment effectiveness, and program completion rates. Help
+              caseworkers connect constituents with the interventions most likely to succeed.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="200">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Health Analytics & Population Health</h4>
+            <p class="feature__description">
+              Predict chronic disease progression, hospital readmissions, and emergency
+              department utilization. Enable Medicaid agencies and public health departments
+              to target care coordination and preventive interventions.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="250">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/><circle cx="12" cy="14" r="1"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Infrastructure & Operations</h4>
+            <p class="feature__description">
+              Predict maintenance needs for roads, bridges, and public buildings. Forecast
+              processing times, workload bottlenecks, and operational issues before they
+              impact service delivery or public safety.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats / Proof Points -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <div class="stats" style="grid-template-columns: 1fr;">
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">3x</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Agencies with predictive analytics are 3x more likely to prevent fraud before payments
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="40" data-suffix="%">0%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Average reduction in improper payments through predictive fraud scoring
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="25" data-suffix="%">0%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Improvement in resource allocation efficiency through demand forecasting
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <span class="section-header__label">Proven Impact</span>
+          <h2>Data-Driven Results Across Government</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Predictive analytics is transforming how government agencies serve constituents.
+            From fraud detection to population health, agencies using predictive models
+            deliver better outcomes with fewer resources:
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Benefits fraud</strong> -- flag suspicious claims before disbursement, saving millions</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Child welfare</strong> -- identify at-risk families for early intervention</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Demand forecasting</strong> -- staff to actual need, not last year's averages</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Public health</strong> -- predict outbreaks and target preventive care</span>
+            </li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Testimonial -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="testimonial" data-animate>
+        <p class="testimonial__quote">
+          "Brite.AI's predictive analytics platform transformed how we manage benefits
+          integrity. We went from catching fraud six months after payment to flagging
+          suspicious claims before a single dollar goes out the door. In the first year,
+          we prevented over $12 million in improper payments -- and the model gets smarter
+          every quarter. Just as importantly, they built fairness testing in from day one,
+          so we can demonstrate to legislators that the system is equitable."
+        </p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">CFO</div>
+          <div>
+            <div class="testimonial__name">Chief Financial Officer</div>
+            <div class="testimonial__title">State Department of Health & Human Services</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
   <section class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Technology</span>
-        <h2 class="section-header__title">Predictive Techniques We Use</h2>
+        <span class="section-header__label">Related Services</span>
+        <h2 class="section-header__title">Extend Your Predictive Capabilities</h2>
       </div>
-      <div class="grid grid--4">
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate>
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">📈</div>
-          <h4 style="font-size: var(--text-base);">Machine Learning</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Classification & Regression</p>
+
+      <div class="grid grid--3">
+        <div class="card">
+          <h3 class="card__title">AI Strategy & Roadmap</h3>
+          <p class="card__description">
+            Define where predictive analytics fits in your broader AI strategy and
+            prioritize high-value use cases for maximum impact.
+          </p>
+          <a href="ai-strategy.html" class="card__link">Learn More &rarr;</a>
         </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="100">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">⏰</div>
-          <h4 style="font-size: var(--text-base);">Time Series</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Forecasting & Trends</p>
+        <div class="card">
+          <h3 class="card__title">Data Cloud & Integration</h3>
+          <p class="card__description">
+            Unify the siloed data sources that power predictive models with a modern
+            cloud data platform built for government.
+          </p>
+          <a href="data-cloud.html" class="card__link">Learn More &rarr;</a>
         </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="200">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">🔍</div>
-          <h4 style="font-size: var(--text-base);">Anomaly Detection</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Fraud & Outliers</p>
-        </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="300">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">🧠</div>
-          <h4 style="font-size: var(--text-base);">Deep Learning</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Complex Patterns</p>
+        <div class="card">
+          <h3 class="card__title">Process Intelligence</h3>
+          <p class="card__description">
+            Combine predictive analytics with process mining to not only forecast
+            demand but optimize the workflows that serve it.
+          </p>
+          <a href="process-intelligence.html" class="card__link">Learn More &rarr;</a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- CTA Section -->
   <section class="section">
     <div class="container">
       <div class="cta">
         <h2>Anticipate Tomorrow's Challenges Today</h2>
-        <p>Build predictive capabilities that help your agency serve constituents proactively.</p>
+        <p>
+          Build predictive capabilities that help your agency serve constituents
+          proactively -- detecting fraud, forecasting demand, and identifying risk
+          before problems escalate.
+        </p>
         <div class="cta__actions">
-          <a href="../contact/index.html" class="btn btn--white btn--lg">Discuss Predictive Analytics</a>
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Discuss Predictive Analytics
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="footer__bottom">
         <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <script src="../js/main.js"></script>
 </body>
 </html>

@@ -4,239 +4,495 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Computer Vision for Government | Brite.AI</title>
-  <meta name="description" content="AI-powered computer vision solutions for government. Image analysis, document processing, and visual inspection automation.">
+  <meta name="description" content="AI-powered computer vision for government agencies. Identity verification, infrastructure inspection, geospatial analysis, and visual automation with 99% accuracy.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
       <div class="navbar__inner">
         <a href="../index.html" class="navbar__logo">Brite.AI</a>
         <ul class="navbar__menu">
           <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
           <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
           <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
+  <!-- Hero Section -->
   <section class="hero hero--centered">
     <div class="container">
       <div class="hero__content">
-        <span class="hero__badge">Specialized AI</span>
-        <h1 class="hero__title">AI That Sees</h1>
+        <span class="hero__badge">Visual AI</span>
+        <h1 class="hero__title">AI That Sees What<br>Humans Can't Scale</h1>
         <p class="hero__subtitle">
-          Computer vision solutions that extract information from images, verify
-          documents, and automate visual inspection tasks for government agencies.
+          Computer vision solutions that verify identities, inspect infrastructure,
+          analyze satellite imagery, and automate visual tasks -- enabling government
+          agencies to process millions of images with the accuracy of expert reviewers
+          and the speed of automation.
         </p>
         <div class="hero__actions">
-          <a href="../contact/index.html" class="btn btn--primary btn--lg">Explore Computer Vision</a>
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Explore Computer Vision
+          </a>
+          <a href="#approach" class="btn btn--secondary btn--lg">
+            See Our Approach
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Problem Statement -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <span class="section-header__label">The Challenge</span>
+          <h2>Visual Tasks That Cannot Scale With Human Reviewers Alone</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Government agencies process millions of identity documents, inspect thousands of
+            miles of infrastructure, review satellite imagery across vast territories, and
+            manage growing archives of photographic evidence. These visual tasks require
+            expert judgment that is expensive, slow, and cannot keep pace with growing
+            volumes. Meanwhile, fraudulent documents become more sophisticated and
+            infrastructure deteriorates faster than inspectors can assess it.
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-error)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>Manual ID verification cannot catch sophisticated forgeries at scale</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-error)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>Infrastructure inspections are infrequent, dangerous, and subjective</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-error)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>Satellite and aerial imagery volumes exceed human analysis capacity</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-error)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span>Evidence photo backlogs delay investigations and court proceedings</span>
+            </li>
+          </ul>
+        </div>
+        <div data-animate data-delay="200">
+          <div class="card" style="background: var(--color-background-alt); padding: var(--space-8);">
+            <div style="text-align: center; margin-bottom: var(--space-6);">
+              <svg width="80" height="80" viewBox="0 0 80 80" fill="none" style="margin: 0 auto;">
+                <circle cx="40" cy="40" r="28" stroke="var(--color-primary)" stroke-width="2.5" fill="none"/>
+                <circle cx="40" cy="40" r="18" stroke="var(--color-primary)" stroke-width="2" fill="none" opacity="0.6"/>
+                <circle cx="40" cy="40" r="8" stroke="var(--color-primary)" stroke-width="2" fill="none" opacity="0.4"/>
+                <circle cx="40" cy="40" r="3" fill="var(--color-primary)"/>
+                <line x1="40" y1="8" x2="40" y2="16" stroke="var(--color-primary)" stroke-width="2"/>
+                <line x1="40" y1="64" x2="40" y2="72" stroke="var(--color-primary)" stroke-width="2"/>
+                <line x1="8" y1="40" x2="16" y2="40" stroke="var(--color-primary)" stroke-width="2"/>
+                <line x1="64" y1="40" x2="72" y2="40" stroke="var(--color-primary)" stroke-width="2"/>
+                <rect x="52" y="52" width="20" height="16" rx="3" stroke="var(--color-success)" stroke-width="2" fill="none"/>
+                <line x1="56" y1="58" x2="68" y2="58" stroke="var(--color-success)" stroke-width="1.5" opacity="0.6"/>
+                <line x1="56" y1="62" x2="64" y2="62" stroke="var(--color-success)" stroke-width="1.5" opacity="0.6"/>
+              </svg>
+            </div>
+            <h4 style="text-align: center; margin-bottom: var(--space-4);">See, Analyze, Act</h4>
+            <p style="color: var(--color-text-muted); text-align: center;">
+              Computer vision transforms images and video into structured insights --
+              verifying identities, detecting defects, classifying objects, and extracting
+              data from visual sources at machine speed.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach / Methodology -->
+  <section id="approach" class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Approach</span>
+        <h2 class="section-header__title">Computer Vision Development Methodology</h2>
+        <p class="section-header__subtitle">
+          A structured approach from use case assessment through production deployment,
+          optimized for government accuracy and compliance requirements.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline__item" data-animate>
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 1</span>
+            <h3 class="timeline__title">Use Case Assessment & Data Evaluation</h3>
+            <p>We evaluate the visual task, analyze sample imagery, assess data volume and
+            quality, and define accuracy requirements. We identify whether pre-trained models,
+            fine-tuning, or custom training is needed.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Visual task definition and accuracy requirements</li>
+              <li>Sample image analysis and quality assessment</li>
+              <li>Data volume and annotation requirements</li>
+              <li>Pre-trained model vs. custom training evaluation</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="100">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 2</span>
+            <h3 class="timeline__title">Model Selection & Training</h3>
+            <p>We select and configure the optimal model architecture, then fine-tune on
+            your specific data. For government applications, we prioritize models that
+            provide explainable outputs and operate in secure environments.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Architecture selection (CNN, transformer, hybrid)</li>
+              <li>Transfer learning from pre-trained foundations</li>
+              <li>Domain-specific fine-tuning with government data</li>
+              <li>Edge vs. cloud deployment architecture decisions</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="200">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 3</span>
+            <h3 class="timeline__title">Validation & Accuracy Benchmarking</h3>
+            <p>We rigorously validate model performance across diverse conditions --
+            varying lighting, image quality, document condition, and edge cases. We
+            benchmark against human expert performance.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Multi-condition testing (quality, lighting, angle)</li>
+              <li>Edge case identification and handling</li>
+              <li>Human expert performance comparison</li>
+              <li>Bias testing across demographic groups</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="300">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 4</span>
+            <h3 class="timeline__title">Integration & Continuous Learning</h3>
+            <p>We deploy into your workflows with APIs, user interfaces, and monitoring.
+            Models continuously improve through feedback loops and periodic retraining
+            on new data.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>API and workflow integration deployment</li>
+              <li>Real-time monitoring and alerting</li>
+              <li>Continuous learning from corrections</li>
+              <li>Performance tracking and drift detection</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deliverables / Features -->
   <section class="section">
     <div class="container">
       <div class="section-header">
         <span class="section-header__label">Capabilities</span>
-        <h2 class="section-header__title">Computer Vision Applications</h2>
+        <h2 class="section-header__title">Government Computer Vision Applications</h2>
+        <p class="section-header__subtitle">
+          Purpose-built visual AI for the unique challenges government agencies face --
+          from identity verification to infrastructure management.
+        </p>
       </div>
-      <div class="grid grid--3">
-        <div class="card" data-animate>
-          <div class="card__icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">🪪</div>
-          <h3 class="card__title">Identity Document Verification</h3>
-          <p class="card__description">Automatically extract data from IDs, verify authenticity, and detect fraudulent documents.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Driver's license processing</li>
-            <li>Passport verification</li>
-            <li>Document fraud detection</li>
-            <li>Liveness detection</li>
-          </ul>
+
+      <div class="features">
+        <div class="feature" data-animate>
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="8" x2="7" y2="8.01"/><rect x="10" y="8" width="7" height="2" rx="1"/><line x1="7" y1="12" x2="7" y2="12.01"/><rect x="10" y="12" width="5" height="2" rx="1"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Identity Document Verification</h4>
+            <p class="feature__description">
+              Automatically extract data from driver's licenses, passports, and government
+              IDs. Verify authenticity through hologram detection, microprint analysis, and
+              tamper detection. Liveness checks prevent spoofing with photos or videos.
+              Achieves 99% verification accuracy.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="100">
-          <div class="card__icon" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">📄</div>
-          <h3 class="card__title">Document Image Processing</h3>
-          <p class="card__description">Extract text and data from scanned documents, forms, and handwritten materials.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>OCR and handwriting recognition</li>
-            <li>Form field extraction</li>
-            <li>Table recognition</li>
-            <li>Document classification</li>
-          </ul>
+
+        <div class="feature" data-animate data-delay="50">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20"/><path d="M5 20V8l7-5 7 5v12"/><rect x="9" y="12" width="6" height="8"/><line x1="12" y1="8" x2="12" y2="8.01"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Infrastructure Inspection</h4>
+            <p class="feature__description">
+              Analyze drone and camera imagery of bridges, roads, buildings, and utility
+              infrastructure. Detect cracks, corrosion, structural deformation, and safety
+              hazards automatically. Prioritize maintenance based on severity scoring and
+              track deterioration over time.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="200">
-          <div class="card__icon" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff;">🔍</div>
-          <h3 class="card__title">Visual Inspection</h3>
-          <p class="card__description">Automate inspection tasks that previously required human visual review.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Infrastructure condition assessment</li>
-            <li>Evidence image analysis</li>
-            <li>Quality control inspection</li>
-            <li>Safety compliance verification</li>
-          </ul>
+
+        <div class="feature" data-animate data-delay="100">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Geospatial & Satellite Analysis</h4>
+            <p class="feature__description">
+              Analyze satellite and aerial imagery for land use classification, change
+              detection, property assessment, and environmental monitoring. Detect
+              unauthorized construction, assess disaster damage, and monitor agricultural
+              patterns across vast geographic areas.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="300">
-          <div class="card__icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff;">🖼️</div>
-          <h3 class="card__title">Image Classification</h3>
-          <p class="card__description">Automatically categorize and tag images for organization and searchability.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Photo evidence categorization</li>
-            <li>Document type classification</li>
-            <li>Content moderation</li>
-            <li>Archive organization</li>
-          </ul>
+
+        <div class="feature" data-animate data-delay="150">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Evidence & Forensic Image Analysis</h4>
+            <p class="feature__description">
+              Organize, classify, and analyze photographic evidence for investigations
+              and court proceedings. Automated categorization, object identification,
+              and metadata extraction speed up case preparation and ensure chain of
+              custody documentation.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="400">
-          <div class="card__icon" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff;">📍</div>
-          <h3 class="card__title">Object Detection</h3>
-          <p class="card__description">Identify and locate specific objects within images for analysis and counting.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Vehicle detection</li>
-            <li>Infrastructure inventory</li>
-            <li>Asset tracking</li>
-            <li>Crowd analysis</li>
-          </ul>
+
+        <div class="feature" data-animate data-delay="200">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Object Detection & Counting</h4>
+            <p class="feature__description">
+              Identify and locate specific objects within images and video feeds --
+              vehicles, people, infrastructure assets, and safety equipment. Enable
+              traffic monitoring, asset inventory, crowd analysis, and compliance
+              verification at scale.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="500">
-          <div class="card__icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff;">🗺️</div>
-          <h3 class="card__title">Geospatial Analysis</h3>
-          <p class="card__description">Analyze satellite and aerial imagery for land use, change detection, and mapping.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Land use classification</li>
-            <li>Change detection</li>
-            <li>Property assessment</li>
-            <li>Environmental monitoring</li>
+
+        <div class="feature" data-animate data-delay="250">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Document Image Processing</h4>
+            <p class="feature__description">
+              Advanced OCR and handwriting recognition for scanned documents, forms,
+              and records. Table extraction, checkbox detection, and form field
+              recognition that handles degraded, aged, and low-quality document images
+              with 95% accuracy.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats / Proof Points -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <div class="stats" style="grid-template-columns: 1fr;">
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="99" data-suffix="%">0%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Identity document verification accuracy, exceeding human expert performance
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="90" data-suffix="%">0%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Reduction in manual visual review time for infrastructure inspections
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">1000x</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Faster image processing compared to manual review, enabling real-time analysis
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <span class="section-header__label">Proven Impact</span>
+          <h2>Visual Intelligence at Government Scale</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Government AI adoption in 2026 is shifting from experimentation to accountable
+            impact. Computer vision leads the way with measurable results across agencies:
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Benefits eligibility</strong> -- automated ID verification for applications</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Infrastructure safety</strong> -- drone-based bridge and road inspection</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Property assessment</strong> -- satellite imagery detects unreported improvements</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Disaster response</strong> -- real-time damage assessment from aerial imagery</span>
+            </li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Testimonial -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="testimonial" data-animate>
+        <p class="testimonial__quote">
+          "We used to send inspectors to physically examine every bridge in our district
+          twice a year -- dangerous work that still left gaps. With Brite.AI's computer
+          vision system analyzing drone imagery, we now monitor every structure monthly.
+          The AI detected hairline cracks on a major overpass that our inspectors had
+          missed. That early detection prevented what could have been a catastrophic
+          failure and saved us an estimated $4.2 million in emergency repairs."
+        </p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">DIR</div>
+          <div>
+            <div class="testimonial__name">Director of Infrastructure</div>
+            <div class="testimonial__title">State Department of Transportation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
   <section class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Use Cases</span>
-        <h2 class="section-header__title">Government Computer Vision Applications</h2>
+        <span class="section-header__label">Related Services</span>
+        <h2 class="section-header__title">Extend Your Visual AI Capabilities</h2>
       </div>
-      <div class="grid grid--2">
-        <div class="card" data-animate>
-          <h3 class="card__title">Benefits & Eligibility</h3>
-          <p class="card__description">Streamline application processing with automated document verification.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-            <li>ID verification for applications</li>
-            <li>Income document extraction</li>
-            <li>Proof of residence validation</li>
-            <li>Form completion checking</li>
-          </ul>
+
+      <div class="grid grid--3">
+        <div class="card">
+          <h3 class="card__title">Document AI & IDP</h3>
+          <p class="card__description">
+            Combine computer vision with intelligent document processing for end-to-end
+            document automation from image capture to data extraction.
+          </p>
+          <a href="document-ai.html" class="card__link">Learn More &rarr;</a>
         </div>
-        <div class="card" data-animate data-delay="100">
-          <h3 class="card__title">Child Welfare</h3>
-          <p class="card__description">Support caseworkers with image analysis tools.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-            <li>Home condition documentation</li>
-            <li>Evidence photo organization</li>
-            <li>Document digitization</li>
-            <li>Court exhibit preparation</li>
-          </ul>
+        <div class="card">
+          <h3 class="card__title">Predictive Analytics</h3>
+          <p class="card__description">
+            Layer predictive models on top of visual data to forecast infrastructure
+            deterioration, predict maintenance needs, and optimize inspection schedules.
+          </p>
+          <a href="predictive-analytics.html" class="card__link">Learn More &rarr;</a>
         </div>
-        <div class="card" data-animate data-delay="200">
-          <h3 class="card__title">Transportation</h3>
-          <p class="card__description">Monitor infrastructure and optimize transportation systems.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-            <li>Road condition assessment</li>
-            <li>Traffic monitoring</li>
-            <li>Sign inventory</li>
-            <li>Bridge inspection support</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="300">
-          <h3 class="card__title">Property & Tax</h3>
-          <p class="card__description">Enhance property assessment and tax administration.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-            <li>Property improvement detection</li>
-            <li>Building classification</li>
-            <li>Deed and document processing</li>
-            <li>Aerial imagery analysis</li>
-          </ul>
+        <div class="card">
+          <h3 class="card__title">Agentic AI Solutions</h3>
+          <p class="card__description">
+            Autonomous AI agents that combine visual analysis with decision-making
+            for end-to-end automation of inspection and verification workflows.
+          </p>
+          <a href="agentic-ai.html" class="card__link">Learn More &rarr;</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Technology</span>
-        <h2 class="section-header__title">Our Computer Vision Approach</h2>
-      </div>
-      <div class="process-steps">
-        <div class="process-step" data-animate>
-          <div class="process-step__number">1</div>
-          <h3 class="process-step__title">Use Case Assessment</h3>
-          <p class="process-step__description">Evaluate the visual task, data requirements, and accuracy needs.</p>
-        </div>
-        <div class="process-step" data-animate data-delay="100">
-          <div class="process-step__number">2</div>
-          <h3 class="process-step__title">Model Selection</h3>
-          <p class="process-step__description">Choose pre-trained models or custom training based on requirements.</p>
-        </div>
-        <div class="process-step" data-animate data-delay="200">
-          <div class="process-step__number">3</div>
-          <h3 class="process-step__title">Training & Tuning</h3>
-          <p class="process-step__description">Fine-tune models on your specific data for optimal accuracy.</p>
-        </div>
-        <div class="process-step" data-animate data-delay="300">
-          <div class="process-step__number">4</div>
-          <h3 class="process-step__title">Integration</h3>
-          <p class="process-step__description">Deploy into your workflows with APIs and user interfaces.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--dark">
-    <div class="container">
-      <div class="stats">
-        <div class="stat" data-animate>
-          <div class="stat__value" data-counter="99" data-suffix="%">0%</div>
-          <div class="stat__label">ID verification accuracy</div>
-        </div>
-        <div class="stat" data-animate data-delay="100">
-          <div class="stat__value" data-counter="95" data-suffix="%">0%</div>
-          <div class="stat__label">OCR accuracy on forms</div>
-        </div>
-        <div class="stat" data-animate data-delay="200">
-          <div class="stat__value" data-counter="90" data-suffix="%">0%</div>
-          <div class="stat__label">Reduction in manual review</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <!-- CTA Section -->
   <section class="section">
     <div class="container">
       <div class="cta">
-        <h2>Automate Visual Tasks</h2>
-        <p>Let AI handle image analysis so your staff can focus on decisions that require human judgment.</p>
+        <h2>Automate Visual Tasks at Government Scale</h2>
+        <p>
+          Let AI handle image analysis, identity verification, and infrastructure inspection
+          so your staff can focus on the decisions that require human judgment and the
+          constituents who need human service.
+        </p>
         <div class="cta__actions">
-          <a href="../contact/index.html" class="btn btn--white btn--lg">Discuss Computer Vision</a>
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Discuss Computer Vision
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="footer__bottom">
         <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <script src="../js/main.js"></script>
 </body>
 </html>

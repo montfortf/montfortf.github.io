@@ -3,242 +3,511 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LLM Fine-Tuning & Custom Models | Brite.AI</title>
-  <meta name="description" content="Fine-tune large language models for government-specific tasks. Custom AI models trained on your domain for superior performance.">
+  <title>LLM Fine-Tuning & Custom Models for Government | Brite.AI</title>
+  <meta name="description" content="Fine-tune large language models for government-specific tasks. Custom AI models trained on your domain data for superior accuracy, consistency, and security on classified and sensitive workloads.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
       <div class="navbar__inner">
         <a href="../index.html" class="navbar__logo">Brite.AI</a>
         <ul class="navbar__menu">
           <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
           <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
           <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <section class="hero hero--centered">
+  <!-- Hero Section -->
+  <section class="hero">
     <div class="container">
       <div class="hero__content">
         <span class="hero__badge">Generative AI</span>
         <h1 class="hero__title">AI Models Built for Government</h1>
         <p class="hero__subtitle">
-          Fine-tune large language models on your domain-specific data for superior
-          accuracy, consistency, and performance on government tasks.
+          Fine-tune large language models on your domain-specific data for superior accuracy,
+          consistency, and performance on government tasks -- deployed on secure infrastructure
+          you control.
         </p>
         <div class="hero__actions">
-          <a href="../contact/index.html" class="btn btn--primary btn--lg">Explore Custom Models</a>
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Explore Custom Models
+          </a>
+          <a href="#approach" class="btn btn--secondary btn--lg">
+            See Our Methodology
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Problem Statement -->
   <section class="section">
     <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">When to Fine-Tune</span>
-        <h2 class="section-header__title">Fine-Tuning vs. Prompting vs. RAG</h2>
-      </div>
-      <div class="grid grid--3">
-        <div class="card" data-animate>
-          <h3 class="card__title">Prompt Engineering</h3>
-          <p class="card__description">Use when you need flexibility and have diverse tasks. Good for exploration and quick iteration.</p>
-          <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-md);">
-            <strong style="color: var(--color-primary);">Best for:</strong>
-            <p style="font-size: var(--text-sm); margin: 0;">General tasks, prototyping, low volume</p>
-          </div>
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <span class="section-header__label">The Challenge</span>
+          <h2>General-Purpose Models Fall Short on Specialized Tasks</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light);">
+            Off-the-shelf LLMs are impressive generalists, but government agencies need
+            specialists. When you require consistent output formats, domain-specific terminology,
+            regulatory compliance, and reliable behavior at scale, general-purpose models
+            introduce unacceptable risk and inefficiency.
+          </p>
+          <p style="color: var(--color-text-light);">
+            Fine-tuning transforms a foundation model into a purpose-built tool that understands
+            your agency's language, follows your templates, and embeds your compliance requirements
+            directly into the model's behavior -- reducing reliance on fragile prompt engineering.
+          </p>
         </div>
-        <div class="card" data-animate data-delay="100">
-          <h3 class="card__title">RAG</h3>
-          <p class="card__description">Use when you need AI to access specific knowledge that changes over time.</p>
-          <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-md);">
-            <strong style="color: var(--color-primary);">Best for:</strong>
-            <p style="font-size: var(--text-sm); margin: 0;">Q&A over documents, dynamic content</p>
-          </div>
-        </div>
-        <div class="card" data-animate data-delay="200" style="border: 2px solid var(--color-primary);">
-          <h3 class="card__title">Fine-Tuning</h3>
-          <p class="card__description">Use when you need consistent behavior, specific output formats, or domain expertise.</p>
-          <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--color-primary); color: #fff; border-radius: var(--radius-md);">
-            <strong>Best for:</strong>
-            <p style="font-size: var(--text-sm); margin: 0;">High-volume, specialized tasks</p>
+        <div data-animate data-delay="200">
+          <div class="card" style="background: var(--color-background-alt);">
+            <h4 style="color: var(--color-primary); margin-bottom: var(--space-4);">Generic LLMs vs. Fine-Tuned Models:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Inconsistent output formats requiring manual review
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Long, expensive prompts to get domain-specific behavior
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Data sent to third-party cloud APIs
+              </li>
+              <li style="padding: var(--space-3) 0; display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> No control over model behavior updates
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section section--alt">
+  <!-- Approach Section with Timeline -->
+  <section id="approach" class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Benefits</span>
-        <h2 class="section-header__title">Why Fine-Tune?</h2>
+        <span class="section-header__label">Our Methodology</span>
+        <h2 class="section-header__title">Six-Phase Fine-Tuning Process</h2>
+        <p class="section-header__subtitle">
+          A rigorous, security-first methodology that delivers production-grade custom models
+          with full auditability and reproducibility.
+        </p>
       </div>
-      <div class="grid grid--2">
-        <div class="card" data-animate>
-          <div class="card__icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">🎯</div>
-          <h3 class="card__title">Higher Accuracy</h3>
-          <p class="card__description">Models trained on your specific task and data consistently outperform generic models on domain-specific tasks.</p>
-        </div>
-        <div class="card" data-animate data-delay="100">
-          <div class="card__icon" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">📋</div>
-          <h3 class="card__title">Consistent Output</h3>
-          <p class="card__description">Fine-tuned models reliably follow your desired format, tone, and style without lengthy prompts.</p>
-        </div>
-        <div class="card" data-animate data-delay="200">
-          <div class="card__icon" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff;">⚡</div>
-          <h3 class="card__title">Lower Latency</h3>
-          <p class="card__description">Shorter prompts mean faster responses. Fine-tuned models can use smaller, faster base models.</p>
-        </div>
-        <div class="card" data-animate data-delay="300">
-          <div class="card__icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff;">💰</div>
-          <h3 class="card__title">Cost Efficiency</h3>
-          <p class="card__description">Reduced prompt tokens and ability to use smaller models can significantly lower per-request costs at scale.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Use Cases</span>
-        <h2 class="section-header__title">Government Fine-Tuning Applications</h2>
-      </div>
-      <div class="grid grid--3">
-        <div class="card" data-animate>
-          <h3 class="card__title">Document Classification</h3>
-          <p class="card__description">Train models to classify government documents into your specific taxonomy with high accuracy.</p>
-        </div>
-        <div class="card" data-animate data-delay="100">
-          <h3 class="card__title">Data Extraction</h3>
-          <p class="card__description">Fine-tune for extracting specific fields from forms and documents in your exact format.</p>
-        </div>
-        <div class="card" data-animate data-delay="200">
-          <h3 class="card__title">Case Summarization</h3>
-          <p class="card__description">Generate consistent case summaries following your agency's specific templates and standards.</p>
-        </div>
-        <div class="card" data-animate data-delay="300">
-          <h3 class="card__title">Eligibility Determination</h3>
-          <p class="card__description">Apply complex program rules to determine eligibility with explanations.</p>
-        </div>
-        <div class="card" data-animate data-delay="400">
-          <h3 class="card__title">Correspondence Generation</h3>
-          <p class="card__description">Generate letters and notices that follow your agency's tone, style, and compliance requirements.</p>
-        </div>
-        <div class="card" data-animate data-delay="500">
-          <h3 class="card__title">Code & Query Generation</h3>
-          <p class="card__description">Generate SQL queries or code specific to your systems and data schemas.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Our Process</span>
-        <h2 class="section-header__title">Fine-Tuning Methodology</h2>
-      </div>
       <div class="timeline">
         <div class="timeline__item" data-animate>
-          <div class="timeline__marker">1</div>
+          <div class="timeline__marker"></div>
           <div class="timeline__content">
-            <h3>Requirements & Feasibility</h3>
-            <p>Define the task, assess data availability, and determine if fine-tuning is the right approach vs. prompting or RAG.</p>
+            <span class="timeline__date">Phase 1</span>
+            <h3 class="timeline__title">Requirements &amp; Feasibility Analysis</h3>
+            <p>Define the target task, evaluate data availability, assess security constraints,
+            and determine whether fine-tuning is the right approach versus prompting, RAG,
+            or a hybrid strategy.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Task definition and success criteria</li>
+              <li>Data availability and quality assessment</li>
+              <li>Security and deployment constraint analysis</li>
+              <li>Cost-benefit analysis vs. prompting and RAG</li>
+            </ul>
           </div>
         </div>
+
         <div class="timeline__item" data-animate data-delay="100">
-          <div class="timeline__marker">2</div>
+          <div class="timeline__marker"></div>
           <div class="timeline__content">
-            <h3>Data Preparation</h3>
-            <p>Collect, clean, and format training data. Create high-quality examples that represent the desired behavior.</p>
+            <span class="timeline__date">Phase 2</span>
+            <h3 class="timeline__title">Data Preparation &amp; Curation</h3>
+            <p>Collect, clean, and format high-quality training examples that represent the
+            desired model behavior. Establish data governance protocols for sensitive content.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Training data collection and annotation</li>
+              <li>PII scrubbing and data classification</li>
+              <li>Quality assurance and inter-rater agreement</li>
+              <li>Train/validation/test split strategy</li>
+            </ul>
           </div>
         </div>
+
         <div class="timeline__item" data-animate data-delay="200">
-          <div class="timeline__marker">3</div>
+          <div class="timeline__marker"></div>
           <div class="timeline__content">
-            <h3>Base Model Selection</h3>
-            <p>Choose the appropriate base model based on task requirements, cost, latency, and deployment constraints.</p>
+            <span class="timeline__date">Phase 3</span>
+            <h3 class="timeline__title">Base Model Selection &amp; Architecture</h3>
+            <p>Select the optimal foundation model based on task requirements, license terms,
+            security clearance, latency needs, and deployment infrastructure constraints.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Open-source vs. proprietary model evaluation</li>
+              <li>Size/performance/latency tradeoff analysis</li>
+              <li>LoRA, QLoRA, or full fine-tuning selection</li>
+              <li>Infrastructure and compute planning</li>
+            </ul>
           </div>
         </div>
+
         <div class="timeline__item" data-animate data-delay="300">
-          <div class="timeline__marker">4</div>
+          <div class="timeline__marker"></div>
           <div class="timeline__content">
-            <h3>Training & Iteration</h3>
-            <p>Fine-tune the model, evaluate on held-out data, and iterate on training data and hyperparameters.</p>
+            <span class="timeline__date">Phase 4</span>
+            <h3 class="timeline__title">Training &amp; Iterative Refinement</h3>
+            <p>Execute fine-tuning with rigorous experiment tracking, hyperparameter optimization,
+            and iterative improvement based on validation performance.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Distributed training on secure GPU clusters</li>
+              <li>Hyperparameter tuning and ablation studies</li>
+              <li>Experiment tracking and model versioning</li>
+              <li>Checkpoint evaluation and early stopping</li>
+            </ul>
           </div>
         </div>
+
         <div class="timeline__item" data-animate data-delay="400">
-          <div class="timeline__marker">5</div>
+          <div class="timeline__marker"></div>
           <div class="timeline__content">
-            <h3>Evaluation & Testing</h3>
-            <p>Rigorous evaluation on diverse test cases, edge cases, and adversarial examples. Safety and bias testing.</p>
+            <span class="timeline__date">Phase 5</span>
+            <h3 class="timeline__title">Evaluation, Safety &amp; Bias Testing</h3>
+            <p>Comprehensive evaluation on held-out test data, edge cases, adversarial inputs,
+            and bias benchmarks to ensure the model meets government standards for fairness
+            and reliability.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Task-specific accuracy benchmarking</li>
+              <li>Red-teaming and adversarial testing</li>
+              <li>Bias and fairness evaluation</li>
+              <li>Safety guardrail verification</li>
+            </ul>
           </div>
         </div>
+
         <div class="timeline__item" data-animate data-delay="500">
-          <div class="timeline__marker">6</div>
+          <div class="timeline__marker"></div>
           <div class="timeline__content">
-            <h3>Deployment & Monitoring</h3>
-            <p>Deploy to production with monitoring for quality, drift, and performance. Plan for periodic retraining.</p>
+            <span class="timeline__date">Phase 6</span>
+            <h3 class="timeline__title">Deployment &amp; Continuous Monitoring</h3>
+            <p>Production deployment on secure infrastructure with real-time monitoring,
+            drift detection, and retraining pipelines to maintain model quality over time.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>On-premises or GovCloud deployment</li>
+              <li>Model serving optimization (quantization, batching)</li>
+              <li>Performance and drift monitoring</li>
+              <li>Scheduled retraining pipelines</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Deliverables / Features Section -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Techniques</span>
-        <h2 class="section-header__title">Fine-Tuning Approaches</h2>
+        <span class="section-header__label">What You Get</span>
+        <h2 class="section-header__title">Fine-Tuning Deliverables</h2>
+        <p class="section-header__subtitle">
+          Custom models with full documentation, evaluation reports, and deployment infrastructure.
+        </p>
       </div>
-      <div class="grid grid--3">
-        <div class="card" data-animate>
-          <h3 class="card__title">Full Fine-Tuning</h3>
-          <p class="card__description">Update all model parameters. Maximum customization but requires significant compute and data.</p>
-          <span style="display: inline-block; padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm); margin-top: var(--space-4);">High Resource</span>
+
+      <div class="features">
+        <div class="feature" data-animate>
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Custom Fine-Tuned Model</h4>
+            <p class="feature__description">
+              A production-ready model trained on your data, optimized for your specific task,
+              with full weight ownership and no vendor lock-in.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="100">
-          <h3 class="card__title">LoRA / QLoRA</h3>
-          <p class="card__description">Low-rank adaptation updates a small subset of parameters. Efficient and effective for most tasks.</p>
-          <span style="display: inline-block; padding: var(--space-2) var(--space-3); background: var(--color-primary); color: #fff; border-radius: var(--radius-full); font-size: var(--text-sm); margin-top: var(--space-4);">Recommended</span>
+
+        <div class="feature" data-animate data-delay="50">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Evaluation Report &amp; Benchmarks</h4>
+            <p class="feature__description">
+              Comprehensive evaluation documenting accuracy, latency, bias metrics,
+              safety scores, and comparison against baseline models.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="200">
-          <h3 class="card__title">Instruction Tuning</h3>
-          <p class="card__description">Train on instruction-response pairs to improve the model's ability to follow specific directions.</p>
-          <span style="display: inline-block; padding: var(--space-2) var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-full); font-size: var(--text-sm); margin-top: var(--space-4);">Task-Specific</span>
+
+        <div class="feature" data-animate data-delay="100">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Secure Deployment Infrastructure</h4>
+            <p class="feature__description">
+              Model serving infrastructure on your preferred environment -- on-premises,
+              GovCloud, or air-gapped -- with optimized inference and autoscaling.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="150">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Data Governance Documentation</h4>
+            <p class="feature__description">
+              Complete lineage of training data, preprocessing steps, PII handling,
+              and model provenance for compliance and audit purposes.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="200">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Retraining Pipeline</h4>
+            <p class="feature__description">
+              Automated pipeline for periodic retraining as your data evolves, with
+              version control and A/B testing for model updates.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="250">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Monitoring &amp; Drift Detection</h4>
+            <p class="feature__description">
+              Real-time quality monitoring with automated alerts for performance degradation,
+              distribution drift, and emerging failure patterns.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section section--dark">
+  <!-- Stats / Proof Points -->
+  <section class="section section--alt">
     <div class="container">
-      <div class="cta" style="background: transparent; box-shadow: none;">
-        <h2 style="color: #fff;">Build Your Custom AI Model</h2>
-        <p style="color: rgba(255,255,255,0.8);">Fine-tune language models for your specific government tasks and achieve superior results.</p>
-        <div class="cta__actions">
-          <a href="../contact/index.html" class="btn btn--white btn--lg">Discuss Fine-Tuning</a>
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <div class="stats" style="grid-template-columns: 1fr;">
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">40%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Average accuracy improvement over generic models on domain-specific government tasks
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">60%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Reduction in per-request inference costs using smaller, fine-tuned models
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">5x</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Faster inference with optimized small models vs. large general-purpose APIs
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <span class="section-header__label">Why Fine-Tune</span>
+          <h2>2026 Is the Year of Purpose-Built Models</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            As frontier model improvements plateau, organizations are discovering that smaller,
+            fine-tuned models outperform larger general-purpose ones on specific tasks -- at a
+            fraction of the cost and with complete data sovereignty.
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>Higher accuracy</strong> -- models trained on your task consistently outperform generalists</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>Data sovereignty</strong> -- deploy on-premises or in GovCloud, no data leaves your perimeter</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>Cost efficiency</strong> -- smaller models mean lower compute costs at scale</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>Embedded compliance</strong> -- regulations and standards baked into model behavior</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Testimonial Section -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="testimonial" data-animate>
+        <p class="testimonial__quote">
+          "We fine-tuned a model on five years of eligibility determination data and it
+          now processes routine cases with 96 percent accuracy -- freeing our experienced
+          caseworkers to focus on complex situations. The model runs entirely within our
+          FedRAMP-authorized environment, which was non-negotiable for our security team."
+        </p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">CTO</div>
+          <div>
+            <div class="testimonial__name">Chief Technology Officer</div>
+            <div class="testimonial__title">State Health &amp; Human Services Agency</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Related Services</span>
+        <h2 class="section-header__title">Complement Your Custom Models</h2>
+      </div>
+
+      <div class="grid grid--3">
+        <div class="card">
+          <h3 class="card__title">RAG Solutions</h3>
+          <p class="card__description">
+            Combine fine-tuned models with retrieval augmented generation for maximum
+            accuracy on knowledge-intensive tasks with dynamic content.
+          </p>
+          <a href="rag-solutions.html" class="card__link">Learn More
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="card">
+          <h3 class="card__title">Agentic AI Solutions</h3>
+          <p class="card__description">
+            Deploy fine-tuned models as the reasoning engine within autonomous AI agents
+            that handle multi-step government workflows.
+          </p>
+          <a href="agentic-ai.html" class="card__link">Learn More
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="card">
+          <h3 class="card__title">AI Strategy &amp; Roadmap</h3>
+          <p class="card__description">
+            Not sure if fine-tuning is right for your use case? Start with a strategy
+            engagement to evaluate all AI approaches.
+          </p>
+          <a href="ai-strategy.html" class="card__link">Learn More
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Build Your Custom AI Model</h2>
+        <p>
+          Fine-tune language models for your specific government tasks -- with the accuracy,
+          security, and auditability your agency demands.
+        </p>
+        <div class="cta__actions">
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Discuss Fine-Tuning
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="footer__bottom">
         <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <script src="../js/main.js"></script>
 </body>
 </html>

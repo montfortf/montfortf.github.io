@@ -4,287 +4,471 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Compliance & Risk Management | Brite.AI</title>
-  <meta name="description" content="Navigate AI regulations and manage AI-related risks with comprehensive compliance frameworks and risk management strategies.">
+  <meta name="description" content="Navigate AI regulations and manage AI-related risks with comprehensive compliance frameworks aligned with NIST AI RMF, EO 14110, OMB M-24-10, and state AI laws.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
       <div class="navbar__inner">
         <a href="../index.html" class="navbar__logo">Brite.AI</a>
         <ul class="navbar__menu">
           <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
           <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
           <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <section class="hero hero--centered">
+  <!-- Hero Section -->
+  <section class="hero">
     <div class="container">
       <div class="hero__content">
         <span class="hero__badge">AI Governance</span>
-        <h1 class="hero__title">AI Compliance & Risk Management</h1>
+        <h1 class="hero__title">AI Compliance and Risk Management</h1>
         <p class="hero__subtitle">
-          Navigate the evolving landscape of AI regulations while managing risks
-          effectively. Stay compliant and protect your organization.
+          Navigate EO 14110, NIST AI RMF, OMB M-24-10, state AI laws, and sector-specific
+          regulations with a unified compliance framework that turns regulatory complexity
+          into operational clarity.
         </p>
         <div class="hero__actions">
-          <a href="../contact/index.html" class="btn btn--primary btn--lg">Assess Your Compliance</a>
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Assess Your Compliance
+          </a>
+          <a href="#approach" class="btn btn--secondary btn--lg">
+            See Our Approach
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Problem Statement -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <span class="section-header__label">The Challenge</span>
+          <h2>A Fragmented and Rapidly Evolving Regulatory Landscape</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Government agencies face an unprecedented wave of AI regulation. Executive Order 14110
+            mandates safety and civil rights protections. OMB M-24-10 requires AI use inventories
+            and risk management. NIST AI RMF provides a voluntary but increasingly referenced
+            governance standard. And state legislatures--from Colorado to California to New York--are
+            passing their own AI laws with unique compliance requirements.
+          </p>
+          <p style="color: var(--color-text-light);">
+            Without a unified compliance framework, agencies waste resources chasing individual
+            mandates, create redundant documentation, and still miss critical gaps. Sector
+            regulators like HHS, FTC, EEOC, and CFPB are increasingly referencing NIST AI RMF
+            principles in their enforcement expectations, creating a converging but complex
+            compliance landscape.
+          </p>
+        </div>
+        <div data-animate data-delay="200">
+          <div class="card" style="background: var(--color-background-alt);">
+            <h4 style="color: var(--color-primary); margin-bottom: var(--space-4);">Key Regulations Affecting Government AI:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: flex-start; gap: var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span><strong>EO 14110</strong> -- Federal AI safety, security, and civil rights requirements</span>
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: flex-start; gap: var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span><strong>OMB M-24-10</strong> -- AI use inventories, risk management, and impact assessments</span>
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: flex-start; gap: var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span><strong>NIST AI RMF</strong> -- Trustworthy AI risk management framework (Govern, Map, Measure, Manage)</span>
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: flex-start; gap: var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span><strong>AI Bill of Rights</strong> -- Blueprint for safe, non-discriminatory AI systems</span>
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: flex-start; gap: var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span><strong>State AI Laws</strong> -- Colorado AI Act, NYC LL144, California CCPA AI provisions</span>
+              </li>
+              <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span><strong>Sector Rules</strong> -- HHS, FTC, EEOC, CFPB, HUD AI-specific requirements</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach / Methodology -->
+  <section id="approach" class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Approach</span>
+        <h2 class="section-header__title">Unified Compliance Framework Methodology</h2>
+        <p class="section-header__subtitle">
+          A four-phase approach that consolidates fragmented requirements into a single,
+          auditable compliance program aligned with NIST AI RMF.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline__item" data-animate>
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 1</span>
+            <h3 class="timeline__title">Regulatory Mapping and Gap Analysis</h3>
+            <p>Comprehensive inventory of all applicable AI regulations, standards, and
+            guidance--federal, state, and sector-specific--mapped to your current compliance posture.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Multi-regulatory requirement matrix (EO 14110, OMB M-24-10, NIST AI RMF, state laws)</li>
+              <li>Current state compliance assessment across all AI systems</li>
+              <li>Gap identification with severity and urgency scoring</li>
+              <li>Regulatory overlap analysis to eliminate redundant efforts</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="100">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 2</span>
+            <h3 class="timeline__title">Risk Framework Development</h3>
+            <p>Build a structured AI risk management framework aligned with the four NIST AI RMF
+            core functions: Govern, Map, Measure, and Manage.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>AI risk taxonomy covering safety, legal, operational, ethical, reputational, and security risks</li>
+              <li>Risk tiering methodology with approval workflows per tier</li>
+              <li>Algorithmic Impact Assessment (AIA) process and templates</li>
+              <li>NIST AI RMF function-level implementation plans</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="200">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 3</span>
+            <h3 class="timeline__title">Controls Implementation and Documentation</h3>
+            <p>Deploy compliance controls, create audit-ready documentation, and establish
+            the governance processes needed to demonstrate ongoing compliance.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>AI use case inventory system (OMB-compliant public reporting)</li>
+              <li>Compliance control library mapped to each regulatory requirement</li>
+              <li>Documentation standards for risk assessments, impact assessments, and approvals</li>
+              <li>Audit trail and evidence management procedures</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="300">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 4</span>
+            <h3 class="timeline__title">Continuous Monitoring and Regulatory Intelligence</h3>
+            <p>Establish ongoing compliance monitoring, regulatory change tracking, and
+            periodic reassessment to keep pace with evolving requirements.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Compliance dashboard with real-time status across all regulatory domains</li>
+              <li>Regulatory intelligence service tracking new and proposed AI laws</li>
+              <li>Quarterly compliance review cadence with remediation tracking</li>
+              <li>Audit preparation support and GAO/IG readiness assessments</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deliverables / Features Grid -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Regulatory Landscape</span>
-        <h2 class="section-header__title">AI Regulations Affecting Government</h2>
+        <span class="section-header__label">What You Get</span>
+        <h2 class="section-header__title">Compliance Deliverables</h2>
+        <p class="section-header__subtitle">
+          Audit-ready artifacts that satisfy multiple regulatory requirements simultaneously.
+        </p>
       </div>
-      <div class="grid grid--2">
-        <div class="card" data-animate>
-          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
-            <span style="font-size: 2rem;">🇺🇸</span>
-            <h3 class="card__title" style="margin: 0;">Federal Requirements</h3>
+
+      <div class="features">
+        <div class="feature" data-animate>
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
           </div>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light);">
-            <li><strong>Executive Order on AI</strong> - Safety, security, and civil rights requirements</li>
-            <li><strong>OMB Guidance</strong> - AI use case inventories and risk management</li>
-            <li><strong>NIST AI RMF</strong> - Risk management framework for trustworthy AI</li>
-            <li><strong>Agency-Specific Rules</strong> - HHS, DOL, HUD requirements</li>
-          </ul>
+          <div>
+            <h4 class="feature__title">AI Use Case Inventory System</h4>
+            <p class="feature__description">
+              Comprehensive inventory of all AI systems with risk classifications,
+              compliance status, and public reporting capabilities per OMB M-24-10.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="100">
-          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
-            <span style="font-size: 2rem;">🏛️</span>
-            <h3 class="card__title" style="margin: 0;">State & Local Requirements</h3>
+
+        <div class="feature" data-animate data-delay="50">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           </div>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light);">
-            <li><strong>State AI Laws</strong> - Colorado, Illinois, California leading the way</li>
-            <li><strong>Automated Decision Laws</strong> - NYC Local Law 144 and similar</li>
-            <li><strong>Privacy Laws</strong> - CCPA, state privacy acts with AI provisions</li>
-            <li><strong>Procurement Rules</strong> - AI-specific procurement requirements</li>
+          <div>
+            <h4 class="feature__title">AI Risk Assessments</h4>
+            <p class="feature__description">
+              Structured risk assessments for each AI system covering safety, fairness,
+              privacy, security, and operational risks--aligned with NIST AI RMF.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="100">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Algorithmic Impact Assessments</h4>
+            <p class="feature__description">
+              Detailed AIAs evaluating civil rights impact, disparate effect analysis,
+              privacy implications, and stakeholder notification requirements.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="150">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Compliance Monitoring Dashboards</h4>
+            <p class="feature__description">
+              Real-time compliance status across all regulatory domains with automated
+              alerts for drift, upcoming deadlines, and new requirements.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="200">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Multi-Regulatory Crosswalk</h4>
+            <p class="feature__description">
+              Single-source mapping showing how each control satisfies requirements across
+              EO 14110, NIST AI RMF, OMB guidance, FedRAMP, and state AI laws.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="250">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Regulatory Intelligence Reports</h4>
+            <p class="feature__description">
+              Quarterly briefings on new and proposed AI regulations, enforcement actions,
+              and guidance updates with impact analysis for your organization.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats / Proof Points -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <div class="stats" style="grid-template-columns: 1fr;">
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="40">40+</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                State-level AI laws enacted or pending in 2026, creating a patchwork of compliance obligations for multi-state agencies
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="70">70%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Reduction in compliance effort when using a unified framework versus addressing each regulation independently
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="100">100%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Of our government clients passed their most recent AI-focused audit or IG review without material findings
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <span class="section-header__label">Why Unified Compliance Matters</span>
+          <h2>One Framework, Every Regulation Covered</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Rather than building separate compliance programs for each regulation, our unified
+            framework maps controls once and demonstrates compliance across every applicable
+            mandate. This approach dramatically reduces effort while eliminating gaps.
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#x2713;</span>
+              <span><strong>Consolidated controls</strong>--one control library satisfies multiple regulatory requirements</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#x2713;</span>
+              <span><strong>Audit-ready documentation</strong>--evidence packages prepared for GAO, IG, and congressional review</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#x2713;</span>
+              <span><strong>Future-proof design</strong>--framework adapts as new regulations emerge (NIST AI RMF 1.1, EU AI Act)</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#x2713;</span>
+              <span><strong>FedRAMP alignment</strong>--AI compliance controls integrated with existing security authorization</span>
+            </li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Testimonial -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="testimonial" data-animate>
+        <p class="testimonial__quote">
+          "We were drowning in overlapping AI compliance requirements--EO 14110, OMB guidance,
+          state AI laws, and our sector-specific rules from HHS. Brite.AI built us a unified
+          compliance framework that mapped every control once and demonstrated coverage across
+          all our obligations. Our compliance team went from reactive firefighting to proactive
+          governance, and we cut our audit preparation time by more than half."
+        </p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">GC</div>
+          <div>
+            <div class="testimonial__name">General Counsel</div>
+            <div class="testimonial__title">State Department of Social Services</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
   <section class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Risk Categories</span>
-        <h2 class="section-header__title">AI Risk Taxonomy</h2>
+        <span class="section-header__label">Related Services</span>
+        <h2 class="section-header__title">Complete Your Governance Program</h2>
       </div>
+
       <div class="grid grid--3">
-        <div class="card" data-animate>
-          <div class="card__icon" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff;">⚠️</div>
-          <h3 class="card__title">Safety & Harm Risks</h3>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm);">
-            <li>Physical safety impacts</li>
-            <li>Psychological harm</li>
-            <li>Financial harm to individuals</li>
-            <li>Denial of services/benefits</li>
-          </ul>
+        <div class="card">
+          <h3 class="card__title">Responsible AI Framework</h3>
+          <p class="card__description">
+            Develop comprehensive AI ethics policies, governance structures, and
+            accountability mechanisms aligned with NIST AI RMF and EO 14110.
+          </p>
+          <a href="responsible-ai.html" class="card__link">Learn More &#x2192;</a>
         </div>
-        <div class="card" data-animate data-delay="100">
-          <div class="card__icon" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff;">⚖️</div>
-          <h3 class="card__title">Legal & Compliance Risks</h3>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm);">
-            <li>Regulatory violations</li>
-            <li>Civil rights violations</li>
-            <li>Privacy breaches</li>
-            <li>Contractual breaches</li>
-          </ul>
+        <div class="card">
+          <h3 class="card__title">AI Bias Audit and Fairness Testing</h3>
+          <p class="card__description">
+            Independent algorithmic audits using demographic parity, equalized odds,
+            and counterfactual fairness testing across protected groups.
+          </p>
+          <a href="bias-audit.html" class="card__link">Learn More &#x2192;</a>
         </div>
-        <div class="card" data-animate data-delay="200">
-          <div class="card__icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff;">📉</div>
-          <h3 class="card__title">Operational Risks</h3>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm);">
-            <li>System failures</li>
-            <li>Data quality issues</li>
-            <li>Model drift/degradation</li>
-            <li>Vendor dependency</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="300">
-          <div class="card__icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">🎯</div>
-          <h3 class="card__title">Ethical Risks</h3>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm);">
-            <li>Algorithmic bias</li>
-            <li>Lack of transparency</li>
-            <li>Inappropriate automation</li>
-            <li>Loss of human agency</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="400">
-          <div class="card__icon" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">🏢</div>
-          <h3 class="card__title">Reputational Risks</h3>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm);">
-            <li>Public trust erosion</li>
-            <li>Media scrutiny</li>
-            <li>Stakeholder concerns</li>
-            <li>Political backlash</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="500">
-          <div class="card__icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff;">🔒</div>
-          <h3 class="card__title">Security Risks</h3>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm);">
-            <li>Adversarial attacks</li>
-            <li>Data poisoning</li>
-            <li>Model theft</li>
-            <li>Prompt injection</li>
-          </ul>
+        <div class="card">
+          <h3 class="card__title">AI Strategy and Roadmap</h3>
+          <p class="card__description">
+            Define your AI vision, identify high-value use cases, and create a practical
+            roadmap with governance built in from day one.
+          </p>
+          <a href="ai-strategy.html" class="card__link">Learn More &#x2192;</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Our Services</span>
-        <h2 class="section-header__title">Compliance & Risk Services</h2>
-      </div>
-
-      <div class="tabs" data-tabs>
-        <div class="tabs__nav">
-          <button class="tabs__tab tabs__tab--active" data-tab="assessment">Compliance Assessment</button>
-          <button class="tabs__tab" data-tab="framework">Risk Framework</button>
-          <button class="tabs__tab" data-tab="monitoring">Ongoing Monitoring</button>
-        </div>
-        <div class="tabs__content">
-          <div class="tabs__panel tabs__panel--active" data-panel="assessment">
-            <div class="grid grid--2" style="gap: var(--space-6);">
-              <div>
-                <h3>AI Compliance Assessment</h3>
-                <p>Comprehensive evaluation of your AI systems against applicable regulations and best practices.</p>
-                <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-                  <li>Regulatory requirement mapping</li>
-                  <li>Current state assessment</li>
-                  <li>Gap identification</li>
-                  <li>Remediation roadmap</li>
-                  <li>Compliance documentation</li>
-                </ul>
-              </div>
-              <div class="card">
-                <h4>Assessment Covers</h4>
-                <ul style="padding-left: var(--space-5);">
-                  <li>Federal AI requirements</li>
-                  <li>State-specific AI laws</li>
-                  <li>Privacy regulations (HIPAA, etc.)</li>
-                  <li>Civil rights compliance</li>
-                  <li>Sector-specific rules</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="tabs__panel" data-panel="framework">
-            <div class="grid grid--2" style="gap: var(--space-6);">
-              <div>
-                <h3>AI Risk Management Framework</h3>
-                <p>Establish a structured approach to identifying, assessing, and mitigating AI risks aligned with NIST AI RMF.</p>
-                <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-                  <li>Risk categorization criteria</li>
-                  <li>Assessment methodology</li>
-                  <li>Mitigation strategies</li>
-                  <li>Governance processes</li>
-                  <li>Documentation standards</li>
-                </ul>
-              </div>
-              <div class="card">
-                <h4>NIST AI RMF Functions</h4>
-                <ul style="padding-left: var(--space-5);">
-                  <li><strong>GOVERN</strong> - Culture, structure, accountability</li>
-                  <li><strong>MAP</strong> - Context, requirements, impacts</li>
-                  <li><strong>MEASURE</strong> - Analysis, evaluation, metrics</li>
-                  <li><strong>MANAGE</strong> - Prioritize, respond, document</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="tabs__panel" data-panel="monitoring">
-            <div class="grid grid--2" style="gap: var(--space-6);">
-              <div>
-                <h3>Ongoing Compliance Monitoring</h3>
-                <p>Continuous monitoring and reporting to maintain compliance as regulations evolve.</p>
-                <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-                  <li>Regulatory change tracking</li>
-                  <li>Compliance dashboards</li>
-                  <li>Periodic assessments</li>
-                  <li>Audit support</li>
-                  <li>Documentation maintenance</li>
-                </ul>
-              </div>
-              <div class="card">
-                <h4>Monitoring Includes</h4>
-                <ul style="padding-left: var(--space-5);">
-                  <li>Quarterly compliance reviews</li>
-                  <li>Regulatory update briefings</li>
-                  <li>AI inventory maintenance</li>
-                  <li>Risk register updates</li>
-                  <li>Audit preparation support</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Deliverables</span>
-        <h2 class="section-header__title">Compliance Documentation</h2>
-      </div>
-      <div class="grid grid--4">
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate>
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">📋</div>
-          <h4>AI Use Case Inventory</h4>
-        </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="100">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">⚠️</div>
-          <h4>Risk Assessments</h4>
-        </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="200">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">📊</div>
-          <h4>Impact Assessments</h4>
-        </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="300">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">📝</div>
-          <h4>Compliance Reports</h4>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <!-- CTA Section -->
   <section class="section">
     <div class="container">
       <div class="cta">
         <h2>Stay Ahead of AI Regulations</h2>
-        <p>Proactive compliance management protects your agency and builds public trust.</p>
+        <p>
+          Proactive compliance management protects your agency, satisfies oversight bodies,
+          and builds the public trust that enables AI innovation. Start with a compliance
+          assessment to understand your current posture and build a path forward.
+        </p>
         <div class="cta__actions">
-          <a href="../contact/index.html" class="btn btn--white btn--lg">Discuss Compliance Needs</a>
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Discuss Compliance Needs
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="footer__bottom">
         <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <script src="../js/main.js"></script>
 </body>
 </html>

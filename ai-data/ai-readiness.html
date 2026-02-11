@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Readiness Assessment Service | Brite.AI</title>
-  <meta name="description" content="Comprehensive evaluation of your organization's technical, organizational, and cultural readiness for AI adoption.">
+  <meta name="description" content="Comprehensive evaluation of your organization's technical, data, organizational, and governance readiness for AI adoption aligned with NIST AI RMF and federal best practices.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
       <div class="navbar__inner">
@@ -20,102 +22,454 @@
           <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
           <li><a href="index.html" class="navbar__link">AI & Data</a></li>
           <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
           <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <section class="hero hero--centered">
+  <!-- Hero Section -->
+  <section class="hero">
     <div class="container">
       <div class="hero__content">
         <span class="hero__badge">Advisory & Strategy</span>
         <h1 class="hero__title">Are You Ready for AI?</h1>
         <p class="hero__subtitle">
-          A comprehensive evaluation of your organization's technical, organizational,
-          and cultural readiness for AI adoption—with actionable recommendations.
+          A comprehensive, NIST AI RMF-aligned evaluation of your organization's technical,
+          data, organizational, and governance readiness for AI adoption--with a prioritized
+          roadmap for closing gaps and accelerating responsible AI initiatives.
         </p>
         <div class="hero__actions">
-          <a href="../contact/index.html" class="btn btn--primary btn--lg">Request Assessment</a>
-          <a href="readiness-assessment.html" class="btn btn--secondary btn--lg">Try Free Self-Assessment</a>
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Request Assessment
+          </a>
+          <a href="#approach" class="btn btn--secondary btn--lg">
+            See Our Methodology
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Problem Statement -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <span class="section-header__label">The Challenge</span>
+          <h2>Agencies Rush to AI Without Understanding Their Starting Point</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light);">
+            Executive mandates and public expectations are pushing agencies to adopt AI
+            quickly. But launching AI initiatives without understanding your current
+            capabilities leads to failed pilots, wasted budgets, and eroded trust.
+          </p>
+          <p style="color: var(--color-text-light);">
+            A rigorous readiness assessment--covering data quality, infrastructure,
+            workforce skills, governance maturity, and organizational culture--gives
+            leadership the clarity to invest wisely and build on a solid foundation.
+            According to Gartner, organizations that conduct formal AI readiness
+            assessments are 2.5x more likely to achieve production-scale AI within
+            18 months.
+          </p>
+        </div>
+        <div data-animate data-delay="200">
+          <div class="card" style="background: var(--color-background-alt);">
+            <h4 style="color: var(--color-primary); margin-bottom: var(--space-4);">Without an AI Readiness Assessment:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> AI pilots fail because data isn't clean, accessible, or governed
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Investments target wrong use cases for your maturity level
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Staff resistance stalls adoption due to skills and culture gaps
+              </li>
+              <li style="padding: var(--space-3) 0; display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Compliance risks from missing governance and ethics frameworks
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach Section with Timeline -->
+  <section id="approach" class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Methodology</span>
+        <h2 class="section-header__title">Four-Dimension Assessment Framework</h2>
+        <p class="section-header__subtitle">
+          Aligned with the NIST AI Risk Management Framework and proven across
+          federal, state, and local government agencies.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline__item" data-animate>
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 1</span>
+            <h3 class="timeline__title">Discovery and Scoping</h3>
+            <p>We begin with executive stakeholder interviews and document review to
+            understand your mission priorities, current technology landscape, and
+            strategic objectives for AI. This phase calibrates the assessment to
+            your specific context.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Executive and technical stakeholder interviews</li>
+              <li>Existing technology and data inventory review</li>
+              <li>Mission priority and use case alignment</li>
+              <li>Assessment scope and dimension weighting</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="100">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 2</span>
+            <h3 class="timeline__title">Multi-Dimension Evaluation</h3>
+            <p>Deep assessment across all four readiness dimensions using structured
+            rubrics, technical audits, and workforce surveys. Each dimension is scored
+            on a 1-5 maturity scale with specific, observable criteria.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Data quality, accessibility, and governance audit</li>
+              <li>Infrastructure and platform capability evaluation</li>
+              <li>Organizational culture and change capacity survey</li>
+              <li>Policy, ethics, and compliance framework review</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="200">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 3</span>
+            <h3 class="timeline__title">Gap Analysis and Benchmarking</h3>
+            <p>We map your current state against your AI ambitions and benchmark
+            against peer agencies to identify the most critical gaps. Each gap is
+            prioritized by impact and effort to address.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Current vs. target state gap identification</li>
+              <li>Peer benchmarking against similar agencies</li>
+              <li>Risk and compliance gap mapping (NIST AI RMF, FedRAMP)</li>
+              <li>Priority ranking by impact and remediation effort</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="300">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 4</span>
+            <h3 class="timeline__title">Roadmap and Executive Briefing</h3>
+            <p>We deliver a prioritized readiness roadmap with quick wins, medium-term
+            capability building, and long-term transformation milestones. An executive
+            briefing ensures leadership alignment and commitment.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Phased readiness improvement roadmap</li>
+              <li>Quick-win initiative identification</li>
+              <li>Investment and resource planning guidance</li>
+              <li>Executive briefing and leadership alignment session</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deliverables Section with Feature Grid -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Assessment Dimensions</span>
-        <h2 class="section-header__title">We Evaluate Four Key Areas</h2>
+        <span class="section-header__label">What You Get</span>
+        <h2 class="section-header__title">Assessment Deliverables</h2>
+        <p class="section-header__subtitle">
+          Tangible, actionable outputs--not just a maturity score, but a clear
+          path forward for your AI journey.
+        </p>
       </div>
-      <div class="grid grid--4">
-        <div class="card" data-animate>
-          <div class="card__icon">📊</div>
-          <h3 class="card__title">Data Readiness</h3>
-          <p class="card__description">Data quality, accessibility, governance, and analytics maturity.</p>
+
+      <div class="features">
+        <div class="feature" data-animate>
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Readiness Scorecard</h4>
+            <p class="feature__description">
+              Detailed 1-5 maturity scores across all four dimensions--data, technology,
+              organization, and governance--with sub-dimension breakdowns and benchmarking
+              against peer agencies.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="100">
-          <div class="card__icon">⚙️</div>
-          <h3 class="card__title">Technology Readiness</h3>
-          <p class="card__description">Infrastructure, platforms, integration capabilities, and security.</p>
+
+        <div class="feature" data-animate data-delay="50">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Gap Analysis Report</h4>
+            <p class="feature__description">
+              Comprehensive identification of gaps between your current state and AI
+              readiness targets, with each gap mapped to specific remediation actions
+              and NIST AI RMF alignment.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="200">
-          <div class="card__icon">👥</div>
-          <h3 class="card__title">Organizational Readiness</h3>
-          <p class="card__description">Leadership support, skills, resources, and change capacity.</p>
+
+        <div class="feature" data-animate data-delay="100">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Data Readiness Assessment</h4>
+            <p class="feature__description">
+              In-depth evaluation of data quality, accessibility, cataloging, governance
+              practices, and analytics maturity--the foundation every AI initiative
+              depends on.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="300">
-          <div class="card__icon">🛡️</div>
-          <h3 class="card__title">Governance Readiness</h3>
-          <p class="card__description">Policies, ethics frameworks, compliance, and risk management.</p>
+
+        <div class="feature" data-animate data-delay="150">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Governance Maturity Review</h4>
+            <p class="feature__description">
+              Assessment of your AI governance posture against NIST AI RMF, OMB
+              memoranda, and responsible AI principles--including policy, ethics,
+              risk management, and oversight mechanisms.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="200">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Prioritized Roadmap</h4>
+            <p class="feature__description">
+              Phased action plan for closing readiness gaps, from quick wins you
+              can execute in 30 days to strategic investments over 12-24 months,
+              with clear milestones and resource requirements.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="250">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Workforce Skills Assessment</h4>
+            <p class="feature__description">
+              Evaluation of current AI and data literacy across your workforce, with
+              targeted upskilling recommendations for leadership, technical staff,
+              and end users.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Stats / Proof Points -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <div class="stats" style="grid-template-columns: 1fr;">
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter>2.5x</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Organizations with formal readiness assessments are 2.5x more likely to
+                reach production-scale AI within 18 months
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter>85%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Of AI project failures trace back to data quality and organizational
+                readiness gaps that assessment would have identified
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter>40%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Average reduction in time-to-value for AI initiatives when preceded
+                by a structured readiness assessment
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <span class="section-header__label">Why Assessment Matters</span>
+          <h2>You Can't Build AI on a Foundation You Don't Understand</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            AI readiness isn't a checkbox--it's a strategic input that shapes every
+            decision that follows. A thorough assessment ensures you're:
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Investing where it matters most</strong>--targeting gaps that actually block AI progress, not just visible ones</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Choosing the right starting point</strong>--selecting use cases matched to your actual maturity level</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Meeting compliance requirements</strong>--ensuring alignment with NIST AI RMF, OMB mandates, and agency-specific policies</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Building stakeholder confidence</strong>--giving leadership and oversight bodies evidence-based assurance</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="testimonial" data-animate>
+        <p class="testimonial__quote">
+          "The readiness assessment was eye-opening. We thought our biggest gap was
+          technology, but Brite.AI showed us it was data governance and workforce
+          skills. That reframing saved us from a million-dollar platform investment
+          we weren't ready for. Six months later, after addressing the real gaps,
+          our first AI pilot succeeded on the first try."
+        </p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">CDO</div>
+          <div>
+            <div class="testimonial__name">Chief Data Officer</div>
+            <div class="testimonial__title">State Health & Human Services Agency</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
   <section class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Deliverables</span>
-        <h2 class="section-header__title">What You'll Receive</h2>
+        <span class="section-header__label">Related Services</span>
+        <h2 class="section-header__title">Continue Your AI Journey</h2>
       </div>
+
       <div class="grid grid--3">
         <div class="card">
-          <h3 class="card__title">Readiness Scorecard</h3>
-          <p class="card__description">Detailed scores across all four dimensions with benchmarking against similar organizations.</p>
+          <h3 class="card__title">AI Strategy & Roadmap</h3>
+          <p class="card__description">
+            Turn readiness insights into a comprehensive AI strategy with prioritized
+            use cases, governance framework, and multi-year implementation roadmap.
+          </p>
+          <a href="ai-strategy.html" class="card__link">Learn More &rarr;</a>
         </div>
         <div class="card">
-          <h3 class="card__title">Gap Analysis Report</h3>
-          <p class="card__description">Specific gaps identified with prioritized recommendations for addressing them.</p>
+          <h3 class="card__title">AI Platform Evaluation</h3>
+          <p class="card__description">
+            Independent, compliance-aware evaluation of AI platforms and vendors
+            matched to your agency's requirements and readiness level.
+          </p>
+          <a href="platform-evaluation.html" class="card__link">Learn More &rarr;</a>
         </div>
         <div class="card">
-          <h3 class="card__title">Roadmap Recommendations</h3>
-          <p class="card__description">Phased approach to closing gaps and building AI capability over time.</p>
+          <h3 class="card__title">Generative AI Strategy</h3>
+          <p class="card__description">
+            Evaluate, pilot, and scale generative AI with a structured approach
+            that manages risk while capturing value for your agency.
+          </p>
+          <a href="genai-strategy.html" class="card__link">Learn More &rarr;</a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- CTA Section -->
   <section class="section">
     <div class="container">
       <div class="cta">
-        <h2>Start Your AI Readiness Journey</h2>
-        <p>Understand where you stand today and get a clear path forward.</p>
+        <h2>Ready to Understand Your AI Readiness?</h2>
+        <p>
+          Start with a conversation about your AI ambitions and current capabilities.
+          We'll help you determine the right scope for your readiness assessment and
+          the fastest path to confident AI adoption.
+        </p>
         <div class="cta__actions">
-          <a href="../contact/index.html" class="btn btn--white btn--lg">Request Full Assessment</a>
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Request AI Readiness Assessment
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="footer__bottom">
         <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <script src="../js/main.js"></script>
 </body>
 </html>

@@ -3,244 +3,445 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MLOps & AI Operations | Brite.AI</title>
-  <meta name="description" content="Operationalize AI with MLOps. Build reliable, scalable machine learning pipelines that keep your AI systems running in production.">
+  <title>MLOps & AI Operations for Government | Brite.AI</title>
+  <meta name="description" content="Operationalize AI with government-grade MLOps. Build FedRAMP-compliant, scalable machine learning pipelines with continuous monitoring, automated retraining, and ATO-ready audit trails.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
       <div class="navbar__inner">
         <a href="../index.html" class="navbar__logo">Brite.AI</a>
         <ul class="navbar__menu">
           <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
           <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
           <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <section class="hero hero--centered">
+  <!-- Hero Section -->
+  <section class="hero">
     <div class="container">
       <div class="hero__content">
         <span class="hero__badge">AI Operations</span>
-        <h1 class="hero__title">From Prototype to Production</h1>
+        <h1 class="hero__title">From Prototype to <span class="text-gradient">Production</span></h1>
         <p class="hero__subtitle">
-          MLOps practices and platforms that operationalize your AI—building reliable,
-          scalable pipelines for model development, deployment, and monitoring.
+          Government-grade MLOps practices and platforms that operationalize your AI -- building
+          FedRAMP-compliant, scalable pipelines for model development, deployment, monitoring,
+          and continuous retraining within IL4/IL5 security boundaries.
         </p>
         <div class="hero__actions">
-          <a href="../contact/index.html" class="btn btn--primary btn--lg">Explore MLOps</a>
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Request MLOps Assessment
+          </a>
+          <a href="#approach" class="btn btn--secondary btn--lg">
+            See Our Approach
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Problem Statement -->
   <section class="section">
     <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">The Challenge</span>
-        <h2 class="section-header__title">Getting AI to Production Is Hard</h2>
-      </div>
       <div class="grid grid--2" style="align-items: center; gap: 4rem;">
         <div data-animate>
+          <span class="section-header__label">The Challenge</span>
+          <h2>87% of Government AI Models Never Reach Production</h2>
           <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
-            Building a working AI model is just the beginning. Most organizations struggle
-            to move models from notebooks to production—and even more struggle to keep them
-            running reliably over time.
+            Building a working AI model is just the beginning. Most agencies struggle
+            to move models from notebooks to production -- and even more struggle to keep them
+            running reliably while maintaining FedRAMP compliance, ATO requirements, and
+            continuous monitoring mandates.
           </p>
-          <div class="card" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: none;">
-            <h4 style="color: #92400e;">Common Challenges</h4>
-            <ul style="padding-left: var(--space-5); color: #78350f;">
-              <li>Manual, error-prone deployment processes</li>
-              <li>No versioning of models or data</li>
-              <li>Models degrade without anyone noticing</li>
-              <li>Can't reproduce past results</li>
-              <li>Scaling issues in production</li>
+          <p style="color: var(--color-text-light);">
+            Without mature MLOps practices, agencies face manual deployment errors,
+            undetected model drift, compliance gaps, and an inability to reproduce
+            results for audit -- all of which undermine public trust in AI systems.
+          </p>
+        </div>
+        <div data-animate data-delay="200">
+          <div class="card" style="background: var(--color-background-alt);">
+            <h4 style="color: var(--color-primary); margin-bottom: var(--space-4);">Without MLOps:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Manual, error-prone deployment processes
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> No versioning of models, data, or configurations
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Models degrade without anyone noticing
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Cannot reproduce past results for audit
+              </li>
+              <li style="padding: var(--space-3) 0; display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> No compliance trail for ATO or FedRAMP reviews
+              </li>
             </ul>
           </div>
         </div>
-        <div data-animate data-delay="200">
-          <div class="card" style="padding: var(--space-8); text-align: center; border: 2px solid var(--color-primary);">
-            <h4 style="margin-bottom: var(--space-4);">MLOps Maturity Levels</h4>
-            <div style="text-align: left;">
-              <div style="padding: var(--space-3); margin-bottom: var(--space-2); background: var(--color-background-alt); border-radius: var(--radius-md);">
-                <strong>Level 0:</strong> Manual, ad-hoc processes
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach / Methodology -->
+  <section id="approach" class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Approach</span>
+        <h2 class="section-header__title">Four-Phase MLOps Implementation</h2>
+        <p class="section-header__subtitle">
+          A structured methodology that builds MLOps maturity incrementally -- from manual processes to fully automated, self-healing pipelines with government-grade security at every layer.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline__item" data-animate>
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 1</span>
+            <h3 class="timeline__title">Assess & Baseline</h3>
+            <p>Evaluate current ML practices, infrastructure maturity, and compliance posture. Establish your MLOps maturity baseline against government and industry benchmarks.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>MLOps maturity assessment (Level 0-3)</li>
+              <li>Infrastructure and toolchain audit</li>
+              <li>Security and compliance gap analysis</li>
+              <li>Current model inventory and risk profiling</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="100">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 2</span>
+            <h3 class="timeline__title">Architecture & Design</h3>
+            <p>Design MLOps architecture that meets FedRAMP, IL4/IL5, and agency-specific security requirements while enabling rapid model iteration.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Platform selection and architecture design</li>
+              <li>CI/CD pipeline blueprints for ML workflows</li>
+              <li>Security-first data and model governance</li>
+              <li>Feature store and model registry design</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="200">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 3</span>
+            <h3 class="timeline__title">Build & Automate</h3>
+            <p>Implement pipelines, monitoring infrastructure, and automation within your authorized environment -- with full audit logging and compliance controls.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Automated training and deployment pipelines</li>
+              <li>Model monitoring and drift detection</li>
+              <li>Automated testing and validation gates</li>
+              <li>Compliance-ready audit trail integration</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="300">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 4</span>
+            <h3 class="timeline__title">Operate & Optimize</h3>
+            <p>Transition to steady-state operations with continuous improvement, automated retraining triggers, and self-healing capabilities.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Runbook and SOP documentation</li>
+              <li>Team training and knowledge transfer</li>
+              <li>Continuous optimization and cost management</li>
+              <li>Quarterly maturity reassessment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deliverables / Features -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Capabilities</span>
+        <h2 class="section-header__title">MLOps Platform Components</h2>
+        <p class="section-header__subtitle">
+          Every component is designed for government compliance -- with encryption at rest and in transit, role-based access controls, and full audit logging.
+        </p>
+      </div>
+
+      <div class="features">
+        <div class="feature" data-animate>
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Model Registry & Versioning</h4>
+            <p class="feature__description">
+              Track every version of models, data, and code with full reproducibility. Immutable audit trails satisfy ATO requirements and enable rollback to any prior state.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="50">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Automated ML Pipelines</h4>
+            <p class="feature__description">
+              End-to-end automation for data processing, feature engineering, model training, and deployment -- with scheduled retraining triggers based on data drift thresholds.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="100">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Secure Model Deployment</h4>
+            <p class="feature__description">
+              Deploy models with containerized isolation, canary releases, A/B testing, and automated rollback -- all within your FedRAMP-authorized boundary.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="150">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Drift Detection & Monitoring</h4>
+            <p class="feature__description">
+              Continuous monitoring for data drift, concept drift, and performance degradation with automated alerting and retraining triggers before issues impact decisions.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="200">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Feature Store</h4>
+            <p class="feature__description">
+              Centralized, governed feature repository ensuring consistency between training and serving -- with access controls, lineage tracking, and point-in-time correctness.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="250">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Testing & Compliance Gates</h4>
+            <p class="feature__description">
+              Automated model validation, data quality checks, bias testing, and security scanning -- with compliance gates that prevent non-conforming models from reaching production.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats / Proof Points -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <div class="stats" style="grid-template-columns: 1fr;">
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">3x</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Agencies with mature MLOps are 3x more likely to achieve meaningful AI results and maintain ATO compliance
               </div>
-              <div style="padding: var(--space-3); margin-bottom: var(--space-2); background: var(--color-background-alt); border-radius: var(--radius-md);">
-                <strong>Level 1:</strong> Automated ML pipelines
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">70%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Reduction in model deployment time with automated CI/CD pipelines for ML systems
               </div>
-              <div style="padding: var(--space-3); margin-bottom: var(--space-2); background: var(--color-primary); color: #fff; border-radius: var(--radius-md);">
-                <strong>Level 2:</strong> CI/CD for ML systems
-              </div>
-              <div style="padding: var(--space-3); background: var(--color-background-alt); border-radius: var(--radius-md);">
-                <strong>Level 3:</strong> Fully automated, self-healing
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">99.9%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Model availability SLA with automated failover, rollback, and self-healing pipelines
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Capabilities</span>
-        <h2 class="section-header__title">MLOps Components</h2>
-      </div>
-      <div class="grid grid--3">
-        <div class="card" data-animate>
-          <div class="card__icon">📦</div>
-          <h3 class="card__title">Model Versioning</h3>
-          <p class="card__description">Track every version of models, data, and code with full reproducibility.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Model registry</li>
-            <li>Data versioning</li>
-            <li>Experiment tracking</li>
-            <li>Lineage documentation</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="100">
-          <div class="card__icon">🔄</div>
-          <h3 class="card__title">Automated Pipelines</h3>
-          <p class="card__description">Automate data processing, training, and deployment with repeatable pipelines.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Feature pipelines</li>
-            <li>Training pipelines</li>
-            <li>Deployment automation</li>
-            <li>Scheduled retraining</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="200">
-          <div class="card__icon">🚀</div>
-          <h3 class="card__title">Model Deployment</h3>
-          <p class="card__description">Deploy models reliably with proper testing, staging, and rollback capabilities.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Containerized deployment</li>
-            <li>A/B testing</li>
-            <li>Canary releases</li>
-            <li>Rollback procedures</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="300">
-          <div class="card__icon">📊</div>
-          <h3 class="card__title">Model Monitoring</h3>
-          <p class="card__description">Monitor model performance and detect drift before it impacts decisions.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Performance metrics</li>
-            <li>Data drift detection</li>
-            <li>Concept drift alerts</li>
-            <li>Anomaly detection</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="400">
-          <div class="card__icon">🏗️</div>
-          <h3 class="card__title">Feature Store</h3>
-          <p class="card__description">Centralized repository for features that ensures consistency across training and serving.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Feature registry</li>
-            <li>Online/offline serving</li>
-            <li>Feature reuse</li>
-            <li>Point-in-time correctness</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="500">
-          <div class="card__icon">🔍</div>
-          <h3 class="card__title">Testing & Validation</h3>
-          <p class="card__description">Comprehensive testing of models, data, and infrastructure before deployment.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Model validation</li>
-            <li>Data quality tests</li>
-            <li>Integration testing</li>
-            <li>Performance testing</li>
+        <div data-animate data-delay="200">
+          <span class="section-header__label">Why MLOps Matters</span>
+          <h2>Production AI Requires Production Operations</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            MLOps is not optional for government AI at scale. It is the operational backbone
+            that ensures your models remain accurate, compliant, and trustworthy.
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>Reproducible results</strong> -- every model version, dataset, and configuration is tracked for audit</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>Continuous compliance</strong> -- automated security scanning and compliance gates at every pipeline stage</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>Faster time to value</strong> -- reduce model deployment from months to days with automation</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>Operational resilience</strong> -- automated failover, rollback, and self-healing pipelines</span>
+            </li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Testimonial -->
   <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Our Approach</span>
-        <h2 class="section-header__title">MLOps Implementation</h2>
-      </div>
-      <div class="process-steps">
-        <div class="process-step" data-animate>
-          <div class="process-step__number">1</div>
-          <h3 class="process-step__title">Assess</h3>
-          <p class="process-step__description">Evaluate current ML practices, infrastructure, and maturity level.</p>
-        </div>
-        <div class="process-step" data-animate data-delay="100">
-          <div class="process-step__number">2</div>
-          <h3 class="process-step__title">Design</h3>
-          <p class="process-step__description">Design MLOps architecture and select appropriate tools and platforms.</p>
-        </div>
-        <div class="process-step" data-animate data-delay="200">
-          <div class="process-step__number">3</div>
-          <h3 class="process-step__title">Build</h3>
-          <p class="process-step__description">Implement pipelines, monitoring, and automation infrastructure.</p>
-        </div>
-        <div class="process-step" data-animate data-delay="300">
-          <div class="process-step__number">4</div>
-          <h3 class="process-step__title">Operate</h3>
-          <p class="process-step__description">Run and continuously improve your ML operations.</p>
+    <div class="container container--narrow">
+      <div class="testimonial" data-animate>
+        <p class="testimonial__quote">
+          "Before Brite.AI, we had data scientists building models in notebooks that
+          never made it to production. Their MLOps implementation gave us automated
+          pipelines, continuous monitoring, and the audit trails we needed for our
+          ATO. We went from deploying one model per quarter to multiple models per
+          month -- all within our FedRAMP boundary."
+        </p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">CTO</div>
+          <div>
+            <div class="testimonial__name">Chief Technology Officer</div>
+            <div class="testimonial__title">Federal Health Agency</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Related Services -->
   <section class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Technology</span>
-        <h2 class="section-header__title">MLOps Platforms</h2>
+        <span class="section-header__label">Related Services</span>
+        <h2 class="section-header__title">Continue Your AI Operations Journey</h2>
       </div>
-      <div class="grid grid--4">
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate>
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">🔶</div>
-          <h4>AWS SageMaker</h4>
+
+      <div class="grid grid--3">
+        <div class="card">
+          <h3 class="card__title">AI Integration Services</h3>
+          <p class="card__description">
+            Connect your ML models to existing systems, workflows, and business processes for real operational impact.
+          </p>
+          <a href="ai-integration.html" class="card__link">Learn More &#8594;</a>
         </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="100">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">🔷</div>
-          <h4>Azure ML</h4>
+        <div class="card">
+          <h3 class="card__title">AI Managed Services</h3>
+          <p class="card__description">
+            Ongoing monitoring, maintenance, and optimization of your AI systems with government-grade SLAs.
+          </p>
+          <a href="ai-managed-services.html" class="card__link">Learn More &#8594;</a>
         </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="200">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">🔴</div>
-          <h4>Vertex AI</h4>
-        </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="300">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">📊</div>
-          <h4>MLflow</h4>
+        <div class="card">
+          <h3 class="card__title">Secure AI Platform</h3>
+          <p class="card__description">
+            FedRAMP-authorized infrastructure for deploying AI within IL4/IL5 security boundaries.
+          </p>
+          <a href="secure-ai-platform.html" class="card__link">Learn More &#8594;</a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- CTA Section -->
   <section class="section">
     <div class="container">
       <div class="cta">
-        <h2>Operationalize Your AI</h2>
-        <p>Build MLOps practices that keep your AI systems running reliably in production.</p>
+        <h2>Ready to Operationalize Your AI?</h2>
+        <p>
+          Start with an MLOps maturity assessment. We will evaluate your current state,
+          identify gaps, and design a roadmap to production-grade AI operations within
+          your compliance framework.
+        </p>
         <div class="cta__actions">
-          <a href="../contact/index.html" class="btn btn--white btn--lg">Discuss MLOps</a>
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Request MLOps Assessment
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="footer__bottom">
         <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <script src="../js/main.js"></script>
 </body>
 </html>

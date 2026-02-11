@@ -3,267 +3,450 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Secure AI Platform Development | Brite.AI</title>
-  <meta name="description" content="Build secure, compliant AI platforms for government. FedRAMP-ready infrastructure that keeps your data safe.">
+  <title>Secure AI Platform for Government | Brite.AI</title>
+  <meta name="description" content="FedRAMP-authorized secure AI platform for government. Deploy generative AI within IL4/IL5 boundaries with end-to-end encryption, zero-trust architecture, and ATO-ready compliance controls.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
       <div class="navbar__inner">
         <a href="../index.html" class="navbar__logo">Brite.AI</a>
         <ul class="navbar__menu">
           <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
           <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
           <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <section class="hero hero--centered">
+  <!-- Hero Section -->
+  <section class="hero">
     <div class="container">
       <div class="hero__content">
-        <span class="hero__badge">Generative AI</span>
-        <h1 class="hero__title">Secure AI for Government</h1>
+        <span class="hero__badge">Secure Infrastructure</span>
+        <h1 class="hero__title">Secure AI for <span class="text-gradient">Government</span></h1>
         <p class="hero__subtitle">
-          Deploy generative AI with enterprise-grade security. Compliant infrastructure
-          that keeps sensitive data protected while enabling AI innovation.
+          Deploy generative AI and machine learning within FedRAMP-authorized, IL4/IL5-compliant
+          infrastructure. Zero-trust architecture, end-to-end encryption, and ATO-ready
+          compliance controls -- your data never leaves your security boundary.
         </p>
         <div class="hero__actions">
-          <a href="../contact/index.html" class="btn btn--primary btn--lg">Explore Secure AI</a>
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Request Security Assessment
+          </a>
+          <a href="#architecture" class="btn btn--secondary btn--lg">
+            View Architecture
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Problem Statement -->
   <section class="section">
     <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">The Challenge</span>
-        <h2 class="section-header__title">AI Security Concerns</h2>
-      </div>
       <div class="grid grid--2" style="align-items: center; gap: 4rem;">
         <div data-animate>
+          <span class="section-header__label">The Challenge</span>
+          <h2>AI Innovation Cannot Come at the Cost of Security</h2>
           <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
             Government agencies want to leverage generative AI but face legitimate security
-            concerns. Public AI services may train on your data, lack compliance certifications,
-            and create risks around sensitive information.
+            concerns. Public AI services may train on your data, lack FedRAMP authorization,
+            and create unacceptable risks around sensitive information. The FedRAMP 20x
+            program is accelerating AI cloud authorizations, but agencies still need
+            purpose-built secure platforms.
           </p>
-          <ul style="list-style: none; padding: 0; margin: 0;">
-            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
-              <span style="color: var(--color-error);">⚠️</span>
-              <span>Data may be used for model training</span>
-            </li>
-            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
-              <span style="color: var(--color-error);">⚠️</span>
-              <span>Lack of FedRAMP or StateRAMP authorization</span>
-            </li>
-            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
-              <span style="color: var(--color-error);">⚠️</span>
-              <span>Limited visibility into data handling</span>
-            </li>
-            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
-              <span style="color: var(--color-error);">⚠️</span>
-              <span>Potential for data leakage in responses</span>
-            </li>
-          </ul>
+          <p style="color: var(--color-text-light);">
+            With the 2026 Vulnerability Detection and Response standard replacing
+            previous monitoring requirements, agencies must implement platforms that
+            address rapid-turnaround AI threats while enabling fast remediation --
+            all within their authorized security boundary.
+          </p>
         </div>
         <div data-animate data-delay="200">
-          <div class="card" style="padding: var(--space-8); text-align: center; border: 2px solid var(--color-primary);">
-            <div style="font-size: 4rem; margin-bottom: var(--space-4);">🔒</div>
-            <h3>Secure AI Platform</h3>
-            <p style="color: var(--color-text-light);">Your data never leaves your security boundary</p>
-            <div style="display: flex; justify-content: center; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-4);">
-              <span style="padding: var(--space-2) var(--space-3); background: var(--color-primary); color: #fff; border-radius: var(--radius-full); font-size: var(--text-sm);">FedRAMP</span>
-              <span style="padding: var(--space-2) var(--space-3); background: var(--color-primary); color: #fff; border-radius: var(--radius-full); font-size: var(--text-sm);">StateRAMP</span>
-              <span style="padding: var(--space-2) var(--space-3); background: var(--color-primary); color: #fff; border-radius: var(--radius-full); font-size: var(--text-sm);">HIPAA</span>
-            </div>
+          <div class="card" style="background: var(--color-background-alt);">
+            <h4 style="color: var(--color-primary); margin-bottom: var(--space-4);">Security Risks of Public AI:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Data may be used for third-party model training
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Lack of FedRAMP or StateRAMP authorization
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> No visibility into data handling or retention
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Potential for sensitive data leakage in responses
+              </li>
+              <li style="padding: var(--space-3) 0; display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Cannot meet IL4/IL5 data classification requirements
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section section--alt">
+  <!-- Architecture / Features -->
+  <section id="architecture" class="section section--alt">
     <div class="container">
       <div class="section-header">
         <span class="section-header__label">Platform Capabilities</span>
-        <h2 class="section-header__title">Secure AI Architecture</h2>
+        <h2 class="section-header__title">Security-First AI Architecture</h2>
+        <p class="section-header__subtitle">
+          Every layer of the platform is built for government security requirements -- from infrastructure to application, with NIST 800-53 controls embedded at every level.
+        </p>
       </div>
-      <div class="grid grid--3">
-        <div class="card" data-animate>
-          <div class="card__icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">🏰</div>
-          <h3 class="card__title">Private Deployment</h3>
-          <p class="card__description">Deploy AI models in your own cloud environment or government cloud. Data never leaves your security boundary.</p>
+
+      <div class="features">
+        <div class="feature" data-animate>
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Private Deployment</h4>
+            <p class="feature__description">
+              Deploy AI models in your own government cloud environment or on-premise data center.
+              Data never leaves your security boundary. Supports AWS GovCloud, Azure Government,
+              and air-gapped deployments for IL4/IL5 workloads.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="100">
-          <div class="card__icon" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">🔐</div>
-          <h3 class="card__title">Encryption</h3>
-          <p class="card__description">End-to-end encryption for data at rest and in transit. Hardware security modules for key management.</p>
+
+        <div class="feature" data-animate data-delay="50">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">End-to-End Encryption</h4>
+            <p class="feature__description">
+              FIPS 140-2 validated encryption for data at rest and in transit. Hardware
+              security modules (HSMs) for key management. Customer-managed encryption keys
+              ensure complete data sovereignty.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="200">
-          <div class="card__icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff;">👤</div>
-          <h3 class="card__title">Access Control</h3>
-          <p class="card__description">Role-based access control, SSO integration, and multi-factor authentication for all platform access.</p>
+
+        <div class="feature" data-animate data-delay="100">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Zero-Trust Access Control</h4>
+            <p class="feature__description">
+              Role-based access control with attribute-based policies, SSO integration
+              via SAML 2.0/OIDC, multi-factor authentication, and continuous session
+              validation. Every access request is verified, never trusted.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="300">
-          <div class="card__icon" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff;">📝</div>
-          <h3 class="card__title">Audit Logging</h3>
-          <p class="card__description">Complete audit trails of all AI interactions, queries, and responses for compliance and investigation.</p>
+
+        <div class="feature" data-animate data-delay="150">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Complete Audit Logging</h4>
+            <p class="feature__description">
+              Immutable audit trails of all AI interactions, queries, responses, and
+              administrative actions. Tamper-proof logs stored within your boundary support
+              NIST 800-53 AU controls and ATO evidence requirements.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="400">
-          <div class="card__icon" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff;">🛡️</div>
-          <h3 class="card__title">Data Loss Prevention</h3>
-          <p class="card__description">Prevent sensitive data from being included in prompts or leaked in responses through content filtering.</p>
+
+        <div class="feature" data-animate data-delay="200">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Data Loss Prevention</h4>
+            <p class="feature__description">
+              Automated content filtering prevents sensitive data -- PII, PHI, classified
+              information -- from being included in prompts or leaked in AI responses.
+              Custom DLP policies aligned to your data classification scheme.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="500">
-          <div class="card__icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff;">📊</div>
-          <h3 class="card__title">Monitoring</h3>
-          <p class="card__description">Real-time monitoring of usage, performance, and security events with alerting and dashboards.</p>
+
+        <div class="feature" data-animate data-delay="250">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Security Monitoring & SIEM</h4>
+            <p class="feature__description">
+              Real-time security event monitoring, anomaly detection, and SIEM integration.
+              Automated threat response aligned with the 2026 Vulnerability Detection and
+              Response standard for rapid AI-specific threat remediation.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Deployment Options / Approach -->
   <section class="section">
     <div class="container">
       <div class="section-header">
         <span class="section-header__label">Deployment Options</span>
         <h2 class="section-header__title">Choose Your Security Model</h2>
+        <p class="section-header__subtitle">
+          Flexible deployment options that match your security requirements, data classification levels, and operational needs.
+        </p>
       </div>
 
-      <div class="tabs" data-tabs>
-        <div class="tabs__nav">
-          <button class="tabs__tab tabs__tab--active" data-tab="gov-cloud">Government Cloud</button>
-          <button class="tabs__tab" data-tab="private">Private Cloud</button>
-          <button class="tabs__tab" data-tab="hybrid">Hybrid</button>
+      <div class="timeline">
+        <div class="timeline__item" data-animate>
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Option 1</span>
+            <h3 class="timeline__title">Government Cloud</h3>
+            <p>Deploy on FedRAMP-authorized cloud infrastructure with all the benefits of
+            cloud scalability, managed services, and the FedRAMP 20x accelerated authorization pathway.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>AWS GovCloud, Azure Government, or Google Cloud</li>
+              <li>FedRAMP High or Moderate authorization</li>
+              <li>IL4/IL5 certified environments</li>
+              <li>Elastic scaling for variable demand</li>
+            </ul>
+          </div>
         </div>
-        <div class="tabs__content">
-          <div class="tabs__panel tabs__panel--active" data-panel="gov-cloud">
-            <div class="grid grid--2" style="gap: var(--space-6);">
-              <div>
-                <h3>Government Cloud Deployment</h3>
-                <p>Deploy on FedRAMP-authorized cloud infrastructure with all the benefits of cloud scalability and managed services.</p>
-                <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-                  <li>AWS GovCloud, Azure Government, or GCP</li>
-                  <li>FedRAMP High or Moderate authorization</li>
-                  <li>Managed infrastructure and patching</li>
-                  <li>Elastic scaling for demand</li>
-                </ul>
-              </div>
-              <div class="card">
-                <h4>Best For</h4>
-                <ul style="padding-left: var(--space-5);">
-                  <li>Federal agencies</li>
-                  <li>State agencies with FedRAMP requirements</li>
-                  <li>Organizations without dedicated infrastructure</li>
-                </ul>
-              </div>
-            </div>
+
+        <div class="timeline__item" data-animate data-delay="100">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Option 2</span>
+            <h3 class="timeline__title">Private Cloud / On-Premise</h3>
+            <p>Deploy AI models in your own data center or private cloud for maximum control,
+            air-gapped security, and complete data sovereignty.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Your infrastructure, your control</li>
+              <li>Air-gapped deployment for classified workloads</li>
+              <li>No data leaves your physical perimeter</li>
+              <li>Custom hardware security configurations</li>
+            </ul>
           </div>
-          <div class="tabs__panel" data-panel="private">
-            <div class="grid grid--2" style="gap: var(--space-6);">
-              <div>
-                <h3>Private Cloud / On-Premise</h3>
-                <p>Deploy AI models in your own data center or private cloud for maximum control and air-gapped security.</p>
-                <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-                  <li>Your infrastructure, your control</li>
-                  <li>Air-gapped deployment options</li>
-                  <li>No data leaves your environment</li>
-                  <li>Custom security configurations</li>
-                </ul>
-              </div>
-              <div class="card">
-                <h4>Best For</h4>
-                <ul style="padding-left: var(--space-5);">
-                  <li>Highly sensitive data</li>
-                  <li>Air-gapped requirements</li>
-                  <li>Organizations with existing infrastructure</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="tabs__panel" data-panel="hybrid">
-            <div class="grid grid--2" style="gap: var(--space-6);">
-              <div>
-                <h3>Hybrid Architecture</h3>
-                <p>Combine cloud AI services for general tasks with private deployment for sensitive workloads.</p>
-                <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-                  <li>Route by data sensitivity</li>
-                  <li>Cost optimization</li>
-                  <li>Flexibility for different use cases</li>
-                  <li>Unified management interface</li>
-                </ul>
-              </div>
-              <div class="card">
-                <h4>Best For</h4>
-                <ul style="padding-left: var(--space-5);">
-                  <li>Mixed sensitivity workloads</li>
-                  <li>Cost-conscious organizations</li>
-                  <li>Gradual cloud adoption</li>
-                </ul>
-              </div>
-            </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="200">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Option 3</span>
+            <h3 class="timeline__title">Hybrid Architecture</h3>
+            <p>Combine cloud AI services for lower-sensitivity workloads with private
+            deployment for sensitive data -- with intelligent routing based on data classification.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Automatic routing by data classification level</li>
+              <li>Cost optimization for mixed workloads</li>
+              <li>Unified management and monitoring interface</li>
+              <li>Gradual cloud adoption pathway</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Stats / Proof Points -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <div class="stats" style="grid-template-columns: 1fr;">
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">0</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Data breaches -- your sensitive data never leaves your authorized security boundary
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">800+</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                NIST 800-53 controls implemented and continuously monitored across the platform
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">3mo</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Accelerated ATO timeline with pre-built compliance documentation and FedRAMP 20x alignment
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <span class="section-header__label">Compliance & Certifications</span>
+          <h2>Built for Government Security Standards</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Our platform architecture aligns with the most stringent government security frameworks:
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>FedRAMP High & Moderate</strong> -- aligned with FedRAMP 20x accelerated authorization</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>IL4/IL5 Certified</strong> -- Department of Defense impact level compliance</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>HIPAA Compliant</strong> -- healthcare data protection with BAA support</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>StateRAMP</strong> -- state and local government security framework</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>SOC 2 Type II</strong> -- third-party validated security controls</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="testimonial" data-animate>
+        <p class="testimonial__quote">
+          "Our agency needed generative AI capabilities but could not risk sensitive
+          citizen data on public cloud services. Brite.AI deployed a secure AI platform
+          within our FedRAMP-authorized GovCloud environment -- complete with DLP controls,
+          full audit logging, and the compliance documentation we needed for our ATO.
+          Our staff now has AI-powered tools without any of the security concerns."
+        </p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">CISO</div>
+          <div>
+            <div class="testimonial__name">Chief Information Security Officer</div>
+            <div class="testimonial__title">Federal Civilian Agency</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
   <section class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Compliance</span>
-        <h2 class="section-header__title">Security & Compliance Certifications</h2>
+        <span class="section-header__label">Related Services</span>
+        <h2 class="section-header__title">Complete Your Secure AI Stack</h2>
       </div>
-      <div class="grid grid--4">
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate>
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">🏛️</div>
-          <h4>FedRAMP</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">High & Moderate</p>
+
+      <div class="grid grid--3">
+        <div class="card">
+          <h3 class="card__title">AI Compliance & Governance</h3>
+          <p class="card__description">
+            Build responsible AI governance frameworks with bias auditing, explainability, and regulatory compliance.
+          </p>
+          <a href="ai-compliance.html" class="card__link">Learn More &#8594;</a>
         </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="100">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">🏥</div>
-          <h4>HIPAA</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Healthcare Data</p>
+        <div class="card">
+          <h3 class="card__title">MLOps & AI Operations</h3>
+          <p class="card__description">
+            Operationalize AI within your secure platform with automated pipelines, monitoring, and compliance gates.
+          </p>
+          <a href="mlops.html" class="card__link">Learn More &#8594;</a>
         </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="200">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">📋</div>
-          <h4>StateRAMP</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">State & Local</p>
-        </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="300">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">🔒</div>
-          <h4>SOC 2 Type II</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Security Controls</p>
+        <div class="card">
+          <h3 class="card__title">AI Managed Services</h3>
+          <p class="card__description">
+            Ongoing monitoring, maintenance, and optimization of your secure AI platform with government-grade SLAs.
+          </p>
+          <a href="ai-managed-services.html" class="card__link">Learn More &#8594;</a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- CTA Section -->
   <section class="section">
     <div class="container">
       <div class="cta">
-        <h2>Deploy AI with Confidence</h2>
-        <p>Build a secure AI platform that meets government security and compliance requirements.</p>
+        <h2>Ready to Deploy AI with Confidence?</h2>
+        <p>
+          Start with a security assessment. We will evaluate your compliance requirements,
+          data classification levels, and infrastructure to design a secure AI platform
+          that meets your agency's specific security standards.
+        </p>
         <div class="cta__actions">
-          <a href="../contact/index.html" class="btn btn--white btn--lg">Discuss Secure AI</a>
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Request Security Assessment
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="footer__bottom">
         <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <script src="../js/main.js"></script>
 </body>
 </html>

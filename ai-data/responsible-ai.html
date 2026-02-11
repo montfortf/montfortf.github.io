@@ -4,70 +4,92 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Responsible AI Framework Development | Brite.AI</title>
-  <meta name="description" content="Develop comprehensive responsible AI frameworks that ensure ethical, fair, and transparent AI systems in government.">
+  <meta name="description" content="Develop comprehensive responsible AI frameworks aligned with NIST AI RMF, EO 14110, and the AI Bill of Rights. Ethical, fair, and transparent AI systems for government.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
       <div class="navbar__inner">
         <a href="../index.html" class="navbar__logo">Brite.AI</a>
         <ul class="navbar__menu">
           <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
           <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
           <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <section class="hero hero--centered">
+  <!-- Hero Section -->
+  <section class="hero">
     <div class="container">
       <div class="hero__content">
         <span class="hero__badge">AI Governance</span>
         <h1 class="hero__title">Responsible AI by Design</h1>
         <p class="hero__subtitle">
-          Build AI systems that are ethical, fair, transparent, and accountable—
-          frameworks that earn public trust and meet regulatory requirements.
+          Build AI systems that are ethical, fair, transparent, and accountable--
+          frameworks aligned with NIST AI RMF, EO 14110, and the Blueprint for an
+          AI Bill of Rights that earn public trust and meet every regulatory requirement.
         </p>
         <div class="hero__actions">
-          <a href="../contact/index.html" class="btn btn--primary btn--lg">Develop Your Framework</a>
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Develop Your Framework
+          </a>
+          <a href="#approach" class="btn btn--secondary btn--lg">
+            See Our Methodology
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Problem Statement -->
   <section class="section">
     <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Why It Matters</span>
-        <h2 class="section-header__title">The Stakes of AI in Government</h2>
-      </div>
       <div class="grid grid--2" style="align-items: center; gap: 4rem;">
         <div data-animate>
+          <span class="section-header__label">The Challenge</span>
+          <h2>AI Without Guardrails Puts Agencies at Risk</h2>
           <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
-            Government AI systems make decisions that affect people's lives—benefits eligibility,
-            child welfare interventions, healthcare access, criminal justice outcomes. The consequences
-            of biased, opaque, or unreliable AI can be severe and disproportionately impact vulnerable populations.
+            Government AI systems make decisions that affect people's lives--benefits eligibility,
+            child welfare interventions, healthcare access, criminal justice outcomes. Without a
+            responsible AI framework, agencies face regulatory penalties under EO 14110, civil
+            rights violations, erosion of public trust, and systems that disproportionately harm
+            vulnerable populations.
           </p>
-          <p style="font-size: var(--text-lg); color: var(--color-text-light);">
-            A Responsible AI framework ensures your AI systems serve all constituents fairly,
-            operate transparently, and maintain human oversight where it matters most.
+          <p style="color: var(--color-text-light);">
+            The OMB Memorandum M-24-10 now requires federal agencies to implement AI governance
+            frameworks, conduct impact assessments, and maintain public AI use inventories. Agencies
+            without a structured responsible AI program risk non-compliance, GAO audit findings,
+            and congressional scrutiny. A proactive framework transforms regulatory burden into
+            a competitive advantage for mission delivery.
           </p>
         </div>
         <div data-animate data-delay="200">
-          <div class="card" style="border-left: 4px solid var(--color-primary);">
-            <h4 style="color: var(--color-primary);">Executive Order on AI</h4>
-            <p style="margin-bottom: var(--space-4);">Federal agencies are now required to:</p>
-            <ul style="padding-left: var(--space-5); color: var(--color-text-light);">
-              <li>Conduct AI impact assessments</li>
-              <li>Ensure AI safety and security</li>
-              <li>Protect civil rights and liberties</li>
-              <li>Maintain human oversight</li>
-              <li>Report on AI use publicly</li>
+          <div class="card" style="background: var(--color-background-alt);">
+            <h4 style="color: var(--color-primary); margin-bottom: var(--space-4);">Without a Responsible AI Framework:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#x2715;</span> Non-compliance with EO 14110 and OMB M-24-10 mandates
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#x2715;</span> Algorithmic bias causing disparate impact on protected groups
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#x2715;</span> GAO audit findings and congressional scrutiny
+              </li>
+              <li style="padding: var(--space-3) 0; display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#x2715;</span> Loss of public trust from opaque decision-making
+              </li>
             </ul>
           </div>
         </div>
@@ -75,206 +97,382 @@
     </div>
   </section>
 
-  <section class="section section--alt">
+  <!-- Approach / Methodology -->
+  <section id="approach" class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Core Principles</span>
-        <h2 class="section-header__title">Pillars of Responsible AI</h2>
+        <span class="section-header__label">Our Methodology</span>
+        <h2 class="section-header__title">Five-Phase Framework Development</h2>
+        <p class="section-header__subtitle">
+          A structured approach grounded in NIST AI RMF functions--Govern, Map, Measure, Manage--that
+          delivers an actionable, audit-ready responsible AI program.
+        </p>
       </div>
-      <div class="grid grid--3">
-        <div class="card" data-animate>
-          <div class="card__icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">⚖️</div>
-          <h3 class="card__title">Fairness</h3>
-          <p class="card__description">AI systems treat all individuals and groups equitably, without discrimination based on protected characteristics.</p>
+
+      <div class="timeline">
+        <div class="timeline__item" data-animate>
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 1</span>
+            <h3 class="timeline__title">Maturity Assessment</h3>
+            <p>Evaluate your current AI governance posture against NIST AI RMF, EO 14110 requirements,
+            the AI Bill of Rights principles, and agency-specific mandates.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Responsible AI maturity model evaluation</li>
+              <li>Existing policy and process inventory</li>
+              <li>Stakeholder interview program (executive, technical, legal)</li>
+              <li>Gap analysis against NIST AI RMF and OMB M-24-10</li>
+            </ul>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="100">
-          <div class="card__icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff;">🔍</div>
-          <h3 class="card__title">Transparency</h3>
-          <p class="card__description">AI decision-making processes are understandable and explainable to affected individuals and oversight bodies.</p>
+
+        <div class="timeline__item" data-animate data-delay="100">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 2</span>
+            <h3 class="timeline__title">Principles and Governance Design</h3>
+            <p>Establish organization-wide AI ethics principles, governance structures, and
+            accountability mechanisms aligned with your mission and values.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Core ethical principles statement co-developed with leadership</li>
+              <li>AI governance board charter and composition</li>
+              <li>Role definitions (AI Ethics Officer, Data Stewards, Review Board)</li>
+              <li>Decision-authority matrix for AI deployment approvals</li>
+            </ul>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="200">
-          <div class="card__icon" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">👤</div>
-          <h3 class="card__title">Accountability</h3>
-          <p class="card__description">Clear ownership and responsibility for AI outcomes, with mechanisms for appeal and redress.</p>
+
+        <div class="timeline__item" data-animate data-delay="200">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 3</span>
+            <h3 class="timeline__title">Risk and Impact Framework</h3>
+            <p>Build structured risk categorization and algorithmic impact assessment processes
+            aligned with NIST AI RMF functions.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>AI risk tiering methodology (Low / Medium / High / Unacceptable)</li>
+              <li>Algorithmic Impact Assessment (AIA) templates and workflows</li>
+              <li>NIST AI RMF GOVERN, MAP, MEASURE, MANAGE implementation</li>
+              <li>Civil rights and equity impact evaluation criteria</li>
+            </ul>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="300">
-          <div class="card__icon" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff;">🔒</div>
-          <h3 class="card__title">Privacy</h3>
-          <p class="card__description">Personal data is protected throughout the AI lifecycle, with appropriate consent and data minimization.</p>
+
+        <div class="timeline__item" data-animate data-delay="300">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 4</span>
+            <h3 class="timeline__title">Policy and Controls Implementation</h3>
+            <p>Develop comprehensive policies, technical controls, and operational procedures
+            that operationalize responsible AI principles.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>AI ethics policy suite (procurement, development, deployment)</li>
+              <li>Bias testing and fairness standards (linked to Bias Audit service)</li>
+              <li>Explainability requirements by use-case risk level</li>
+              <li>Human oversight protocols and override procedures</li>
+            </ul>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="400">
-          <div class="card__icon" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff;">🛡️</div>
-          <h3 class="card__title">Safety</h3>
-          <p class="card__description">AI systems are reliable, robust, and secure, with safeguards against harmful outcomes.</p>
-        </div>
-        <div class="card" data-animate data-delay="500">
-          <div class="card__icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff;">👁️</div>
-          <h3 class="card__title">Human Oversight</h3>
-          <p class="card__description">Humans remain in control of high-stakes decisions, with ability to override AI recommendations.</p>
+
+        <div class="timeline__item" data-animate data-delay="400">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 5</span>
+            <h3 class="timeline__title">Operationalization and Culture</h3>
+            <p>Embed responsible AI into daily operations, procurement processes, and
+            organizational culture for long-term sustainability.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Training and certification program for staff and leadership</li>
+              <li>AI incident response and remediation playbook</li>
+              <li>Continuous monitoring dashboards and reporting cadence</li>
+              <li>Vendor and procurement responsible AI requirements</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Deliverables / Features Grid -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Framework Components</span>
-        <h2 class="section-header__title">What We Deliver</h2>
+        <span class="section-header__label">What You Get</span>
+        <h2 class="section-header__title">Framework Deliverables</h2>
+        <p class="section-header__subtitle">
+          Tangible, audit-ready artifacts--not just principles on a slide deck.
+        </p>
       </div>
 
-      <div class="accordion" data-accordion>
-        <div class="accordion__item">
-          <button class="accordion__trigger">
-            <span>AI Ethics Policy & Principles</span>
-            <span class="accordion__icon">+</span>
-          </button>
-          <div class="accordion__content">
-            <div class="accordion__body">
-              <p>Organization-wide policy establishing AI ethics principles, roles, and responsibilities.</p>
-              <ul style="padding-left: var(--space-5); margin-top: var(--space-4);">
-                <li>Core ethical principles statement</li>
-                <li>Scope and applicability</li>
-                <li>Roles and governance structure</li>
-                <li>Policy enforcement mechanisms</li>
-              </ul>
-            </div>
+      <div class="features">
+        <div class="feature" data-animate>
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">AI Ethics Policy Suite</h4>
+            <p class="feature__description">
+              Comprehensive policy documents covering AI development, procurement, deployment,
+              and decommissioning--aligned with EO 14110 and OMB M-24-10.
+            </p>
           </div>
         </div>
-        <div class="accordion__item">
-          <button class="accordion__trigger">
-            <span>AI Risk Assessment Process</span>
-            <span class="accordion__icon">+</span>
-          </button>
-          <div class="accordion__content">
-            <div class="accordion__body">
-              <p>Structured methodology for evaluating AI risk levels and determining appropriate oversight.</p>
-              <ul style="padding-left: var(--space-5); margin-top: var(--space-4);">
-                <li>Risk categorization framework (Low/Medium/High)</li>
-                <li>Impact assessment criteria</li>
-                <li>Review and approval workflows</li>
-                <li>Documentation requirements by risk level</li>
-              </ul>
-            </div>
+
+        <div class="feature" data-animate data-delay="50">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Algorithmic Impact Assessment Templates</h4>
+            <p class="feature__description">
+              Structured AIA templates with scoring rubrics for risk classification,
+              civil rights evaluation, and stakeholder impact analysis.
+            </p>
           </div>
         </div>
-        <div class="accordion__item">
-          <button class="accordion__trigger">
-            <span>Bias Testing & Fairness Standards</span>
-            <span class="accordion__icon">+</span>
-          </button>
-          <div class="accordion__content">
-            <div class="accordion__body">
-              <p>Technical standards and testing procedures to identify and mitigate algorithmic bias.</p>
-              <ul style="padding-left: var(--space-5); margin-top: var(--space-4);">
-                <li>Fairness metrics definitions</li>
-                <li>Testing procedures and thresholds</li>
-                <li>Bias mitigation strategies</li>
-                <li>Ongoing monitoring requirements</li>
-              </ul>
-            </div>
+
+        <div class="feature" data-animate data-delay="100">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">NIST AI RMF Crosswalk</h4>
+            <p class="feature__description">
+              Detailed mapping of your framework to NIST AI RMF Govern, Map, Measure,
+              and Manage functions with implementation evidence documentation.
+            </p>
           </div>
         </div>
-        <div class="accordion__item">
-          <button class="accordion__trigger">
-            <span>Explainability Guidelines</span>
-            <span class="accordion__icon">+</span>
-          </button>
-          <div class="accordion__content">
-            <div class="accordion__body">
-              <p>Standards for making AI decisions understandable to affected individuals and oversight bodies.</p>
-              <ul style="padding-left: var(--space-5); margin-top: var(--space-4);">
-                <li>Explanation requirements by use case</li>
-                <li>Technical explainability methods</li>
-                <li>Plain-language communication standards</li>
-                <li>Appeal and review processes</li>
-              </ul>
-            </div>
+
+        <div class="feature" data-animate data-delay="150">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Governance Board Charter</h4>
+            <p class="feature__description">
+              AI governance board charter with membership criteria, meeting cadence,
+              decision authority, and escalation procedures.
+            </p>
           </div>
         </div>
-        <div class="accordion__item">
-          <button class="accordion__trigger">
-            <span>Human Oversight Protocols</span>
-            <span class="accordion__icon">+</span>
-          </button>
-          <div class="accordion__content">
-            <div class="accordion__body">
-              <p>Define when and how humans review, approve, or override AI recommendations.</p>
-              <ul style="padding-left: var(--space-5); margin-top: var(--space-4);">
-                <li>Decision authority matrix</li>
-                <li>Human review triggers</li>
-                <li>Override procedures</li>
-                <li>Escalation paths</li>
-              </ul>
-            </div>
+
+        <div class="feature" data-animate data-delay="200">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Monitoring and Reporting Dashboards</h4>
+            <p class="feature__description">
+              Real-time responsible AI metrics, compliance status tracking, and
+              automated reporting for OMB AI use case inventory requirements.
+            </p>
           </div>
         </div>
-        <div class="accordion__item">
-          <button class="accordion__trigger">
-            <span>AI Incident Response Plan</span>
-            <span class="accordion__icon">+</span>
-          </button>
-          <div class="accordion__content">
-            <div class="accordion__body">
-              <p>Procedures for responding to AI system failures, bias discoveries, or harmful outcomes.</p>
-              <ul style="padding-left: var(--space-5); margin-top: var(--space-4);">
-                <li>Incident classification</li>
-                <li>Response procedures</li>
-                <li>Communication protocols</li>
-                <li>Remediation requirements</li>
-              </ul>
-            </div>
+
+        <div class="feature" data-animate data-delay="250">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">AI Incident Response Plan</h4>
+            <p class="feature__description">
+              Procedures for responding to AI system failures, bias discoveries, or
+              harmful outcomes--including communication protocols and remediation workflows.
+            </p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section section--dark">
+  <!-- Stats / Proof Points -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <div class="stats" style="grid-template-columns: 1fr;">
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="87">87%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Of federal agencies now require responsible AI frameworks before deploying new AI systems (OMB 2025 survey)
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="4">4x</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Agencies with responsible AI programs are 4x more likely to scale AI successfully beyond pilot stage
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="60">60%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Reduction in AI-related compliance findings after implementing a structured responsible AI framework
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <span class="section-header__label">Why Responsible AI Matters</span>
+          <h2>Trust Is the Foundation of Government AI</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Responsible AI is not just a compliance checkbox--it is the foundation that enables
+            agencies to deploy AI confidently, scale successfully, and maintain the public trust
+            that government depends on.
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#x2713;</span>
+              <span><strong>Regulatory alignment</strong>--meet EO 14110, NIST AI RMF, and AI Bill of Rights requirements proactively</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#x2713;</span>
+              <span><strong>Civil rights protection</strong>--ensure AI systems serve all constituents equitably</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#x2713;</span>
+              <span><strong>Stakeholder confidence</strong>--demonstrate due diligence to oversight bodies, legislators, and the public</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#x2713;</span>
+              <span><strong>Scalable governance</strong>--build a reusable framework that grows with your AI portfolio</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="testimonial" data-animate>
+        <p class="testimonial__quote">
+          "Brite.AI built us a responsible AI framework that did more than check regulatory
+          boxes--it gave us the confidence to accelerate our AI initiatives. Our governance
+          board now has clear processes for evaluating new use cases, and we passed our first
+          GAO AI audit with zero findings. The NIST AI RMF crosswalk was exactly what our
+          compliance team needed."
+        </p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">CDO</div>
+          <div>
+            <div class="testimonial__name">Chief Data Officer</div>
+            <div class="testimonial__title">Federal Department of Health and Human Services</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
+  <section class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-header__title" style="color: #fff;">Alignment with Standards</h2>
+        <span class="section-header__label">Related Services</span>
+        <h2 class="section-header__title">Strengthen Your AI Governance</h2>
       </div>
-      <div class="grid grid--4">
-        <div class="card" style="text-align: center; padding: var(--space-6);">
-          <h4>NIST AI RMF</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Risk Management Framework</p>
+
+      <div class="grid grid--3">
+        <div class="card">
+          <h3 class="card__title">AI Bias Audit and Fairness Testing</h3>
+          <p class="card__description">
+            Independent algorithmic audits to test for disparate impact and ensure your
+            AI systems treat all demographic groups equitably.
+          </p>
+          <a href="bias-audit.html" class="card__link">Learn More &#x2192;</a>
         </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);">
-          <h4>OECD AI Principles</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">International Standards</p>
+        <div class="card">
+          <h3 class="card__title">AI Compliance and Risk Management</h3>
+          <p class="card__description">
+            Navigate EO 14110, NIST AI RMF, and state AI laws with comprehensive
+            compliance assessments and risk management frameworks.
+          </p>
+          <a href="ai-compliance.html" class="card__link">Learn More &#x2192;</a>
         </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);">
-          <h4>Executive Order</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Federal AI Requirements</p>
-        </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);">
-          <h4>IEEE Standards</h4>
-          <p style="font-size: var(--text-sm); color: var(--color-text-muted);">Technical Ethics</p>
+        <div class="card">
+          <h3 class="card__title">AI Strategy and Roadmap</h3>
+          <p class="card__description">
+            Define your AI vision, identify high-value use cases, and create a practical
+            roadmap for responsible AI transformation.
+          </p>
+          <a href="ai-strategy.html" class="card__link">Learn More &#x2192;</a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- CTA Section -->
   <section class="section">
     <div class="container">
       <div class="cta">
         <h2>Build Trust Through Responsible AI</h2>
-        <p>Develop a comprehensive framework that ensures your AI systems are ethical, fair, and accountable.</p>
+        <p>
+          Develop a comprehensive framework aligned with NIST AI RMF, EO 14110, and the
+          AI Bill of Rights. Protect your constituents, satisfy oversight bodies, and
+          accelerate your AI mission with confidence.
+        </p>
         <div class="cta__actions">
-          <a href="../contact/index.html" class="btn btn--white btn--lg">Discuss Responsible AI</a>
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Discuss Responsible AI
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="footer__bottom">
         <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <script src="../js/main.js"></script>
 </body>
 </html>

@@ -4,241 +4,495 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Government Analytics & Business Intelligence | Brite.AI</title>
-  <meta name="description" content="Transform data into actionable insights with modern analytics and business intelligence solutions for government agencies.">
+  <meta name="description" content="Transform government data into actionable insights with modern analytics and business intelligence. Dashboards, reporting, advanced analytics, and AI-powered decision support for public sector agencies.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
       <div class="navbar__inner">
         <a href="../index.html" class="navbar__logo">Brite.AI</a>
         <ul class="navbar__menu">
           <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
           <li><a href="index.html" class="navbar__link">AI & Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
           <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <section class="hero hero--centered">
+  <!-- Hero Section -->
+  <section class="hero">
     <div class="container">
       <div class="hero__content">
-        <span class="hero__badge">Data Services</span>
-        <h1 class="hero__title">Data-Driven Government</h1>
+        <span class="hero__badge">Analytics & Business Intelligence</span>
+        <h1 class="hero__title">Data-Driven Government Decisions</h1>
         <p class="hero__subtitle">
-          Modern analytics and business intelligence that transform government
-          data into actionable insights for better decision-making.
+          Modern analytics and business intelligence that transform government data
+          into actionable insights -- from real-time dashboards and automated reporting
+          to AI-powered predictive analytics and prescriptive recommendations.
         </p>
         <div class="hero__actions">
-          <a href="../contact/index.html" class="btn btn--primary btn--lg">Explore Analytics</a>
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Explore Analytics Solutions
+          </a>
+          <a href="#approach" class="btn btn--secondary btn--lg">
+            See Our Approach
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Problem Statement -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <span class="section-header__label">The Challenge</span>
+          <h2>Government Runs on Reports, Not Insights</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Most government agencies generate mountains of reports but still lack
+            the real-time visibility needed for effective decision-making. Static
+            spreadsheets and quarterly PDF reports can't keep pace with the speed
+            of constituent needs or legislative demands.
+          </p>
+          <p style="color: var(--color-text-light);">
+            The OPEN Data Act requires agencies to make data accessible and useful,
+            but without modern analytics capabilities, compliance becomes a box-checking
+            exercise rather than a catalyst for better outcomes. CDO Council guidance
+            emphasizes data-driven decision-making, yet many agencies still rely on
+            intuition over evidence when allocating resources and measuring program impact.
+          </p>
+        </div>
+        <div data-animate data-delay="200">
+          <div class="card" style="background: var(--color-background-alt);">
+            <h4 style="color: var(--color-primary); margin-bottom: var(--space-4);">Common Analytics Gaps:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Reports are static and weeks behind reality
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Data analysts are bottlenecks for every question
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> No predictive capabilities to anticipate demand
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Federal reporting requires manual data wrangling
+              </li>
+              <li style="padding: var(--space-3) 0; display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </span> Program outcomes are measured retroactively, not proactively
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach Section with Timeline -->
+  <section id="approach" class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Approach</span>
+        <h2 class="section-header__title">Analytics Maturity Journey</h2>
+        <p class="section-header__subtitle">
+          We meet agencies where they are and build capabilities progressively --
+          from foundational reporting to AI-powered prescriptive analytics.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline__item" data-animate>
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Stage 1</span>
+            <h3 class="timeline__title">Descriptive Analytics</h3>
+            <p>Build the foundation with modern dashboards and automated reporting
+            that answer "what happened?" in real time, replacing static spreadsheets
+            and manual processes.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Executive dashboards and operational scorecards</li>
+              <li>Automated federal and state reporting</li>
+              <li>KPI tracking and performance monitoring</li>
+              <li>Data warehouse design and implementation</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="100">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Stage 2</span>
+            <h3 class="timeline__title">Diagnostic Analytics</h3>
+            <p>Add drill-down and root-cause analysis capabilities that answer
+            "why did it happen?" -- enabling analysts and program managers to
+            explore data and uncover patterns.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Interactive drill-down and filtering</li>
+              <li>Root cause analysis frameworks</li>
+              <li>Self-service analytics for business users</li>
+              <li>Ad-hoc analysis and data exploration tools</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="200">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Stage 3</span>
+            <h3 class="timeline__title">Predictive Analytics</h3>
+            <p>Layer in forecasting and trend prediction that answer "what will happen?"
+            -- allowing agencies to anticipate demand, identify at-risk populations,
+            and allocate resources proactively.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Demand forecasting and trend prediction</li>
+              <li>Risk scoring and early warning systems</li>
+              <li>Statistical modeling and ML integration</li>
+              <li>Geospatial and temporal analysis</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="300">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Stage 4</span>
+            <h3 class="timeline__title">Prescriptive Analytics</h3>
+            <p>Deploy AI-powered recommendations that answer "what should we do?"
+            -- delivering optimized resource allocation, next-best-action guidance,
+            and automated decision support.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>AI-powered recommendations and next-best-action</li>
+              <li>Resource optimization and scenario modeling</li>
+              <li>Automated decision support systems</li>
+              <li>Natural language query and AI-generated insights</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deliverables / Features Section -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Analytics Maturity</span>
-        <h2 class="section-header__title">The Analytics Journey</h2>
+        <span class="section-header__label">Capabilities</span>
+        <h2 class="section-header__title">Analytics and BI Services</h2>
+        <p class="section-header__subtitle">
+          End-to-end analytics capabilities that transform raw government data
+          into the insights leaders need to drive better outcomes.
+        </p>
       </div>
-      <div class="grid grid--4">
-        <div class="card" data-animate>
-          <div class="card__icon" style="background: linear-gradient(135deg, #94a3b8, #64748b); color: #fff;">📊</div>
-          <h3 class="card__title">Descriptive</h3>
-          <p class="card__description">What happened? Reports and dashboards showing historical performance.</p>
+
+      <div class="features">
+        <div class="feature" data-animate>
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Dashboard Development</h4>
+            <p class="feature__description">
+              Interactive, real-time dashboards that provide at-a-glance visibility
+              into key metrics -- from executive scorecards to operational monitors --
+              built on Tableau, Power BI, or Salesforce CRM Analytics.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="100">
-          <div class="card__icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">🔍</div>
-          <h3 class="card__title">Diagnostic</h3>
-          <p class="card__description">Why did it happen? Root cause analysis and drill-down capabilities.</p>
+
+        <div class="feature" data-animate data-delay="50">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Automated Reporting</h4>
+            <p class="feature__description">
+              Scheduled and event-triggered reports that deliver insights to
+              stakeholders automatically -- including automated federal reporting,
+              performance summaries, and compliance documentation.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="200">
-          <div class="card__icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff;">🔮</div>
-          <h3 class="card__title">Predictive</h3>
-          <p class="card__description">What will happen? Forecasting and trend prediction.</p>
+
+        <div class="feature" data-animate data-delay="100">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Self-Service Analytics</h4>
+            <p class="feature__description">
+              Empower program managers and analysts to explore data and create
+              their own analyses without IT dependency -- with governed data access,
+              training, and data literacy programs.
+            </p>
+          </div>
         </div>
-        <div class="card" data-animate data-delay="300">
-          <div class="card__icon" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">🎯</div>
-          <h3 class="card__title">Prescriptive</h3>
-          <p class="card__description">What should we do? AI-powered recommendations.</p>
+
+        <div class="feature" data-animate data-delay="150">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Modern Data Warehouse</h4>
+            <p class="feature__description">
+              Cloud-native data warehouse architecture optimized for analytics --
+              with historical data storage, performance tuning, dimensional modeling,
+              and governed access controls.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="200">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Advanced and Predictive Analytics</h4>
+            <p class="feature__description">
+              Statistical modeling, machine learning, and AI-powered analytics
+              that go beyond historical reporting -- delivering forecasts, risk
+              scores, and pattern detection for proactive decision-making.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="250">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Data Visualization and Storytelling</h4>
+            <p class="feature__description">
+              Compelling visualizations, geospatial mapping, and data narratives
+              that communicate complex findings to executives, legislators, and
+              the public in accessible, transparent formats.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Stats / Proof Points Section -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <div class="stats" style="grid-template-columns: 1fr;">
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="64" data-suffix="%">0%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Of public sector organizations have adopted BI for budgeting and transparency
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);" data-counter="45" data-suffix="%">0%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Reduction in reporting cycle time with automated analytics platforms
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">3x</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Faster evidence-based decisions with real-time dashboards vs. static reports
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <span class="section-header__label">Why Analytics Matters</span>
+          <h2>From Reporting Compliance to Mission Intelligence</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Modern analytics transforms government from reactive to proactive --
+            moving beyond compliance reporting to real-time mission intelligence
+            that drives better outcomes for constituents.
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>OPEN Data Act transparency</strong> -- public-facing dashboards and open data portals that satisfy federal transparency mandates</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>CDO Council data literacy</strong> -- self-service tools and training programs that build organizational analytics capability</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>Data sovereignty built in</strong> -- governed access controls, audit trails, and PII protections embedded in every dashboard and report</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong>Evidence-based policy</strong> -- analytics that connect program spending to constituent outcomes for legislative accountability</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="testimonial" data-animate>
+        <p class="testimonial__quote">
+          "Before Brite.AI, our quarterly performance report took three analysts
+          two weeks to compile manually. Now leadership has a real-time dashboard
+          they check daily. We caught a 30% spike in processing backlogs within
+          hours instead of discovering it in the next quarterly review -- and
+          redirected staff before constituents were impacted."
+        </p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">CIO</div>
+          <div>
+            <div class="testimonial__name">Chief Information Officer</div>
+            <div class="testimonial__title">County Department of Public Services</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
   <section class="section section--alt">
     <div class="container">
       <div class="section-header">
-        <span class="section-header__label">Services</span>
-        <h2 class="section-header__title">Analytics & BI Services</h2>
+        <span class="section-header__label">Related Services</span>
+        <h2 class="section-header__title">Strengthen Your Data Capabilities</h2>
       </div>
+
       <div class="grid grid--3">
-        <div class="card" data-animate>
-          <h3 class="card__title">Dashboard Development</h3>
-          <p class="card__description">Interactive dashboards that provide at-a-glance visibility into key metrics.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Executive dashboards</li>
-            <li>Operational metrics</li>
-            <li>KPI tracking</li>
-            <li>Real-time monitoring</li>
-          </ul>
+        <div class="card">
+          <h3 class="card__title">Data Readiness for AI</h3>
+          <p class="card__description">
+            Ensure your data meets quality and governance standards before
+            building analytics and AI solutions on top of it.
+          </p>
+          <a href="data-readiness.html" class="card__link">Learn More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
         </div>
-        <div class="card" data-animate data-delay="100">
-          <h3 class="card__title">Reporting Solutions</h3>
-          <p class="card__description">Automated reporting that delivers insights to stakeholders.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Scheduled reports</li>
-            <li>Ad-hoc analysis</li>
-            <li>Federal reporting</li>
-            <li>Performance reports</li>
-          </ul>
+        <div class="card">
+          <h3 class="card__title">Salesforce Data Cloud</h3>
+          <p class="card__description">
+            Unify constituent data across programs to power comprehensive,
+            cross-program analytics and reporting.
+          </p>
+          <a href="data-cloud.html" class="card__link">Learn More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
         </div>
-        <div class="card" data-animate data-delay="200">
-          <h3 class="card__title">Self-Service Analytics</h3>
-          <p class="card__description">Empower users to explore data and create their own analyses.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>User-friendly tools</li>
-            <li>Governed data access</li>
-            <li>Training and support</li>
-            <li>Data democratization</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="300">
-          <h3 class="card__title">Data Warehouse</h3>
-          <p class="card__description">Centralized data repository optimized for analytics and reporting.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Modern cloud architecture</li>
-            <li>Historical data storage</li>
-            <li>Performance optimization</li>
-            <li>Data modeling</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="400">
-          <h3 class="card__title">Advanced Analytics</h3>
-          <p class="card__description">Statistical analysis and machine learning for deeper insights.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Statistical modeling</li>
-            <li>Trend analysis</li>
-            <li>Segmentation</li>
-            <li>Correlation analysis</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="500">
-          <h3 class="card__title">Data Visualization</h3>
-          <p class="card__description">Compelling visualizations that tell the story in your data.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); font-size: var(--text-sm); margin-top: var(--space-4);">
-            <li>Interactive charts</li>
-            <li>Geospatial mapping</li>
-            <li>Infographics</li>
-            <li>Data storytelling</li>
-          </ul>
+        <div class="card">
+          <h3 class="card__title">AI Strategy and Roadmap</h3>
+          <p class="card__description">
+            Define your vision for AI-powered analytics and build a practical
+            roadmap from descriptive to prescriptive capabilities.
+          </p>
+          <a href="ai-strategy.html" class="card__link">Learn More
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Use Cases</span>
-        <h2 class="section-header__title">Government Analytics Applications</h2>
-      </div>
-      <div class="grid grid--2">
-        <div class="card" data-animate>
-          <h3 class="card__title">Program Performance</h3>
-          <p class="card__description">Track program outcomes, measure effectiveness, and identify improvement opportunities.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-            <li>Outcome tracking</li>
-            <li>Performance benchmarking</li>
-            <li>Goal monitoring</li>
-            <li>ROI analysis</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="100">
-          <h3 class="card__title">Operational Efficiency</h3>
-          <p class="card__description">Monitor and optimize operational processes and resource utilization.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-            <li>Processing time metrics</li>
-            <li>Workload analysis</li>
-            <li>Capacity planning</li>
-            <li>Bottleneck identification</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="200">
-          <h3 class="card__title">Constituent Analytics</h3>
-          <p class="card__description">Understand constituent needs, behaviors, and service patterns.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-            <li>Service demand analysis</li>
-            <li>Demographic trends</li>
-            <li>Channel preferences</li>
-            <li>Satisfaction tracking</li>
-          </ul>
-        </div>
-        <div class="card" data-animate data-delay="300">
-          <h3 class="card__title">Financial Analytics</h3>
-          <p class="card__description">Track spending, forecast budgets, and ensure fiscal accountability.</p>
-          <ul style="padding-left: var(--space-5); color: var(--color-text-light); margin-top: var(--space-4);">
-            <li>Budget vs. actual</li>
-            <li>Cost analysis</li>
-            <li>Financial forecasting</li>
-            <li>Grant tracking</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-header__label">Platforms</span>
-        <h2 class="section-header__title">Analytics Technologies</h2>
-      </div>
-      <div class="grid grid--4">
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate>
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">📊</div>
-          <h4>Tableau</h4>
-        </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="100">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">📈</div>
-          <h4>Power BI</h4>
-        </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="200">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">☁️</div>
-          <h4>Salesforce CRM Analytics</h4>
-        </div>
-        <div class="card" style="text-align: center; padding: var(--space-6);" data-animate data-delay="300">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);">🔍</div>
-          <h4>Looker</h4>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <!-- CTA Section -->
   <section class="section">
     <div class="container">
       <div class="cta">
-        <h2>Turn Data into Decisions</h2>
-        <p>Build analytics capabilities that drive better outcomes for your agency and constituents.</p>
+        <h2>Turn Government Data into Mission Intelligence</h2>
+        <p>
+          Build analytics capabilities that drive better decisions, improve constituent
+          outcomes, and demonstrate program impact with evidence.
+        </p>
         <div class="cta__actions">
-          <a href="../contact/index.html" class="btn btn--white btn--lg">Discuss Analytics</a>
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Discuss Analytics Solutions
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health & Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform & Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">AI & Data</h4>
+          <ul class="footer__links">
+            <li><a href="ai-strategy.html">AI Strategy</a></li>
+            <li><a href="agentic-ai.html">Agentic AI</a></li>
+            <li><a href="data-cloud.html">Data Cloud</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="footer__bottom">
         <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <script src="../js/main.js"></script>
 </body>
 </html>
