@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APS &amp; Aging Services Directory | Brite.AI</title>
+  <meta name="description" content="Browse all Brite.AI Adult Protective Services and aging solutions&mdash;from case management and elder protection to AI analytics, constituent services, and workforce training.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .directory__category {
+      margin-bottom: var(--space-10);
+    }
+    .directory__category-title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-2);
+      border-bottom: 2px solid var(--color-primary-light);
+    }
+    .directory__list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+    }
+    .directory__item {
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      transition: var(--transition-base);
+    }
+    .directory__item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary);
+    }
+    .directory__item-title {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+    .directory__item-title a {
+      color: var(--color-text);
+      text-decoration: none;
+    }
+    .directory__item-title a:hover {
+      color: var(--color-primary);
+    }
+    .directory__item-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+    @media (max-width: 1024px) {
+      .directory__list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      .directory__list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
+          <li><a href="../ai-data/index.html" class="navbar__link">AI &amp; Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero hero--centered">
+    <div class="container">
+      <div class="hero__content">
+        <span class="hero__badge">APS &amp; Aging Directory</span>
+        <h1 class="hero__title">
+          All APS &amp; Aging<br>
+          <span class="text-gradient">Services &amp; Solutions</span>
+        </h1>
+        <p class="hero__subtitle">
+          Browse our complete catalog of Adult Protective Services and aging
+          solutions&mdash;from case management and elder protection through
+          AI analytics, constituent services, and workforce training.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Directory -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Case Management & Investigations -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">Case Management &amp; Investigations</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="aps-case-management.html">APS Case Management</a></h3>
+            <p class="directory__item-desc">Full lifecycle case management from intake through investigation, disposition, service planning, and closure&mdash;built on Salesforce with APS-specific workflows and ACL Final Rule compliance.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="eligibility-benefits.html">Eligibility &amp; Benefits</a></h3>
+            <p class="directory__item-desc">Streamline eligibility determination for Medicaid HCBS waivers, OAA programs, SNAP, LIHEAP, and Medicare benefits with AI-assisted screening and automated enrollment.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="investigation-management.html">Investigation Management</a></h3>
+            <p class="directory__item-desc">Evidence collection, chain of custody tracking, interview documentation, multi-agency coordination, and structured disposition workflows aligned with ACL tiered response requirements.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elder Protection -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">Elder Protection</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="financial-exploitation.html">Financial Exploitation Detection</a></h3>
+            <p class="directory__item-desc">AI-powered analysis of financial transaction patterns to detect exploitation, unusual withdrawals, and suspicious activity&mdash;catching what manual review misses.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="abuse-risk-analytics.html">Abuse Risk Analytics</a></h3>
+            <p class="directory__item-desc">Predictive risk models trained on APS investigation data to identify high-risk individuals earlier, prioritize cases by severity, and allocate resources where they matter most.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="guardianship-monitoring.html">Guardianship Monitoring</a></h3>
+            <p class="directory__item-desc">Digital tracking of guardianship and conservatorship cases with automated alerts for late filings, financial reporting anomalies, and compliance gaps.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aging Services -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">Aging Services</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="care-coordination.html">Care Coordination</a></h3>
+            <p class="directory__item-desc">Person-centered service planning and cross-agency coordination across APS, AAA, Medicaid HCBS, behavioral health, and community providers&mdash;the No Wrong Door vision realized.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="nutrition-services.html">Nutrition Services</a></h3>
+            <p class="directory__item-desc">Meals on Wheels and congregate meal program management with route optimization, dietary tracking, volunteer coordination, and OAA Title III-C compliance reporting.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="transportation-management.html">Transportation Management</a></h3>
+            <p class="directory__item-desc">NEMT scheduling and coordination, route optimization, fleet management, and integration with care schedules for transportation-disadvantaged older adults.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI & Analytics -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">AI &amp; Analytics</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="predictive-risk-models.html">Predictive Risk Models</a></h3>
+            <p class="directory__item-desc">Machine learning models validated on APS investigation data to predict abuse risk, identify high-priority cases, and enable proactive intervention before harm escalates.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="caseload-intelligence.html">Caseload Intelligence</a></h3>
+            <p class="directory__item-desc">AI-driven workload management that balances caseloads, routes cases to investigators by expertise, and ensures compliance with ACL response time requirements.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="namrs-reporting.html">NAMRS &amp; OAAPS Reporting</a></h3>
+            <p class="directory__item-desc">Automated federal reporting for NAMRS Case Component data, OAAPS performance metrics, and CMS HCBS quality measures&mdash;eliminating manual extraction and ensuring compliance.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Constituent Services -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">Constituent Services</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="multichannel-intake.html">24/7 Multi-Channel Intake</a></h3>
+            <p class="directory__item-desc">AI-powered intake across phone, web, and mobile&mdash;meeting the ACL mandate for 24/7 online reporting with intelligent screening, risk classification, and automated case creation.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="self-service-portal.html">Self-Service Portal</a></h3>
+            <p class="directory__item-desc">Accessible portals for families to report concerns, check case status, submit documentation, and access community resources&mdash;reducing call volume while improving transparency.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="caregiver-support.html">Caregiver Support Platform</a></h3>
+            <p class="directory__item-desc">Digital tools for family caregivers including respite care scheduling, support group connections, training resources, and burnout prevention assessments aligned with OAA Title III-E.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Workforce & Training -->
+      <div class="directory__category" data-animate>
+        <h2 class="directory__category-title">Workforce &amp; Training</h2>
+        <div class="directory__list">
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="aps-training.html">APS Training Academy</a></h3>
+            <p class="directory__item-desc">Role-based training for APS investigators, supervisors, and intake staff covering AI tools, investigation techniques, and compliance with the NAPSA National Training Center curriculum.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="change-management.html">Change Management</a></h3>
+            <p class="directory__item-desc">Structured adoption programs that address workforce resistance, union considerations, and organizational change unique to public sector APS and aging services agencies.</p>
+          </div>
+          <div class="directory__item">
+            <h3 class="directory__item-title"><a href="workforce-planning.html">Workforce Planning</a></h3>
+            <p class="directory__item-desc">Data-driven staffing models that address the APS investigator shortage, optimize caseload distribution, and reduce burnout&mdash;using the ACL Workload Toolkit framework.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Ready to Modernize Your APS Program?</h2>
+        <p>
+          Start with a conversation about your compliance timeline, technology gaps,
+          and modernization goals. No sales pitch&mdash;just honest advice from people
+          who understand adult protective services.
+        </p>
+        <div class="cta__actions">
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Request APS Consultation
+          </a>
+          <a href="../ai-data/readiness-assessment.html" class="btn btn--secondary btn--lg" style="border-color: #fff; color: #fff;">
+            Take AI Readiness Assessment
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health &amp; Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform &amp; Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">APS &amp; Aging</h4>
+          <ul class="footer__links">
+            <li><a href="index.html">APS Solutions</a></li>
+            <li><a href="aps-case-management.html">Case Management</a></li>
+            <li><a href="financial-exploitation.html">Elder Protection</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
