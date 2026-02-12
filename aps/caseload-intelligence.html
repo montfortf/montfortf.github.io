@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caseload Intelligence | Brite.AI</title>
+  <meta name="description" content="AI-driven workload management that balances caseloads, routes cases to investigators by expertise, and ensures compliance with ACL response time requirements.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="../index.html" class="navbar__logo">Brite.AI</a>
+        <ul class="navbar__menu">
+          <li><a href="../solutions/index.html" class="navbar__link">Solutions</a></li>
+          <li><a href="../industries/index.html" class="navbar__link">Industries</a></li>
+          <li><a href="../ai-data/index.html" class="navbar__link">AI &amp; Data</a></li>
+          <li><a href="../about/index.html" class="navbar__link">About</a></li>
+          <li><a href="../insights/index.html" class="navbar__link">Insights</a></li>
+          <li><a href="../contact/index.html" class="btn btn--primary">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero__content">
+        <span class="hero__badge">AI &amp; Analytics</span>
+        <h1 class="hero__title">AI-Driven Caseload Intelligence</h1>
+        <p class="hero__subtitle">
+          Intelligent workload management that balances investigator caseloads,
+          routes cases by expertise, and ensures compliance with ACL response
+          time requirements.
+        </p>
+        <div class="hero__actions">
+          <a href="../contact/index.html" class="btn btn--primary btn--lg">
+            Request a Demo
+          </a>
+          <a href="#approach" class="btn btn--secondary btn--lg">
+            See Our Approach
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Statement -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <span class="section-header__label">The Challenge</span>
+          <h2>Uneven Caseloads Undermine Investigation Quality</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light);">
+            APS investigators carry wildly uneven caseloads. Complex financial
+            exploitation cases land on junior investigators while senior staff are
+            overloaded with routine screenings. Response time mandates from the
+            Administration for Community Living are missed &mdash; not from lack
+            of effort, but from lack of intelligent case routing.
+          </p>
+          <p style="color: var(--color-text-light);">
+            Caseload intelligence applies AI to the assignment problem &mdash; matching
+            each case to the right investigator based on expertise, current workload,
+            geographic proximity, and urgency, while tracking SLA compliance in real time.
+          </p>
+        </div>
+        <div data-animate data-delay="200">
+          <div class="card" style="background: var(--color-background-alt);">
+            <h4 style="color: var(--color-primary); margin-bottom: var(--space-4);">Without Caseload Intelligence:</h4>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Unbalanced investigator caseloads
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Cases mismatched to expertise
+              </li>
+              <li style="padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> Response time SLA violations
+              </li>
+              <li style="padding: var(--space-3) 0; display: flex; align-items: center; gap: var(--space-3);">
+                <span style="color: var(--color-error);">&#10005;</span> High investigator burnout and turnover
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach Section with Timeline -->
+  <section id="approach" class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Our Approach</span>
+        <h2 class="section-header__title">Four-Phase Intelligence Deployment</h2>
+        <p class="section-header__subtitle">
+          A structured rollout from workload analysis through continuous optimization.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline__item" data-animate>
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 1</span>
+            <h3 class="timeline__title">Workload Analysis</h3>
+            <p>Map current caseload distribution, identify imbalances, and catalog
+            investigator skills, certifications, and geographic coverage areas.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Current caseload distribution mapping</li>
+              <li>Investigator skill and certification inventory</li>
+              <li>Historical response time analysis</li>
+              <li>Bottleneck and imbalance identification</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="100">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 2</span>
+            <h3 class="timeline__title">Routing Logic Design</h3>
+            <p>Build the intelligent routing engine that considers case complexity,
+            investigator expertise, current workload, and SLA deadlines.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Case complexity scoring criteria</li>
+              <li>Expertise matching algorithm design</li>
+              <li>Workload capacity modeling</li>
+              <li>SLA-aware urgency weighting</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="200">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 3</span>
+            <h3 class="timeline__title">System Integration</h3>
+            <p>Connect the routing engine to your existing case management system,
+            enabling automatic assignment with supervisor override capability.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Case management system API integration</li>
+              <li>Real-time assignment workflow</li>
+              <li>Supervisor override and approval controls</li>
+              <li>Notification and escalation triggers</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline__item" data-animate data-delay="300">
+          <div class="timeline__marker"></div>
+          <div class="timeline__content">
+            <span class="timeline__date">Phase 4</span>
+            <h3 class="timeline__title">Optimization &amp; Monitoring</h3>
+            <p>Continuously monitor routing effectiveness, refine algorithms based
+            on outcomes, and adapt to staffing changes and seasonal patterns.</p>
+            <ul style="margin-top: var(--space-4); color: var(--color-text-light);">
+              <li>Routing effectiveness dashboards</li>
+              <li>Algorithm refinement from outcome data</li>
+              <li>Seasonal and staffing change adaptation</li>
+              <li>Quarterly performance reviews</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deliverables Section with Feature Grid -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">What You Get</span>
+        <h2 class="section-header__title">Intelligence Deliverables</h2>
+        <p class="section-header__subtitle">
+          Operational tools that integrate into daily APS workflow from day one.
+        </p>
+      </div>
+
+      <div class="features">
+        <div class="feature" data-animate>
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6"/><path d="M23 11h-6"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Smart Case Routing Engine</h4>
+            <p class="feature__description">
+              AI-powered assignment system that matches incoming cases to the best-fit
+              investigator based on expertise, capacity, and geographic coverage.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="50">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Workload Balance Dashboard</h4>
+            <p class="feature__description">
+              Real-time visualization of caseload distribution across investigators,
+              teams, and regions with imbalance alerts.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="100">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Expertise Matching Algorithm</h4>
+            <p class="feature__description">
+              Matches case characteristics &mdash; financial exploitation, self-neglect,
+              facility-based abuse &mdash; to investigators with proven experience in that area.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="150">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Response Time Tracker</h4>
+            <p class="feature__description">
+              Monitors ACL-mandated response time SLAs in real time, flagging cases
+              approaching deadlines and escalating automatically.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="200">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 10h2"/><path d="M15 10h2"/><path d="M11 10h2"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Supervisor Oversight Console</h4>
+            <p class="feature__description">
+              Management dashboard for reviewing assignments, overriding routing
+              decisions, and tracking team performance metrics.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature" data-animate data-delay="250">
+          <div class="feature__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div>
+            <h4 class="feature__title">Burnout Prevention Alerts</h4>
+            <p class="feature__description">
+              Early warning system that detects investigator workload patterns
+              associated with burnout, enabling proactive redistribution.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why It Matters Section -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="grid grid--2" style="align-items: center; gap: 4rem;">
+        <div data-animate>
+          <div class="stats" style="grid-template-columns: 1fr;">
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">35%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                More balanced caseloads across investigators within the first quarter
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl); margin-bottom: var(--space-4);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">98%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                ACL response time compliance achieved through SLA-aware routing
+              </div>
+            </div>
+            <div class="stat" style="text-align: left; padding: var(--space-6); background: var(--color-background); border-radius: var(--radius-xl);">
+              <div class="stat__value" style="font-size: var(--text-5xl);">25%</div>
+              <div class="stat__label" style="font-size: var(--text-lg);">
+                Reduction in investigator turnover by preventing chronic overload
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-animate data-delay="200">
+          <span class="section-header__label">Why It Matters</span>
+          <h2>The Right Case to the Right Investigator, Every Time</h2>
+          <p style="font-size: var(--text-lg); color: var(--color-text-light); margin-bottom: var(--space-6);">
+            Caseload intelligence transforms APS operations by ensuring you are:
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>Matching cases to investigator expertise</strong> &mdash; financial exploitation to forensic specialists, self-neglect to behavioral health experts</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>Meeting ACL response time mandates</strong> &mdash; with real-time SLA tracking and automatic escalation</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>Preventing investigator burnout</strong> &mdash; equitable distribution with early warning alerts</span>
+            </li>
+            <li style="padding: var(--space-3) 0; display: flex; align-items: flex-start; gap: var(--space-3);">
+              <span style="color: var(--color-success); font-size: var(--text-xl);">&#10003;</span>
+              <span><strong>Optimizing resource utilization</strong> &mdash; maximizing investigation capacity without adding headcount</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="testimonial" data-animate>
+        <p class="testimonial__quote">
+          &ldquo;Before caseload intelligence, our best investigators were drowning
+          while newer staff had lighter loads of cases they weren&rsquo;t equipped to
+          handle. Now assignments are balanced, expertise-matched, and we haven&rsquo;t
+          missed an ACL response deadline in six months. Turnover dropped for the
+          first time in years.&rdquo;
+        </p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">APS</div>
+          <div>
+            <div class="testimonial__name">APS Program Supervisor</div>
+            <div class="testimonial__title">County Department of Social Services</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-header__label">Related Services</span>
+        <h2 class="section-header__title">Explore More APS Solutions</h2>
+      </div>
+
+      <div class="grid grid--3">
+        <div class="card">
+          <h3 class="card__title">Predictive Risk Models</h3>
+          <p class="card__description">
+            ML models validated on APS data to predict abuse risk, prioritize
+            cases, and enable proactive intervention before harm escalates.
+          </p>
+          <a href="predictive-risk-models.html" class="card__link">Learn More &rarr;</a>
+        </div>
+        <div class="card">
+          <h3 class="card__title">NAMRS &amp; OAAPS Reporting</h3>
+          <p class="card__description">
+            Automated federal reporting for NAMRS, OAAPS, and CMS HCBS quality
+            measures &mdash; eliminating manual data extraction.
+          </p>
+          <a href="namrs-reporting.html" class="card__link">Learn More &rarr;</a>
+        </div>
+        <div class="card">
+          <h3 class="card__title">Workforce Planning</h3>
+          <p class="card__description">
+            Data-driven staffing models that forecast investigator demand, optimize
+            hiring timelines, and plan for seasonal surges.
+          </p>
+          <a href="workforce-planning.html" class="card__link">Learn More &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Ready to Balance Caseloads &amp; Boost Compliance?</h2>
+        <p>
+          Start with a conversation about your current workload challenges, response time
+          metrics, and how intelligent routing can transform your APS operations.
+        </p>
+        <div class="cta__actions">
+          <a href="../contact/index.html" class="btn btn--white btn--lg">
+            Request a Caseload Intelligence Demo
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Brite.AI</div>
+          <p class="footer__tagline">Government AI Transformation Specialists</p>
+        </div>
+        <div>
+          <h4 class="footer__title">Solutions</h4>
+          <ul class="footer__links">
+            <li><a href="../solutions/human-services.html">Human Services</a></li>
+            <li><a href="../solutions/health-nonprofit.html">Health &amp; Nonprofit</a></li>
+            <li><a href="../solutions/platform.html">Platform &amp; Integration</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">APS &amp; Aging</h4>
+          <ul class="footer__links">
+            <li><a href="index.html">APS Solutions</a></li>
+            <li><a href="aps-case-management.html">Case Management</a></li>
+            <li><a href="financial-exploitation.html">Elder Protection</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Company</h4>
+          <ul class="footer__links">
+            <li><a href="../about/index.html">About Us</a></li>
+            <li><a href="../about/careers.html">Careers</a></li>
+            <li><a href="../contact/index.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__title">Resources</h4>
+          <ul class="footer__links">
+            <li><a href="../insights/index.html">Blog</a></li>
+            <li><a href="../insights/case-studies.html">Case Studies</a></li>
+            <li><a href="../insights/resources.html">Guides</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 Brite.AI. All rights reserved.</p>
+        <div class="footer__social">
+          <a href="#">LinkedIn</a>
+          <a href="#">Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
