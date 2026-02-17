@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advisory & Strategy Services | Brite.AI</title>
+  <meta name="description" content="AI Advisory & Strategy services from Brite.AI. 18 years serving government, health & human services, nonprofits, and healthcare payers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1E293B;
+      line-height: 1.6;
+      background: #FFFFFF;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4, h5 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* ===== DESIGN TOKENS ===== */
+    :root {
+      --primary: #2563EB;
+      --primary-dark: #1D4ED8;
+      --primary-light: #3B82F6;
+      --dark-bg: #1E293B;
+      --dark-surface: #334155;
+      --slate-50: #F8FAFC;
+      --slate-100: #F1F5F9;
+      --slate-200: #E2E8F0;
+      --slate-300: #CBD5E1;
+      --slate-400: #94A3B8;
+      --slate-500: #64748B;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1E293B;
+      --white: #FFFFFF;
+      --success: #10B981;
+      --danger: #EF4444;
+      --warning: #F59E0B;
+      --gradient-blue: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --max-width: 1200px;
+    }
+
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+    .section-padding { padding: 80px 0; }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: var(--radius);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255,255,255,0.3);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.5);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    .btn-outline:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    /* ===== SECTION 1: HERO ===== */
+    .hero {
+      background: var(--dark-bg);
+      position: relative;
+      overflow: hidden;
+      padding: 100px 0 80px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 720px; }
+    .hero .eyebrow {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary-light);
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    .hero .subtitle {
+      font-size: 19px;
+      color: var(--slate-400);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .hero-ctas { display: flex; gap: 16px; margin-bottom: 48px; flex-wrap: wrap; }
+    .trust-badges {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--slate-400);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .trust-badge svg { flex-shrink: 0; }
+    .trust-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--slate-600);
+    }
+
+    /* ===== SECTION 2: PROBLEM STATEMENT ===== */
+    .problem-section { background: var(--slate-50); }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .problem-text h2 {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-bottom: 20px;
+    }
+    .problem-text p {
+      font-size: 17px;
+      color: var(--slate-600);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+    .stat-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .stat-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-md);
+      border-left: 4px solid var(--primary);
+    }
+    .stat-card .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-card .stat-label {
+      font-size: 14px;
+      color: var(--slate-600);
+      line-height: 1.4;
+    }
+
+    /* ===== SECTION 3: SERVICES GRID ===== */
+    .services-section { background: var(--white); }
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-header .eyebrow {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .section-header h2 {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-bottom: 16px;
+    }
+    .section-header p {
+      font-size: 17px;
+      color: var(--slate-500);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      border: 1px solid var(--slate-200);
+      border-top: 3px solid var(--primary);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary);
+    }
+    .service-card .card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(37,99,235,0.1);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .service-card .card-icon svg { color: var(--primary); }
+    .service-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-bottom: 12px;
+    }
+    .service-card .card-desc {
+      font-size: 15px;
+      color: var(--slate-600);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .service-card .card-meta {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: var(--slate-500);
+    }
+    .service-card .card-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .service-card .card-link {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s ease;
+    }
+    .service-card .card-link:hover { gap: 10px; }
+
+    /* ===== SECTION 4: DIFFERENTIATOR TABLE ===== */
+    .differentiator-section { background: var(--slate-50); }
+    .diff-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .diff-table thead th {
+      background: var(--dark-bg);
+      color: var(--white);
+      padding: 18px 24px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: left;
+    }
+    .diff-table thead th:first-child { width: 160px; }
+    .diff-table tbody td {
+      padding: 18px 24px;
+      font-size: 15px;
+      line-height: 1.5;
+      vertical-align: top;
+      border-bottom: 1px solid var(--slate-200);
+    }
+    .diff-table tbody tr:last-child td { border-bottom: none; }
+    .diff-table tbody tr:nth-child(even) td { background: var(--slate-50); }
+    .diff-table tbody tr:nth-child(odd) td { background: var(--white); }
+    .diff-table .diff-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      color: var(--slate-800);
+      background: var(--slate-100) !important;
+    }
+    .diff-table .others-col {
+      color: var(--slate-500);
+      border-left: 3px solid var(--danger);
+    }
+    .diff-table .brite-col {
+      color: var(--slate-700);
+      border-left: 3px solid var(--success);
+      font-weight: 500;
+    }
+
+    /* ===== SECTION 5: PROCESS TIMELINE ===== */
+    .process-section { background: var(--white); }
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 3px;
+      background: var(--slate-200);
+      z-index: 0;
+    }
+    .timeline-step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 0 16px;
+    }
+    .step-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--white);
+      border: 3px solid var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      transition: all 0.3s ease;
+    }
+    .timeline-step:hover .step-icon {
+      background: var(--primary);
+    }
+    .timeline-step:hover .step-icon svg { color: var(--white); }
+    .step-icon svg { color: var(--primary); }
+    .step-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .step-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-bottom: 8px;
+    }
+    .step-desc {
+      font-size: 14px;
+      color: var(--slate-500);
+      line-height: 1.5;
+    }
+
+    /* ===== SECTION 6: INDUSTRIES SERVED (TABS) ===== */
+    .industries-section { background: var(--slate-50); }
+    .tabs-container { }
+    .tab-buttons {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 32px;
+      background: var(--slate-200);
+      border-radius: var(--radius);
+      padding: 4px;
+      width: fit-content;
+    }
+    .tab-btn {
+      padding: 12px 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--slate-600);
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: var(--white);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .tab-btn:hover:not(.active) { color: var(--slate-800); }
+    .tab-panel {
+      display: none;
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-md);
+    }
+    .tab-panel.active { display: block; }
+    .tab-panel h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-bottom: 16px;
+    }
+    .tab-panel p {
+      font-size: 16px;
+      color: var(--slate-600);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .tab-panel ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .tab-panel ul li {
+      font-size: 15px;
+      color: var(--slate-700);
+      padding-left: 24px;
+      position: relative;
+    }
+    .tab-panel ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+
+    /* ===== SECTION 7: SOCIAL PROOF ===== */
+    .testimonial-section {
+      background: var(--dark-bg);
+      padding: 64px 0;
+    }
+    .testimonial-content {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .testimonial-quote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.5;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .testimonial-quote::before { content: '\201C'; color: var(--primary-light); }
+    .testimonial-quote::after { content: '\201D'; color: var(--primary-light); }
+    .testimonial-author {
+      font-size: 16px;
+      color: var(--slate-400);
+    }
+    .testimonial-author strong { color: var(--white); }
+
+    /* ===== SECTION 8: FAQ ACCORDION ===== */
+    .faq-section { background: var(--white); }
+    .faq-list { max-width: 800px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--slate-200);
+    }
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--slate-800);
+      transition: color 0.2s ease;
+    }
+    .faq-question:hover { color: var(--primary); }
+    .faq-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      position: relative;
+      margin-left: 16px;
+    }
+    .faq-icon::before,
+    .faq-icon::after {
+      content: '';
+      position: absolute;
+      background: var(--slate-400);
+      transition: transform 0.3s ease;
+    }
+    .faq-icon::before {
+      top: 50%;
+      left: 4px;
+      right: 4px;
+      height: 2px;
+      transform: translateY(-50%);
+    }
+    .faq-icon::after {
+      left: 50%;
+      top: 4px;
+      bottom: 4px;
+      width: 2px;
+      transform: translateX(-50%);
+    }
+    .faq-item.open .faq-icon::after { transform: translateX(-50%) rotate(90deg); opacity: 0; }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; }
+    .faq-answer-inner {
+      padding-bottom: 24px;
+      font-size: 16px;
+      color: var(--slate-600);
+      line-height: 1.7;
+    }
+
+    /* ===== SECTION 9: RELATED CATEGORIES ===== */
+    .related-section { background: var(--slate-50); }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .related-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-md);
+      transition: all 0.3s ease;
+      border: 1px solid var(--slate-200);
+    }
+    .related-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+    .related-card .related-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(37,99,235,0.1);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .related-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-bottom: 12px;
+    }
+    .related-card p {
+      font-size: 15px;
+      color: var(--slate-600);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .related-card .related-link {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ===== SECTION 10: BOTTOM CTA ===== */
+    .cta-section {
+      background: var(--gradient-blue);
+      padding: 80px 0;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .cta-section p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.8);
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-white {
+      background: var(--white);
+      color: var(--primary);
+      border-color: var(--white);
+      font-weight: 700;
+    }
+    .btn-white:hover {
+      background: var(--slate-100);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* ===== SERVICE OVERVIEW TABLE ===== */
+    .overview-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      margin-top: 40px;
+    }
+    .overview-table thead th {
+      background: var(--primary);
+      color: var(--white);
+      padding: 16px 20px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: left;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .overview-table tbody td {
+      padding: 16px 20px;
+      font-size: 15px;
+      border-bottom: 1px solid var(--slate-200);
+      vertical-align: top;
+    }
+    .overview-table tbody tr:nth-child(even) td { background: var(--slate-50); }
+    .overview-table tbody tr:last-child td { border-bottom: none; }
+    .overview-table .service-name {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero h1 { font-size: 40px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .related-grid { grid-template-columns: repeat(2, 1fr); }
+      .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .section-padding { padding: 56px 0; }
+      .hero { padding: 72px 0 56px; }
+      .hero h1 { font-size: 32px; }
+      .hero .subtitle { font-size: 17px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .related-grid { grid-template-columns: 1fr; }
+      .timeline {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .timeline::before { display: none; }
+      .stat-cards { grid-template-columns: 1fr; }
+      .tab-buttons { flex-wrap: wrap; width: 100%; }
+      .tab-btn { flex: 1; text-align: center; min-width: 120px; }
+      .tab-panel ul { grid-template-columns: 1fr; }
+      .diff-table { display: block; overflow-x: auto; }
+      .section-header h2 { font-size: 28px; }
+      .cta-section h2 { font-size: 28px; }
+      .testimonial-quote { font-size: 22px; }
+      .trust-badges { gap: 16px; }
+      .trust-divider { display: none; }
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas .btn { text-align: center; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== SECTION 1: HERO ===== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="eyebrow">Advisory &amp; Strategy Services</span>
+        <h1>The Right AI Strategy Starts Before the First Line of Code</h1>
+        <p class="subtitle">We work with your leadership to build the strategic foundation that makes AI investments succeed &mdash; before any platform is selected and before any budget is committed.</p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn btn-primary">Schedule a Strategy Session</a>
+          <a href="#services" class="btn btn-ghost">Explore Our Services &darr;</a>
+        </div>
+        <div class="trust-badges">
+          <span class="trust-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            18 Years Serving Government
+          </span>
+          <span class="trust-divider"></span>
+          <span class="trust-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Salesforce Summit Partner
+          </span>
+          <span class="trust-divider"></span>
+          <span class="trust-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6"/><path d="M23 11h-6"/></svg>
+            Woman-Owned Business
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 2: PROBLEM STATEMENT ===== -->
+  <section class="problem-section section-padding">
+    <div class="container">
+      <div class="problem-grid">
+        <div class="problem-text">
+          <h2>AI Investments Fail Without Strategy</h2>
+          <p>The pressure to "do something with AI" leads to scattered pilot projects, wasted investment, and disillusionment. Most organizations know they need an AI strategy &mdash; but few know where to start or how to prioritize.</p>
+          <p>Brite.AI's Advisory &amp; Strategy practice is the strategic front door to every AI engagement. We build the foundation that turns AI ambition into measurable mission impact.</p>
+        </div>
+        <div class="stat-cards">
+          <div class="stat-card">
+            <div class="stat-number">70%</div>
+            <div class="stat-label">of AI projects fail to scale without a strategic foundation</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">Apr 2026</div>
+            <div class="stat-label">OMB M-25-21 compliance deadline for high-impact AI systems</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">6&ndash;18 mo</div>
+            <div class="stat-label">average time lost to failed AI pilots without proper strategy</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">3&ndash;5x</div>
+            <div class="stat-label">ROI improvement with strategy-first AI implementations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: SERVICES GRID ===== -->
+  <section id="services" class="services-section section-padding">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Our Services</span>
+        <h2>Five Services to Get Your AI Strategy Right</h2>
+        <p>Each service is designed to be implementable &mdash; and we can implement it. Advisory that leads to action, not shelf-ware.</p>
+      </div>
+
+      <div class="services-grid">
+        <!-- Card 1 -->
+        <div class="service-card">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          </div>
+          <h3>AI Strategy &amp; Roadmap Development</h3>
+          <p class="card-desc">Define your AI vision, identify high-value use cases, and build a phased 3-year roadmap that balances ambition with practicality.</p>
+          <div class="card-meta">
+            <span>$75K &ndash; $350K</span>
+            <span>4&ndash;6 weeks</span>
+          </div>
+          <a href="#" class="card-link">Learn More <span>&rarr;</span></a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="service-card">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          </div>
+          <h3>AI Readiness Assessment</h3>
+          <p class="card-desc">Scored evaluation across 5 dimensions &mdash; data maturity, technology, organizational readiness, governance, and leadership &mdash; with a prioritized action plan.</p>
+          <div class="card-meta">
+            <span>$35K &ndash; $100K</span>
+            <span>2&ndash;4 weeks</span>
+          </div>
+          <a href="#" class="card-link">Learn More <span>&rarr;</span></a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="service-card">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </div>
+          <h3>AI Vendor &amp; Platform Evaluation</h3>
+          <p class="card-desc">Independent platform comparison with scored matrix, TCO analysis, and unbiased recommendation. Trust over commissions.</p>
+          <div class="card-meta">
+            <span>$25K &ndash; $75K</span>
+            <span>2&ndash;4 weeks</span>
+          </div>
+          <a href="#" class="card-link">Learn More <span>&rarr;</span></a>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="service-card">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>OMB AI Compliance (M-25-21)</h3>
+          <p class="card-desc">AI inventory classification, governance structure design, and compliance documentation to meet federal AI mandate requirements with confidence.</p>
+          <div class="card-meta">
+            <span>$50K &ndash; $150K</span>
+            <span>4&ndash;8 weeks</span>
+          </div>
+          <a href="#" class="card-link">Learn More <span>&rarr;</span></a>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="service-card">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <h3>AI Procurement Advisory</h3>
+          <p class="card-desc">RFP development, vendor evaluation, and contract negotiation guidance that sets AI projects up for success from the procurement stage.</p>
+          <div class="card-meta">
+            <span>$25K &ndash; $100K</span>
+            <span>4&ndash;12 weeks</span>
+          </div>
+          <a href="#" class="card-link">Learn More <span>&rarr;</span></a>
+        </div>
+      </div>
+
+      <!-- Overview Table -->
+      <table class="overview-table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>What It Delivers</th>
+            <th>Investment</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="service-name">AI Strategy &amp; Roadmap</td>
+            <td>3-year phased roadmap with use case prioritization, business cases, and OMB alignment</td>
+            <td>$75K &ndash; $350K</td>
+            <td>4&ndash;6 weeks</td>
+          </tr>
+          <tr>
+            <td class="service-name">AI Readiness Assessment</td>
+            <td>Scored evaluation across 5 dimensions with gap analysis and action plan</td>
+            <td>$35K &ndash; $100K</td>
+            <td>2&ndash;4 weeks</td>
+          </tr>
+          <tr>
+            <td class="service-name">Vendor &amp; Platform Evaluation</td>
+            <td>Independent platform comparison with scored matrix, TCO analysis, and recommendation</td>
+            <td>$25K &ndash; $75K</td>
+            <td>2&ndash;4 weeks</td>
+          </tr>
+          <tr>
+            <td class="service-name">OMB AI Compliance</td>
+            <td>AI inventory classification, governance structure, compliance documentation</td>
+            <td>$50K &ndash; $150K</td>
+            <td>4&ndash;8 weeks</td>
+          </tr>
+          <tr>
+            <td class="service-name">AI Procurement Advisory</td>
+            <td>RFP development, vendor evaluation, contract negotiation for AI initiatives</td>
+            <td>$25K &ndash; $100K</td>
+            <td>4&ndash;12 weeks</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 4: DIFFERENTIATOR TABLE ===== -->
+  <section class="differentiator-section section-padding">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Why Brite.AI</span>
+        <h2>How We're Different</h2>
+        <p>Advisory services are everywhere. Here's what makes our approach fundamentally different.</p>
+      </div>
+
+      <table class="diff-table">
+        <thead>
+          <tr>
+            <th>Differentiator</th>
+            <th>What Others Do</th>
+            <th>What Brite.AI Does</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="diff-label">Sector Depth</td>
+            <td class="others-col">Generalists learning your industry on your dime. Big 4 firms rotate junior staff through government engagements with no prior sector experience.</td>
+            <td class="brite-col">18 years exclusively serving government, health &amp; human services, nonprofits, and healthcare payers. We know your compliance requirements, procurement cycles, and stakeholder dynamics before day one.</td>
+          </tr>
+          <tr>
+            <td class="diff-label">Practitioner-Led</td>
+            <td class="others-col">Partners sell the engagement, then hand off to junior analysts who build deliverables from templates.</td>
+            <td class="brite-col">Senior practitioners who've actually built AI systems do the strategy work. The people in the room have done the implementation, not just the PowerPoint.</td>
+          </tr>
+          <tr>
+            <td class="diff-label">Platform Independent</td>
+            <td class="others-col">Vendor-aligned consultants recommend the platform that earns them the highest commission or maintains their partnership tier.</td>
+            <td class="brite-col">We're a Salesforce Summit Partner and AWS Partner, but our evaluations are objective. If a different platform better serves your mission, we'll tell you. Trust > commissions.</td>
+          </tr>
+          <tr>
+            <td class="diff-label">Implementation Ready</td>
+            <td class="others-col">Strategy firms produce beautiful slide decks that gather dust. They have no ability or incentive to help you execute.</td>
+            <td class="brite-col">Every strategy we produce is designed to be implementable &mdash; and we can implement it. Our advisory team works hand-in-hand with our engineering team so roadmaps become reality.</td>
+          </tr>
+          <tr>
+            <td class="diff-label">Compliance Native</td>
+            <td class="others-col">AI strategy consultants bolt compliance on as an afterthought or punt it to legal teams entirely.</td>
+            <td class="brite-col">OMB M-25-21, NIST AI RMF, FedRAMP, HIPAA, and Section 508 are built into our process from day one. Compliance isn't an add-on; it's woven into every recommendation.</td>
+          </tr>
+          <tr>
+            <td class="diff-label">Mission-First</td>
+            <td class="others-col">Tech companies push AI because it's profitable. The strategy is shaped by what they can sell, not what you need.</td>
+            <td class="brite-col">We serve organizations that serve others. Every recommendation starts with your mission outcomes &mdash; citizen services, member health, community impact &mdash; not technology for technology's sake.</td>
+          </tr>
+          <tr>
+            <td class="diff-label">Woman-Owned</td>
+            <td class="others-col">Diversity checkboxes without substance.</td>
+            <td class="brite-col">Certified woman-owned business that brings genuine diversity of perspective to leadership conversations, while meeting supplier diversity requirements.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 5: PROCESS TIMELINE ===== -->
+  <section class="process-section section-padding">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Our Process</span>
+        <h2>How We Work</h2>
+        <p>A proven four-step approach that turns AI ambition into actionable strategy.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-step">
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          </div>
+          <div class="step-number">Step 1</div>
+          <div class="step-title">Discover</div>
+          <div class="step-desc">Stakeholder interviews, technology audits, and data landscape review. We learn how your organization actually operates.</div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          </div>
+          <div class="step-number">Step 2</div>
+          <div class="step-title">Assess</div>
+          <div class="step-desc">Score every opportunity on mission impact, feasibility, data readiness, and compliance implications.</div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          </div>
+          <div class="step-number">Step 3</div>
+          <div class="step-title">Strategize</div>
+          <div class="step-desc">Build the phased plan with quick wins, mid-term initiatives, and long-term transformation goals.</div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="step-number">Step 4</div>
+          <div class="step-title">Deliver</div>
+          <div class="step-desc">Executive presentation, stakeholder alignment, and handoff of the complete strategy package. We stay for questions and refinement.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 6: INDUSTRIES SERVED ===== -->
+  <section class="industries-section section-padding">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Who We Serve</span>
+        <h2>Tailored for the Sectors That Matter Most</h2>
+        <p>Deep expertise across the organizations whose missions drive real impact.</p>
+      </div>
+
+      <div class="tabs-container">
+        <div class="tab-buttons">
+          <button class="tab-btn active" data-tab="gov">Government</button>
+          <button class="tab-btn" data-tab="hhs">Health &amp; Human Services</button>
+          <button class="tab-btn" data-tab="nonprofit">Nonprofits</button>
+          <button class="tab-btn" data-tab="payer">Healthcare Payers</button>
+        </div>
+
+        <div id="gov" class="tab-panel active">
+          <h3>Government CIOs &amp; CTOs</h3>
+          <p>You need a partner who understands your procurement constraints, your compliance obligations, and the political dynamics of AI adoption in public agencies. We've navigated these waters for 18 years. We know that a brilliant AI strategy means nothing if it can't survive a budget hearing, meet OMB requirements, and earn trust from program staff who fear automation will replace them.</p>
+          <ul>
+            <li>OMB M-25-21 compliance alignment</li>
+            <li>FedRAMP and NIST AI RMF readiness</li>
+            <li>AI inventory and classification support</li>
+            <li>Budget-defensible business cases</li>
+            <li>Procurement-ready AI strategies</li>
+            <li>Stakeholder alignment across agencies</li>
+          </ul>
+        </div>
+
+        <div id="hhs" class="tab-panel">
+          <h3>Health &amp; Human Services Leaders</h3>
+          <p>Your agency handles some of the most sensitive data in government &mdash; child welfare records, benefits determinations, health information. AI must improve outcomes without creating new risks. We bring HIPAA expertise, NIST alignment, and a deep understanding of caseworker workflows that no generalist AI consultancy can match.</p>
+          <ul>
+            <li>HIPAA-compliant AI implementations</li>
+            <li>Caseworker workflow optimization</li>
+            <li>Benefits determination AI safeguards</li>
+            <li>Child welfare risk assessment tools</li>
+            <li>Sensitive data governance frameworks</li>
+            <li>Bias testing for rights-impacting systems</li>
+          </ul>
+        </div>
+
+        <div id="nonprofit" class="tab-panel">
+          <h3>Nonprofit Executives</h3>
+          <p>Your budget is finite and every dollar has to demonstrate impact to donors and boards. You can't afford a failed AI pilot. We right-size our engagements for nonprofit budgets while maintaining the rigor that ensures success. We've worked with foundations, associations, and direct-service nonprofits who all face different AI challenges.</p>
+          <ul>
+            <li>Right-sized engagements for nonprofit budgets</li>
+            <li>Grant application AI review tools</li>
+            <li>Impact measurement with AI</li>
+            <li>Donor engagement optimization</li>
+            <li>Board-ready AI strategy documents</li>
+            <li>Community impact-focused AI solutions</li>
+          </ul>
+        </div>
+
+        <div id="payer" class="tab-panel">
+          <h3>Healthcare Payer Organizations</h3>
+          <p>Regulatory compliance, member experience, claims processing, and provider network optimization &mdash; these are AI-ready workflows, but the stakes of getting it wrong are enormous. We bring deep familiarity with CMS requirements, quality measures, and the member-centric design that regulators increasingly demand.</p>
+          <ul>
+            <li>CMS compliance-ready AI strategies</li>
+            <li>Claims processing automation</li>
+            <li>Member engagement AI solutions</li>
+            <li>Provider network optimization</li>
+            <li>Quality measure improvement</li>
+            <li>Regulatory-compliant AI implementations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 7: SOCIAL PROOF ===== -->
+  <section class="testimonial-section">
+    <div class="container">
+      <div class="testimonial-content">
+        <p class="testimonial-quote">Brite didn't just give us a strategy deck &mdash; they gave us a roadmap we could actually execute. Their team understood our compliance requirements from day one, and their practitioners had the real-world implementation experience to make every recommendation actionable.</p>
+        <p class="testimonial-author"><strong>State Agency CIO</strong> &mdash; AI Strategy &amp; Roadmap Engagement</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 8: FAQ ===== -->
+  <section class="faq-section section-padding">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Common Questions</span>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            How long does a typical AI strategy engagement take?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Our AI Strategy &amp; Roadmap Development engagement typically runs 4&ndash;6 weeks. An AI Readiness Assessment can be completed in 2&ndash;4 weeks. We also offer AI Strategy Sprints (4&ndash;6 weeks) for agencies ready to move fast, and comprehensive AI Transformation Plans (12&ndash;16 weeks) for enterprise-wide initiatives.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Do you only work with Salesforce environments?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">No. While we are a Salesforce Summit Partner and have deep Salesforce expertise, our advisory services are platform-independent. We evaluate and recommend the best technology for your mission, whether that's Salesforce, AWS, Azure, Google Cloud, or a combination. Our commitment to objectivity means we recommend what's right for you, not what earns us the highest commission.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Can you help us meet the OMB M-25-21 compliance deadline?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes. Our OMB AI Compliance service is specifically designed to help agencies classify AI use cases (safety-impacting vs. rights-impacting), establish governance structures, implement the seven minimum risk management practices, and produce all required documentation. The April 2026 deadline is approaching, and we have the expertise to help you meet it with confidence.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What makes your advisory different from the Big 4 firms?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Three things: First, our people are practitioners &mdash; the senior consultants who develop your strategy have actually built and deployed AI systems, not just created slide decks. Second, every strategy we produce is designed to be implementable, and we have the engineering team to execute it. Third, we've spent 18 years exclusively serving government, HHS, nonprofits, and healthcare payers &mdash; we know your sector before we walk in the door.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Can you implement the strategy you develop, or just advise?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Both. Unlike pure advisory firms, Brite.AI has full implementation capabilities across Salesforce Agentforce, AWS AI services, custom development, and more. Our advisory team works directly with our engineering team, so the strategies we develop are grounded in practical implementability. Many clients engage us for strategy first, then continue into implementation.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 9: RELATED CATEGORIES ===== -->
+  <section class="related-section section-padding">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Explore More</span>
+        <h2>Related Service Categories</h2>
+        <p>Your AI journey doesn't stop at strategy. Explore our full capabilities.</p>
+      </div>
+
+      <div class="related-grid">
+        <a href="#" class="related-card">
+          <div class="related-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <h3>Enablement &amp; Education</h3>
+          <p>Government AI Academy, change management, Center of Excellence development, and AI data foundations to build organizational AI capability.</p>
+          <span class="related-link">Explore Services <span>&rarr;</span></span>
+        </a>
+
+        <a href="#" class="related-card">
+          <div class="related-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Governance &amp; Trust</h3>
+          <p>Responsible AI frameworks, bias auditing, compliance and risk management, and security red teaming to ensure trustworthy AI deployments.</p>
+          <span class="related-link">Explore Services <span>&rarr;</span></span>
+        </a>
+
+        <a href="#" class="related-card">
+          <div class="related-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Generative AI &amp; LLM</h3>
+          <p>GenAI strategy and pilots, enterprise RAG solutions, custom LLM fine-tuning, and secure government AI platforms for production deployment.</p>
+          <span class="related-link">Explore Services <span>&rarr;</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 10: BOTTOM CTA ===== -->
+  <section id="contact" class="cta-section">
+    <div class="container">
+      <h2>Ready to Build Your AI Strategy?</h2>
+      <p>Let's start with a conversation about your mission, your challenges, and where AI can make the greatest impact for your organization.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn btn-white">Schedule a Strategy Session</a>
+        <a href="#" class="btn btn-ghost">Download AI Strategy Framework (PDF)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = this.parentElement;
+        var isOpen = item.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(function(i) {
+          i.classList.remove('open');
+        });
+        // Toggle clicked
+        if (!isOpen) {
+          item.classList.add('open');
+        }
+      });
+    });
+
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var tabId = this.getAttribute('data-tab');
+        // Update buttons
+        document.querySelectorAll('.tab-btn').forEach(function(b) {
+          b.classList.remove('active');
+        });
+        this.classList.add('active');
+        // Update panels
+        document.querySelectorAll('.tab-panel').forEach(function(p) {
+          p.classList.remove('active');
+        });
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
