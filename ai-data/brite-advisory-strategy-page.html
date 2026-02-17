@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brite.AI — Advisory & Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0B1120;
+  --ink-soft: #1A2438;
+  --ink-muted: #2A3650;
+  --slate: #64748B;
+  --silver: #94A3B8;
+  --ghost: #CBD5E1;
+  --cloud: #F1F5F9;
+  --white: #FFFFFF;
+  --blue: #2563EB;
+  --blue-light: #3B82F6;
+  --blue-glow: rgba(37, 99, 235, 0.15);
+  --blue-soft: #DBEAFE;
+  --cyan: #06B6D4;
+  --cyan-glow: rgba(6, 182, 212, 0.1);
+  --emerald: #10B981;
+  --amber: #F59E0B;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; color: var(--ink); background: var(--white); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+/* ─── Utility ─── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+@media (max-width: 768px) { .container { padding: 0 24px; } }
+
+/* ─── Scroll Reveal ─── */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+/* ═══════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+/* Mesh gradient orbs */
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 900px; height: 900px;
+  top: -300px; right: -200px;
+  background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 65%);
+  animation: orb-drift 20s ease-in-out infinite alternate;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  bottom: -200px; left: -100px;
+  background: radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 65%);
+  animation: orb-drift 15s ease-in-out infinite alternate-reverse;
+}
+@keyframes orb-drift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(40px, -30px) scale(1.1); }
+}
+
+/* Grid overlay */
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+}
+
+/* Floating accent shapes */
+.hero-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(1px);
+  opacity: 0.5;
+}
+.hero-shape-1 { width: 6px; height: 6px; background: var(--blue); top: 20%; left: 15%; animation: float 6s ease-in-out infinite; }
+.hero-shape-2 { width: 4px; height: 4px; background: var(--cyan); top: 60%; right: 20%; animation: float 8s ease-in-out infinite 1s; }
+.hero-shape-3 { width: 5px; height: 5px; background: var(--blue-light); bottom: 30%; left: 40%; animation: float 7s ease-in-out infinite 0.5s; }
+.hero-shape-4 { width: 3px; height: 3px; background: var(--emerald); top: 35%; right: 35%; animation: float 9s ease-in-out infinite 2s; }
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+  50% { transform: translateY(-20px) scale(1.5); opacity: 0.8; }
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  max-width: 740px;
+  padding: 140px 0 120px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 3.5px; text-transform: uppercase;
+  color: var(--blue-light);
+  margin-bottom: 28px;
+  opacity: 0; animation: hero-in 0.8s 0.2s forwards;
+}
+.hero-eyebrow::before { content: ''; width: 36px; height: 1.5px; background: var(--blue); }
+
+.hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(42px, 5.5vw, 64px);
+  font-weight: 700;
+  line-height: 1.08;
+  color: var(--white);
+  letter-spacing: -0.025em;
+  margin-bottom: 28px;
+  opacity: 0; animation: hero-in 1s 0.35s forwards;
+}
+.hero h1 em {
+  
+  background: linear-gradient(135deg, #60A5FA, #22D3EE);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 18px; line-height: 1.75;
+  color: var(--silver);
+  max-width: 560px;
+  margin-bottom: 44px;
+  opacity: 0; animation: hero-in 1s 0.5s forwards;
+}
+
+.hero-actions {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  margin-bottom: 60px;
+  opacity: 0; animation: hero-in 1s 0.65s forwards;
+}
+
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 600;
+  padding: 15px 30px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  cursor: pointer; border: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-primary {
+  background: var(--blue);
+  color: var(--white);
+  box-shadow: 0 0 0 0 var(--blue-glow);
+}
+.btn-primary:hover {
+  background: var(--blue-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(37,99,235,0.35);
+}
+.btn-ghost {
+  background: rgba(255,255,255,0.04);
+  color: var(--ghost);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+}
+.btn-ghost:hover {
+  border-color: rgba(96,165,250,0.4);
+  color: #93C5FD;
+  background: rgba(37,99,235,0.06);
+}
+
+/* Trust strip */
+.hero-trust {
+  display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+  opacity: 0; animation: hero-in 1s 0.8s forwards;
+}
+.trust-badge {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 500;
+  color: var(--slate);
+}
+.trust-badge svg { width: 14px; height: 14px; opacity: 0.6; }
+.trust-sep { width: 1px; height: 16px; background: var(--ink-muted); }
+
+/* ═══════════════════════════════════════════
+   STATS BAR
+   ═══════════════════════════════════════════ */
+.stats-bar {
+  background: var(--cloud);
+  border-top: 1px solid #E2E8F0;
+  border-bottom: 1px solid #E2E8F0;
+  padding: 48px 0;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  text-align: center;
+}
+.stat-item { position: relative; }
+.stat-item:not(:last-child)::after {
+  content: '';
+  position: absolute; right: -16px; top: 10%;
+  width: 1px; height: 80%;
+  background: linear-gradient(to bottom, transparent, #CBD5E1, transparent);
+}
+.stat-number {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 48px; font-weight: 700;
+  color: var(--blue);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 13px; font-weight: 500;
+  color: var(--slate);
+  line-height: 1.5;
+}
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .stat-item:not(:last-child)::after { display: none; }
+  .stat-number { font-size: 36px; }
+}
+
+/* ═══════════════════════════════════════════
+   DIFFERENTIATORS — GLOSSY PILLAR CARDS
+   ═══════════════════════════════════════════ */
+.diff-section {
+  padding: 120px 0;
+  background: var(--white);
+  position: relative;
+}
+.diff-section::before {
+  content: '';
+  position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, var(--blue-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 72px;
+  position: relative; z-index: 1;
+}
+.section-eyebrow {
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 3.5px; text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 700; color: var(--ink);
+  line-height: 1.15; letter-spacing: -0.01em;
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 17px; color: var(--slate);
+  line-height: 1.7; max-width: 560px;
+  margin: 0 auto;
+}
+
+.diff-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  position: relative; z-index: 1;
+}
+.diff-card {
+  position: relative;
+  background: linear-gradient(165deg, rgba(255,255,255,0.95), rgba(241,245,249,0.9));
+  border: 1px solid rgba(226,232,240,0.6);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px 36px;
+  overflow: hidden;
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+.diff-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.diff-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 64px rgba(11,17,32,0.08), 0 8px 24px rgba(37,99,235,0.06);
+  border-color: rgba(37,99,235,0.15);
+}
+.diff-card:hover::before { opacity: 1; }
+
+.diff-icon-wrap {
+  width: 56px; height: 56px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--blue-soft), rgba(219,234,254,0.5));
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px;
+  transition: all 0.4s;
+}
+.diff-card:hover .diff-icon-wrap {
+  background: var(--blue);
+  box-shadow: 0 8px 24px rgba(37,99,235,0.3);
+}
+.diff-icon-wrap svg {
+  width: 26px; height: 26px; color: var(--blue);
+  transition: color 0.4s;
+}
+.diff-card:hover .diff-icon-wrap svg { color: var(--white); }
+
+.diff-card h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 19px; font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.diff-card p {
+  font-size: 14.5px; line-height: 1.7;
+  color: var(--slate);
+}
+.diff-card .diff-highlight {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 6px 14px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--blue);
+  background: var(--blue-soft);
+  border-radius: 100px;
+}
+@media (max-width: 900px) {
+  .diff-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+}
+
+/* Bottom row: 3 cards spanning full width */
+.diff-grid-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+  position: relative; z-index: 1;
+}
+@media (max-width: 900px) {
+  .diff-grid-bottom { grid-template-columns: 1fr; max-width: 480px; margin: 24px auto 0; }
+}
+
+/* ═══════════════════════════════════════════
+   SERVICES — IMMERSIVE SHOWCASE
+   ═══════════════════════════════════════════ */
+.services-section {
+  padding: 120px 0 140px;
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.services-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
+.services-section .section-eyebrow { color: var(--cyan); }
+.services-section .section-title { color: var(--white); }
+.services-section .section-sub { color: var(--silver); }
+
+.services-scroll {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  position: relative; z-index: 1;
+}
+
+.service-card {
+  position: relative;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  padding: 36px 28px 32px;
+  backdrop-filter: blur(16px);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.service-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(37,99,235,0.06) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.service-card:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(96,165,250,0.2);
+  transform: translateY(-6px);
+  box-shadow: 0 32px 64px rgba(0,0,0,0.3), 0 0 40px var(--blue-glow);
+}
+.service-card:hover::before { opacity: 1; }
+
+.service-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 42px; font-weight: 700;
+  color: rgba(255,255,255,0.06);
+  line-height: 1;
+  margin-bottom: 20px;
+  transition: color 0.4s;
+  position: relative;
+}
+.service-card:hover .service-num { color: rgba(96,165,250,0.15); }
+
+.service-icon-sm {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: rgba(37,99,235,0.1);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+  transition: all 0.4s;
+  position: relative;
+}
+.service-card:hover .service-icon-sm {
+  background: var(--blue);
+  box-shadow: 0 8px 24px rgba(37,99,235,0.4);
+}
+.service-icon-sm svg {
+  width: 22px; height: 22px; color: var(--blue-light);
+  transition: color 0.4s;
+}
+.service-card:hover .service-icon-sm svg { color: var(--white); }
+
+.service-card h3 {
+  font-size: 17px; font-weight: 700;
+  color: var(--white);
+  margin-bottom: 10px;
+  line-height: 1.35;
+  position: relative;
+}
+.service-card .service-desc {
+  font-size: 13.5px; line-height: 1.7;
+  color: var(--silver);
+  margin-bottom: 24px;
+  flex: 1;
+  position: relative;
+}
+.service-meta {
+  display: flex; flex-direction: column; gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+}
+.meta-row {
+  display: flex; justify-content: space-between;
+  font-size: 12px;
+}
+.meta-label { color: var(--slate); font-weight: 500; }
+.meta-value { color: var(--ghost); font-weight: 600; }
+
+.service-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 16px;
+  font-size: 13px; font-weight: 600;
+  color: var(--blue-light);
+  text-decoration: none;
+  transition: gap 0.3s, color 0.3s;
+  position: relative;
+}
+.service-link:hover { gap: 10px; color: #93C5FD; }
+
+@media (max-width: 1100px) {
+  .services-scroll { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .services-scroll { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+}
+
+/* ═══════════════════════════════════════════
+   PROCESS
+   ═══════════════════════════════════════════ */
+.process-section {
+  padding: 120px 0;
+  background: var(--cloud);
+  position: relative;
+}
+.process-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative; z-index: 1;
+  margin-top: 16px;
+}
+/* Connecting line */
+.process-track::before {
+  content: '';
+  position: absolute;
+  top: 44px; left: calc(12.5%); right: calc(12.5%);
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan), var(--emerald));
+}
+
+.process-step {
+  text-align: center;
+  position: relative;
+  padding: 0 16px;
+}
+.step-dot {
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  margin: 0 auto 28px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 2;
+  background: var(--white);
+  border: 2px solid #E2E8F0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.step-dot svg { width: 32px; height: 32px; color: var(--blue); transition: all 0.4s; }
+.process-step:hover .step-dot {
+  background: var(--blue);
+  border-color: var(--blue);
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(37,99,235,0.3);
+}
+.process-step:hover .step-dot svg { color: var(--white); }
+
+.step-phase {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.step-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px; font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.step-desc {
+  font-size: 13px; color: var(--slate);
+  line-height: 1.65;
+  max-width: 210px; margin: 0 auto;
+}
+.step-week {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 11px; font-weight: 600;
+  color: var(--slate);
+  background: var(--white);
+  padding: 4px 14px;
+  border-radius: 100px;
+  border: 1px solid #E2E8F0;
+}
+@media (max-width: 768px) {
+  .process-track {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .process-track::before { display: none; }
+}
+
+/* ═══════════════════════════════════════════
+   AUDIENCE TABS
+   ═══════════════════════════════════════════ */
+.audience-section {
+  padding: 120px 0;
+  background: var(--white);
+}
+.tab-nav {
+  display: flex; gap: 4px;
+  background: var(--cloud);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  margin-bottom: 48px;
+  max-width: 600px;
+  margin-left: auto; margin-right: auto;
+}
+.tab-btn {
+  flex: 1;
+  padding: 12px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 600;
+  color: var(--slate);
+  border: none; background: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.tab-btn.active {
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.tab-btn:hover:not(.active) { color: var(--ink); }
+
+.tab-panel { display: none; animation: tab-in 0.4s forwards; }
+.tab-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+@keyframes tab-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.tab-content h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 32px; font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.tab-content p {
+  font-size: 15px; color: var(--slate);
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+.tab-tags {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.tab-tag {
+  padding: 6px 16px;
+  font-size: 12px; font-weight: 600;
+  color: var(--blue);
+  background: var(--blue-soft);
+  border-radius: 100px;
+}
+.tab-visual {
+  background: linear-gradient(135deg, #F0F7FF, #E0F2FE);
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  display: flex; flex-direction: column; gap: 16px;
+  border: 1px solid rgba(37,99,235,0.08);
+}
+.tab-stat-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 20px;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.tab-stat-label { font-size: 13px; color: var(--slate); font-weight: 500; }
+.tab-stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px; color: var(--blue);
+}
+@media (max-width: 768px) {
+  .tab-panel.active { grid-template-columns: 1fr; }
+  .tab-nav { flex-wrap: wrap; }
+}
+
+/* ═══════════════════════════════════════════
+   CTA
+   ═══════════════════════════════════════════ */
+.cta-section {
+  position: relative;
+  padding: 120px 0;
+  background: var(--ink);
+  overflow: hidden;
+  text-align: center;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  width: 800px; height: 800px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 60%);
+}
+.cta-inner { position: relative; z-index: 1; }
+.cta-inner .section-eyebrow { color: var(--cyan); }
+.cta-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700; color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.cta-title em {
+  
+  background: linear-gradient(135deg, #60A5FA, #22D3EE);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cta-sub {
+  font-size: 17px; color: var(--silver);
+  line-height: 1.7; max-width: 500px;
+  margin: 0 auto 40px;
+}
+.cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.cta-note {
+  margin-top: 20px;
+  font-size: 13px; color: var(--slate);
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER LIGHT
+   ═══════════════════════════════════════════ */
+.footer-light {
+  padding: 32px 0;
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.04);
+  text-align: center;
+}
+.footer-light p {
+  font-size: 12px; color: var(--slate);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-shape hero-shape-1"></div>
+  <div class="hero-shape hero-shape-2"></div>
+  <div class="hero-shape hero-shape-3"></div>
+  <div class="hero-shape hero-shape-4"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Advisory & Strategy</div>
+      <h1>The right AI strategy starts <em>before the first line of code</em></h1>
+      <p class="hero-sub">Roadmaps. Readiness assessments. Vendor evaluations. OMB compliance. Procurement advisory. The strategic foundation your AI initiatives need to succeed.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary">
+          Schedule a Strategy Conversation
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#" class="btn btn-ghost">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          Download AI Strategy Framework
+        </a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-badge">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Salesforce Summit Partner
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-badge">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          18+ Years Sector Expertise
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-badge">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          OMB M-25-21 Ready
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-badge">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          FedRAMP Expertise
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS BAR ═══ -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-number" data-target="70">0%</div>
+        <div class="stat-label">of AI projects fail to scale<br>without strategic foundation</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-number">Apr '26</div>
+        <div class="stat-label">OMB M-25-21 compliance<br>deadline approaching</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-number" data-target="18">0+</div>
+        <div class="stat-label">years of mission-sector<br>expertise</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-number">3–5×</div>
+        <div class="stat-label">ROI improvement with<br>structured AI roadmap</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DIFFERENTIATORS ═══ -->
+<section class="diff-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Why Brite.AI</div>
+      <h2 class="section-title">Built different for<br>organizations that can't afford to get it wrong</h2>
+      <p class="section-sub">Government CIOs and nonprofit leaders need partners who understand their world — not generalists learning on their dime.</p>
+    </div>
+
+    <div class="diff-grid">
+      <div class="diff-card reveal">
+        <div class="diff-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>18 Years of Sector Depth</h3>
+        <p>We don't learn your industry on your dime. Government, health & human services, nonprofits, and healthcare payers — we've lived in these sectors since 2007.</p>
+        <span class="diff-highlight">Deep Domain Expertise</span>
+      </div>
+
+      <div class="diff-card reveal reveal-delay-1">
+        <div class="diff-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Practitioner-Led Delivery</h3>
+        <p>The people building your strategy have built the AI systems they're recommending. No bait-and-switch from partners to junior analysts.</p>
+        <span class="diff-highlight">Senior Practitioners</span>
+      </div>
+
+      <div class="diff-card reveal reveal-delay-2">
+        <div class="diff-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </div>
+        <h3>Platform Independent</h3>
+        <p>We're a Salesforce Summit Partner, but our evaluations are objective. If a different platform serves your mission better, we'll tell you. Trust over commissions.</p>
+        <span class="diff-highlight">Objective Guidance</span>
+      </div>
+    </div>
+
+    <div class="diff-grid-bottom">
+      <div class="diff-card reveal reveal-delay-1">
+        <div class="diff-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        </div>
+        <h3>Strategy to Implementation</h3>
+        <p>Unlike strategy-only firms, we can actually build what we recommend. Your roadmap doesn't gather dust — our advisory and engineering teams work hand-in-hand.</p>
+        <span class="diff-highlight">End-to-End Partner</span>
+      </div>
+
+      <div class="diff-card reveal reveal-delay-2">
+        <div class="diff-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg>
+        </div>
+        <h3>Compliance Native</h3>
+        <p>OMB M-25-21, NIST AI RMF, FedRAMP, HIPAA, Section 508 — woven into every recommendation from day one, not bolted on as an afterthought.</p>
+        <span class="diff-highlight">Built-In Compliance</span>
+      </div>
+
+      <div class="diff-card reveal reveal-delay-3">
+        <div class="diff-icon-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <h3>Mission-First Thinking</h3>
+        <p>We serve organizations that serve others. Every recommendation starts with your mission outcomes — citizen services, member health, community impact — not tech for tech's sake.</p>
+        <span class="diff-highlight">Purpose-Driven</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section class="services-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Our Services</div>
+      <h2 class="section-title">Five pillars of strategic AI advisory</h2>
+      <p class="section-sub">Every successful AI journey starts with the right foundation. Choose where you need to begin.</p>
+    </div>
+
+    <div class="services-scroll">
+      <!-- Service 1 -->
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <div class="service-icon-sm">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+          </svg>
+        </div>
+        <h3>AI Strategy &<br>Roadmap Development</h3>
+        <p class="service-desc">A phased 3-year roadmap with use case prioritization, business cases, and OMB alignment — built around your mission.</p>
+        <div class="service-meta">
+          <div class="meta-row">
+            <span class="meta-label">Investment</span>
+            <span class="meta-value">$75K – $350K</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Timeline</span>
+            <span class="meta-value">4–6 weeks</span>
+          </div>
+        </div>
+        <a href="#" class="service-link">Explore →</a>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">02</div>
+        <div class="service-icon-sm">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <h3>AI Readiness<br>Assessment</h3>
+        <p class="service-desc">Scored evaluation across five dimensions — data, technology, people, governance, and leadership — with a prioritized action plan.</p>
+        <div class="service-meta">
+          <div class="meta-row">
+            <span class="meta-label">Investment</span>
+            <span class="meta-value">$35K – $100K</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Timeline</span>
+            <span class="meta-value">2–4 weeks</span>
+          </div>
+        </div>
+        <a href="#" class="service-link">Explore →</a>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">03</div>
+        <div class="service-icon-sm">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+          </svg>
+        </div>
+        <h3>Vendor & Platform<br>Evaluation</h3>
+        <p class="service-desc">Independent, unbiased platform assessment with scored comparisons, TCO analysis, and compliance alignment review.</p>
+        <div class="service-meta">
+          <div class="meta-row">
+            <span class="meta-label">Investment</span>
+            <span class="meta-value">$25K – $75K</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Timeline</span>
+            <span class="meta-value">2–4 weeks</span>
+          </div>
+        </div>
+        <a href="#" class="service-link">Explore →</a>
+      </div>
+
+      <!-- Service 4 -->
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-num">04</div>
+        <div class="service-icon-sm">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3>OMB AI Compliance<br>(M-25-21)</h3>
+        <p class="service-desc">AI inventory classification, governance structure design, and compliance documentation before the April 2026 deadline.</p>
+        <div class="service-meta">
+          <div class="meta-row">
+            <span class="meta-label">Investment</span>
+            <span class="meta-value">$50K – $150K</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Timeline</span>
+            <span class="meta-value">4–8 weeks</span>
+          </div>
+        </div>
+        <a href="#" class="service-link">Explore →</a>
+      </div>
+
+      <!-- Service 5 -->
+      <div class="service-card reveal reveal-delay-4">
+        <div class="service-num">05</div>
+        <div class="service-icon-sm">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8m8 4H8"/>
+          </svg>
+        </div>
+        <h3>AI Procurement<br>Advisory</h3>
+        <p class="service-desc">Smarter RFPs, objective vendor evaluations, and contract negotiations with appropriate IP and data protections.</p>
+        <div class="service-meta">
+          <div class="meta-row">
+            <span class="meta-label">Investment</span>
+            <span class="meta-value">$25K – $100K</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Timeline</span>
+            <span class="meta-value">4–12 weeks</span>
+          </div>
+        </div>
+        <a href="#" class="service-link">Explore →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROCESS ═══ -->
+<section class="process-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">How We Work</div>
+      <h2 class="section-title">A structured path from<br>ambiguity to action</h2>
+      <p class="section-sub">Every engagement follows our proven four-phase process — transparent, predictable, and designed for your success.</p>
+    </div>
+
+    <div class="process-track">
+      <div class="process-step reveal">
+        <div class="step-dot">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </div>
+        <div class="step-phase">Phase 1</div>
+        <div class="step-title">Discover</div>
+        <p class="step-desc">Stakeholder interviews, technology audits, and data landscape review</p>
+        <span class="step-week">Week 1–2</span>
+      </div>
+
+      <div class="process-step reveal reveal-delay-1">
+        <div class="step-dot">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="step-phase">Phase 2</div>
+        <div class="step-title">Assess</div>
+        <p class="step-desc">Use case workshops, readiness scoring, and opportunity mapping</p>
+        <span class="step-week">Week 2–3</span>
+      </div>
+
+      <div class="process-step reveal reveal-delay-2">
+        <div class="step-dot">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+          </svg>
+        </div>
+        <div class="step-phase">Phase 3</div>
+        <div class="step-title">Strategize</div>
+        <p class="step-desc">Phased roadmap with business cases, investment models, and compliance mapping</p>
+        <span class="step-week">Week 3–5</span>
+      </div>
+
+      <div class="process-step reveal reveal-delay-3">
+        <div class="step-dot">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div class="step-phase">Phase 4</div>
+        <div class="step-title">Deliver</div>
+        <p class="step-desc">Executive presentation, alignment sessions, and strategy handoff</p>
+        <span class="step-week">Week 5–6</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AUDIENCE TABS ═══ -->
+<section class="audience-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Who We Serve</div>
+      <h2 class="section-title">Tailored for your sector</h2>
+      <p class="section-sub">Every sector has unique AI challenges. We bring specific expertise to each one.</p>
+    </div>
+
+    <div class="tab-nav reveal">
+      <button class="tab-btn active" onclick="switchTab(0)">Government</button>
+      <button class="tab-btn" onclick="switchTab(1)">Health & Human Svcs</button>
+      <button class="tab-btn" onclick="switchTab(2)">Nonprofit</button>
+
+    </div>
+
+    <div class="tab-panel active" data-tab="0">
+      <div class="tab-content">
+        <h3>Navigate AI mandates with a partner who knows government</h3>
+        <p>You need a partner who understands procurement constraints, compliance obligations, and the political dynamics of AI adoption in public agencies. We've navigated these waters for 18 years — from budget hearings to OMB requirements to building trust with program staff.</p>
+        <div class="tab-tags">
+          <span class="tab-tag">OMB M-25-21</span>
+          <span class="tab-tag">FedRAMP</span>
+          <span class="tab-tag">NIST AI RMF</span>
+          <span class="tab-tag">IL4+ Security</span>
+          <span class="tab-tag">508 Compliance</span>
+        </div>
+      </div>
+      <div class="tab-visual">
+        <div class="tab-stat-row">
+          <span class="tab-stat-label">Compliance Alignment</span>
+          <span class="tab-stat-value">100%</span>
+        </div>
+        <div class="tab-stat-row">
+          <span class="tab-stat-label">Avg. Use Cases Identified</span>
+          <span class="tab-stat-value">12–15</span>
+        </div>
+        <div class="tab-stat-row">
+          <span class="tab-stat-label">Time to Roadmap</span>
+          <span class="tab-stat-value">4–6 wks</span>
+        </div>
+        <div class="tab-stat-row">
+          <span class="tab-stat-label">Budget Hearing Ready</span>
+          <span class="tab-stat-value">Always</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-tab="1">
+      <div class="tab-content">
+        <h3>AI that improves outcomes without creating new risks</h3>
+        <p>Your agency handles some of the most sensitive data in government — child welfare records, benefits determinations, health information. AI must reduce caseworker burden while maintaining quality of care. We bring HIPAA expertise and deep understanding of caseworker workflows.</p>
+        <div class="tab-tags">
+          <span class="tab-tag">HIPAA</span>
+          <span class="tab-tag">Case Management</span>
+          <span class="tab-tag">Document AI</span>
+          <span class="tab-tag">Predictive Analytics</span>
+        </div>
+      </div>
+      <div class="tab-visual">
+        <div class="tab-stat-row">
+          <span class="tab-stat-label">Admin Burden Reduction</span>
+          <span class="tab-stat-value">30–40%</span>
+        </div>
+        <div class="tab-stat-row">
+          <span class="tab-stat-label">HIPAA Compliance</span>
+          <span class="tab-stat-value">Built In</span>
+        </div>
+        <div class="tab-stat-row">
+          <span class="tab-stat-label">Caseworker Adoption</span>
+          <span class="tab-stat-value">High</span>
+        </div>
+        <div class="tab-stat-row">
+          <span class="tab-stat-label">Data Sensitivity Level</span>
+          <span class="tab-stat-value">Expert</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-tab="2">
+      <div class="tab-content">
+        <h3>Right-sized AI strategy for mission-driven budgets</h3>
+        <p>Your budget is finite and every dollar must demonstrate impact to donors and boards. You can't afford a failed AI pilot. We right-size our engagements for nonprofit budgets while maintaining the rigor that ensures success — from foundations to associations to direct-service organizations.</p>
+        <div class="tab-tags">
+          <span class="tab-tag">Nonprofit Cloud</span>
+          <span class="tab-tag">Grant Management</span>
+          <span class="tab-tag">Impact Measurement</span>
+          <span class="tab-tag">Donor Analytics</span>
+        </div>
+      </div>
+      <div class="tab-visual">
+        <div class="tab-stat-row">
+          <span class="tab-stat-label">Budget-Appropriate</span>
+          <span class="tab-stat-value">Always</span>
+        </div>
+        <div class="tab-stat-row">
+          <span class="tab-stat-label">Quick Wins Identified</span>
+          <span class="tab-stat-value">5–8</span>
+        </div>
+        <div class="tab-stat-row">
+          <span class="tab-stat-label">Board-Ready Deliverables</span>
+          <span class="tab-stat-value">Standard</span>
+        </div>
+        <div class="tab-stat-row">
+          <span class="tab-stat-label">ROI Demonstrated</span>
+          <span class="tab-stat-value">Every Time</span>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div class="section-eyebrow" style="color: var(--cyan);">Ready to Start?</div>
+      <h2 class="cta-title">Let's build your AI strategy <em>together</em></h2>
+      <p class="cta-sub">Every successful AI initiative starts with a clear strategy. Schedule a free discovery conversation to discuss your goals, challenges, and next steps.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-primary" style="background: var(--white); color: var(--ink); font-weight: 700;">
+          Schedule a Free Discovery Call
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#" class="btn btn-ghost">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          Download AI Strategy Framework
+        </a>
+      </div>
+      <p class="cta-note">30-minute call · No obligation · Tailored to your sector</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer-light">
+  <div class="container">
+    <p>&copy; 2026 Brite.AI — AI-Powered Transformation for Mission-Driven Organizations</p>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Tab switching
+function switchTab(index) {
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === index);
+  });
+  document.querySelectorAll('.tab-panel').forEach((panel, i) => {
+    panel.classList.toggle('active', i === index);
+  });
+}
+
+// Animated counters
+function animateCounters() {
+  document.querySelectorAll('[data-target]').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.textContent.replace(/[0-9]/g, '');
+    let current = 0;
+    const increment = target / 40;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      el.textContent = Math.round(current) + suffix;
+    }, 30);
+  });
+}
+
+// Trigger counters when stats bar is visible
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounters();
+      statsObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+const statsBar = document.querySelector('.stats-bar');
+if (statsBar) statsObserver.observe(statsBar);
+</script>
+
+</body>
+</html>
